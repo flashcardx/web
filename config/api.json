@@ -1,0 +1,8 @@
+{
+        "development":{
+            "getInitialCards": "http://localhost:3000/allCards"
+        },
+        "production":{
+            
+        }
+}

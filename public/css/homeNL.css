@@ -2,6 +2,65 @@ body {
 	font-family: Arial, Helvetica, sans-serif;
 }
 /* Move down content because we have a fixed navbar that is 50px tall */
-body {
-  padding-top: 2rem;
+.fixed-top {
+  position: relative;
+}
+
+.main-content{
+  margin: 10px;
+  text-align: center;
+}
+
+.card-deck{
+  display: block;
+  width: 100%;
+  display: center;
+  text-align: center;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.card{
+  overflow: auto;
+  padding-top:5px;
+  max-height: 505px;
+  margin: 10px;
+  width: 100%;
+  background-color: #333;
+  color: white;
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 10px;
+  border-color: #44b23c;
+}
+
+
+footer {
+  position: static;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  min-width: 100%;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
+}
+
+.copyright{
+  display:inline;
+}
+
+.poweredBy{
+  float:right;
+  display:inline;
+}
+
+.poweredBy-logo{
+  float:right;
+  display:inline;
+}
+
+.poweredBy-text{
+  float:left;
+  display:inline;
 }

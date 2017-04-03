@@ -1,0 +1,24 @@
+.slide-size{
+    height: 390px;
+    width: auto;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 5px;
+}
+
+.carousel-inner {
+    text-align: center;
+}
+
+.carousel-item{
+  text-align: center;
+}
+
+.card-img-top{
+  max-width:100%;
+  max-height:100%;
+  object-fit: contain;
+}
