@@ -11,27 +11,8 @@ body {
   text-align: center;
 }
 
-.card-deck{
-  display: block;
-  width: 100%;
-  display: center;
-  text-align: center;
-  padding-left: 100px;
-  padding-right: 100px;
-}
-
-.card{
-  overflow: auto;
-  padding-top:5px;
-  max-height: 505px;
-  margin: 10px;
-  width: 100%;
-  background-color: #333;
-  color: white;
-  border-style: solid;
-  border-width: 3px;
-  border-radius: 10px;
-  border-color: #44b23c;
+.btn-space-left{
+  margin-left: 10px;
 }
 
 

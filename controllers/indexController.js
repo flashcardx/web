@@ -9,7 +9,7 @@ module.exports = function(app) {
 	
 	app.get('/', function(req, res) {
 		requestify.get(config.apiGetInitialCards).then(function(response) {
-			res.render('indexNoLogged', response.getBody());
+			res.render('indexNoLogged', {data:response.getBody(), imgUrl:config.apiGetImg});
 		});
 
 	});

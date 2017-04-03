@@ -1,0 +1,33 @@
+
+.card-deck{
+  display: block;
+  width: 100%;
+  display: center;
+  text-align: center;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.card{
+  overflow: auto;
+  padding-top:5px;
+  max-height: 515px;
+  margin: 10px;
+  max-width: 650px;
+  background-color: #ccccce;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  border-color: #333;
+  margin: 10px auto;
+}
+
+
+
+.card-deck .card:not(:last-child) {
+    margin-right: auto;
+}
+
+.card-deck .card:not(:first-child) {
+    margin-left: auto;
+}

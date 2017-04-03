@@ -1,6 +1,7 @@
 {
         "development":{
-            "getInitialCards": "http://localhost:3000/allCards"
+            "getInitialCards": "http://localhost:3000/allCards",
+            "getImg": "http://localhost:3000/image"
         },
         "production":{
             
