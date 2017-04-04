@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 
 var indexController = require('./controllers/indexController');
+var loginController = require('./controllers/loginController');
 
 var port = process.env.PORT || 8081;
 
@@ -15,6 +16,7 @@ app.use('/', function (req, res, next) {
 });
 
 indexController(app);
+loginController(app);
 console.log("FlashCardX-Web Starting in port: " + port);
 
 app.listen(port);

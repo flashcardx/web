@@ -4,6 +4,6 @@ const api = require("./api.json")[env];
 module.exports = {
 
     apiGetInitialCards: api.getInitialCards,
-    apiGetImg: api.getImg
-
+    apiGetImg: api.getImg,
+    apiSignup: api.signup
 };

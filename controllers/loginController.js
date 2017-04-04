@@ -5,13 +5,11 @@ const requestify = require("requestify");
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
+
 module.exports = function(app) {
 	
-	app.get('/', function(req, res) {
-		requestify.get(config.apiGetInitialCards).then(function(response) {
-			res.render('indexNoLogged', {data:response.getBody(), imgUrl:config.apiGetImg});
-		});
-
+	app.get('/signup', function(req, res) {
+           res.render("signup");
 	});
 	
 

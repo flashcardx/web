@@ -1,7 +1,8 @@
 {
         "development":{
             "getInitialCards": "http://localhost:3000/allCards",
-            "getImg": "http://localhost:3000/image"
+            "getImg": "http://localhost:3000/image",
+            "signup": "http://localhost:3000/signup"
         },
         "production":{
             
