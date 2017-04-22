@@ -5,5 +5,14 @@ module.exports = {
 
     apiGetInitialCards: api.getInitialCards,
     apiGetImg: api.getImg,
-    apiSignup: api.signup
+    apiSignup: api.signup,
+    apiGetLangs: api.getLangs,
+    apiEmailVerification: api.emailVerification,
+    apiResendEmailVerification: api.resendEmailVerification,
+    apiLogin: api.login,
+    apiGetUserCards: api.getUserCards,
+    apiValidateToken: api.validateToken,
+    apiDeleteCard: api.deleteCard,
+    apiSearchImage: api.searchImage,
+    apiPostCard: api.postCard
 };

@@ -11,8 +11,13 @@
   "dependencies": {
     "app-root-path": "^2.0.1",
     "body-parser": "^1.14.0",
+    "client-sessions": "^0.7.0",
+    "cookie-parser": "^1.4.3",
+    "csurf": "^1.9.0",
     "ejs": "^2.3.4",
     "express": "^4.13.3",
+    "helmet": "^3.5.0",
+    "randomstring": "^1.1.5",
     "requestify": "^0.2.5"
   }
 }

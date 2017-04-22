@@ -9,12 +9,11 @@
 }
 
 .card{
-  overflow: auto;
   padding-top:5px;
   max-height: 515px;
   margin: 10px;
   max-width: 650px;
-  background-color: #ccccce;
+  background-color: #dededf ;
   border-style: solid;
   border-width: 1px;
   border-radius: 10px;

@@ -25,46 +25,66 @@
         <form class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="text" placeholder="Email">
           <input class="form-control mr-sm-2" type="text" placeholder="Password">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign in</button>
+          <button role="button" class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign in</button>
         </form>
        </div>
     </nav>
-
     <div class="container">
-        <form class="form-horizontal">
+       <% if (!data.success) { %>
+    <div id="errorMsg" class="alert alert-danger">
+      <strong>Error!</strong> <%= data.msg%>
+      <% if (data.errorCode === 1) { %>
+          <button class="btn btn-outline-primary my-2 my-sm-0 btn-space-left" onClick="resendEmail()"> Resend verification email</button>
+     <%}%> 
+  </div>  
+ <% }else if(data.success && data.msg) { %>
+    <div class="alert alert-success">
+      <strong>Success!</strong> <%= data.msg%>
+  </div>  
+ <%}%>
+        <form class="form-horizontal" action= "/signup" method="post">
+          <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="email">Email:</label>
                 <div class="col-sm-10">
-                <input type="email" class="form-control" id="email" placeholder="Enter email">
+                <input name="email" type="email" required="true"class="form-control" id="email" placeholder="Your email">
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="control-label col-sm-2" for="name">Name:</label>
+                <div class="col-sm-10">
+                <input name="name" type="text" class="form-control" id="name" placeholder="Your name(or how your friends call you)">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-5" for="sel1">Languaje for image search(needed for providing a better experience in the image search engine):</label>
                 <div class="col-sm-10">
-                 <select class="form-control" id="sel1">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
+                 <select name="lang" class="form-control" id="sel1">
+                   <% langs.forEach(function(value){ 
+                     if(value.code==="en"){%>
+                        <option  selected="selected"value="<%=value.code%>"><%=value.name%></option>
+                     <%}else{%>
+                        <option value="<%=value.code%>"><%=value.name%></option>
+                  <% }});%>
                 </select>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="pwd">Password:</label>
                 <div class="col-sm-10"> 
-                <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                <input minlength="4" required="true" type="password" name="password" class="form-control" id="pwd" placeholder="Enter password">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="pwd2">Verify Password:</label>
                 <div class="col-sm-10"> 
-                <input type="password2" class="form-control" id="pwd2" placeholder="Enter password again">
+                <input minlength="4" required="true" type="password" name="password2" class="form-control" id="pwd2" placeholder="Enter password again">
                 </div>
             </div>
           
             <div class="form-group"> 
                 <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default btn-outline-success btn-gray">Sign up!</button>
+                <button role="button" type="submit" class="btn btn-default btn-outline-success btn-gray">Sign up!</button>
                 </div>
             </div>
         </form>
@@ -73,14 +93,14 @@
 
       <footer class="row">
         <div class="col-md-9 copyright">
-          &copy; 2016 FlashCardX, Inc.
+          &copy; 2017 FlashCardX, Inc.
         </div>
         <div class="col-md-3 poweredBy">
           <span class ="poweredBy-text">
           Powered by:
           </span>
         <a href="https://pixabay.com/" style="margin:3px 15px 5px 0;font-size:12px;line-height:1.7;color:#555;display:block;float:left;padding:9px 12px 7px;border:1px solid #ccc">
-                        <i style="display:block;width:68px;height:18px;overflow:hidden"><img class="pixabay-logo"src="assets/img/pixabay-logo.svg" style="width:94px"></i>
+                        <i style="display:block;width:68px;height:18px;overflow:hidden"><img class="pixabay-logo"src="/assets/img/pixabay-logo.svg" style="width:94px"></i>
                         Free Images
                     </a>
         </div>
@@ -91,7 +111,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="assets/css/page/homeNL.css">
-        <link rel="stylesheet" href="assets/css/page/signup.css">
+        <script src="/assets/js/signup.js"></script>
+        <link rel="stylesheet" href="/assets/css/page/homeNL.css">
+        <link rel="stylesheet" href="/assets/css/page/signup.css">
   </body>
 </html>

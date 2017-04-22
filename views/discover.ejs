@@ -9,6 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
+    <script src="https://use.fontawesome.com/6cbcc3e9b8.js"></script>
     <title>FlashCardX</title>
    
   </head>
@@ -20,17 +21,25 @@
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="#">FlashcardX</a>
+      <a class="navbar-brand" href="/">FlashcardX</a>
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+       <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Discover</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/">My collection</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/create">Create card</a>
+      </li>
+    </ul>
 
-      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <form class="form-inline my-2 my-lg-0" method="POST">
-          <input type="hidden" name="_csrf" value="<%=csrfTokenLogin%>"/>
-          <input type="email" class="form-control mr-sm-2" name="email" type="text" placeholder="Email">
-          <input class="form-control mr-sm-2" name="password"type="password" placeholder="Password">
-          <button role="button" class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign in</button>
-        </form>
-          <a role="button" class="btn btn-outline-success my-2 my-sm-0 btn-space-left" href="/signup"> Sign up </a>
-      </div>
+         <a class="btn btn-warning my-2 my-sm-0 " href="#"> <i class="fa fa-cog fa-fw" aria-hidden="true"></i></a>
+          
+         <a class="btn btn-danger my-2 my-sm-0 btn-space-left" href="/logout"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i></a>
+        
+        </div>
     </nav>
   <div class= " main-content">
       <% errors.forEach(err=>{%>
@@ -39,15 +48,14 @@
             </div> 
         <%});%>
    
-    <div class="card-deck">
-                   
-       <% cards.forEach((card, index1)=>{%>
-          <%- include tiles/basicCard %>
-       <% });%>
+          <div class="card-deck">
+                   <% cards.forEach((card, index1)=>{%>
+                        <%- include tiles/discoverCard %>
+                    <% });%>
        
-      
-    </div>
-    <!-- end card-deck-->
+          </div>
+
+
   </div>
   <!-- end container-->
 
@@ -73,9 +81,11 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="assets/css/page/homeNL.css">
+<link rel="stylesheet" href="assets/css/page/homeL.css">
 <link rel="stylesheet" href="assets/css/component/card.css">
 <link rel="stylesheet" href="assets/css/component/slideshow.css">
   </body>

@@ -2,7 +2,16 @@
         "development":{
             "getInitialCards": "http://localhost:3000/allCards",
             "getImg": "http://localhost:3000/image",
-            "signup": "http://localhost:3000/signup"
+            "signup": "http://localhost:3000/signup",
+            "getLangs": "http://localhost:3000/langs",
+            "emailVerification": "http://localhost:3000/email-verification",
+            "resendEmailVerification": "http://localhost:3000/resend-email-verification",
+            "login": "http://localhost:3000/login",
+            "getUserCards": "http://localhost:3000/Mycards",
+            "validateToken": "http://localhost:3000/validateToken",
+            "deleteCard": "http://localhost:3000/card",
+            "searchImage": "http://localhost:3000/search",
+            "postCard": "http://localhost:3000/card"
         },
         "production":{
             
