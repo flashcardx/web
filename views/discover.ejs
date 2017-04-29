@@ -15,6 +15,10 @@
   </head>
 
   <body>
+    <script type='text/javascript'>
+      var cards = <%-JSON.stringify(cards)%>;
+      var imgUrl = "<%-imgUrl%>";
+      </script>
 
   
    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
@@ -41,18 +45,16 @@
         
         </div>
     </nav>
-  <div class= " main-content">
+  <div class= "main-content">
       <% errors.forEach(err=>{%>
             <div class="alert alert-danger">
                 <strong>Error!</strong> <%= err%>
             </div> 
         <%});%>
    
-          <div class="card-deck">
-                   <% cards.forEach((card, index1)=>{%>
-                        <%- include tiles/discoverCard %>
-                    <% });%>
-       
+          <div class="card-deck" id="card-deck">
+
+                 
           </div>
 
 
@@ -88,5 +90,7 @@
 <link rel="stylesheet" href="assets/css/page/homeL.css">
 <link rel="stylesheet" href="assets/css/component/card.css">
 <link rel="stylesheet" href="assets/css/component/slideshow.css">
+<script src="assets/js/formatDate.js"></script>
+<script src="assets/js/discoverCards.js"></script>
   </body>
 </html>

@@ -14,5 +14,6 @@ module.exports = {
     apiValidateToken: api.validateToken,
     apiDeleteCard: api.deleteCard,
     apiSearchImage: api.searchImage,
-    apiPostCard: api.postCard
+    apiPostCard: api.postCard,
+    apiDiscoverCards: api.discoverCards
 };

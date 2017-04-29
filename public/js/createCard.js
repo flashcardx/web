@@ -13,6 +13,9 @@ $("form").submit(function(){
     var title = $("#title")
 });
 
+$('#title').bind('keypress keyup blur', function() {
+    $('#search-box').val($(this).val());
+});
 
 
 function search(){

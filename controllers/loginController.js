@@ -23,7 +23,9 @@ module.exports = function(app) {
 				cards = data.msg;
 			if(error)
 				errors.push(error);
-			res.render('indexNoLogged', {cards:cards, errors:errors, imgUrl:config.apiGetImg, csrfTokenLogin: req.csrfToken()});		
+			var successMsg = req.session.successMsg;
+			controllerUtils.cleanSessionMsgs(req);
+			res.render('indexNoLogged', {cards:cards, successMsg:successMsg,errors:errors, imgUrl:config.apiGetImg, csrfTokenLogin: req.csrfToken()});		
 		});
 	});
 
@@ -41,6 +43,16 @@ module.exports = function(app) {
 			});
 		});
 
+	app.get("/getAllCards", (req, res)=>{
+		var url = config.apiGetInitialCards;
+		var lastId = req.query.lastId;
+		if(lastId)
+			url += "?lastId=" + lastId;
+		requestify.get(url).then(response=>{
+				const data = response.getBody();
+				res.json(data);
+		});
+	})
 	
 	app.get("/logout", (req, res)=>{
 		req.session.reset();

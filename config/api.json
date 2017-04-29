@@ -11,7 +11,8 @@
             "validateToken": "http://localhost:3000/validateToken",
             "deleteCard": "http://localhost:3000/card",
             "searchImage": "http://localhost:3000/search",
-            "postCard": "http://localhost:3000/card"
+            "postCard": "http://localhost:3000/card",
+            "discoverCards": "http://localhost:3000/discoverCards"
         },
         "production":{
             

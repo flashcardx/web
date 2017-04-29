@@ -12,10 +12,13 @@ module.exports = function(app){
 
     app.get("/discover", controllerUtils.requireLogin, (req, res)=>{
 
-        requestify.get(config.apiGetInitialCards)
+        requestify.get(config.apiDiscoverCards, {headers:{
+			"x-access-token": req.session.token
+		}})
         .then(response=>{
 			const data = response.getBody();
 			const error = req.session.error;
+			controllerUtils.cleanSessionMsgs(req);
 			var cards = [];
 			var errors = [];
 			if(!data.success)
@@ -34,5 +37,17 @@ module.exports = function(app){
     });
 
 
+	app.get("/getDiscoverCards", controllerUtils.requireLogin, (req, res)=>{
+		var url = config.apiDiscoverCards;
+		var lastId = req.query.lastId;
+		if(lastId)
+			url += "?lastId=" + lastId;
+		requestify.get(url, {headers:{
+			"x-access-token": req.session.token
+		}}).then(response=>{
+				const data = response.getBody();
+				res.json(data);
+		});
+	})
 
 };

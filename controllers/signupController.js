@@ -47,14 +47,10 @@ module.exports = function(app) {
 	
 	app.get("/email-verification/:id", csrfProtection,(req,res)=>{
 		const url = config.apiEmailVerification + "/" + req.params.id;
+		req.session.reset();
 		requestify.get(url).then(response=>{
-			if(langs)
-				res.render("signup",{ data: response.getBody(), langs:langs , csrfToken:req.csrfToken()});
-			else
-				requestify.get(config.apiGetLangs).then(response2=>{
-					langs = response2.getBody();
-					res.render("signup",{ data: response.getBody(), langs:langs , csrfToken:req.csrfToken()});
-			});
+			req.session.successMsg = "User registered ok, you can sign in now!"; 
+			res.redirect("/home");
 		});
 	});
 
