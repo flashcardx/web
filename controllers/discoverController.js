@@ -39,9 +39,9 @@ module.exports = function(app){
 
 	app.get("/getDiscoverCards", controllerUtils.requireLogin, (req, res)=>{
 		var url = config.apiDiscoverCards;
-		var lastId = req.query.lastId;
-		if(lastId)
-			url += "?lastId=" + lastId;
+		var last = req.query.last;
+		if(last)
+			url += "?last=" + last;
 		requestify.get(url, {headers:{
 			"x-access-token": req.session.token
 		}}).then(response=>{

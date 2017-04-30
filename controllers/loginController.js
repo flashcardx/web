@@ -45,9 +45,9 @@ module.exports = function(app) {
 
 	app.get("/getAllCards", (req, res)=>{
 		var url = config.apiGetInitialCards;
-		var lastId = req.query.lastId;
-		if(lastId)
-			url += "?lastId=" + lastId;
+		var last = req.query.last;
+		if(last)
+			url += "?last=" + last;
 		requestify.get(url).then(response=>{
 				const data = response.getBody();
 				res.json(data);

@@ -14,6 +14,21 @@
             "postCard": "http://localhost:3000/card",
             "discoverCards": "http://localhost:3000/discoverCards"
         },
+        "pi":{
+            "getInitialCards": "http://custom-env.3u8k5dru3p.us-east-1.elasticbeanstalk.comallCards",
+            "getImg": "http://custom-env.3u8k5dru3p.us-east-1.elasticbeanstalk.com/image",
+            "signup": "http://custom-env.3u8k5dru3p.us-east-1.elasticbeanstalk.com/signup",
+            "getLangs": "http://custom-env.3u8k5dru3p.us-east-1.elasticbeanstalk.com/langs",
+            "emailVerification": "http://custom-env.3u8k5dru3p.us-east-1.elasticbeanstalk.com/email-verification",
+            "resendEmailVerification": "http://custom-env.3u8k5dru3p.us-east-1.elasticbeanstalk.com/resend-email-verification",
+            "login": "http://custom-env.3u8k5dru3p.us-east-1.elasticbeanstalk.com/login",
+            "getUserCards": "http://custom-env.3u8k5dru3p.us-east-1.elasticbeanstalk.com/Mycards",
+            "validateToken": "http://custom-env.3u8k5dru3p.us-east-1.elasticbeanstalk.com/validateToken",
+            "deleteCard": "http://custom-env.3u8k5dru3p.us-east-1.elasticbeanstalk.com/card",
+            "searchImage": "http://custom-env.3u8k5dru3p.us-east-1.elasticbeanstalk.com/search",
+            "postCard": "http://custom-env.3u8k5dru3p.us-east-1.elasticbeanstalk.com/card",
+            "discoverCards": "http://custom-env.3u8k5dru3p.us-east-1.elasticbeanstalk.com/discoverCards"
+        },
         "production":{
             
         }

@@ -1,4 +1,5 @@
 var firstTime = true;
+var end = false;
 setScroll();
 getMoreCards();
 
@@ -16,7 +17,7 @@ function setScroll(){
 function getMoreCards(){
         var queryString ="";
         if(!firstTime)
-            queryString = "?lastId=" + getLastId();
+            queryString = "?last=" + getLast();
         firstTime = false;
         $.ajax({
         url:"/getDiscoverCards" + queryString,
@@ -24,7 +25,7 @@ function getMoreCards(){
             if(!result.success)
                 showError(result.msg);
             else
-               appendCards(result.msg);
+                processResult(result.msg);
         },
         error: err=>{
                 showError(err);
@@ -32,7 +33,18 @@ function getMoreCards(){
     });
 }
 
-function getLastId(){
+function processResult(result){
+    if(end)
+        return;
+    if(!result || result.length === 0){
+        end = true;
+        $(window).off("scroll"); 
+    }
+    else
+        appendCards(result);
+}
+
+function getLast(){
     return $('#card-deck').children().last().attr('id');
 }
 
@@ -50,7 +62,7 @@ function showError(msg){
 function appendCards(cards){
     cards.forEach((card, index1)=>{
     
-    var html = "<div class='card' id='" + card._id + "'>" + 
+    var html = "<div class='card' id='" + card.counter + "'>" + 
                                 "<div id='carousel" + index1 + "' data-interval='false' class='carousel slide' data-ride='carousel'>" +
                   "<div class='carousel-inner' role='listbox'>"
     card.imgs.forEach((img, index2)=>{
@@ -79,10 +91,10 @@ function appendCards(cards){
                    "<div class='row'>"+
                        "<div class='col-10'>"+
                            "<h4 class='card-title'>"+ card.name +"</h4>"+
-                           "<p class='card-text'>"+ card.description +"</p>"+
+                           "<p class='card-text'>"+ checkUndefined(card.description) +"</p>"+
                            "<p class='card-text'><small class='text-muted format-date'>Updated "+ timeSince(new Date(card.updated_at)) +" ago. "+"</small>"+
                            "<small class='text-muted'>"+
-                                   "By: "+ card.creatorName+
+                                   "By: "+ checkUndefined(card.creatorName)+
                                 "</small>"+
                            "</p>"+
                          
@@ -98,3 +110,4 @@ function appendCards(cards){
     $("#card-deck").append(html);
     });
 }
+
