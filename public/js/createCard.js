@@ -79,6 +79,8 @@ function generatePagination(data){
     var pages = 0;
     if(data.hits.length !== 0)
         pages = data.totalHits / data.hits.length;
+    else
+        return;
     var pagination = "<nav aria-label='Page navigation'>" +
                      "<ul class='pagination' id='pagination'></ul>" +
                     "</nav>";
@@ -111,7 +113,7 @@ function updatePage(page){
 function updateGallery(data){
     var gallery = "<select multiple='multiple' class='image-picker'>"; 
     data.hits.forEach(img=>{
-        gallery += "<option data-img-src='"+img.previewURL+"' value='"+img.webformatURL+"'>   </option>";
+        gallery += "<option  data-img-width='"+img.webformatWidth+"' data-img-height='"+img.webformatHeight+"' data-img-src='"+img.previewURL+"' value='"+img.webformatURL+"'>   </option>";
     });
     gallery += "</select>";
     $("#gallery").html(gallery);
@@ -132,31 +134,40 @@ function addImgs(){
          var element = selected[0];
          var preview = element.getAttribute("data-img-src");
          var original = element.getAttribute("value");
-         loadImg(preview, original);
+         var height = element.getAttribute("data-img-height");
+         var width = element.getAttribute("data-img-width");
+         loadImg(preview, original, width, height);
     }
     if(selected[1]){
          var element = selected[1];
          var preview = element.getAttribute("data-img-src");
          var original = element.getAttribute("value");
-         loadImg(preview, original);
+         var height = element.getAttribute("data-img-height");
+         var width = element.getAttribute("data-img-width");
+         loadImg(preview, original, width, height);
     }
     if(selected[2]){
         var element = selected[2];
         var preview = element.getAttribute("data-img-src");
         var original = element.getAttribute("value");
-        loadImg(preview, original);
+        var height = element.getAttribute("data-img-height");
+        var width = element.getAttribute("data-img-width");
+        loadImg(preview, original, width, height);
     }
      $(".selected").click();
 }
 
-function loadImg(preview, original){
+function loadImg(preview, original, width, height){
     if(imgLoadAvailable.length <= 0)
             return showWarning("You can not add more images!");
     var numberFrameAvailable = imgLoadAvailable.shift();
-    const idImg = "wrap-img" +  numberFrameAvailable;
-    $("#" + idImg).find("img").attr("src", preview);
-    $("#" + idImg).find(".close").show();
-     $("#" + idImg).find("input").attr("value", original);
+    const idWrapper = "wrap-img" +  numberFrameAvailable;
+    const idImg = "img" +  numberFrameAvailable;
+    $("#" + idWrapper).find("img").attr("src", preview);
+    $("#" + idWrapper).find(".close").show();
+    $("#" + idImg).attr("value", original);
+    $("#height" + numberFrameAvailable).attr("value", height);
+    $("#width" + numberFrameAvailable).attr("value", width);
 }
 
 function closeImg(number){

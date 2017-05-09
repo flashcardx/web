@@ -1,12 +1,5 @@
 
 
-$(".delete-btn").click(function(){
-    var id =  $(this).closest('.card').attr('id');
-    deleteCard(id);
-});
-
-
-
 function deleteCard(id){
     $.ajax({
         url:"/card/" + id,
@@ -24,8 +17,10 @@ function deleteCard(id){
 }
 
 function removeCard(id){
-    $("#" + id).remove();
+    $("#"+id).closest(".card").fadeOut(300, function(){ $(this).remove();});
 }
+
+
 
 function showSight(){
       $(".main-content").prepend(""   +

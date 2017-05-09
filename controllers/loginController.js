@@ -25,7 +25,7 @@ module.exports = function(app) {
 				errors.push(error);
 			var successMsg = req.session.successMsg;
 			controllerUtils.cleanSessionMsgs(req);
-			res.render('indexNoLogged', {cards:cards, successMsg:successMsg,errors:errors, imgUrl:config.apiGetImg, csrfTokenLogin: req.csrfToken()});		
+			res.render('indexNoLogged', {cards:cards, successMsg:successMsg,errors:errors, csrfTokenLogin: req.csrfToken()});		
 		});
 	});
 

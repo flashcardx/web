@@ -7,9 +7,3 @@ a:visited {
     color: white;
   }
 
-.alert-deleted{
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 5000;
-}

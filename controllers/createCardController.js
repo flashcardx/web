@@ -15,18 +15,33 @@ module.exports = function(app){
     });
 
     app.post("/create", controllerUtils.requireLogin, parseForm,csrfProtection, (req, res)=>{
-        var urls = [];
+        var imgs = [];
         var errors = [];
-        if(req.body.img1)
-            urls.push(req.body.img1);
-        if(req.body.img2)
-            urls.push(req.body.img2);
-        if(req.body.img3)
-            urls.push(req.body.img3);
+        if(req.body.img1){
+            imgs.push({
+                url: req.body.img1,
+                width: req.body.width1,
+                height: req.body.height1
+            });
+        }
+        if(req.body.img2){
+            imgs.push({
+                url: req.body.img2,
+                width: req.body.width2,
+                height: req.body.height2
+            });
+        }
+        if(req.body.img3){
+            imgs.push({
+                url: req.body.img3,
+                width: req.body.width3,
+                height: req.body.height3
+            });
+        }
         var card = {
             name: req.body.name,
             description: req.body.description,
-            urls: urls
+            imgs: imgs
         };
         requestify.post(config.apiPostCard, card,
          {headers:{

@@ -20,7 +20,7 @@ function getMoreCards(){
             queryString = "?last=" + getLast();
         firstTime = false;
         $.ajax({
-        url:"/getDiscoverCards" + queryString,
+        url:"/getMyCards" + queryString,
         success: result=>{
             if(!result.success)
                 showError(result.msg);
@@ -36,7 +36,7 @@ function getMoreCards(){
 function processResult(result){
     if(end === true)
         return;
-    if(!result || result.length === 0){
+    if(result===undefined || result.length === 0){
         end = true;
         $(window).off("scroll"); 
     }
@@ -62,23 +62,23 @@ function showError(msg){
 function appendCards(cards){
     cards.forEach((card, index1)=>{
     
-    var html = "<div class='card' id='" + card.counter + "'>" + 
+    var html = "<div class='card' id='" + card.updated_at + "'>" + 
                                 "<div id='carousel" + index1 + "' data-interval='false' class='carousel slide' data-ride='carousel'>" +
                   "<div class='carousel-inner' role='listbox'>"
     card.imgs.forEach((img, index2)=>{
         if(index2===0){
             html += "<div class='carousel-item active slide-fixed-size'>" +
-                              "<div class='slide-size' style='height:"+img.height+"px;width:"+img.width+"px;overflow:hidden'>"+
-                                    "<img class='d-block img-fluid' src='" + img.hash +"' alt='Card img'>" +
-                              "</div>"+
-                   "</div>";
+                                "<div class='slide-size' style='height:"+img.height+"px;width:"+img.width+"px;overflow:hidden'>"+
+                                    "<img class='d-block img-fluid ' src='" + img.hash +"' alt='Card image'>" +
+                                "</div>"+
+                            "</div>";
         }
         else{
             html +="<div class='carousel-item slide-fixed-size'>"+
-                            "<div class='slide-size' style='height:"+img.height+"px;width:"+img.width+"px;overflow:hidden'>"+
+                              "<div class='slide-size' style='height:"+img.height+"px;width:"+img.width+"px;overflow:hidden'>"+
                                     "<img class='d-block img-fluid' src='" + img.hash +"' alt='Card img'>" +
                               "</div>"+
-                  "</div>";
+                          "</div>";
         }
     });
     html += "<a class='carousel-control-prev' href='#carousel"+ index1+ "' role='button' data-slide='prev'>" +
@@ -97,16 +97,16 @@ function appendCards(cards){
                            "<h4 class='card-title'>"+ card.name +"</h4>"+
                            "<p class='card-text'>"+ checkUndefined(card.description) +"</p>"+
                            "<p class='card-text'><small class='text-muted format-date'>Updated "+ timeSince(new Date(card.updated_at)) +" ago. "+"</small>"+
-                           "<small class='text-muted'>"+
-                                   "By: "+ checkUndefined(card.ownerName)+
-                                "</small>"+
                            "</p>"+
                          
                        "</div>"+
                        "<div class= 'col'>"+
                                "<div class='row'>"+
-                                   "<a onClick=\"duplicateCard('"+card._id+"')\" role='button' class='btn nounderline btn-primary my-2 my-sm-1'> <i class='fa fa-share fa-fw' aria-hidden='true'></i></a>"+
-                               "</div>"+
+                                    "<a role='button' class='btn nounderline btn-info my-2 my-sm-1' href='#'> <i class='fa fa-pencil-square-o fa-fw' aria-hidden='true'></i></a>"+
+                                "</div>"+
+                                "<div class='row'>"+
+                                    "<a id='"+card._id+"' role='button' onClick=\"deleteCard('"+card._id+"','"+ card.updated_at +"')\" class='btn nounderline btn-danger delete-btn my-2 my-sm-1'> <i class='fa fa-trash fa-fw' aria-hidden='true'></i></a>"+
+                                "</div>"+
                        "</div>"+
                    "</div>"+
                "</div>"+

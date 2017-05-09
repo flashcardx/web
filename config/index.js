@@ -15,5 +15,6 @@ module.exports = {
     apiDeleteCard: api.deleteCard,
     apiSearchImage: api.searchImage,
     apiPostCard: api.postCard,
-    apiDiscoverCards: api.discoverCards
+    apiDiscoverCards: api.discoverCards,
+    apiDuplicateCard: api.duplicateCard
 };

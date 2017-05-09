@@ -32,7 +32,7 @@ module.exports = function(app){
 			const errorCode = response.getCode();
 			console.log("error code: " + errorCode);
 			errors.push("API got error code: " + errorCode);
-			res.render("discover", {cards:[], errors: errors, imgUrl:config.apiGetImg}); // Some error code such as, for example, 404
+			res.render("discover", {cards:[], errors: errors}); // Some error code such as, for example, 404
 		});
     });
 
@@ -47,7 +47,28 @@ module.exports = function(app){
 		}}).then(response=>{
 				const data = response.getBody();
 				res.json(data);
+		})
+		.fail(response=>{
+			const errorCode = response.getCode();
+			console.log("error code: " + errorCode);
+			res.json({success:false, msg:"api got error code: " + errorCode});
 		});
 	})
+
+	app.get("/duplicateCard/:id", controllerUtils.requireLogin, (req, res)=>{
+		const id = req.params.id;
+		var url = config.apiDuplicateCard + "/" + id;
+		requestify.get(url, {headers:{
+			"x-access-token": req.session.token
+		}}).then(response=>{
+				const data = response.getBody();
+				res.json(data);
+		})
+		.fail(response=>{
+			const errorCode = response.getCode();
+			console.log("error code: " + errorCode);
+			res.json({success:false, msg:"api got error code: " + errorCode});
+		});
+	});
 
 };

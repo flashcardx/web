@@ -18,3 +18,30 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.alert-deleted{
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 5000;
+}
+
+
+.alert-side{
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 5000;
+}
+
+
+footer {
+  position: static;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  min-width: 100%;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
+}

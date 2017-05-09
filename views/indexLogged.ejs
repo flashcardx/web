@@ -11,6 +11,7 @@
     <link rel="icon" href="../../favicon.ico">
     <title>FlashCardX</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/component/general.css">
     <link rel="stylesheet" href="assets/css/page/homeNL.css">
     <link rel="stylesheet" href="assets/css/page/homeL.css">
     <link rel="stylesheet" href="assets/css/component/card.css">
@@ -52,11 +53,9 @@
             </div> 
         <%});%>
    
-          <div class="card-deck">
+          <div class="card-deck" id="card-deck">
                    
-          <% cards.forEach((card, index1)=>{%>
-            <%- include tiles/myCard %>
-          <% });%>
+          
         </div>
 
 
@@ -84,10 +83,12 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/6cbcc3e9b8.js"></script>
-    <script src="assets/js/formatDate.js"></script>
-    <script src="assets/js/myCards.js"></script>
     <script src="assets/js/general.js"></script>
+    <script src="assets/js/myCards.js"></script>
+    <script src="assets/js/getMyCards.js"></script>
+    <script src="assets/js/formatDate.js"></script>
   </body>
 </html>

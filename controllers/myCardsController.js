@@ -10,23 +10,7 @@ const controllerUtils = require("./utils");
 module.exports = function(app){
 
     app.get('/', controllerUtils.requireLogin, function(req, res) {
-		var errors = [];
-		requestify.get(config.apiGetUserCards, {headers:{
-			"x-access-token": req.session.token
-		}}).then(response=>{
-			const data = response.getBody();
-			var cards = [];
-			if(!data.success)
-				errors.push(data.msg);
-			else
-				cards = data.msg;
-			res.render("indexLogged", {cards:cards, errors: errors, imgUrl:config.apiGetImg});
-		}).fail(response=> {
-			const errorCode = response.getCode();
-			console.log("error code: " + errorCode);
-			errors.push("API got error code: " + errorCode);
-			res.render("indexLogged", {cards:[], errors: errors, imgUrl:config.apiGetImg}); // Some error code such as, for example, 404
-		});
+		res.render("indexLogged", {errors: []});
 	});
 	
     app.delete("/card/:id", controllerUtils.requireLogin, (req,res)=>{
@@ -36,5 +20,22 @@ module.exports = function(app){
 			res.json(response.getBody());
         });
     });
+
+
+	app.get("/getMyCards", controllerUtils.requireLogin, (req, res)=>{
+		var url = config.apiGetUserCards + "?limit=8";
+		var last = req.query.last;
+		if(last)
+			url += "&last=" + last;
+		requestify.get(url, {headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				res.json(data);
+			}).fail(response=> {
+				const errorCode = response.getCode();
+				res.json({success:false, msg: "server got error code " + errorCode});	
+			});
+	})
 
 };

@@ -34,7 +34,7 @@ function getMoreCards(){
 }
 
 function processResult(result){
-    if(end)
+    if(end === true)
         return;
     if(!result || result.length === 0){
         end = true;
@@ -66,13 +66,17 @@ function appendCards(cards){
                   "<div class='carousel-inner' role='listbox'>";
         card.imgs.forEach((img, index2)=>{
             if(index2===0){
-                html += "<div class='carousel-item active'>" +
-                                    "<img class='d-block img-fluid slide-size' src='" + imgUrl +"/" + img +"' alt='Card image'>" +
-                                "</div>";
+                html += "<div class='carousel-item active slide-fixed-size'>" +
+                              "<div class='slide-size' style='height:"+img.height+"px;width:"+img.width+"px;overflow:hidden'>"+
+                                    "<img class='d-block img-fluid' src='" + img.hash +"' alt='Card img'>" +
+                              "</div>"+
+                             "</div>";
             }
             else{
-                html +="<div class='carousel-item'>"+
-                                "<img class='d-block img-fluid slide-size' src='" + imgUrl +"/" + img +"' alt='Card img'>" +
+                html +="<div class='carousel-item slide-fixed-size'>"+
+                               "<div class='slide-size' style='height:"+img.height+"px;width:"+img.width+"px;overflow:hidden'>"+
+                                    "<img class='d-block img-fluid' src='" + img.hash +"' alt='Card img'>" +
+                              "</div>"+
                             "</div>";
             }
         });                
@@ -91,7 +95,7 @@ function appendCards(cards){
                     "<p class='card-text'>"+ checkUndefined(card.description) +"</p>"+
                     "<p class='card-text'><small class='text-muted format-date'>Updated "+ timeSince(new Date(card.updated_at)) +" ago. "+"</small>"+
                             "<small class='text-muted'>"+
-                                    "By: "+ checkUndefined(card.creatorName)+
+                                    "By: "+ checkUndefined(card.ownerName)+
                                     "</small>"+
                             "</p>"+
                 "</div>"+

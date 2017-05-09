@@ -12,6 +12,7 @@
     <script src="https://use.fontawesome.com/6cbcc3e9b8.js"></script>
     <title>FlashCardX</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/component/general.css">
     <link rel="stylesheet" href="assets/css/page/homeNL.css">
     <link rel="stylesheet" href="assets/css/page/homeL.css">
     <link rel="stylesheet" href="assets/css/component/card.css">
@@ -22,7 +23,6 @@
   <body>
     <script type='text/javascript'>
       var cards = <%-JSON.stringify(cards)%>;
-      var imgUrl = "<%-imgUrl%>";
       </script>
 
   
@@ -91,5 +91,6 @@
     <script src="assets/js/formatDate.js"></script>
     <script src="assets/js/discoverCards.js"></script>
     <script src="assets/js/general.js"></script>
+    <script src="assets/js/capabilities/duplicateCard.js"></script>
   </body>
 </html>
