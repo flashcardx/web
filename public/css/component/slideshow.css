@@ -16,29 +16,9 @@
    height:410px;
    max-height:410px;
 }
-@media (max-width: 600px) {
-  .slide-fixed-size{
-    width:320px; 
-    max-width:320px;
-  }
-}
-@media (max-height: 400px) {
-  .slide-fixed-size{
-    height:195px;
-    max-height:195px;
-  }
-}
-@media (max-width: 400px) {
-  .slide-fixed-size{
-    width:200px; 
-    max-width:200px;
-  }
-}
-@media (max-height: 300px) {
-  .slide-fixed-size{
-    height:150px;
-    max-height:150px;
-  }
+.responsive {
+    width: 100%;
+    height: auto;
 }
 .carousel-inner {
     text-align: center;

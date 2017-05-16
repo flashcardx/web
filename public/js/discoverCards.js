@@ -63,39 +63,31 @@ function appendCards(cards){
     cards.forEach((card, index1)=>{
     
     var html = "<div class='card' id='" + card.counter + "'>" + 
-                                "<div id='carousel" + index1 + "' data-interval='false' class='carousel slide' data-ride='carousel'>" +
-                  "<div class='carousel-inner' role='listbox'>"
+                             "<div id='carousel" + index1+"' class='carousel slide'>"+
+                "<div class='slick'>";
     card.imgs.forEach((img, index2)=>{
         if(index2===0){
-            html += "<div class='carousel-item active slide-fixed-size'>" +
+              html += "<div class='active slide-fixed-size'>" +
                               "<div class='slide-size' style='height:"+img.height+"px;width:"+img.width+"px;overflow:hidden'>"+
-                                    "<img class='d-block img-fluid' src='" + img.hash +"' alt='Card img'>" +
+                                    "<img class='d-block responsive' src='" + img.hash +"' alt='Card img'>" +
                               "</div>"+
-                   "</div>";
-        }
-        else{
-            html +="<div class='carousel-item slide-fixed-size'>"+
-                            "<div class='slide-size' style='height:"+img.height+"px;width:"+img.width+"px;overflow:hidden'>"+
-                                    "<img class='d-block img-fluid' src='" + img.hash +"' alt='Card img'>" +
+                             "</div>";
+            }
+            else{
+                html +="<div class='slide-fixed-size'>"+
+                               "<div class='slide-size' style='height:"+img.height+"px;width:"+img.width+"px;overflow:hidden'>"+
+                                    "<img class='d-block responsive' src='" + img.hash +"' alt='Card img'>" +
                               "</div>"+
-                  "</div>";
-        }
+                            "</div>";
+            }
     });
-    html += "<a class='carousel-control-prev' href='#carousel"+ index1+ "' role='button' data-slide='prev'>" +
-                             "<span class='carousel-control-prev-icon' aria-hidden='true'></span>"+
-                             "<span class='sr-only'>Previous</span>"+
-                           "</a>"+
-                           "<a class='carousel-control-next' href='#carousel" + index1 + "' role='button' data-slide='next'>"+
-                             "<span class='carousel-control-next-icon' aria-hidden='true'></span>"+
-                             "<span class='sr-only'>Next</span>"+
-                           "</a>"+
-                 "</div>"+
+    html += "</div>"+
                "</div>"+
                 "<div class='card-block container'>"+
                    "<div class='row'>"+
                        "<div class='col-10'>"+
-                           "<h4 class='card-title'>"+ card.name +"</h4>"+
-                           "<p class='card-text'>"+ checkUndefined(card.description) +"</p>"+
+                           "<h4 id='speak"+card._id+"' class='card-title'>"+ card.name +" <i onCLick=\"speak(\'"+card._id+"\', \'"+card.lang+"\');\" class='speaker fa fa-volume-up black' aria-hidden='true'></i></h4>"+
+                          "<p class='card-text'>"+ checkUndefined(card.description) +"</p>"+
                            "<p class='card-text'><small class='text-muted format-date'>Updated "+ timeSince(new Date(card.updated_at)) +" ago. "+"</small>"+
                            "<small class='text-muted'>"+
                                    "By: "+ checkUndefined(card.ownerName)+
@@ -112,6 +104,10 @@ function appendCards(cards){
                "</div>"+
              "</div>";
     $("#card-deck").append(html);
+     $(".slick").not('.slick-initialized').slick({
+            prevArrow:"<img class='a-left control-c prev slick-prev' src='assets/img/left-arrow.png'>",
+            nextArrow:"<img class='a-right control-c next slick-next' src='assets/img/right-arrow.png'>"
+        });
     });
 }
 

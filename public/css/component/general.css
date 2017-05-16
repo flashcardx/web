@@ -45,3 +45,9 @@ footer {
   background-color: #efefef;
   text-align: center;
 }
+
+
+
+.speaker:hover {
+    cursor:pointer;
+}

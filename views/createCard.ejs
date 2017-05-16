@@ -67,7 +67,7 @@
             </script>
         <%};%>
    
-         <form class="form-horizontal " action= "#" method="post">
+         <form enctype="multipart/form-data"  class="form-horizontal " action= "#" method="post">
           <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
             <div class="form-group">
                 <div class="col-sm-10">
@@ -82,13 +82,15 @@
             
             <div class="picure-load">
                   <div id="custom-search-input">
-                      <div class="input-group col-sm-10">
-                          <input id="search-box"  onkeydown="if (event.keyCode == 13) return false;"type="text" class="form-control input-lg" placeholder="Search image" />
+                      <div class="input-group col-sm-12">
+                         <input id="search-box"  onkeydown="if (event.keyCode == 13) return false;"type="text" class="col-sm-8 form-control input-lg" placeholder="Search image" />
                           <span class="input-group-btn">
                               <button id ="search-button" class="btn btn-info" role="button" type="button" onClick="search()">
                                   <i class="fa fa-search fa-fw" aria-hidden="true"></i>
                               </button>
                           </span>
+                      <span style="margin-left:6px;margin-right:6px;">OR</span>
+                      <button role="button" class=" btn btn-info redText" type="button" onclick="chooseFile();">Upload image</button>
                       </div>
                       <div class = "image-gallery">
                         <div id="gallery">
@@ -101,6 +103,7 @@
                       <div id="addButton">
                       </div>
                   </div>
+                                    
                  <div class="input-group col-sm-10 row">
                               <div class="col-md-offset-1">
                               <div id="wrap-img1" class="img-wrap">
@@ -109,6 +112,10 @@
                                     <input id="img1" type="hidden" name="img1" value=""> </input>
                                     <input id="height1" type="hidden" name="height1" value=""> </input>
                                     <input id="width1" type="hidden" name="width1" value=""> </input>
+                                    <div style="height:0px;overflow:hidden">
+                                        <input accept="image/*" type="file" onchange="readURL(this, 1);" id="fileInput1" name="fileInput1" ></input>
+                                    <div style="height:0px;overflow:hidden">
+                                    </div>
                               </div>
                               </div>
                               <div id="wrap-img2" class="img-wrap">
@@ -117,6 +124,9 @@
                                     <input id="img2" type="hidden" name="img2" value=""> </input>
                                     <input id="height2" type="hidden" name="height2" value=""> </input>
                                     <input id="width2" type="hidden" name="width2" value=""> </input>
+                                    <div style="height:0px;overflow:hidden">
+                                        <input accept="image/*" type="file"  onchange="readURL(this, 2);" id="fileInput2" name="fileInput2" />
+                                    </div>
                               </div>
                               
 
@@ -126,6 +136,9 @@
                                     <input id="img3" type="hidden" name="img3" value=""> </input>
                                     <input id="height3" type="hidden"  name="height3" value=""> </input>
                                     <input id="width3" type="hidden" name="width3" value=""> </input>
+                                    <div style="height:0px;overflow:hidden">
+                                        <input accept="image/*" type="file" id="fileInput3" onchange="readURL(this , 3);" name="fileInput3" />
+                                    </div>
                                 </div>
                              
                         

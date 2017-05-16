@@ -79,8 +79,6 @@ function generatePagination(data){
     var pages = 0;
     if(data.hits.length !== 0)
         pages = data.totalHits / data.hits.length;
-    else
-        return;
     var pagination = "<nav aria-label='Page navigation'>" +
                      "<ul class='pagination' id='pagination'></ul>" +
                     "</nav>";
@@ -173,6 +171,10 @@ function loadImg(preview, original, width, height){
 function closeImg(number){
     $("#close" + number).closest('.img-wrap').find('img').attr("src","assets/img/no-image.png");
     $("#close" + number).hide();
+    var imgId = "fileInput" + number;
+    var inputTextId = "img" + number;
+    $('#' + imgId).removeAttr('value');
+    $('#' + inputTextId).removeAttr('value');
     imgLoadAvailable.push(number);
 }
 
@@ -180,3 +182,39 @@ function getLoading(){
     return "<div class='mx-auto loader'></div>";
 }
 
+ function chooseFile() {
+     if(imgLoadAvailable.length <= 0)
+            return showWarning("You can not add more images!");
+      var numberFrameAvailable = imgLoadAvailable[0];
+      const idInput = "fileInput" + numberFrameAvailable;
+      $("#" + idInput).click();
+     
+     // $("#" + idImg).attr("value", original);
+      //
+   }
+
+
+
+function readURL(input, number) {
+     
+      const idWrapper = "wrap-img" +  number;
+    
+      const idImg = "img" +  number;
+
+  if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            imgLoadAvailable.shift();
+            var image = new Image();
+            image.src = e.target.result;
+            image.onload = function() {
+                $('#' + idWrapper).find("img")
+                    .attr('src', this.src)
+                $("#" + idWrapper).find(".close").show();
+                $("#height" + number).attr("value",this.height);
+                $("#width" + number).attr("value",this.width);
+            };
+        };
+        reader.readAsDataURL(input.files[0]);
+  }
+}
