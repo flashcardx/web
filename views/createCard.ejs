@@ -108,7 +108,9 @@
                               <div class="col-md-offset-1">
                               <div id="wrap-img1" class="img-wrap">
                                     <span id="close1" class="close" onClick="closeImg(1);">&times;</span>
-                                    <img class="resize-img img-responsive" src="assets/img/no-image.png" />
+                                    <div id="delimiterImg1" style="overflow:hidden;">
+                                        <img class="resize-img img-responsive" src="assets/img/no-image.png" />
+                                    </div>
                                     <input id="img1" type="hidden" name="img1" value=""> </input>
                                     <input id="height1" type="hidden" name="height1" value=""> </input>
                                     <input id="width1" type="hidden" name="width1" value=""> </input>
@@ -120,7 +122,9 @@
                               </div>
                               <div id="wrap-img2" class="img-wrap">
                                     <span id="close2" class="close" onClick="closeImg(2);"> &times;</span>
-                                    <img class="resize-img img-responsive" src="assets/img/no-image.png" />
+                                    <div id="delimiterImg2" style="overflow:hidden;">
+                                        <img class="resize-img img-responsive" src="assets/img/no-image.png" />
+                                    </div>
                                     <input id="img2" type="hidden" name="img2" value=""> </input>
                                     <input id="height2" type="hidden" name="height2" value=""> </input>
                                     <input id="width2" type="hidden" name="width2" value=""> </input>
@@ -132,8 +136,10 @@
 
                                 <div id="wrap-img3" class="img-wrap">
                                     <span id="close3" class="close" onClick="closeImg(3);">&times;</span>
-                                    <img class="resize-img img-responsive" src="assets/img/no-image.png" />
-                                    <input id="img3" type="hidden" name="img3" value=""> </input>
+                                    <div id="delimiterImg3" style="overflow:hidden;">
+                                        <img class="resize-img img-responsive" src="assets/img/no-image.png" />
+                                    </div>
+                                        <input id="img3" type="hidden" name="img3" value=""> </input>
                                     <input id="height3" type="hidden"  name="height3" value=""> </input>
                                     <input id="width3" type="hidden" name="width3" value=""> </input>
                                     <div style="height:0px;overflow:hidden">
@@ -160,23 +166,10 @@
   </div>
   <!-- end container-->
 
+</div>
 
 
-
-      <footer class="row">
-        <div class="col-md-9 copyright">
-          &copy; 2017 FlashCardX, Inc.
-        </div>
-        <div class="col-md-3 poweredBy">
-          <span class ="poweredBy-text">
-          Powered by:
-          </span>
-        <a href="https://pixabay.com/" style="margin:3px 15px 5px 0;font-size:12px;line-height:1.7;color:#555;display:block;float:left;padding:9px 12px 7px;border:1px solid #ccc">
-                        <i style="display:block;width:68px;height:18px;overflow:hidden"><img class="pixabay-logo"src="assets/img/pixabay-logo.svg" style="width:94px"></i>
-                        Free Images
-                    </a>
-        </div>
-      </footer>
+       <%- include('tiles/footer'); %>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

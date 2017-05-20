@@ -10,7 +10,7 @@ const multer = require("multer");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage,
-                        limits: { fileSize: 1600000 } });
+                        limits: { fileSize: 1900000 } });
 
 function multerErrorHandler(err, req, res, next){
     if(err && err.code === "LIMIT_FILE_SIZE"){
@@ -37,16 +37,25 @@ module.exports = function(app){
         var imgs = [];
         var errors = [];
         if(req.body.img1){
+            console.log("1img");
             imgs.push({
                 url: req.body.img1,
                 width: req.body.width1,
-                height: req.body.height1
+                height: req.body.height1,
+                
             });
         }
         else if(req.files["fileInput1"]){
-            console.log("file1: " + req.files["fileInput1"][0]);
+             console.log("1file");
+             imgs.push({
+                width: req.body.width1,
+                height: req.body.height1,
+                name: req.files["fileInput1"][0].originalname,
+                data: req.files["fileInput1"][0].buffer
+            });
         }
         if(req.body.img2){
+            console.log("2img");
             imgs.push({
                 url: req.body.img2,
                 width: req.body.width2,
@@ -54,7 +63,13 @@ module.exports = function(app){
             });
         }
          else if(req.files["fileInput2"]){
-            console.log("file2: " + req.files["fileInput2"]);
+            console.log("2file");
+            imgs.push({
+                width: req.body.width2,
+                height: req.body.height2,
+                name: req.files["fileInput2"][0].originalname,
+                data: req.files["fileInput2"][0].buffer
+            });
         }
         if(req.body.img3){
             imgs.push({
@@ -64,13 +79,19 @@ module.exports = function(app){
             });
         }
          else if(req.files["fileInput3"]){
-            console.log("file3: " + req.files["fileInput3"]);
+            imgs.push({
+                width: req.body.width3,
+                height: req.body.height3,
+                name: req.files["fileInput3"][0].originalname,
+                data: req.files["fileInput3"][0].buffer
+            });
         }
         var card = {
             name: req.body.name,
             description: req.body.description,
             imgs: imgs
         };
+        console.log("imgs: " + imgs);
         requestify.post(config.apiPostCard, card,
          {headers:{
 			"x-access-token": req.session.token

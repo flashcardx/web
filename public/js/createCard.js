@@ -111,8 +111,8 @@ function updatePage(page){
 function updateGallery(data){
     var gallery = "<select multiple='multiple' class='image-picker'>"; 
     data.hits.forEach(img=>{
-        gallery += "<option  data-img-width='"+img.webformatWidth+"' data-img-height='"+img.webformatHeight+"' data-img-src='"+img.previewURL+"' value='"+img.webformatURL+"'>   </option>";
-    });
+        gallery += "<option data-img-previewWidth='"+img.previewWidth+"' data-img-previewHeight='"+img.previewHeight+"' data-img-width='"+img.webformatWidth+"' data-img-height='"+img.webformatHeight+"' data-img-src='"+img.previewURL+"' value='"+img.webformatURL+"'>   </option>";
+     });
     gallery += "</select>";
     $("#gallery").html(gallery);
     $("select").imagepicker({limit: limitSelectCards, limit_reached: showWarningLimit}); 
@@ -125,43 +125,47 @@ function updateGallery(data){
     });
 }
 
+function extractDataAndLoad(element){
+         var preview = element.getAttribute("data-img-src");
+         var original = element.getAttribute("value");
+         var height = element.getAttribute("data-img-height");
+         var width = element.getAttribute("data-img-width");
+         var previewHeight = element.getAttribute("data-img-previewHeight");
+         var previewWidth = element.getAttribute("data-img-previewWidth");
+         loadImg(preview, original, width, height, previewHeight, previewWidth);
+}
 
 function addImgs(){
     var selected = $( ".image-picker option:selected");
     if(selected[0]){
          var element = selected[0];
-         var preview = element.getAttribute("data-img-src");
-         var original = element.getAttribute("value");
-         var height = element.getAttribute("data-img-height");
-         var width = element.getAttribute("data-img-width");
-         loadImg(preview, original, width, height);
+         extractDataAndLoad(element);
     }
     if(selected[1]){
          var element = selected[1];
-         var preview = element.getAttribute("data-img-src");
-         var original = element.getAttribute("value");
-         var height = element.getAttribute("data-img-height");
-         var width = element.getAttribute("data-img-width");
-         loadImg(preview, original, width, height);
+         extractDataAndLoad(element);
     }
     if(selected[2]){
         var element = selected[2];
-        var preview = element.getAttribute("data-img-src");
-        var original = element.getAttribute("value");
-        var height = element.getAttribute("data-img-height");
-        var width = element.getAttribute("data-img-width");
-        loadImg(preview, original, width, height);
+        extractDataAndLoad(element);
     }
      $(".selected").click();
 }
 
-function loadImg(preview, original, width, height){
+function loadDelimiter(number, height, width){
+    var idContainer = "delimiterImg" + number;
+    $("#"+idContainer).css("height", height+"px"); 
+    $("#"+idContainer).css("width", width+"px");
+}
+
+function loadImg(preview, original, width, height, previewHeight, previewWidth){
     if(imgLoadAvailable.length <= 0)
             return showWarning("You can not add more images!");
     var numberFrameAvailable = imgLoadAvailable.shift();
     const idWrapper = "wrap-img" +  numberFrameAvailable;
     const idImg = "img" +  numberFrameAvailable;
     $("#" + idWrapper).find("img").attr("src", preview);
+    loadDelimiter(numberFrameAvailable, previewHeight, previewWidth);
     $("#" + idWrapper).find(".close").show();
     $("#" + idImg).attr("value", original);
     $("#height" + numberFrameAvailable).attr("value", height);
@@ -173,7 +177,7 @@ function closeImg(number){
     $("#close" + number).hide();
     var imgId = "fileInput" + number;
     var inputTextId = "img" + number;
-    $('#' + imgId).removeAttr('value');
+    document.getElementById(imgId).value = "";
     $('#' + inputTextId).removeAttr('value');
     imgLoadAvailable.push(number);
 }
@@ -188,9 +192,6 @@ function getLoading(){
       var numberFrameAvailable = imgLoadAvailable[0];
       const idInput = "fileInput" + numberFrameAvailable;
       $("#" + idInput).click();
-     
-     // $("#" + idImg).attr("value", original);
-      //
    }
 
 

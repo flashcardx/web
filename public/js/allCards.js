@@ -1,3 +1,5 @@
+const MAX_HEIGHT = 500;
+const MAX_WIDTH = 650;
 var firstTime = true;
 var end = false;
 setScroll();
@@ -65,16 +67,22 @@ function appendCards(cards){
                                 "<div id='carousel" + index1+"' class='carousel slide'>"+
                   "<div class='slick'>";
         card.imgs.forEach((img, index2)=>{
+            var height = img.height;
+            var width = img.width;
+            while(height > MAX_HEIGHT || width > MAX_WIDTH){
+                width--;
+                height--;
+            }
             if(index2===0){
                 html += "<div class='active slide-fixed-size'>" +
-                              "<div class='slide-size' style='height:"+img.height+"px;width:"+img.width+"px;overflow:hidden'>"+
+                              "<div class='slide-size' style='height:"+height+"px;width:"+width+"px;overflow:hidden'>"+
                                     "<img class='d-block responsive' src='" + img.hash +"' alt='Card img'>" +
                               "</div>"+
                              "</div>";
             }
             else{
                 html +="<div class='slide-fixed-size'>"+
-                               "<div class='slide-size' style='height:"+img.height+"px;width:"+img.width+"px;overflow:hidden'>"+
+                               "<div class='slide-size' style='height:"+height+"px;width:"+width+"px;overflow:hidden'>"+
                                     "<img class='d-block responsive' src='" + img.hash +"' alt='Card img'>" +
                               "</div>"+
                             "</div>";
