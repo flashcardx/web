@@ -87,11 +87,11 @@ module.exports = function(app){
             });
         }
         var card = {
-            name: req.body.name,
-            description: req.body.description,
-            imgs: imgs
+            name: req.body.name.replace(/</g, "&lt;").replace(/>/g, "&gt;"),// avoids html injection
+            description: req.body.description.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
+            imgs: imgs,
+            category: req.body.category
         };
-        console.log("imgs: " + imgs);
         requestify.post(config.apiPostCard, card,
          {headers:{
 			"x-access-token": req.session.token
@@ -125,6 +125,30 @@ module.exports = function(app){
                 }
             );
         });
+
+    app.get("/examples/:word", controllerUtils.requireLogin, (req, res)=>{
+        const url = config.apiExamples + "/" + req.params.word;
+        requestify.get(url, {headers:{
+                "x-access-token": req.session.token
+            }})
+                .then(
+                    response=>{
+                            return res.json(response.getBody());
+                    }
+                );
+        });
+
+    app.get("/categories", controllerUtils.requireLogin, (req, res)=>{
+        var url = config.apiGetCategories;
+        requestify.get(url, {headers:{
+                "x-access-token": req.session.token
+            }})
+                .then(
+                    response=>{
+                            return res.json(response.getBody());
+                    }
+                );
+    });
 
 }
 

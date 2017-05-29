@@ -17,6 +17,8 @@ function setScroll(){
 }
 
 function getMoreCards(){
+        if(end === true)
+            return;
         var queryString ="";
         if(!firstTime){
             var last = getLast();
@@ -80,8 +82,8 @@ function showError(msg){
 
 function appendCards(cards){
     cards.forEach((card, index1)=>{
-    
-    var html = "<div class='card' id='" + card.updated_at + "'>" + 
+    var containerId = card.updated_at;
+    var html = "<div class='card' id='" + containerId + "'>" + 
                                       "<div id='carousel" + index1+"' class='carousel slide'>"+
                   "<div class='slick'>";
 
@@ -95,32 +97,36 @@ function appendCards(cards){
         if(index2===0){
                 html += "<div class='active slide-fixed-size'>" +
                               "<div class='slide-size' style='height:"+height+"px;width:"+width+"px;overflow:hidden'>"+
-                                    "<img class='d-block responsive' src='" + img.hash +"' alt='Card img'>" +
+                                    "<img class='d-block responsive' data-lazy='" + img.hash +"' alt='One moment!...'>" +
                               "</div>"+
                              "</div>";
             }
         else{
                 html +="<div class='slide-fixed-size'>"+
                                "<div class='slide-size' style='height:"+height+"px;width:"+width+"px;overflow:hidden'>"+
-                                    "<img class='d-block responsive' src='" + img.hash +"' alt='Card img'>" +
+                                    "<img class='d-block responsive' data-lazy='" + img.hash +"' alt='One moment!...'>" +
                               "</div>"+
                             "</div>";
             }
     });
+    if(card.description)
+            var description = card.description.replace(/(\r\n|\n|\r)/g,"<br />");
     html += "</div>"+
                "</div>"+
-                "<div class='card-block container'>"+
+                "<div id='update-"+card._id+"' class='card-block container'>"+
                    "<div class='row'>"+
                        "<div class='col-10'>"+
-                           "<h4 id='speak"+card._id+"' class='card-title'>"+ card.name +" <i onCLick=\"speak(\'"+card._id+"\', \'"+card.lang+"\');\" class='speaker fa fa-volume-up black' aria-hidden='true'></i></h4>"+
-                           "<p class='card-text'>"+ checkUndefined(card.description) +"</p>"+
+                       "<div>"+//do not delete this div, updateCard.js needs it to update card
+                           "<h4 id='speak"+card._id+"' class='card-title'><span>"+ card.name +" </span><i onCLick=\"speak(\'"+card._id+"\', \'"+card.lang+"\');\" class='speaker fa fa-volume-up black' aria-hidden='true'></i></h4>"+
+                           "<p id='description-"+card._id+"'class='card-text card-description'>"+ checkUndefined(description) +"</p>"+
+                        "</div>" +
                            "<p class='card-text'><small class='text-muted format-date'>Updated "+ timeSince(new Date(card.updated_at)) +" ago. "+"</small>"+
                            "</p>"+
                          
                        "</div>"+
-                       "<div class= 'col'>"+
+                       "<div class= 'col' id='buttons-"+card._id+"'>"+
                                "<div class='row'>"+
-                                    "<a role='button' class='btn nounderline btn-info my-2 my-sm-1' href='#'> <i class='fa fa-pencil-square-o fa-fw' aria-hidden='true'></i></a>"+
+                                    "<a id='update-button-"+card._id+"'role='button' onClick=\"updateCard('"+ card._id +"')\" class='btn nounderline btn-info my-2 my-sm-1'> <i class='fa fa-pencil-square-o fa-fw' aria-hidden='true'></i></a>"+
                                 "</div>"+
                                 "<div class='row'>"+
                                     "<a id='"+card._id+"' role='button' onClick=\"deleteCard('"+card._id+"','"+ card.updated_at +"')\" class='btn nounderline btn-danger delete-btn my-2 my-sm-1'> <i class='fa fa-trash fa-fw' aria-hidden='true'></i></a>"+
@@ -131,6 +137,9 @@ function appendCards(cards){
              "</div>";
     $("#card-deck").append(html);
     $(".slick").not('.slick-initialized').slick({
+            lazyLoad: 'ondemand',
+            slidesToShow: 1,
+            slidesToScroll: 1,
             prevArrow:"<img class='a-left control-c prev slick-prev' src='assets/img/left-arrow.png'>",
             nextArrow:"<img class='a-right control-c next slick-next' src='assets/img/right-arrow.png'>"
         });

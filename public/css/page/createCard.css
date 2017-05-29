@@ -85,10 +85,31 @@ a:visited{
 }
 
 .resize-img{
-    width:150px;
+    max-width:150px;
     height: auto;
 }
 
 .close{
     display:none;
 }
+
+.text-black{
+    color: black;
+}
+
+.left-margin{
+    margin-left: 6px;
+}
+
+.modal{
+    color:black;
+}
+/*
+
+.image-gallery{
+    border-style: solid;
+    border-width: 2px;
+    color:black;
+    padding:3px;
+}
+*/

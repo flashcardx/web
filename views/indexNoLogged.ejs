@@ -13,9 +13,9 @@
   
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 <link rel="stylesheet" href="assets/css/component/general.css">
-<link rel="stylesheet" href="assets/css/page/homeNL.css">
 <link rel="stylesheet" href="assets/css/component/card.css">
 <link rel="stylesheet" href="assets/css/component/slideshow.css">
+<link rel="stylesheet" href="assets/css/page/homeNL.css">
 
     <title>FlashCardX</title>
    
@@ -54,11 +54,31 @@
       <strong>Success!</strong> <%= successMsg%>
   </div>  
  <%}%>
-   
-    <div class="card-deck" id="card-deck">
-      
-    </div>
-    <!-- end card-deck-->
+
+
+      <div class= "row">
+
+          <div class="col-6" id="market-info">
+              <h1>Learn new languajes with beautiful images! </h1>
+              <h3>Create a card takes 10 seconds, and you end with the most useful vocabulary list ever!</h3>
+              <ul>
+                  <li>Image search engines for creating cards super fast.</li>
+                  <li>Listen the pronunciation of every word.</li>
+                  <li>The system automatically completes your card's description with examples of the word.</li>
+                  <li>Keep your collection ordered by categories. </li>
+              </ul>
+
+          </div>
+
+          <div class="col" id="cards-container">
+              <div class="card-deck" id="card-deck">
+              </div>
+              <!-- end card-deck-->
+          </div>
+          
+
+
+      </div>
   </div>
   <!-- end container-->
 

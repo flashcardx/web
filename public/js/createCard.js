@@ -3,6 +3,39 @@ var limitSelectCards = 3;
 const IMGS_LOAD_LIMIT = 3;
 var imgLoadAvailable = [1,2,3]; 
 
+  $.ajax({
+        url:"/categories",
+        success: result=>{
+            if(result.success === false)
+                showError(result.msg);
+            else
+               fillCategories(result.msg);
+        },
+        error: err=>{
+                showError(err);
+        }
+    });
+ function fillCategories(categories){
+     categories.forEach(c=>{
+         $('#category').append($('<option>', {
+                value: c,
+                text: c
+            }));
+     })
+ }
+
+ function newCategory(){
+     var category = $('#new-category').val();
+     if(!category)
+        return;
+      $('#category').append($('<option>', {
+                value: category,
+                text: category,
+                selected: "selected"
+            }));
+     showSuccess("Your new category has been added to the list!");
+ }
+
 $("#search-box").keyup(function(event){
     if(event.keyCode == 13){
         $("#search-button").click();
@@ -16,7 +49,6 @@ $("form").submit(function(){
 $('#title').bind('keypress keyup blur', function() {
     $('#search-box').val($(this).val());
 });
-
 
 function search(){
     parameter = $("#search-box").val();
@@ -54,7 +86,7 @@ function showError(msg){
 
 function displayGallery(data){
     updateGallery(data);
-    var addButton = "<button onClick='addImgs()'role='button' type='button' class='btn btn-default btn-outline-success'>Add seleted cards</button>";
+    var addButton = "<button onClick='addImgs()'role='button' type='button' class='btn btn-success'>Add seleted cards</button>";
     generatePagination(data);
     $("#addButton").html(addButton);
 }
@@ -177,6 +209,9 @@ function closeImg(number){
     $("#close" + number).hide();
     var imgId = "fileInput" + number;
     var inputTextId = "img" + number;
+    var idContainer = "delimiterImg" + number;
+    $("#"+idContainer).css("height", "auto"); 
+    $("#"+idContainer).css("width", "150px");
     document.getElementById(imgId).value = "";
     $('#' + inputTextId).removeAttr('value');
     imgLoadAvailable.push(number);
@@ -218,4 +253,16 @@ function readURL(input, number) {
         };
         reader.readAsDataURL(input.files[0]);
   }
+}
+
+function showSuccess(msg){
+     $(".container").prepend(""   +
+            "<div class='alert alert-side alert-success'>" +
+            msg+"</div>");
+
+     window.setTimeout(function() {
+    $(".alert-side").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+        });
+        }, 4000);
 }

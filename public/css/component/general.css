@@ -9,6 +9,14 @@
   animation: spin 2s linear infinite;
 }
 
+@import url('https://fonts.googleapis.com/css?family=Work+Sans');
+body{
+    background: linear-gradient(141deg, #E44424 0%, #e65639 51%, #eb7860 75%);
+    color: white;
+    opacity: 0.95;
+    font-family: 'Work Sans', sans-serif;
+}
+
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }
   100% { -webkit-transform: rotate(360deg); }
@@ -42,7 +50,7 @@ footer {
   left: 0;
   min-width: 100%;
   padding: 1rem;
-  background-color: #efefef;
+  background-color: #292b2c;
   text-align: center;
 }
 
@@ -50,4 +58,9 @@ footer {
 
 .speaker:hover {
     cursor:pointer;
+    color: #0080ff;
+}
+
+.btn{
+  cursor:pointer;
 }

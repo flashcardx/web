@@ -16,5 +16,10 @@ module.exports = {
     apiSearchImage: api.searchImage,
     apiPostCard: api.postCard,
     apiDiscoverCards: api.discoverCards,
-    apiDuplicateCard: api.duplicateCard
+    apiDuplicateCard: api.duplicateCard,
+    apiUserPreferences: api.userPreferences,
+    apiToggleAutocomplete: api.toggleAutocomplete,
+    apiExamples: api.examples,
+    apiUpdateCard: api.updateCard,
+    apiGetCategories: api.getCategories
 };

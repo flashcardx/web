@@ -17,6 +17,8 @@ function setScroll(){
 }
 
 function getMoreCards(){
+        if(end === true)
+            return;
         var queryString ="";
         if(!firstTime){
             var last = getLast();
@@ -84,25 +86,27 @@ function appendCards(cards){
         if(index2===0){
               html += "<div class='active slide-fixed-size'>" +
                               "<div class='slide-size' style='height:"+height+"px;width:"+width+"px;overflow:hidden'>"+
-                                    "<img class='d-block responsive' src='" + img.hash +"' alt='Card img'>" +
+                                    "<img class='d-block responsive' data-lazy='" + img.hash +"' alt='One moment!...'>" +
                               "</div>"+
                              "</div>";
             }
             else{
                 html +="<div class='slide-fixed-size'>"+
                                "<div class='slide-size' style='height:"+height+"px;width:"+width+"px;overflow:hidden'>"+
-                                    "<img class='d-block responsive' src='" + img.hash +"' alt='Card img'>" +
+                                    "<img class='d-block responsive' data-lazy='" + img.hash +"' alt='One moment!...'>" +
                               "</div>"+
                             "</div>";
             }
     });
+    if(card.description)
+            var description = card.description.replace(/(\r\n|\n|\r)/g,"<br />");
     html += "</div>"+
                "</div>"+
                 "<div class='card-block container'>"+
                    "<div class='row'>"+
                        "<div class='col-10'>"+
                            "<h4 id='speak"+card._id+"' class='card-title'>"+ card.name +" <i onCLick=\"speak(\'"+card._id+"\', \'"+card.lang+"\');\" class='speaker fa fa-volume-up black' aria-hidden='true'></i></h4>"+
-                          "<p class='card-text'>"+ checkUndefined(card.description) +"</p>"+
+                          "<p class='card-text'>"+ checkUndefined(description) +"</p>"+
                            "<p class='card-text'><small class='text-muted format-date'>Updated "+ timeSince(new Date(card.updated_at)) +" ago. "+"</small>"+
                            "<small class='text-muted'>"+
                                    "By: "+ checkUndefined(card.ownerName)+
@@ -120,6 +124,9 @@ function appendCards(cards){
              "</div>";
     $("#card-deck").append(html);
      $(".slick").not('.slick-initialized').slick({
+            lazyLoad: 'ondemand',
+            slidesToShow: 1,
+            slidesToScroll: 1,
             prevArrow:"<img class='a-left control-c prev slick-prev' src='assets/img/left-arrow.png'>",
             nextArrow:"<img class='a-right control-c next slick-next' src='assets/img/right-arrow.png'>"
         });

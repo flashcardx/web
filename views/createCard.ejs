@@ -17,7 +17,8 @@
     <link rel="stylesheet" href="assets/css/component/slideshow.css">
     <link rel="stylesheet" href="assets/css/page/createCard.css">
     <link rel="stylesheet" href="assets/css/component/image-picker.css">
-    
+    <link rel="stylesheet" href="assets/css/component/switchery.min.css">
+    <script src="https://use.fontawesome.com/6cbcc3e9b8.js"></script>
     <title>FlashCardX</title>
    
   </head>
@@ -66,31 +67,39 @@
               }, 4000);
             </script>
         <%};%>
-   
+        
          <form enctype="multipart/form-data"  class="form-horizontal " action= "#" method="post">
           <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
             <div class="form-group">
                 <div class="col-sm-10">
-                <input name="name" type="text" required="true"class="form-control" id="title" placeholder="Card´s title">
+                <input name="name" type="text" required="true"class="form-control" id="title" placeholder="What is it?">
                 </div>
             </div>
              <div class="form-group">
                 <div class="col-sm-10">
-                <input name="description" type="text" class="form-control" id="description" placeholder="What is it?">
+                <textarea rows="5" name="description" type="text" class="form-control" id="description" placeholder="A description of the word"></textarea>
                 </div>
-            </div>          
+            </div>
+            <div class="form-group">
+                <div class="input-group col-sm-12">
+                    <select name="category" class="form-control" id="category">
+                        <option selected="selected" value="">No category</option>
+                    </select>
+                     <button role="button" class="left-margin btn btn-warning " type="button" data-toggle="modal" data-target="#new-category-modal">Add new category</button>
+                </div>
+            </div>                
             
             <div class="picure-load">
                   <div id="custom-search-input">
                       <div class="input-group col-sm-12">
                          <input id="search-box"  onkeydown="if (event.keyCode == 13) return false;"type="text" class="col-sm-8 form-control input-lg" placeholder="Search image" />
                           <span class="input-group-btn">
-                              <button id ="search-button" class="btn btn-info" role="button" type="button" onClick="search()">
+                              <button id ="search-button" class="btn btn-success" role="button" type="button" onClick="search()">
                                   <i class="fa fa-search fa-fw" aria-hidden="true"></i>
                               </button>
                           </span>
-                      <span style="margin-left:6px;margin-right:6px;">OR</span>
-                      <button role="button" class=" btn btn-info redText" type="button" onclick="chooseFile();">Upload image</button>
+                      <span class="text-black" style="margin-left:6px;margin-right:6px;">OR</span>
+                      <button role="button" class=" btn btn-success " type="button" onclick="chooseFile();">Upload image</button>
                       </div>
                       <div class = "image-gallery">
                         <div id="gallery">
@@ -156,12 +165,32 @@
                 <button role="button" type="submit" class="btn btn-default btn-outline-success btn-gray">Create!</button>
                 </div>
             </div>
-
-
         </form>
+        <div class="inline">
+                <span class="text-black">Autocomplete:</span>
+                <input type="checkbox" class="js-switch" checked />
+            </div>
 
          
-
+<div class="modal fade" id="new-category-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New category</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <input type="text" class="form-control" id="new-category" placeholder="Category's name">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" onCLick="newCategory()" data-dismiss="modal" class="btn btn-primary">Add category</button>
+      </div>
+    </div>
+  </div>
+</div>
 
   </div>
   <!-- end container-->
@@ -177,7 +206,9 @@
   
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-<script src="https://use.fontawesome.com/6cbcc3e9b8.js"></script>
+<script src="/assets/js/lib/switchery.min.js"></script> 
+<script src="/assets/js/capabilities/autocomplete.js"></script> 
+<script src="/assets/js/general.js"></script>
 <script src="/assets/js/createCard.js"></script>
 <script src="/assets/js/lib/jquery.twbsPagination.min.js"></script>
  <script src="/assets/js/lib/image-picker.min.js"></script> 

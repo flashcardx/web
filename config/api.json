@@ -13,7 +13,12 @@
             "searchImage": "http://localhost:3000/search",
             "postCard": "http://localhost:3000/card",
             "discoverCards": "http://localhost:3000/discoverCards",
-            "duplicateCard": "http://localhost:3000/duplicateCard"
+            "duplicateCard": "http://localhost:3000/duplicateCard",
+            "userPreferences": "http://localhost:3000/userPreferences",
+            "toggleAutocomplete": "http://localhost:3000/toggleAutocomplete",
+            "examples": "http://localhost:3000/examples",
+            "updateCard": "http://localhost:3000/updateCard",
+            "getCategories": "http://localhost:3000/categories"
         },
         "pi":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -29,7 +34,12 @@
             "searchImage": "http://localhost:3000/search",
             "postCard": "http://localhost:3000/card",
             "discoverCards": "http://localhost:3000/discoverCards",
-            "duplicateCard": "http://localhost:3000/duplicateCard"
+            "duplicateCard": "http://localhost:3000/duplicateCard",
+            "userPreferences": "http://localhost:3000/userPreferences",
+            "toggleAutocomplete": "http://localhost:3000/toggleAutocomplete",
+            "examples": "http://localhost:3000/examples",
+            "updateCard": "http://localhost:3000/updateCard",
+            "getCategories": "http://localhost:3000/categories"
             },
         "production":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -45,6 +55,11 @@
             "searchImage": "http://localhost:3000/search",
             "postCard": "http://localhost:3000/card",
             "discoverCards": "http://localhost:3000/discoverCards",
-            "duplicateCard": "http://localhost:3000/duplicateCard"
+            "duplicateCard": "http://localhost:3000/duplicateCard",
+            "userPreferences": "http://localhost:3000/userPreferences",
+            "toggleAutocomplete": "http://localhost:3000/toggleAutocomplete",
+            "examples": "http://localhost:3000/examples",
+            "updateCard": "http://localhost:3000/updateCard",
+            "getCategories": "http://localhost:3000/categories"
         }
 }
