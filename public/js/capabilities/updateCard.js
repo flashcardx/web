@@ -1,7 +1,4 @@
-
-
-
-
+var lastCardId = "";
 
 function updateCard(cardId){
     var nameElement = $("#update-" + cardId).find(".card-title");
@@ -9,15 +6,65 @@ function updateCard(cardId){
     var updateButtonElement = $("#update-button-"+cardId);
     var buttonsElement = $("#buttons-"+cardId);
     var textElement = nameElement.parent();
-    
+    var timeElement = textElement.children(".card-time");
+
     var backupText = textElement.html();
     var backUpButtons = buttonsElement.html();
     var oldName = nameElement.text();
     var oldDescription = descriptionElement.text();
-    nameElement.replaceWith("<input value='"+oldName+"' name='name' type='text' class='form-control card-title' id='update-title-"+cardId+"' placeholder='Enter new name'>");
+    nameElement.replaceWith("<input value='"+oldName+"' name='name' type='text' class='form-control card-title margin-title-update' id='update-title-"+cardId+"' placeholder='Enter new name'>");
     descriptionElement.replaceWith("<textarea rows='5' name='description' id='update-description-"+cardId+"' type='text' class='form-control' placeholder='A description of the word'>"+oldDescription+"</textarea>");
+    var category = textElement.attr("data-category");
+    var selectHtml = setupSelect(cardId, category);
+    timeElement.replaceWith(selectHtml);
+    fillWithCategories(cardId, category);
     loadUpdateButtons(cardId, backupText, backUpButtons);
 }
+
+function setupSelect(cardId, category){
+    var html = "<div class='input-group'>"+
+                        "<select name='category' class='category margin-top form-control' id='select-category-"+cardId+"'>";
+    if(category){
+        html += "<option selected='selected' value='"+category+"'>"+category+"</option>" + 
+                "<option value=''>No category</option>";
+    }
+    else
+        html += "<option selected='selected' value=''>No category</option>"; 
+    html += "</select>"+
+            "<button onClick=\"loadLastCardId(\'"+cardId+"\');\" role='button' class='margin-top fix-height left-margin btn btn-warning' type='button' data-toggle='modal' data-target='#new-category-modal'>New category</button>"+
+            "</div>";
+    return html;
+}
+
+function loadLastCardId(cardId){
+    lastCardId = cardId;
+}
+
+function fillWithCategories(cardId, category){
+     $.ajax({
+        url:"/categories",
+        success: result=>{
+            if(result.success === false)
+                showError(result.msg);
+            else
+               fillCategories(cardId, category, result.msg);
+        },
+        error: err=>{
+                showError(err);
+        }
+    });
+}
+
+function fillCategories(cardId, defaultCategory, categories){
+    var selectElement = $("#select-category-"+cardId);
+     categories.forEach(c=>{
+         if(c !== defaultCategory)
+         selectElement.append($('<option>', {
+                value: c,
+                text: c
+            }));
+     })
+ }
 
 function loadUpdateButtons(cardId, backupText, backUpButtons){
     var buttonsElement = $("#buttons-"+cardId);
@@ -40,19 +87,20 @@ function loadUpdateButtons(cardId, backupText, backUpButtons){
 function confirmUpdate(cardId, backupText, backUpButtons){
     var name = $("#update-title-"+cardId).val();
     var description = $("#update-description-"+cardId).val();
-    //ajax call calls updateDone on success
+    var category = $("#select-category-"+cardId).val();
      $.ajax({
             method: "post",
             data:{
                 name: name,
-                description: description
+                description: description,
+                category: category
                 },
             url:"/updateCard/" + cardId,
             success: result=>{
                 if(!result.success)
                     showError(result.msg);
                 else{
-                    updateDone(cardId, backupText, backUpButtons, name, description);
+                    updateDone(cardId, backupText, backUpButtons, name, description, category);
                 }
             },
             error: err=>{
@@ -61,14 +109,27 @@ function confirmUpdate(cardId, backupText, backUpButtons){
         });
 }
 
-function updateDone(cardId, backupText, backUpButtons, name, description){
-     var buttonsElement = $("#buttons-"+cardId);
+function updateDone(cardId, backupText, backUpButtons, name, description, category){
      var textElement =  $("#update-" + cardId).find(".card-title").parent();
+     var oldCategory = textElement.attr("data-category");
+     if(oldCategory !== category){
+        reloadCards();
+        reloadCategories();
+        return;
+     }
+     var buttonsElement = $("#buttons-"+cardId);
      textElement.html(backupText);
      $("#speak"+cardId+" span").text(name);
      $("#description-"+cardId).text(description);
      buttonsElement.html(backUpButtons);
+     textElement.attr("data-category", category);
+     updateTime(cardId);
      showSuccess("Card was updated successfully!");
+}
+
+function updateTime(cardId){
+    var time = "Updated "+ timeSince(new Date()) +" ago. ";
+    $("#update-time-"+cardId).text(time);
 }
 
 
@@ -81,3 +142,27 @@ function cancel(cardId, backupText, backUpButtons){
 
 
 
+ function newCategory(){
+     var category = $('#new-category').val();
+     if(!category)
+        return;
+      $('#select-category-'+lastCardId).append($('<option>', {
+                value: category,
+                text: category,
+                selected: "selected"
+            }));
+     showSuccess("Your new category has been added to the list!");
+ }
+
+
+function showSuccess(msg){
+     $(".container").prepend(""   +
+            "<div class='alert alert-side alert-success'>" +
+            msg+"</div>");
+
+     window.setTimeout(function() {
+    $(".alert-side").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+        });
+        }, 4000);
+}

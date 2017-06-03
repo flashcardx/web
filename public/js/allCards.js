@@ -1,4 +1,4 @@
-const MAX_HEIGHT = 450;
+const MAX_HEIGHT = 500;
 const MAX_WIDTH = 600;
 var firstTime = true;
 var end = false;

@@ -10,3 +10,35 @@ a:visited {
 .black{
   color: black;
 }
+
+.margin-top{
+  margin-top: 7px;
+}
+
+.margin-title-update{
+  margin-bottom: 5px;
+}
+
+.left-margin{
+  margin-left: 5px;
+}
+
+.fix-height{
+  max-height: 40px;
+}
+
+.modal{
+    color:black;
+}
+
+#category-select{
+  margin-top:10px;
+}
+
+.card-deck{
+  padding-right: 0px;
+}
+
+#card-deck{
+  padding-right: 0px;
+}

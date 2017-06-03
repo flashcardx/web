@@ -6,6 +6,7 @@ const myCardsController = require("./controllers/myCardsController");
 const discoverController = require("./controllers/discoverController");
 const createCardController = require("./controllers/createCardController");
 const preferencesController = require("./controllers/preferencesController");
+const settingsController = require("./controllers/settingsController");
 const middleware = require("./middleware");
 
 var port = process.env.PORT || 8081;
@@ -19,6 +20,7 @@ myCardsController(app);
 discoverController(app);
 createCardController(app);
 preferencesController(app);
+settingsController(app);
 console.log("FlashCardX-Web Starting in port: " + port);
 
 app.listen(port);

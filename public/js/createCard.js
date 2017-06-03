@@ -147,7 +147,7 @@ function updateGallery(data){
      });
     gallery += "</select>";
     $("#gallery").html(gallery);
-    $("select").imagepicker({limit: limitSelectCards, limit_reached: showWarningLimit}); 
+    $("select.image-picker").imagepicker({limit: limitSelectCards, limit_reached: showWarningLimit}); 
     var $container = $('.image_picker_selector');
     $container.imagesLoaded(function () {
         $container.masonry({

@@ -1,5 +1,6 @@
 const env = process.env.NODE_ENV || "development";
 const api = require("./api.json")[env];
+const fbAuth = require("./fbAuth.json")[env];
 
 module.exports = {
 
@@ -21,5 +22,13 @@ module.exports = {
     apiToggleAutocomplete: api.toggleAutocomplete,
     apiExamples: api.examples,
     apiUpdateCard: api.updateCard,
-    apiGetCategories: api.getCategories
+    apiGetCategories: api.getCategories,
+    apiGetUserPlan: api.getUserPlan,
+    apiGetUserLang: api.getUserLang,
+    apiUpdateUserLang: api.updateUserLang,
+    apiFbLogin: api.fbLogin,
+    apiFbSignup: api.fbSignup,
+    fbAuthId: fbAuth.clientID,
+    fbAuthSecret: fbAuth.clientSecret,
+    fbAuthCallbackUrl: fbAuth.callbackURL
 };

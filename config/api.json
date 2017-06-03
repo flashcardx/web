@@ -18,7 +18,12 @@
             "toggleAutocomplete": "http://localhost:3000/toggleAutocomplete",
             "examples": "http://localhost:3000/examples",
             "updateCard": "http://localhost:3000/updateCard",
-            "getCategories": "http://localhost:3000/categories"
+            "getCategories": "http://localhost:3000/categories",
+            "getUserPlan": "http://localhost:3000/userPlan",
+            "getUserLang": "http://localhost:3000/userLang",
+            "updateUserLang": "http://localhost:3000/updateUserLang",
+            "fbLogin": "http://localhost:3000/fbLogin",
+            "fbSignup": "http://localhost:3000/fbSignup"
         },
         "pi":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -39,7 +44,12 @@
             "toggleAutocomplete": "http://localhost:3000/toggleAutocomplete",
             "examples": "http://localhost:3000/examples",
             "updateCard": "http://localhost:3000/updateCard",
-            "getCategories": "http://localhost:3000/categories"
+            "getCategories": "http://localhost:3000/categories",
+            "getUserPlan": "http://localhost:3000/userPlan",
+            "getUserLang": "http://localhost:3000/userLang",
+            "updateUserLang": "http://localhost:3000/updateUserLang",
+            "fbLogin": "http://localhost:3000/fbLogin",
+            "fbSignup": "http://localhost:3000/fbSignup"
             },
         "production":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -60,6 +70,11 @@
             "toggleAutocomplete": "http://localhost:3000/toggleAutocomplete",
             "examples": "http://localhost:3000/examples",
             "updateCard": "http://localhost:3000/updateCard",
-            "getCategories": "http://localhost:3000/categories"
+            "getCategories": "http://localhost:3000/categories",
+            "getUserPlan": "http://localhost:3000/userPlan",
+            "getUserLang": "http://localhost:3000/userLang",
+            "updateUserLang": "http://localhost:3000/updateUserLang",
+            "fbLogin": "http://localhost:3000/fbLogin",
+            "fbSignup": "http://localhost:3000/fbSignup"
         }
 }

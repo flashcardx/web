@@ -31,8 +31,11 @@ module.exports = function(app){
 	app.get("/getMyCards", controllerUtils.requireLogin, (req, res)=>{
 		var url = config.apiGetUserCards + "?limit=8";
 		var last = req.query.last;
+		var category = req.query.category;
 		if(last)
 			url += "&last=" + last;
+		if(category !== undefined && category !== "undefined")
+			url += "&category=" + category;
 		requestify.get(url, {headers:{
 				"x-access-token": req.session.token
 			}}).then(response=>{
@@ -49,15 +52,12 @@ module.exports = function(app){
 		var url = config.apiUpdateCard + "/" + req.params.id;
 		var name = req.body.name.replace(/</g, "&lt;").replace(/>/g, "&gt;")// avoids html injection
 		var description = req.body.description.replace(/</g, "&lt;").replace(/>/g, "&gt;")
-		console.log("name: " + name);
-		console.log("description: " + description);
-		console.log("url: " + url);
-		requestify.post(url, {name: name, description: description}, {headers:{
+		var category = req.body.category.replace(/</g, "&lt;").replace(/>/g, "&gt;")
+		requestify.post(url, {name: name, description: description, category:category}, {headers:{
 				"x-access-token": req.session.token
 			}})
 			.then(response=>{
 				const data = response.getBody();
-				console.log("data: " + data);
 				res.json(data);
 			});
 	});

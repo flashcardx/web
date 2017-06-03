@@ -4,6 +4,7 @@ var firstTime = true;
 var end = false;
 setScroll();
 getMoreCards();
+var category = "*";
 
 function setScroll(){
 
@@ -16,6 +17,22 @@ function setScroll(){
     });
 }
 
+function reloadCards(){
+    end = false;
+    firstTime = true;
+    $("#card-deck").html("");
+    getMoreCards();
+     $(window).off("scroll");
+     setTimeout(setScroll, 2000);
+}
+
+function reloadForCategory(newCategory){
+    if(newCategory === category)
+        return;
+    category = newCategory;
+    reloadCards();
+}
+
 function getMoreCards(){
         if(end === true)
             return;
@@ -25,7 +42,11 @@ function getMoreCards(){
             if(last === undefined)
                 return;
             queryString = "?last=" + last;
+            if(category !== "*")
+                queryString += "&category=" + category;
         }
+        else if(category !== "*")
+            queryString += "?category=" + category;
         $.ajax({
         url:"/getMyCards" + queryString,
         success: result=>{
@@ -116,12 +137,12 @@ function appendCards(cards){
                 "<div id='update-"+card._id+"' class='card-block container'>"+
                    "<div class='row'>"+
                        "<div class='col-10'>"+
-                       "<div>"+//do not delete this div, updateCard.js needs it to update card
+                       "<div data-category='"+card.category+"'>"+//do not delete this div, updateCard.js needs it to update card
                            "<h4 id='speak"+card._id+"' class='card-title'><span>"+ card.name +" </span><i onCLick=\"speak(\'"+card._id+"\', \'"+card.lang+"\');\" class='speaker fa fa-volume-up black' aria-hidden='true'></i></h4>"+
                            "<p id='description-"+card._id+"'class='card-text card-description'>"+ checkUndefined(description) +"</p>"+
-                        "</div>" +
-                           "<p class='card-text'><small class='text-muted format-date'>Updated "+ timeSince(new Date(card.updated_at)) +" ago. "+"</small>"+
+                           "<p class='card-time card-text'><small id='update-time-"+card._id+"'class='text-muted format-date'>Updated "+ timeSince(new Date(card.updated_at)) +" ago. "+"</small>"+
                            "</p>"+
+                        "</div>" +
                          
                        "</div>"+
                        "<div class= 'col' id='buttons-"+card._id+"'>"+

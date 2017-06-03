@@ -8,7 +8,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <link rel="icon" href="assets/img/favicon.ico">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
@@ -16,12 +16,15 @@
 <link rel="stylesheet" href="assets/css/component/card.css">
 <link rel="stylesheet" href="assets/css/component/slideshow.css">
 <link rel="stylesheet" href="assets/css/page/homeNL.css">
+<link rel="stylesheet" href="assets/css/component/fbButton.css">
 
     <title>FlashCardX</title>
    
   </head>
 
   <body>
+
+
       <script type='text/javascript'>
           var cards = <%-JSON.stringify(cards)%>;
       </script>
@@ -41,7 +44,9 @@
           <button role="button" class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign in</button>
         </form>
           <a role="button" class="btn btn-outline-success my-2 my-sm-0 btn-space-left" href="/signup"> Sign up </a>
-      </div>
+          <button OnClick="location.href='/auth/facebook'" class="button loginBtn loginBtn--facebook">
+             Continue with Facebook
+            </button>
     </nav>
   <div class= "main-content">
       <% errors.forEach(err=>{%>
@@ -59,7 +64,7 @@
       <div class= "row">
 
           <div class="col-6" id="market-info">
-              <h1>Learn new languajes with beautiful images! </h1>
+              <h1>Learn new languages with beautiful images! </h1>
               <h3>Create a card takes 10 seconds, and you end with the most useful vocabulary list ever!</h3>
               <ul>
                   <li>Image search engines for creating cards super fast.</li>

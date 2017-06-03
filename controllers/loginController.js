@@ -6,6 +6,8 @@ var csrf = require('csurf')
 var csrfProtection = csrf({ cookie: true });
 var parseForm = bodyParser.urlencoded({ extended: false });
 const controllerUtils = require("./utils");
+const passport = require('passport');
+require(appRoot + "/config/passport")(passport);
 
 module.exports = function(app) {
 	
@@ -59,6 +61,11 @@ module.exports = function(app) {
 		res.redirect("/home");
 	});
 			
+	app.get('/auth/facebook',passport.initialize(), passport.authenticate('facebook', {scope: ['email']}));
+
+	app.get('/auth/facebook/callback', passport.initialize(), 
+	passport.authenticate('facebook', { successRedirect: '/',
+	                                    failureRedirect: '/home' }));
 
 	
 }

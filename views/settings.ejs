@@ -13,18 +13,11 @@
     <title>FlashCardX</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/component/general.css">
+    <link rel="stylesheet" href="assets/css/page/settings.css">
     <link rel="stylesheet" href="assets/css/page/homeNL.css">
-    <link rel="stylesheet" href="assets/css/page/homeL.css">
-    <link rel="stylesheet" href="assets/css/component/card.css">
-    <link rel="stylesheet" href="assets/css/component/slideshow.css">
-   
   </head>
 
   <body>
-    <script type='text/javascript'>
-      var cards = <%-JSON.stringify(cards)%>;
-      </script>
-
   
    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,8 +26,8 @@
       <a class="navbar-brand" href="/">FlashcardX</a>
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
        <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Discover</a>
+      <li class="nav-item">
+        <a class="nav-link" href="/discover">Discover</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/">My collection</a>
@@ -44,7 +37,7 @@
       </li>
     </ul>
 
-         <a class="btn btn-warning my-2 my-sm-0 " href="/settings"> <i class="fa fa-cog fa-fw" aria-hidden="true"></i></a>
+         <a class="btn btn-warning my-2 my-sm-0 " href="#"> <i class="fa fa-cog fa-fw" aria-hidden="true"></i></a>
           
          <a class="btn btn-danger my-2 my-sm-0 btn-space-left" href="/logout"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i></a>
         
@@ -56,11 +49,56 @@
                 <strong>Error!</strong> <%= err%>
             </div> 
         <%});%>
-   
-          <div class="card-deck" id="card-deck">
+         <% if(success) { %>
+    <div class="alert alert-success">
+      <strong>Success!</strong> <%= success%>
+  </div>  
+ <%}%>
 
-                 
-          </div>
+    <div class="row border plan">
+          <span>
+          <p><bold>Subscription type:</bold> <%=data.type%>. <button type="button" data-toggle="tooltip" data-placement="right" title="More plans are coming soon, if you can't wait email us to: contact@flashcard-x.com" class="fa fa-info" aria-hidden="true"></button></p>
+          <p>
+            You are using <%=data.maxLimit - data.cardLimit%> cards out of <%=data.maxLimit%> which is your max limit, for increasing your limit you will need a better subscription plan 
+          </p>
+          <span>
+      </div>
+
+       <div class="row border plan">
+      <span>
+      <p><bold>Change languaje:</bold></p>
+        <form class="form-horizontal" action= "#" method="post">
+            <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
+           <div class="form-group">
+             <div class="input-group col-sm-12">
+                 <select name="lang" class="form-control" id="select-lang">
+                </select>
+              <button role="button" type="submit" class="left-margin btn btn-default btn-success btn-gray">Save</button>
+             </div>
+           </div>
+        </form>
+      <span>
+      </div>
+
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+   
 
 
   </div>
@@ -74,13 +112,10 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    <script src="assets/js/formatDate.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
-    <script src="assets/js/discoverCards.js"></script>
     <script src="assets/js/general.js"></script>
-    <script src="assets/js/capabilities/duplicateCard.js"></script>
-     <script src="assets/js/lib/articulate.min.js"></script>
-  </body>
+     <script src="assets/js/settings.js"></script>
 </html>
