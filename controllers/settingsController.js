@@ -58,10 +58,8 @@ module.exports = function(app){
         }
     });
 
-    app.get("/getLangs", controllerUtils.requireLogin, (req, res)=>{
-        requestify.get(config.apiGetLangs,{headers:{
-			"x-access-token": req.session.token
-		}}).then(response=>{
+    app.get("/getLangs", (req, res)=>{
+        requestify.get(config.apiGetLangs).then(response=>{
 					langs = response.getBody();
 					return res.json(langs);
 			});

@@ -21,9 +21,9 @@ module.exports = function(app) {
 	});
 	
 	app.post("/signup",parseForm, csrfProtection,(req, res)=>{
-
 			if(req.body.password != req.body.password2){
-				res.render("signup", {data:{success:false, errorCode:0,msg:"Both passwords are different, when should be the same!"}, langs:langs, csrfToken:req.csrfToken()});
+				req.session.error = "Passwords do not match!";
+				res.redirect("/home");
 			}
 			else{
 				const user = {
@@ -34,13 +34,7 @@ module.exports = function(app) {
 				};
 				req.session.email = req.body.email; 
 				requestify.post(config.apiSignup,user).then(response=>{
-					if(langs)
-						res.render("signup",{ data: response.getBody(), langs:langs , csrfToken:req.csrfToken()});
-					else
-						requestify.get(config.apiGetLangs).then(response=>{
-								langs = response.getBody();
-								res.render("signup",{ data: response.getBody(), langs:langs , csrfToken:req.csrfToken()});
-						});
+					console.log(response.getBody());
 				});
 			}
 	});

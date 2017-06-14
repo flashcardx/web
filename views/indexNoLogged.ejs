@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,101 +5,222 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="assets/img/favicon.ico">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-<link rel="stylesheet" href="assets/css/component/general.css">
-<link rel="stylesheet" href="assets/css/component/card.css">
-<link rel="stylesheet" href="assets/css/component/slideshow.css">
-<link rel="stylesheet" href="assets/css/page/homeNL.css">
-<link rel="stylesheet" href="assets/css/component/fbButton.css">
-
     <title>FlashCardX</title>
-   
+
+    <!-- Bootstrap -->
+    <link href="assets/css/lib/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/lib/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link href="assets/css/page/landingPage.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/component/fbButton.css">
+    
   </head>
-
   <body>
-
-
-      <script type='text/javascript'>
-          var cards = <%-JSON.stringify(cards)%>;
-      </script>
-
-  
-   <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand" href="#">FlashcardX</a>
-
-      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <form class="form-inline my-2 my-lg-0" method="POST">
-          <input type="hidden" name="_csrf" value="<%=csrfTokenLogin%>"/>
-          <input type="email" class="form-control mr-sm-2" name="email" type="text" placeholder="Email">
-          <input class="form-control mr-sm-2" name="password"type="password" placeholder="Password">
-          <button role="button" class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign in</button>
-        </form>
-          <a role="button" class="btn btn-outline-success my-2 my-sm-0 btn-space-left" href="/signup"> Sign up </a>
-          <button OnClick="location.href='/auth/facebook'" class="button loginBtn loginBtn--facebook">
-             Continue with Facebook
-            </button>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">FlashCardX</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <form method="POST" id="form-signup" action="signup" class="navbar-form navbar-right">
+            <input type="hidden" name="_csrf" value="<%=csrfTokenLogin%>"/>
+            <div class="form-group">
+              <input type="text" name="email" placeholder="Email" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" name="password" placeholder="Password" class="form-control">
+            </div>
+            <button type="submit" class="btn margin-left btn-outline-success">Sign in</button>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
     </nav>
-  <div class= "main-content">
-      <% errors.forEach(err=>{%>
+    <div class="jumbotron" id="fondoJumbo">
+      <div class="container">
+           <% errors.forEach(err=>{%>
             <div class="alert alert-danger">
                 <strong>Error!</strong> <%= err%>
             </div> 
         <%});%>
     <% if(successMsg) { %>
     <div class="alert alert-success">
-      <strong>Success!</strong> <%= successMsg%>
-  </div>  
- <%}%>
+        <strong>Success!</strong> <%= successMsg%>
+    </div>  
+    <%}%>
 
-
-      <div class= "row">
-
-          <div class="col-6" id="market-info">
-              <h1>Learn new languages with beautiful images! </h1>
-              <h3>Create a card takes 10 seconds, and you end with the most useful vocabulary list ever!</h3>
-              <ul>
-                  <li>Image search engines for creating cards super fast.</li>
-                  <li>Listen the pronunciation of every word.</li>
-                  <li>The system automatically completes your card's description with examples of the word.</li>
-                  <li>Keep your collection ordered by categories. </li>
-              </ul>
-
-          </div>
-
-          <div class="col" id="cards-container">
-              <div class="card-deck" id="card-deck">
-              </div>
-              <!-- end card-deck-->
-          </div>
+        <div class="row">
+          <div class="col-md-6">
+            <h1>Learn new languages with beautiful images</h1>
+            <p></p>
+            <button OnClick="location.href='/auth/facebook'" class="button loginBtn loginBtn--facebook">
+             Continue with Facebook
+            </button>
+        </div>
+          <div class="col-md-6">
+              <form class="form-horizontal" action= "/signup" method="post">
+           <div class="form-group">
+                <label class="control-label col-sm-2" for="email">Email:</label>
+                <div class="col-sm-10">
+                <input name="email" type="email" required="true"class="form-control" id="email" placeholder="Your email">
+                </div>
+            </div>
+             <div class="form-group">
+                <label class="control-label col-sm-2" for="name">Name:</label>
+                <div class="col-sm-10">
+                <input name="name" type="text" class="form-control" id="name" placeholder="Your name(or how your friends call you)">
+                </div>
+            </div>
+           
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="pwd">Password:</label>
+                <div class="col-sm-10"> 
+                <input minlength="4" required="true" type="password" name="password" class="form-control" id="pwd" placeholder="Enter password">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="pwd2">Verify Password:</label>
+                <div class="col-sm-10"> 
+                <input minlength="4" required="true" type="password" name="password2" class="form-control" id="pwd2" placeholder="Enter password again">
+                </div>
+            </div>
           
+            <div class="form-group"> 
+                <div class="col-sm-offset-2 col-sm-10">
+                <button onClick="fillLangs();" type="button" data-toggle="modal" data-target="#set-lang-modal" role="button" class="btn btn-success">Sign up!</button>
+                </div>
+            </div>
+        </form>
 
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sector info en index -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h2>Creating a card takes 10 seconds,<br> and you will end up with the most useful vocabulary list ever!</h2>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="row" id="infoPrincipal">
+        <div class="col-md-3">
+          <h2 class="text-center">Image seach engine</h2>
+          <p class="text-center">Image search engines <br>for creating cards super fast</p>
+          <p class="text-center icons">
+             <span class="fa-stack fa-4x">
+                  <i class="fa blue fa-circle fa-stack-2x"></i> 
+                  <i class="fa fa-picture-o fa-stack-1x"></i>
+             </span>
+            </p>
+
+        </div>
+
+        <div class="col-md-3">
+          <h2 class="text-center">Listen</h2>
+          <p class="text-center">Listen to the pronunciation <br>of every word</p>
+          <p class="text-center icons">
+            <span class="fa-stack fa-4x">
+                  <i class="fa red fa-circle fa-stack-2x"></i> 
+                  <i class="fa fa-headphones fa-stack-1x"></i>
+            </span>
+          </p>
+       </div>
+
+        <div class="col-md-3">
+          <h2 class="text-center">Autocomplete function</h2>
+          <p class="text-center">The system automatically completes your card's description with definitions of the word</p>
+         
+          <p class="text-center icons">
+                <span class="fa-stack fa-4x">
+                  <i class="fa green fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-magic fa-stack-1x"></i>
+                </span>
+          </p>
+        </div>
+
+         <div class="col-md-3">
+          <h2 class="text-center">Collections</h2>
+          <p class="text-center">Keep your collection <br>ordered by categories</p>
+          <p class="text-center icons">
+            <span class="fa-stack fa-4x">
+              <i class="fa orange fa-circle fa-stack-2x"></i>
+              <i class="fa fa-folder-open fa-stack-1x fa-inverse"></i>
+            </span>
+          </p>
+        </div>
 
       </div>
+
+
+      <div class="modal fade" id="set-lang-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Which languaje do you want to learn?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+             <select name="lang" class="form-control" id="select-lang">
+                </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" onCLick="submit()" data-dismiss="modal" class="btn btn-primary">go there!</button>
+      </div>
+    </div>
   </div>
-  <!-- end container-->
+</div>
 
 
-    <%- include('tiles/footer'); %>
 
-     
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    <script src="assets/js/formatDate.js"></script>
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
-    <script src="assets/js/allCards.js"></script>
-    <script src="assets/js/general.js"></script>
-    <script src="https://use.fontawesome.com/6cbcc3e9b8.js"></script>
-    <script src="assets/js/lib/articulate.min.js"></script>
+
+    </div>
+
+      <footer class="footer" id="footer2">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-5 alignVMiddle">
+              <span class="text-muted">© 2017 FlashCardX, Inc.</span>
+            </div>
+            <div class="col-md-5 alignVMiddle">
+              <span class="text-muted">Tell us what you love about us: contact@flashcard-x.com</span>
+            </div>
+        </div>
+        <div class="row">
+        </div>
+            <div class="col-md-2 alignVMiddle pull-left">
+              <span class="text-muted">Powered by: </span>
+            </div>
+              <ul>
+                <il>
+                  <a href="https://pixabay.com" target="_blank">pixabay.com</a>
+                </il>
+                <il>
+                  <a href="https://shutterstock.com" target="_blank">shutterstock.com</a>
+                </il>
+                <il>
+                  <a href="https://wordnik.com" target="_blank">wordnik.com</a>
+                </il>
+              </ul>
+    </footer>
+
+
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="assets/js/lib/bootstrap.min.js"></script>
+    <script src="assets/js/landingPage.js"></script>
   </body>
 </html>

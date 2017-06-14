@@ -14,21 +14,13 @@ module.exports = function(app) {
 	app.get('/home', csrfProtection, function(req, res) {
 		if(req.session.token)
 			return res.redirect("/");
-		requestify.get(config.apiGetInitialCards).then(function(response) {
-			const data = response.getBody();
-			const error = req.session.error;
-			var cards = [];
-			var errors = [];
-			if(!data.success)
-				errors.push(data.msg);
-			else
-				cards = data.msg;
-			if(error)
-				errors.push(error);
-			var successMsg = req.session.successMsg;
-			controllerUtils.cleanSessionMsgs(req);
-			res.render('indexNoLogged', {cards:cards, successMsg:successMsg,errors:errors, csrfTokenLogin: req.csrfToken()});		
-		});
+		const error = req.session.error;
+		var errors = [];
+		if(error)
+			errors.push(error);
+		var successMsg = req.session.successMsg;
+		controllerUtils.cleanSessionMsgs(req);
+		res.render('indexNoLogged', {successMsg:successMsg,errors:errors, csrfTokenLogin: req.csrfToken()});		
 	});
 
 	app.post("/home", parseForm, (req, res)=>{

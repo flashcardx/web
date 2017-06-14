@@ -5,12 +5,19 @@ var signupController = require('./controllers/signupController');
 const myCardsController = require("./controllers/myCardsController");
 const discoverController = require("./controllers/discoverController");
 const createCardController = require("./controllers/createCardController");
+const env = process.env.NODE_ENV || "development";
 const preferencesController = require("./controllers/preferencesController");
 const settingsController = require("./controllers/settingsController");
 const middleware = require("./middleware");
 
 var port = process.env.PORT || 8081;
-app.use('/assets', express.static(__dirname + '/public'));
+if(env === "production")
+app.use('/assets', express.static(__dirname + '/public', {
+  maxage: '1h'
+}));
+else
+  app.use('/assets', express.static(__dirname + '/public'));
+
 app.set('view engine', 'ejs');
 
 middleware(app);

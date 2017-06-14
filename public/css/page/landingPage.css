@@ -1,0 +1,110 @@
+body{
+	font-family: 'Oswald', sans-serif;
+}
+
+/* Botones */
+.btn-outline-success{
+    color: #5cb85c;
+    background-image: none;
+    background-color: transparent;
+    border-color: #5cb85c;
+}
+
+.btn-outline-success:hover{
+    color: #ffffff;
+}
+
+/* Jumbotron */
+.jumbotron{
+	padding-bottom: 0 !important;
+}
+
+#fondoJumbo{
+	background-color: #e54e2f;
+	color: #ffffff;
+}
+
+/* Carousel */ 
+@media (min-width: 140px) and (max-width: 480px){
+	.carousel-indicators {
+	bottom: -5px;
+	}
+}
+
+@media (min-width: 481px) and (max-width: 767px){
+	.carousel-indicators {
+	bottom: 5px;
+	}
+}
+
+/* Seccion con info en index */
+#infoPrincipal h2{
+	color: #e54e2f;
+}
+
+.icons{
+	padding-top: 10% !important;
+	padding-bottom: 10% !important;
+}
+
+/* Class Indicators */
+.pos-top {
+  position: absolute;
+  top:50%;
+  margin-top:-14px;
+}
+
+/* Footer */
+#footer2{
+    padding: 0.5%;
+    color: #ffffff;
+   	background-color: #222222;
+    border-color: #080808;
+    margin-top: 2% !important;         
+}
+
+.alignVMiddle{
+    float: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.navbar-brand{
+    font-size: 26px;
+}
+
+.margin-left{
+    margin-left: 10px;
+}
+.form-horizontal{
+border-style: solid;
+border-width: 1px;
+border-radius: 10px;
+border-color: #333;
+margin: 10px;
+padding: 10px;
+}
+
+.btn-gray{
+    background-color: #292b2c!important;
+}
+
+.orange {
+  color: #e54e2f;
+}
+
+.green{
+  color:  #1d9d74;
+}
+
+.red{
+    color: #c73232;
+}
+
+.blue{
+    color:#326283;
+}
+
+.alert{
+    margin-top: 10px;
+}
