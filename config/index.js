@@ -21,6 +21,7 @@ module.exports = {
     apiUserPreferences: api.userPreferences,
     apiToggleAutocomplete: api.toggleAutocomplete,
     apiExamples: api.examples,
+    apiDefine: api.define,
     apiUpdateCard: api.updateCard,
     apiGetCategories: api.getCategories,
     apiGetUserPlan: api.getUserPlan,

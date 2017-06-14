@@ -20,6 +20,7 @@ function requireLogin (req, res, next) {
 function cleanSessionMsgs(req){
   req.session.error = undefined;
   req.session.successMsg = undefined;
+  req.session.resend = undefined;
 }
 
 module.exports = {

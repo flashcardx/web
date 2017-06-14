@@ -65,7 +65,7 @@ function desactivate(){
 
 function defineAndFill(word){
     $.ajax({
-        url: "/examples/" + word,
+        url: "/define/" + word,
         success: result=>{
             if(!result.success)
                 showError(result.msg);

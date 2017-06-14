@@ -126,8 +126,8 @@ module.exports = function(app){
             );
         });
 
-    app.get("/examples/:word", controllerUtils.requireLogin, (req, res)=>{
-        const url = config.apiExamples + "/" + req.params.word;
+    app.get("/define/:word", controllerUtils.requireLogin, (req, res)=>{
+        const url = config.apiDefine + "/" + req.params.word;
         requestify.get(url, {headers:{
                 "x-access-token": req.session.token
             }})

@@ -28,7 +28,7 @@
           <a class="navbar-brand" href="#">FlashCardX</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <form method="POST" id="form-signup" action="signup" class="navbar-form navbar-right">
+          <form method="POST" action="#" class="navbar-form navbar-right">
             <input type="hidden" name="_csrf" value="<%=csrfTokenLogin%>"/>
             <div class="form-group">
               <input type="text" name="email" placeholder="Email" class="form-control">
@@ -42,10 +42,13 @@
       </div>
     </nav>
     <div class="jumbotron" id="fondoJumbo">
-      <div class="container">
+      <div class="container main">
            <% errors.forEach(err=>{%>
-            <div class="alert alert-danger">
+            <div class="errorMsg alert alert-danger">
                 <strong>Error!</strong> <%= err%>
+                <% if (resend===1) { %>
+          <button class="btn btn-info" onClick="resendEmail()"> Resend verification email</button>
+     <%}%> 
             </div> 
         <%});%>
     <% if(successMsg) { %>
@@ -53,6 +56,8 @@
         <strong>Success!</strong> <%= successMsg%>
     </div>  
     <%}%>
+
+
 
         <div class="row">
           <div class="col-md-6">
@@ -63,7 +68,8 @@
             </button>
         </div>
           <div class="col-md-6">
-              <form class="form-horizontal" action= "/signup" method="post">
+              <form class="form-horizontal" id="form-signup" action= "/signup" method="post">
+              <input type="hidden" name="_csrf" value="<%=csrfTokenLogin%>"/>
            <div class="form-group">
                 <label class="control-label col-sm-2" for="email">Email:</label>
                 <div class="col-sm-10">

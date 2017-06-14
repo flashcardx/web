@@ -19,8 +19,9 @@ module.exports = function(app) {
 		if(error)
 			errors.push(error);
 		var successMsg = req.session.successMsg;
+		var resend = req.session.resend;
 		controllerUtils.cleanSessionMsgs(req);
-		res.render('indexNoLogged', {successMsg:successMsg,errors:errors, csrfTokenLogin: req.csrfToken()});		
+		res.render('indexNoLogged', {resend: resend, successMsg:successMsg, errors:errors, csrfTokenLogin: req.csrfToken()});		
 	});
 
 	app.post("/home", parseForm, (req, res)=>{

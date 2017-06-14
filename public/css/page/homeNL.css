@@ -1,6 +1,4 @@
-body {
-	font-family: Arial, Helvetica, sans-serif;
-}
+
 /* Move down content because we have a fixed navbar that is 50px tall */
 .fixed-top {
   position: relative;
@@ -13,25 +11,6 @@ body {
 
 .btn-space-left{
   margin-left: 10px;
-}
-
-.copyright{
-  display:inline;
-}
-
-.poweredBy{
-  float:right;
-  display:inline;
-}
-
-.poweredBy-logo{
-  float:right;
-  display:inline;
-}
-
-.poweredBy-text{
-  float:left;
-  display:inline;
 }
 
 

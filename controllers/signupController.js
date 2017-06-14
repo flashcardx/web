@@ -10,18 +10,9 @@ var langs = undefined;
 module.exports = function(app) {
 	
 
-	app.get('/signup', csrfProtection, function(req, res) {
-		if(langs)
-			res.render("signup", {data:{success:true}, langs:langs, csrfToken:req.csrfToken()});
-		else
-			requestify.get(config.apiGetLangs).then(response=>{
-					langs = response.getBody();
-					res.render("signup", {data:{success:true}, langs:langs, csrfToken:req.csrfToken()});
-			});
-	});
 	
 	app.post("/signup",parseForm, csrfProtection,(req, res)=>{
-			if(req.body.password != req.body.password2){
+			if(req.body.password !== req.body.password2){
 				req.session.error = "Passwords do not match!";
 				res.redirect("/home");
 			}
@@ -34,7 +25,17 @@ module.exports = function(app) {
 				};
 				req.session.email = req.body.email; 
 				requestify.post(config.apiSignup,user).then(response=>{
-					console.log(response.getBody());
+					var result = response.getBody();
+					if(result.success)
+						req.session.successMsg = result.msg;
+					else{
+						req.session.error = result.msg;
+						if(result.errorCode === 1){
+							console.log("resend");
+							req.session.resend = 1;
+						}
+					}
+					return res.redirect("/home");
 				});
 			}
 	});

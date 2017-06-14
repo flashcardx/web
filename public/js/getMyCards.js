@@ -66,10 +66,8 @@ function getMoreCards(){
 function completeFooter(n){
     var html = "";
     if(n === 0){
-        html += "You don't have cards, start now and learn vocabulary as never before!<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>";
+        html += "You don't have cards, start now and learn vocabulary as never before!";
     }
-    else
-        html += "<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>";
     $("#card-deck").append(html);
 }
 

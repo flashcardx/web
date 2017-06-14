@@ -9,12 +9,16 @@
   animation: spin 2s linear infinite;
 }
 
+body{
+	font-family: 'Oswald', sans-serif;
+}
+
+
 @import url('https://fonts.googleapis.com/css?family=Work+Sans');
 body{
     background: linear-gradient(141deg, #E44424 0%, #e65639 51%, #eb7860 75%);
     color: white;
     opacity: 0.95;
-    font-family: 'Work Sans', sans-serif;
 }
 
 @-webkit-keyframes spin {
@@ -43,17 +47,20 @@ body{
 }
 
 
-footer {
-  position: static;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  min-width: 100%;
-  padding: 1rem;
-  background-color: #292b2c;
-  text-align: center;
+/* Footer */
+#footer2{
+    padding: 0.5%;
+    color: #ffffff;
+   	background-color: #222222;
+    border-color: #080808;
+    margin-top: 2% !important;         
 }
 
+.alignVMiddle{
+    float: none;
+    display: inline-block;
+    vertical-align: middle;
+}
 
 
 .speaker:hover {
@@ -63,4 +70,8 @@ footer {
 
 .btn{
   cursor:pointer;
+}
+
+.main-content{
+  min-height: 500px;
 }

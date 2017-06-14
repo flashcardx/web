@@ -32,7 +32,7 @@ function fillLangsSelect(langs){
 }
 
 function showError(msg){
-    $(".container").prepend(""   +
+    $(".main").prepend(""   +
             "<div class='alert alert-danger'>" +
             "<strong>Error! </strong>" + msg + "</div>");
 
@@ -42,6 +42,37 @@ function showError(msg){
         }, 4000);
 }
 
+function showInfo(msg){
+    $(".main").prepend(""   +
+            "<div class='alert alert-info'>" +
+            "<strong>Info! </strong>" + msg + "</div>");
+
+    window.setTimeout(function() {$(".alert-info").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+        });
+        }, 4000);
+}
+
 function submit(){
     $("#form-signup").submit();
+}
+
+function resendEmail(){
+    $(".errorMsg").html("Loading...");
+    $.ajax({
+        url:"/resend-email",
+        success: function(result){
+            $(".errorMsg").hide();
+            if(result.success){
+                showInfo(result.msg);
+            }
+            else{
+                showError(result.msg);
+            }
+        },
+        error: function(err){
+            $("#errorMsg").hide();
+            showError(err);
+        }
+    });
 }
