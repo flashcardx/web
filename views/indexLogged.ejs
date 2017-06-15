@@ -54,16 +54,27 @@
             </div> 
         <%});%>
 
-
+  <div class="col-2 filters">
+                <div class="filter-container">
+                <span>  Category:</span>
+                  <select name="category" class="form-control filter-margin" id="category-select">
+                    </select>
+                </div>
+                    <div class="filter-container">
+                    <span>  Sort by:</span>
+                  <select name="sort" class="form-control filter-margin" id="sort-select">
+                        <option selected="selected" value="desc">Newer first</option>
+                        <option value="asc">Older first</option>
+                    </select>
+                    </div>  
+              </div>
+              
           <div class="row">
               <div class="col-10">
                   <div class="card-deck" id="card-deck">
                   </div>
               </div>
-              <div class="col-2">
-                  <select name="category" class="form-control" id="category-select">
-                    </select>  
-              </div>
+            
           </div>
 
 

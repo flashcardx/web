@@ -64,6 +64,8 @@ function desactivate(){
 }
 
 function defineAndFill(word){
+    if(!word || word===" ")
+        return;
     $.ajax({
         url: "/define/" + word,
         success: result=>{

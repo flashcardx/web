@@ -32,6 +32,9 @@ module.exports = function(app){
 		var url = config.apiGetUserCards + "?limit=8";
 		var last = req.query.last;
 		var category = req.query.category;
+		var sort = req.query.sort;
+		if(sort)
+			url += "&sort=" + sort;
 		if(last)
 			url += "&last=" + last;
 		if(category !== undefined && category !== "undefined")

@@ -1,10 +1,22 @@
 reloadCategories();
 
+$('#category-select').on('change', function() {
+        reloadForCategory(this.value);
+})
+
+$('#sort-select').on('change', function() {
+     reloadForSort(this.value);
+})
+
+
+
 function reloadCategories(){
     $('#category-select').html("<option selected='selected' value='*'>All categories</option>"+
                                   "<option value=''>No category</option>");
     loadCategories();
 }
+
+
 
 function loadCategories(){
     $.ajax({
@@ -21,9 +33,6 @@ function loadCategories(){
     });
 }
 
-$('#category-select').on('change', function() {
-        reloadForCategory(this.value);
-})
 
 
  function fillCategoriesFilter(categories){

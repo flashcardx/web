@@ -2,9 +2,10 @@ const MAX_HEIGHT = 500;
 const MAX_WIDTH = 650;
 var firstTime = true;
 var end = false;
+var sort = "desc";
+var category = "*";
 setScroll();
 getMoreCards();
-var category = "*";
 
 function setScroll(){
 
@@ -33,20 +34,26 @@ function reloadForCategory(newCategory){
     reloadCards();
 }
 
+function reloadForSort(value){
+    if(value === sort)
+        return;
+    sort = value;
+    reloadCards();    
+}
+
 function getMoreCards(){
         if(end === true)
             return;
-        var queryString ="";
+        var queryString = "?sort=" + sort;
         if(!firstTime){
             var last = getLast();
             if(last === undefined)
                 return;
-            queryString = "?last=" + last;
-            if(category !== "*")
-                queryString += "&category=" + category;
+            queryString += "&last=" + last;
         }
-        else if(category !== "*")
-            queryString += "?category=" + category;
+        if(category !== "*")
+            queryString += "&category=" + category;
+        console.log("query: " + queryString);
         $.ajax({
         url:"/getMyCards" + queryString,
         success: result=>{
@@ -116,14 +123,14 @@ function appendCards(cards){
         if(index2===0){
                 html += "<div class='active slide-fixed-size'>" +
                               "<div class='slide-size' style='height:"+height+"px;width:"+width+"px;overflow:hidden'>"+
-                                    "<img class='d-block responsive' data-lazy='" + img.hash +"' alt='One moment!...'>" +
+                                    "<img class='d-block img-fluid' data-lazy='" + img.hash +"' alt='One moment!...'>" +
                               "</div>"+
                              "</div>";
             }
         else{
                 html +="<div class='slide-fixed-size'>"+
                                "<div class='slide-size' style='height:"+height+"px;width:"+width+"px;overflow:hidden'>"+
-                                    "<img class='d-block responsive' data-lazy='" + img.hash +"' alt='One moment!...'>" +
+                                    "<img class='d-block img-fluid' data-lazy='" + img.hash +"' alt='One moment!...'>" +
                               "</div>"+
                             "</div>";
             }

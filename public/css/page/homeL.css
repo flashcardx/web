@@ -6,9 +6,7 @@ a:visited {
     color: white;
   }
 
-.black{
-  color: black;
-}
+
 
 .margin-top{
   margin-top: 7px;
@@ -30,14 +28,24 @@ a:visited {
     color:black;
 }
 
-#category-select{
-  margin-top:10px;
-}
-
 .card-deck{
+  padding-left: 70px;
   padding-right: 0px;
 }
 
 #card-deck{
   padding-right: 0px;
 }
+
+.filter-margin{
+   margin-top: 5px;
+}
+
+.filter-container{
+  margin-top: 10px;
+}
+
+.filters{
+  float:left;
+}
+
