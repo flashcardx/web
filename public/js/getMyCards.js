@@ -1,11 +1,11 @@
-const MAX_HEIGHT = 500;
-const MAX_WIDTH = 650;
+var MAX_HEIGHT = 500;
+var MAX_WIDTH = 650;// check append cards since i directly use those values theres, i couldnt get to work the variable with page speed
 var firstTime = true;
 var end = false;
 var sort = "desc";
 var category = "*";
+var searchParameter;
 setScroll();
-getMoreCards();
 
 function setScroll(){
 
@@ -41,10 +41,19 @@ function reloadForSort(value){
     reloadCards();    
 }
 
+function reloadForSearch(q){
+    if(q === searchParameter)
+        return;
+    searchParameter = q;
+    reloadCards();
+}
+
 function getMoreCards(){
         if(end === true)
             return;
         var queryString = "?sort=" + sort;
+        if(searchParameter)
+            queryString += "&q=" + searchParameter;
         if(!firstTime){
             var last = getLast();
             if(last === undefined)
@@ -53,7 +62,6 @@ function getMoreCards(){
         }
         if(category !== "*")
             queryString += "&category=" + category;
-        console.log("query: " + queryString);
         $.ajax({
         url:"/getMyCards" + queryString,
         success: result=>{
@@ -69,6 +77,8 @@ function getMoreCards(){
         }
     });
 }
+
+getMoreCards();
 
 function completeFooter(n){
     var html = "";
@@ -116,7 +126,7 @@ function appendCards(cards){
     card.imgs.forEach((img, index2)=>{
         var height = img.height;
         var width = img.width;
-        while(height > MAX_HEIGHT || width > MAX_WIDTH){
+        while(height > 500 || width > 650){
             width--;
             height--;
         }

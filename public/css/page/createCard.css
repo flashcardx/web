@@ -44,10 +44,6 @@ padding: 10px;
     background-color: #FF0000;
 }
 
-a:visited{
-    color: gray;
-}
-
 #pagination-container{
      margin-right: 20px;
      margin-top: 10px;

@@ -33,6 +33,9 @@ module.exports = function(app){
 		var last = req.query.last;
 		var category = req.query.category;
 		var sort = req.query.sort;
+		var q = req.query.q;
+		if(q)
+			url += "&q=" + q;
 		if(sort)
 			url += "&sort=" + sort;
 		if(last)
