@@ -138,6 +138,18 @@ module.exports = function(app){
                 );
         });
 
+    app.get("/suggest/:word", controllerUtils.requireLogin, (req, res)=>{
+        const url = config.apiSuggest + "/" + req.params.word;
+        requestify.get(url, {headers:{
+                "x-access-token": req.session.token
+            }})
+                .then( response=>{
+                        var r = response.getBody();
+                        return res.json(r.msg);
+                    }
+                );
+        });
+
     app.get("/categories", controllerUtils.requireLogin, (req, res)=>{
         var url = config.apiGetCategories;
         requestify.get(url, {headers:{

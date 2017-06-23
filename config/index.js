@@ -31,5 +31,8 @@ module.exports = {
     apiFbSignup: api.fbSignup,
     fbAuthId: fbAuth.clientID,
     fbAuthSecret: fbAuth.clientSecret,
-    fbAuthCallbackUrl: fbAuth.callbackURL
+    fbAuthCallbackUrl: fbAuth.callbackURL,
+    apiGetPracticeCards: api.getPracticeCards,
+    apiRankCard: api.rankCard,
+    apiSuggest: api.suggest
 };

@@ -19,7 +19,6 @@ function deleteCard(id){
         type: "DELETE",
         success: result=>{
             removeCard(id);
-            showSight();
         },
         error: err=>{
             $(".main-content").prepend(""   +

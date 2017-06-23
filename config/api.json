@@ -24,7 +24,10 @@
             "getUserLang": "http://localhost:3000/userLang",
             "updateUserLang": "http://localhost:3000/updateUserLang",
             "fbLogin": "http://localhost:3000/fbLogin",
-            "fbSignup": "http://localhost:3000/fbSignup"
+            "fbSignup": "http://localhost:3000/fbSignup",
+            "getPracticeCards":"http://localhost:3000/practiceCards",
+            "rankCard":"http://localhost:3000/rankCard",
+            "suggest":"http://localhost:3000/suggest"
         },
         "pi":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -51,7 +54,10 @@
             "getUserLang": "http://localhost:3000/userLang",
             "updateUserLang": "http://localhost:3000/updateUserLang",
             "fbLogin": "http://localhost:3000/fbLogin",
-            "fbSignup": "http://localhost:3000/fbSignup"
+            "fbSignup": "http://localhost:3000/fbSignup",
+            "getPracticeCards":"http://localhost:3000/practiceCards",
+            "rankCard":"http://localhost:3000/rankCard",
+            "suggest":"http://localhost:3000/suggest"
             },
         "production":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -78,6 +84,9 @@
             "getUserLang": "http://localhost:3000/userLang",
             "updateUserLang": "http://localhost:3000/updateUserLang",
             "fbLogin": "http://localhost:3000/fbLogin",
-            "fbSignup": "http://localhost:3000/fbSignup"
+            "fbSignup": "http://localhost:3000/fbSignup",
+            "getPracticeCards":"http://localhost:3000/practiceCards",
+            "rankCard":"http://localhost:3000/rankCard",
+            "suggest":"http://localhost:3000/suggest"
         }
 }
