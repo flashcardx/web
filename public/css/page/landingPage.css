@@ -20,7 +20,7 @@ body{
 }
 
 #fondoJumbo{
-	background-color: #e54e2f;
+	background-color: #4286f4;
 	color: #ffffff;
 }
 
@@ -39,7 +39,7 @@ body{
 
 /* Seccion con info en index */
 #infoPrincipal h2{
-	color: #e54e2f;
+	color: #4286f4;
 }
 
 .icons{
@@ -108,3 +108,16 @@ padding: 10px;
 .alert{
     margin-top: 10px;
 }
+
+.black{
+    color: #333;
+}
+
+.green{
+    color: #259b44;
+}
+
+.margin-5{
+    margin: 10px;
+}
+
