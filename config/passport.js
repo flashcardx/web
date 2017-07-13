@@ -5,7 +5,6 @@ const requestify = require("requestify");
 const config = require(appRoot + "/config");
 const configFbAuth = require("./fbAuth.json")[env];
 
-console.log("callback: " + configFbAuth.callbackURL);
 
 module.exports = function(passport) {
 
@@ -51,8 +50,11 @@ passport.deserializeUser(function(obj, done) {
                         	req.session.token = r.token;
 					        return done();
                     }
-                    else
-                        return done(r.msg);
+                    else{
+                        req.session.error = r.msg;
+                        return done(null, false, r.msg);
+                    }
+                    
             });
 	    });
     }

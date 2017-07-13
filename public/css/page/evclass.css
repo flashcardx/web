@@ -1,0 +1,154 @@
+.ev-padding-top {
+  padding-top: 10px;
+}
+
+.ev-margin-top {
+  margin-top: 1px;
+}
+/*important because the plugin autocomplete has it own width, and we need 100% for responsive*/
+.easy-autocomplete {
+  width: 100% !important;
+}
+
+.ev-height-description {
+  max-height: 100px;
+  overflow-y: scroll;
+}
+
+max-height: 80px;
+overflow-y: scroll;
+
+.ev-col-centered {
+  float: none;
+  margin: 0 auto;
+}
+
+.ev-height-collection {
+  min-height: 439px;
+}
+
+.ev-height-discovery {
+  min-height: 404px;
+}
+
+.ev-mr-10 {
+  margin-right: 10px;
+}
+
+.ev_float_left {
+  float: left;
+  margin-right: 5px;
+}
+
+.ev-pd-top {
+  padding-top: 2%;
+}
+
+.ev-panel {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 0 2px rgba(0,0,0,0.35);
+  box-shadow: 0 0 2px rgba(0,0,0,0.35);
+}
+
+.ev-panel-card {
+  border-width: 0;
+  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.35);
+  box-shadow: 0 0 2px rgba(0,0,0,0.35);
+}
+
+.ev-item {
+  position: relative;
+}
+
+.ev-w-full {
+  width: 100%;
+}
+
+.ev-r-t {
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+
+.ev-md-btn.md-raised:not([disabled]),
+.md-btn.md-fab {
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
+}
+
+.ev-btn-fab {
+  position: relative;
+  display: inline-block;
+  padding: 6px;
+  overflow: hidden;
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: bold;
+  line-height: inherit;
+  color: currentColor;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  border-radius: 3px;
+  outline: 0;
+}
+
+.ev-btn-fab.md-fab {
+  outline: none;
+  z-index: 20;
+  width: 56px;
+  height: 56px;
+  overflow: hidden;
+  border-radius: 50%;
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+  transition: .2s linear;
+  transition-property: -webkit-transform,box-shadow;
+  transition-property: transform,box-shadow;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4);
+}
+
+.ev-orange {
+  background-color: #e54e2f;
+}
+
+.ev-orange:hover {
+  background-color: #B73E25;
+}
+
+.pink {
+  background-color: #e91e63;
+}
+
+.ev-m-r {
+  margin-right: 16px;
+}
+
+.ev-p {
+  padding: 16px;
+}
+
+.ev-md-fab-offset {
+  margin-top: -28px;
+  margin-bottom: -28px;
+}
+
+.ev-md-fab {
+  line-height: 44px;
+}
+
+/*parte de mostrar mas*/
+.ev-morecontent span {
+  display: none;
+}
+
+.ev-morelink {
+  display: block;
+}
+

@@ -9,82 +9,104 @@
   animation: spin 2s linear infinite;
 }
 
-body{
-	font-family: 'Oswald', sans-serif;
+body {
+  font-family: 'Oswald', sans-serif;
 }
+@import url( 'https://fonts.googleapis.com/css?family=Work+Sans');
 
-
-@import url('https://fonts.googleapis.com/css?family=Work+Sans');
-body{
-    background: linear-gradient(141deg, #E44424 0%, #e65639 51%, #eb7860 75%);
-    color: white;
-    opacity: 0.95;
+body {
+  background: #efefef;
+  color: #444444;
+  opacity: .95;
 }
-
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
 
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-.alert-deleted{
+.alert-deleted {
   position: fixed;
   top: 20px;
   right: 20px;
   z-index: 5000;
 }
 
-
-.alert-side{
+.alert-side {
   position: fixed;
   top: 20px;
   right: 20px;
   z-index: 5000;
 }
-
 
 /* Footer */
-#footer2{
-    padding: 0.5%;
-    color: #ffffff;
-   	background-color: #222222;
-    border-color: #080808;
-    margin-top: 2% !important; 
-    font-size: 14px;        
+#footer2 {
+  padding: .5%;
+  color: #ffffff;
+  background-color: #222222;
+  border-color: #080808;
+  margin-top: 2% !important;
+  font-size: 14px;
 }
 
-.alignVMiddle{
-    float: none;
-    display: inline-block;
-    vertical-align: middle;
+.alignVMiddle {
+  float: none;
+  display: inline-block;
+  vertical-align: middle;
 }
-
 
 .speaker:hover {
-    cursor:pointer;
-    color: #0080ff;
+  cursor: pointer;
+  color: #0080ff;
 }
 
-.btn{
-  cursor:pointer;
+.btn {
+  cursor: pointer;
 }
 
-.main-content{
+.main-content {
   min-height: 500px;
 }
 
-.pull-left{
-  float:left;
+.pull-left {
+  float: left;
 }
 
-.black{
+.black {
   color: black;
 }
 
-a:visited { 
-      text-decoration:none; 
-  }
+a:visited {
+  text-decoration: none;
+}
+
+.slick .prev {
+  display: inline;
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.slick .next {
+  display: inline;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  z-index: 1;
+  cursor: pointer;
+}

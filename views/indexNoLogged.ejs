@@ -44,7 +44,8 @@
     <div class="jumbotron" id="fondoJumbo">
       <div class="container main">
            <% errors.forEach(err=>{%>
-            <div class="errorMsg alert alert-danger">
+            <div class="errorMsg alert alert-danger alert-dismissable">
+               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <strong>Error!</strong> <%= err%>
                 <% if (resend===1) { %>
           <button class="btn btn-info" onClick="resendEmail()"> Resend verification email</button>
@@ -52,7 +53,8 @@
             </div> 
         <%});%>
     <% if(successMsg) { %>
-    <div class="alert alert-success">
+    <div class="alert alert-success alert-dismissable">
+       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <strong>Success!</strong> <%= successMsg%>
     </div>  
     <%}%>
@@ -139,7 +141,7 @@
 
         <div class="col-md-2">
           <h2 class="text-center">Share</h2>
-          <p class="text-center">Share cards and chat<br>with classmates</p>
+          <p class="text-center">Share cards and connect<br>with classmates</p>
           <p class="text-center icons">
             <span class="fa-stack fa-4x">
                   <i class="fa green fa-circle fa-stack-2x"></i> 

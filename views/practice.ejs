@@ -1,97 +1,104 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <script src="https://use.fontawesome.com/6cbcc3e9b8.js"></script>
-    <link rel="icon" href="assets/img/favicon.ico">
-    <title>FlashCardX</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/component/general.css">
-    <link rel="stylesheet" href="assets/css/page/homeNL.css">
-    <link rel="stylesheet" href="assets/css/page/discover.css">
-    <link rel="stylesheet" href="assets/css/component/card.css">
-    <link rel="stylesheet" href="assets/css/component/slideshow.css">
-   
-  </head>
 
-  <body>
-  
-   <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <script src="https://use.fontawesome.com/6cbcc3e9b8.js"></script>
+  <link rel="icon" href="assets/img/favicon.ico">
+  <title>FlashCardX</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+    crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/component/general.css">
+  <link rel="stylesheet" href="assets/css/page/homeNL.css">
+  <link rel="stylesheet" href="assets/css/page/discover.css">
+  <link rel="stylesheet" href="assets/css/component/card.css">
+  <link rel="stylesheet" href="assets/css/page/evclass.css">
+  <link rel="stylesheet" href="assets/css/component/slideshow.css">
+
+</head>
+
+<body>
+  <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+    <div class="container">
+      <button class="navbar-toggler pull-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
+        aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
       <a class="navbar-brand" href="/">FlashCardX</a>
-        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-       <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="/discover">Discover</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/">My collection</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/create">Create card</a>
-      </li>
-       <li class="nav-item active">
-        <a class="nav-link" href="/practice">Practice</a>
-      </li>
-    </ul>
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/discover">Discover</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/">My collection</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/create">Create card</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Practice</a>
+          </li>
+        </ul>
+        <a class="btn btn-warning my-2 my-sm-0 " href="/settings"> <i class="fa fa-cog fa-fw" aria-hidden="true"></i></a>
 
-         <a class="btn btn-warning my-2 my-sm-0 " href="/settings"> <i class="fa fa-cog fa-fw" aria-hidden="true"></i></a>
-          
-         <a class="btn btn-danger my-2 my-sm-0 btn-space-left" href="/logout"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i></a>
-        
-        </div>
-    </nav>
-  <div class= "main-content">
-   
-          <div class="card-deck" id="card-deck">
-
-                 
-          </div>
-
-                <div class="modal fade" id="rankCard-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title black" id="exampleModalLabel">How well you knew this one?</h5>
+        <a class="btn btn-danger my-2 my-sm-0 btn-space-left" href="/logout"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i></a>
       </div>
-      <div class="modal-body">
+    </div>
+  </nav>
+  <div class="container cnt_main_practice">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card-deck" id="card-deck">
+
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <div class="modal fade" id="rankCard-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title black" id="exampleModalLabel">How well you knew this one?</h5>
+        </div>
+        <div class="modal-body">
           <button type="button" onCLick="rankCard(0)" data-dismiss="modal" class="btn btn-primary">Bad</button>
           <button type="button" onCLick="rankCard(3)" data-dismiss="modal" class="btn btn-primary">Ok</button>
           <button type="button" onCLick="rankCard(5)" data-dismiss="modal" class="btn btn-primary">Perfect!</button>
+        </div>
+
       </div>
-      
     </div>
   </div>
-</div>
 
 
+  <%- include('tiles/footer'); %>
 
-  </div>
-  <!-- end container-->
+    <!-- end container-->
 
-
-
-
-      <%- include('tiles/footer'); %>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+      crossorigin="anonymous"></script>
     <script src="assets/js/formatDate.js"></script>
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
     <script src="assets/js/general.js"></script>
-     <script src="assets/js/lib/articulate.min.js"></script>
-     <script src="assets/js/practice.js"></script>
-  </body>
+    <script src="assets/js/lib/articulate.min.js"></script>
+    <script src="assets/js/practice.js"></script>
+</body>
+
 </html>

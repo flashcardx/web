@@ -69,11 +69,11 @@ function fillCategories(cardId, defaultCategory, categories){
 function loadUpdateButtons(cardId, backupText, backUpButtons){
     var buttonsElement = $("#buttons-"+cardId);
     buttonsElement.html("<div class='row'>"+
-                                    "<a 'role='button' id='confirm-update-"+cardId+"' class='btn nounderline btn-success my-2 my-sm-1'> <i class='fa fa-check fa-fw' aria-hidden='true'></i></a>"+
-                                "</div>"+
-                                "<div class='row'>"+
-                                    "<a role='button' id='cancel-"+cardId+"' class='btn nounderline btn-danger delete-btn my-2 my-sm-1'> <i class='fa fa-times fa-fw' aria-hidden='true'></i></a>"+
-                                "</div>");
+                          "<div class='col-md-12'>"+
+                            "<a 'role='button' id='confirm-update-"+cardId+"' class='btn nounderline btn-success my-2 my-sm-1 ev-mr-10'> <i class='fa fa-check fa-fw' aria-hidden='true'></i></a>"+
+                            "<a role='button' id='cancel-"+cardId+"' class='btn nounderline btn-danger delete-btn my-2 my-sm-1'> <i class='fa fa-times fa-fw' aria-hidden='true'></i></a>"+
+                          "</div>"+ 
+                        "</div>");
     $("#cancel-"+cardId).click(()=>{
         cancel(cardId, backupText, backUpButtons);
     });

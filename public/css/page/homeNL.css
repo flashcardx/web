@@ -4,17 +4,16 @@
   position: relative;
 }
 
-.main-content{
+.main-content {
   margin: 10px;
   text-align: center;
 }
 
-.btn-space-left{
+.btn-space-left {
   margin-left: 10px;
 }
 
-
-.card-deck{
+.card-deck {
   display: block;
   width: 100%;
   display: center;
@@ -23,11 +22,11 @@
   padding-right: 10px;
 }
 
-.card{
-  padding-top:5px;
+.card {
+  padding-top: 5px;
   margin: 10px;
   max-width: 100%;
-  background-color: #C7C7C8 ;
+  background-color: #C7C7C8;
   border-style: solid;
   border-width: 1px;
   border-radius: 10px;
@@ -36,18 +35,15 @@
   color: black;
 }
 
-
-
 .card-deck .card:not(:last-child) {
-    margin-right: auto;
+  margin-right: auto;
 }
 
 .card-deck .card:not(:first-child) {
-    margin-left: auto;
+  margin-left: auto;
 }
 
-
-#cards-container{
+#cards-container {
   border-color: gray;
   border-style: dashed;
   border-width: 3px;
@@ -55,4 +51,18 @@
   overflow-y: auto;
   margin-right: 10px;
 }
+@media (max-width: 767px) {
+  .cnt_main_practice .card-deck {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
 
+#rankCard-modal .modal-body {
+  text-align: center;
+}
+
+#rankCard-modal .modal-title {
+  text-align: center;
+  width: 100%;
+}

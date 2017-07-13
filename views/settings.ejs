@@ -15,84 +15,94 @@
     <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/component/general.css">
     <link rel="stylesheet" href="assets/css/page/settings.css">
+    <link rel="stylesheet" href="assets/css/page/evclass.css">
     <link rel="stylesheet" href="assets/css/page/homeNL.css">
+    <link rel="stylesheet" href="assets/css/page/createCard.css">
   </head>
 
   <body>
-  
-   <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand" href="/">FlashCardX</a>
+    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+      <div class="container">
+        <button class="navbar-toggler pull-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+          aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="/">FlashCardX</a>
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-       <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="/discover">Discover</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/">My collection</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/create">Create card</a>
-      </li>
-       <li class="nav-item">
-        <a class="nav-link" href="/practice">Practice</a>
-      </li>
-    </ul>
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/discover">Discover</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/">My collection</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/create">Create card</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/practice">Practice</a>
+            </li>
+          </ul>
+          <a class="btn btn-warning my-2 my-sm-0 active" href="/settings"> <i class="fa fa-cog fa-fw" aria-hidden="true"></i></a>
 
-         <a class="btn btn-warning my-2 my-sm-0 " href="#"> <i class="fa fa-cog fa-fw" aria-hidden="true"></i></a>
-          
-         <a class="btn btn-danger my-2 my-sm-0 btn-space-left" href="/logout"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i></a>
-        
+          <a class="btn btn-danger my-2 my-sm-0 btn-space-left" href="/logout"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i></a>
         </div>
+      </div>
     </nav>
-  <div class= "main-content">
-      <% errors.forEach(err=>{%>
-            <div class="alert alert-danger">
-                <strong>Error!</strong> <%= err%>
-            </div> 
-        <%});%>
-         <% if(success) { %>
-    <div class="alert alert-success">
-      <strong>Success!</strong> <%= success%>
-  </div>  
- <%}%>
 
-    <div class="row border plan">
-          <span>
-          <p><bold>Subscription type:</bold> <%=data.type%>. <button type="button" data-toggle="tooltip" data-placement="right" title="More plans are coming soon, if you can't wait email us to: contact@flashcard-x.com" class="fa fa-info" aria-hidden="true"></button></p>
-          <p>
-            You are using <%=data.maxLimit - data.cardLimit%> cards out of <%=data.maxLimit%> which is your max limit, for increasing your limit you will need a better subscription plan 
-          </p>
-          <span>
+      <div class=container> 
+        <div class= "main-content">
+          <% errors.forEach(err=>{%>
+              <div class="alert alert-danger">
+                  <strong>Error!</strong> <%= err%>
+              </div> 
+          <%});%>
+           <% if(success) { %>
+            <div class="alert alert-success">
+              <strong>Success!</strong> <%= success%>
+             </div>  
+         <%}%>
+
+        <div class="create-wrapper">
+            <div class="col-md-12">
+              <span>
+                <p><bold>Subscription type:</bold> <%=data.type%>. <button type="button" data-toggle="tooltip" data-placement="right" title="More plans are coming soon, if you can't wait email us to: contact@flashcard-x.com" class="fa fa-info" aria-hidden="true"></button></p>
+                <p>
+                  You are using <%=data.maxLimit - data.cardLimit%> cards out of <%=data.maxLimit%> which is your max limit, for increasing your limit you will need a better subscription plan 
+                </p>
+              </span>
+            </div>
+
+        </div>
+
+        <div class="create-wrapper">
+          <div class="col-md-12">
+            <span>
+            <p><bold>Change languaje:</bold></p>
+              <form class="form-horizontal" action= "#" method="post">
+                  <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
+                 <div class="form-group">
+                   <div class="col-md-2"></div>
+                   <div class="input-group col-md-8 ev-col-centered">
+                       <select name="lang" class="form-control" id="select-lang">
+                      </select>
+                    <button role="button" type="submit" class="left-margin btn btn-default btn-success btn-gray">Save</button>
+                   </div>
+                 </div>
+              </form>
+            </span>
+          </div>
+
+        </div>
+
+    </div>
+
       </div>
 
-       <div class="row border plan">
-      <span>
-      <p><bold>Change languaje:</bold></p>
-        <form class="form-horizontal" action= "#" method="post">
-            <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
-           <div class="form-group">
-             <div class="input-group col-sm-12">
-                 <select name="lang" class="form-control" id="select-lang">
-                </select>
-              <button role="button" type="submit" class="left-margin btn btn-default btn-success btn-gray">Save</button>
-             </div>
-           </div>
-        </form>
-      <span>
-      </div>
-
-
-
-  </div>
+      <%- include('tiles/footer'); %>
   <!-- end container-->
 
 
-
-
-      <%- include('tiles/footer'); %>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

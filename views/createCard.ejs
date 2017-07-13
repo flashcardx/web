@@ -1,112 +1,131 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <script src="https://use.fontawesome.com/6cbcc3e9b8.js"></script>
-    <link rel="icon" href="assets/img/favicon.ico">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/page/homeNL.css">
-    <link rel="stylesheet" href="assets/css/page/homeL.css">
-    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/component/general.css">
-    <link rel="stylesheet" href="assets/css/component/card.css">
-    <link rel="stylesheet" href="assets/css/component/slideshow.css">
-    <link rel="stylesheet" href="assets/css/page/createCard.css">
-    <link rel="stylesheet" href="assets/css/component/image-picker.css">
-    <link rel="stylesheet" href="assets/css/component/switchery.min.css">
-    <link rel="stylesheet" href="assets/css/lib/easy-autocomplete.min.css">
-    <title>FlashCardX</title>
-   
-  </head>
 
-  <body>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <script src="https://use.fontawesome.com/6cbcc3e9b8.js"></script>
+  <link rel="icon" href="assets/img/favicon.ico">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/page/homeNL.css">
+  <link rel="stylesheet" href="assets/css/page/homeL.css">
+  <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/component/general.css">
+  <link rel="stylesheet" href="assets/css/component/card.css">
+  <link rel="stylesheet" href="assets/css/component/slideshow.css">
+  <link rel="stylesheet" href="assets/css/page/createCard.css">
+  <link rel="stylesheet" href="assets/css/page/evclass.css">
+  <link rel="stylesheet" href="assets/css/component/image-picker.css">
+  <link rel="stylesheet" href="assets/css/component/switchery.min.css">
+  <link rel="stylesheet" href="assets/css/lib/easy-autocomplete.min.css">
+  <title>FlashCardX</title>
 
-  
-   <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+</head>
+
+<body>
+  <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+    <div class="container">
+      <button class="navbar-toggler pull-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
+        aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
       <a class="navbar-brand" href="/">FlashCardX</a>
-        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-       <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="/discover">Discover</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/">My collection</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Create card</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/practice">Practice</a>
-      </li>
-    </ul>
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/discover">Discover</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/">My collection</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Create card</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/practice">Practice</a>
+          </li>
+        </ul>
+        <a class="btn btn-warning my-2 my-sm-0 " href="/settings"> <i class="fa fa-cog fa-fw" aria-hidden="true"></i></a>
 
-         <a class="btn btn-warning my-2 my-sm-0 " href="/settings"> <i class="fa fa-cog fa-fw" aria-hidden="true"></i></a>
-          
-         <a class="btn btn-danger my-2 my-sm-0 btn-space-left" href="/logout"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i></a>
-        
-        </div>
-    </nav>
-  <div class= "container create-wrapper">
-      <% errors.forEach(err=>{%>
-            <div class="alert alert-danger">
-                <strong>Error!</strong> <%= err%>
-            </div> 
-        <%});%>
-        <% if(success){%>
-            <div class="alert alert-success">
-                <strong>Success!</strong> <%= success%>
-            </div>
-            <script>
-              window.setTimeout(function() {$(".alert-success").fadeTo(500, 0).slideUp(500, function(){
-              $(this).remove(); 
-                 });
-              }, 4000);
-            </script>
-        <%};%>
-        
-         <form enctype="multipart/form-data"  class="form-horizontal " action= "#" method="post">
-          <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
-            <div class="form-group">
-                <div class="col-sm-10">
-                <input name="name" type="text" required="true"class="form-control" id="title" placeholder="What is it?">
-                </div>
-            </div>
-             <div class="form-group">
-                <div class="col-sm-10">
-                <textarea rows="5" name="description" type="text" class="form-control" id="description" placeholder="A description of the word"></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group col-sm-12">
-                    <select name="category" class="form-control" id="category">
-                        <option selected="selected" value="">No category</option>
-                    </select>
-                     <button role="button" class="left-margin btn btn-warning " type="button" data-toggle="modal" data-target="#new-category-modal">Add new category</button>
-                </div>
-            </div>                
-            
-            <div class="picure-load">
-                  <div id="custom-search-input">
-                      <div class="input-group col-sm-12">
-                         <input id="search-box"  onkeydown="if (event.keyCode == 13) return false;"type="text" class="col-sm-8 form-control input-lg" placeholder="Search image" />
-                          <span class="input-group-btn">
-                              <button id ="search-button" class="btn btn-success" role="button" type="button" onClick="search()">
-                                  <i class="fa fa-search fa-fw" aria-hidden="true"></i>
-                              </button>
-                          </span>
-                      <span class="text-black" style="margin-left:6px;margin-right:6px;">OR</span>
-                      <button role="button" class=" btn btn-success " type="button" onclick="chooseFile();">Upload image</button>
+        <a class="btn btn-danger my-2 my-sm-0 btn-space-left" href="/logout"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="col-md-12 col-12">
+      <div class="create-wrapper">
+        <% errors.forEach(err=>{%>
+          <div class="alert alert-danger">
+            <strong>Error!</strong>
+            <%= err%>
+          </div>
+          <%});%>
+            <% if(success){%>
+              <div class="alert alert-success">
+                <strong>Success!</strong>
+                <%= success%>
+              </div>
+              <script>
+                window.setTimeout(function () {
+                  $(".alert-success").fadeTo(500, 0).slideUp(500, function () {
+                    $(this).remove();
+                  });
+                }, 4000);
+              </script>
+              <%};%>
+
+                <form enctype="multipart/form-data" class="form-horizontal " action="#" method="post">
+                  <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-10 ev-easyautocomplete">
+                        <input name="name" type="text" required="true" class="form-control" id="title" placeholder="What is it?">
                       </div>
-                      <div class = "image-gallery">
+                    </div>
+                  </div> 
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-10">
+                         <textarea rows="5" name="description" type="text" class="form-control" id="description" placeholder="A description of the word"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-lg-9 col-md-9 col-sm-12">
+                        <select name="category" class="form-control" id="category">
+                              <option selected="selected" value="">No category</option>
+                          </select>
+                       </div>
+                       <div class="col-lg-2 col-md-12 col-sm-12 ev-margin-top">
+                          <button role="button" class="left-margin btn btn-warning " type="button" data-toggle="modal" data-target="#new-category-modal">Add new category</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="picure-load">
+                    <div id="custom-search-input">
+                      <div class="row">
+                        <div class="input-group col-lg-9 col-md-9 col-sm-12">
+                          <input id="search-box" onkeydown="if (event.keyCode == 13) return false;" type="text" class=" form-control input-lg"
+                            placeholder="Search image" />
+                          <span class="input-group-btn">
+                                    <button id ="search-button" class="btn btn-success" role="button" type="button" onClick="search()">
+                                        <i class="fa fa-search fa-fw" aria-hidden="true"></i>
+                                    </button>
+                                </span>
+                          <span class="text-black" style="margin-left:6px;margin-right:6px;">OR</span>
+                        </div>
+                        <div class="col-lg-2 col-md-12 col-sm-12 ev-margin-top">
+                            <button role="button" class="left-margin btn btn-success " type="button" onclick="chooseFile();">Upload image</button>
+                        </div>
+                      </div>
+                      <div class="image-gallery">
                         <div id="gallery">
                         </div>
                         <div id="pagination-container">
@@ -114,110 +133,115 @@
                       </div>
                       <div id="addButton">
                       </div>
-                  </div>
-                                    
-                 <div class="input-group col-sm-10 row">
-                              <div class="col-md-offset-1">
-                              <div id="wrap-img1" class="img-wrap">
-                                    <span id="close1" class="close" onClick="closeImg(1);">&times;</span>
-                                    <div id="delimiterImg1" style="overflow:hidden;">
-                                        <img class="resize-img img-responsive" src="assets/img/no-image.png" />
-                                    </div>
-                                    <input id="img1" type="hidden" name="img1" value=""> </input>
-                                    <input id="height1" type="hidden" name="height1" value=""> </input>
-                                    <input id="width1" type="hidden" name="width1" value=""> </input>
-                                    <div style="height:0px;overflow:hidden">
-                                        <input accept="image/*" type="file" onchange="readURL(this, 1);" id="fileInput1" name="fileInput1" ></input>
-                                    <div style="height:0px;overflow:hidden">
-                                    </div>
-                              </div>
-                              </div>
-                              <div id="wrap-img2" class="img-wrap">
-                                    <span id="close2" class="close" onClick="closeImg(2);"> &times;</span>
-                                    <div id="delimiterImg2" style="overflow:hidden;">
-                                        <img class="resize-img img-responsive" src="assets/img/no-image.png" />
-                                    </div>
-                                    <input id="img2" type="hidden" name="img2" value=""> </input>
-                                    <input id="height2" type="hidden" name="height2" value=""> </input>
-                                    <input id="width2" type="hidden" name="width2" value=""> </input>
-                                    <div style="height:0px;overflow:hidden">
-                                        <input accept="image/*" type="file"  onchange="readURL(this, 2);" id="fileInput2" name="fileInput2" />
-                                    </div>
-                              </div>
-                              
+                    </div>
 
-                                <div id="wrap-img3" class="img-wrap">
-                                    <span id="close3" class="close" onClick="closeImg(3);">&times;</span>
-                                    <div id="delimiterImg3" style="overflow:hidden;">
-                                        <img class="resize-img img-responsive" src="assets/img/no-image.png" />
-                                    </div>
-                                        <input id="img3" type="hidden" name="img3" value=""> </input>
-                                    <input id="height3" type="hidden"  name="height3" value=""> </input>
-                                    <input id="width3" type="hidden" name="width3" value=""> </input>
-                                    <div style="height:0px;overflow:hidden">
-                                        <input accept="image/*" type="file" id="fileInput3" onchange="readURL(this , 3);" name="fileInput3" />
-                                    </div>
+                    <div class="row">
+                      <div class="col-md-8">
+                        <div class="row">
+                          <div id="wrap-img1" class="col-lg-4 col-md-6 col-sm-8 ev-padding-top">
+                              <span id="close1" class="close" onClick="closeImg(1);">&times;</span>
+                              <div id="delimiterImg1" style="overflow:hidden;">
+                                <img class="resize-img img-responsive" src="assets/img/no-image.png" />
+                              </div>
+                              <input id="img1" type="hidden" name="img1" value="">
+                              <input id="height1" type="hidden" name="height1" value="">
+                              <input id="width1" type="hidden" name="width1" value="">
+                              <div style="height:0px;overflow:hidden">
+                                <input accept="image/*" type="file" onchange="readURL(this, 1);" id="fileInput1" name="fileInput1">
+                                <div style="height:0px;overflow:hidden">
                                 </div>
-                             
-                        
+                              </div>
+                          </div>
+                          <div id="wrap-img2" class="col-lg-4 col-md-6 col-sm-8 ev-padding-top">
+                              <span id="close2" class="close" onClick="closeImg(2);"> &times;</span>
+                              <div id="delimiterImg2" style="overflow:hidden;">
+                                <img class="resize-img img-responsive" src="assets/img/no-image.png" />
+                              </div>
+                              <input id="img2" type="hidden" name="img2" value="">
+                              <input id="height2" type="hidden" name="height2" value="">
+                              <input id="width2" type="hidden" name="width2" value="">
+                              <div style="height:0px;overflow:hidden">
+                                <input accept="image/*" type="file" onchange="readURL(this, 2);" id="fileInput2" name="fileInput2" />
+                              </div>
+                          </div>
+                          <div id="wrap-img3" class="col-lg-4 col-md-6 col-sm-8 ev-padding-top">
+                              <span id="close3" class="close" onClick="closeImg(3);">&times;</span>
+                              <div id="delimiterImg3" style="overflow:hidden;">
+                                <img class="resize-img img-responsive" src="assets/img/no-image.png" />
+                              </div>
+                              <input id="img3" type="hidden" name="img3" value="">
+                              <input id="height3" type="hidden" name="height3" value="">
+                              <input id="width3" type="hidden" name="width3" value="">
+                              <div style="height:0px;overflow:hidden">
+                                <input accept="image/*" type="file" id="fileInput3" onchange="readURL(this , 3);" name="fileInput3" />
+                              </div>
+                          </div>
                         </div>
-            </div>
 
-            <div class="form-group"> 
-                <div class="col-sm-offset-2 col-sm-10">
-                <button role="button" type="submit" class="btn btn-default btn-outline-success btn-gray">Create!</button>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button role="button" type="submit" class="btn btn-default btn-outline-success btn-gray">Create!</button>
+                    </div>
+                  </div>
+                </form>
+                <div class="inline">
+                  <span class="text-black">Autocomplete:</span>
+                  <input type="checkbox" class="js-switch" checked />
                 </div>
-            </div>
-        </form>
-        <div class="inline">
-                <span class="text-black">Autocomplete:</span>
-                <input type="checkbox" class="js-switch" checked />
-            </div>
 
-         
-<div class="modal fade" id="new-category-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New category</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-       <input type="text" class="form-control" id="new-category" placeholder="Category's name">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" onCLick="newCategory()" data-dismiss="modal" class="btn btn-primary">Add category</button>
+
+                <div class="modal fade" id="new-category-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">New category</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      </div>
+                      <div class="modal-body">
+                        <input type="text" class="form-control" id="new-category" placeholder="Category's name">
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" onCLick="newCategory()" data-dismiss="modal" class="btn btn-primary">Add category</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
       </div>
     </div>
   </div>
-</div>
 
-  </div>
-  <!-- end container-->
-
-</div>
+  <%- include('tiles/footer'); %>
 
 
-       <%- include('tiles/footer'); %>
+
+
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  
 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-<script src="/assets/js/lib/switchery.min.js"></script> 
-<script src="/assets/js/lib/jquery.easy-autocomplete.min.js"></script> 
-<script src="/assets/js/capabilities/suggest.js"></script>
-<script src="/assets/js/capabilities/autocomplete.js"></script> 
-<script src="/assets/js/general.js"></script>
-<script src="/assets/js/createCard.js"></script>
-<script src="/assets/js/lib/jquery.twbsPagination.min.js"></script>
- <script src="/assets/js/lib/image-picker.min.js"></script> 
- <script src="https://unpkg.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
-<script src="/assets/js/lib/masonry.pkgd.min.js"></script> 
-  </body>
+    <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+      crossorigin="anonymous"></script>
+    <script src="/assets/js/lib/switchery.min.js"></script>
+    <script src="/assets/js/lib/jquery.easy-autocomplete.min.js"></script>
+    <script src="/assets/js/capabilities/suggest.js"></script>
+    <script src="/assets/js/capabilities/autocomplete.js"></script>
+    <script src="/assets/js/general.js"></script>
+    <script src="/assets/js/createCard.js"></script>
+    <script src="/assets/js/lib/jquery.twbsPagination.min.js"></script>
+    <script src="/assets/js/lib/image-picker.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
+    <script src="/assets/js/lib/masonry.pkgd.min.js"></script>
+</body>
+
 </html>
