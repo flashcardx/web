@@ -10,13 +10,12 @@
 }
 
 body {
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 @import url( 'https://fonts.googleapis.com/css?family=Work+Sans');
 
 body {
   background: #efefef;
-  color: #444444;
   opacity: .95;
 }
 @-webkit-keyframes spin {
@@ -39,17 +38,21 @@ body {
 }
 
 .alert-deleted {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 5000;
+    position:fixed; 
+    top: 20px; 
+    left: 0px; 
+    width: 100%;
+    z-index:9999; 
+    border-radius:0px
 }
 
 .alert-side {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 5000;
+ position:fixed; 
+    top: 20px; 
+    left: 0px; 
+    width: 100%;
+    z-index:9999; 
+    border-radius:0px
 }
 
 /* Footer */
@@ -77,8 +80,8 @@ body {
   cursor: pointer;
 }
 
-.main-content {
-  min-height: 500px;
+.min-height {
+  min-height: 700px;
 }
 
 .pull-left {
@@ -109,4 +112,16 @@ a:visited {
   right: 10px;
   z-index: 1;
   cursor: pointer;
+}
+
+button:focus {outline:0;}
+
+.round{
+width: 45px;
+  height: 45px;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 20px;
+  line-height: 1;
+  border-radius: 50%;
 }

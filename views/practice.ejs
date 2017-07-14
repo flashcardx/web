@@ -13,7 +13,7 @@
   <title>FlashCardX</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
     crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/component/general.css">
   <link rel="stylesheet" href="assets/css/page/homeNL.css">
   <link rel="stylesheet" href="assets/css/page/discover.css">
@@ -46,10 +46,9 @@
             <a class="nav-link" href="#">Practice</a>
           </li>
         </ul>
-        <a class="btn btn-warning my-2 my-sm-0 " href="/settings"> <i class="fa fa-cog fa-fw" aria-hidden="true"></i></a>
-
-        <a class="btn btn-danger my-2 my-sm-0 btn-space-left" href="/logout"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i></a>
-      </div>
+         <a data-toggle='tooltip' data-placement='right' title='Settings' class="round btn btn-warning my-2 my-sm-0 " href="/settings"> <i class="fa fa-cog fa-fw" aria-hidden="true"></i></a>
+         <a data-toggle='tooltip' data-placement='right' title='Sign out' class="round btn btn-danger my-2 my-sm-0 btn-space-left" href="/logout"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i></a>
+       </div>
     </div>
   </nav>
   <div class="container cnt_main_practice">
@@ -91,6 +90,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
       crossorigin="anonymous"></script>
     <script src="assets/js/formatDate.js"></script>
@@ -98,6 +98,7 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
     <script src="assets/js/general.js"></script>
     <script src="assets/js/lib/articulate.min.js"></script>
+    <script src="assets/js/lib/bootstrap-notify.min.js"></script>
     <script src="assets/js/practice.js"></script>
 </body>
 

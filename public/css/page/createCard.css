@@ -119,4 +119,5 @@
 
 .easy-autocomplete-container {
   color: black;
+  z-index: 900;
 }

@@ -12,24 +12,31 @@ function speak(obj, lang){
 }
 
 function showSuccess(msg){
-     $(".main-content").prepend(""   +
-            "<div class='alert alert-side alert-success'>" +
-            msg+"</div>");
-
-     window.setTimeout(function() {
-    $(".alert-side").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove(); 
-        });
-        }, 4000);
+       $.notify({
+            title: "Success,",
+            icon:"fa fa-thumbs-up",
+            message: msg
+            },
+            {
+                type: 'success'
+            }
+            , {
+	            newest_on_top: true
+            }
+        );
 }
 
 function showError(msg){
-    $(".main-content").prepend(""   +
-            "<div class='alert alert-danger'>" +
-            "<strong>Error! </strong>" + msg + "</div>");
-
-    window.setTimeout(function() {$(".alert-danger").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove(); 
-        });
-        }, 4000);
+        $.notify({
+            title: "Error,",
+            icon:"fa fa-exclamation-triangle",
+            message: msg
+            },
+            {
+                type: 'danger'
+            }
+            , {
+	            newest_on_top: true
+            }
+        );
 }

@@ -6,6 +6,10 @@ var sort = "desc";
 var category = "*";
 var searchParameter;
 setScroll();
+$(document).ready(()=>{
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
 
 function setScroll(){
     $(window).scroll(function() {
@@ -55,6 +59,7 @@ function getMoreCards(){
             queryString += "&q=" + searchParameter;
         if(!firstTime){
             var last = getLast();
+            console.log("last: " + last);
             if(last === undefined)
                 return;
             queryString += "&last=" + last;
@@ -101,29 +106,18 @@ function processResult(result){
 }
 
 function getLast(){
-    return $('#card-deck div.card:last').attr('id');
-}
-
-function showError(msg){
-    $(".main-content").prepend(""   +
-            "<div class='alert alert-danger'>" +
-            "<strong>Error! </strong>" + msg + "</div>");
-
-    window.setTimeout(function() {$(".alert-danger").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove(); 
-        });
-        }, 4000);
+    return $('#card-deck div.ev-item:last').attr('id');
 }
 
 function appendCards(cards){
     cards.forEach((card, index1)=>{// "<div class='card' id='" + containerId + "'>" +
     var containerId = card.updated_at;
     var html = 
-        "<div class='ev-item'>" +
+        "<div id='"+containerId+"' class='ev-item'>" +
             "<div id='carousel" + index1+"' class='carousel slide'>"+
                   "<div class='slick'>";
 
-    console.log(card.imgs.length);
+  
     if (card.imgs.length>0) {
         card.imgs.forEach((img, index2)=>{
             var height = img.height;
@@ -136,17 +130,13 @@ function appendCards(cards){
                 height=200;
             }
             if(index2===0){
-                    html += "<div class='active slide-fixed-size'>" +
-                                  "<div class='slide-size' style='max-height: 200px; height:"+height+"px;width:"+width+"px;overflow:hidden'>"+
-                                        "<img class='d-block img-fluid' data-lazy='" + img.hash +"' alt='One moment!...'>" +
-                                  "</div>"+
+                    html += "<div class='active slide-fixed-size' style='height:250px; width: auto;overflow:hidden'>" +
+                                  "<img class='d-block img-fluid' data-lazy='" + img.hash +"' alt='One moment!...'>" +
                                  "</div>";
                 }
             else{
-                    html +="<div class='slide-fixed-size'>"+
-                                   "<div class='slide-size' style='max-height: 200px; height:"+height+"px;width:"+width+"px;overflow:hidden'>"+
-                                        "<img class='d-block img-fluid' data-lazy='" + img.hash +"' alt='One moment!...'>" +
-                                  "</div>"+
+                    html +="<div class='slide-fixed-size' style='height:250px; width: auto;overflow:hidden'>"+
+                                   "<img class='d-block img-fluid' data-lazy='" + img.hash +"' alt='One moment!...'>" +
                             "</div>";
                 }
         });
@@ -169,22 +159,31 @@ function appendCards(cards){
                        "<div class='col-12'>"+
                            "<div data-category='"+card.category+"'>"+//do not delete this div, updateCard.js needs it to update card
                                "<h4 id='speak"+card._id+"' class='card-title'><span>"+ card.name +" </span><i onCLick=\"speak(\'"+card._id+"\', \'"+card.lang+"\');\" class='speaker fa fa-volume-up black' aria-hidden='true'></i></h4>"+
-                               "<p id='description-"+card._id+"'class='card-text card-description ev-more'>"+ checkUndefined(description) +"</p>"+
-                               "<p class='card-time card-text'><small id='update-time-"+card._id+"'class='text-muted format-date'>Updated "+ timeSince(new Date(card.updated_at)) +" ago. "+"</small>"+
-                               "</p>"+
+                               "<p style='text-align:left;' id='description-"+card._id+"'class='card-text card-description ev-more'>"+ checkUndefined(description) +"</p>"+
                             "</div>" +
                        "</div>"+
                    "</div>"+
-                   "<div class='row>" + 
+                   "<div style='margin-top:33px;' class='row'>" + 
                         "<div class='col-md-12'>"+
-                            "<div class= 'col' id='buttons-"+card._id+"'>"+
-                                    "<a id='update-button-"+card._id+"'role='button' onClick=\"updateCard('"+ card._id +"')\" class='btn nounderline btn-info my-2 my-sm-1 ev-mr-10'> <i class='fa fa-pencil-square-o fa-fw' aria-hidden='true'></i></a>"+
-                                    "<a id='"+card._id+"' role='button' onClick=\"deleteCard('"+card._id+"','"+ card.updated_at +"')\" class='btn nounderline btn-danger delete-btn my-2 my-sm-1'> <i class='fa fa-trash fa-fw' aria-hidden='true'></i></a>"+
-                           "</div>"+
+                            "<div  id='buttons-"+card._id+"' style='float:right;' class='card-buttons' id='buttons-"+card._id+"'>"+
+                                "<button  style='float:right;' data-toggle='tooltip' data-placement='right' title='Delete' onClick=\"deleteCard('"+card._id+"','"+ card.updated_at +"')\"  class=' ev-btn-fab md-fab ev-md-fab ev-md-fab-offset ev-m-r ev-red pull-right'>" +
+                                    "<i class='fa fa-trash fa-fw'></i>" +
+                                "</button>" +
+                                "<button id='update-button-"+card._id+"' style='float:right;' data-toggle='tooltip' onClick=\"updateCard('"+ card._id +"')\" data-placement='right' title='Edit' class='ev-btn-fab md-fab ev-md-fab ev-md-fab-offset ev-m-r ev-yellow pull-right'>" +
+                                        "<i class='fa fa-pencil-square-o fa-fw'></i>" +
+                                    "</button>" +
+                                 "<button style='float:right;' data-toggle='tooltip' data-placement='right' title='Duplicate on class' class='ev-btn-fab md-fab ev-md-fab ev-md-fab-offset ev-m-r ev-violet pull-right'>" +
+                                        "<i class='fa fa-share fa-fw'></i>" +
+                                    "</button>" +
+                            "</div>" +
                         "</div>"+
                    "</div>"+
+                   "<div class='mycard-footer'>"+
+                   "<p class='card-time card-text'><small id='update-time-"+card._id+"'class='text-muted format-date'>Updated "+ timeSince(new Date(card.updated_at)) +" ago. "+"</small>"+
+                               "</p>"+
+                   "</div>"+
                "</div>";
-    $("#card-deck").append("<div class='col-lg-4 col-md-6 col-sm-12'><div class='ev-panel ev-panel-card ev-height-collection'>"+html+"</div></div>");
+    $("#card-deck").append("<div id='"+card._id+"' class='col-lg-4 col-md-6 col-sm-12'><div class='ev-panel ev-panel-card ev-height-collection'>"+html+"</div></div>");
     $(".slick").not('.slick-initialized').slick({
             lazyLoad: 'ondemand',
             slidesToShow: 1,
@@ -193,24 +192,26 @@ function appendCards(cards){
             nextArrow:"<img class='a-right control-c next slick-next' src='assets/img/right-arrow.png'>"
         });
     });
-    viewMore();
+    viewMore(cards);
 }
 
-    function viewMore() {
-        console.log("Entre en view more");
-        var showChar = 20;  
+    function viewMore(cards) {
+        var showChar = 45;  
         var ellipsestext = "...";
         var moretext = "Show more >";
         var lesstext = "Show less";
 
-        $('.ev-more').each(function() {
-            var content = $(this).html();
-            var id = $(this).attr('id');
-            if(content.length > showChar) {
+
+        cards.forEach(c=>{
+            var id = "description-" + c._id;
+            var content = $("#" + id).html();
+            console.log("got here: " + c.description);
+            if(c.description && c.description.length > showChar){
+                console.log("got here: " + c.description);
                 var initial = content.substr(0, showChar);
                 var more = content.substr(showChar, content.length - showChar);
                 var html = initial + "<span style='display:block;' id='ellipse-"+id+"'>"+ellipsestext+"</span><span id='morecontent-"+id+"' style='display:none'>"+more+"</span> <a id='btn-"+id+"' href='#' onClick=\"showtext(event,'morecontent-"+id+"','ellipse-"+id+"', 'btn-"+id+"')\" class='ev-morelink'>" + moretext + "</a>";
-                $(this).html(html);
+                $("#" + id).html(html);
             }
         });
     }
@@ -222,7 +223,7 @@ function appendCards(cards){
         var txtmore = document.getElementById(id);
         var txtellipse = document.getElementById(ellipse);
         if (txtmore.style.display === 'none') {
-            txtmore.style.display = 'block';
+            txtmore.style.display = 'inline';
             txtellipse.style.display = 'none';
             btn.innerHTML="Show Less";
         } else {

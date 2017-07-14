@@ -15,6 +15,13 @@ var imgLoadAvailable = [1,2,3];
                 showError(err);
         }
     });
+
+$(document).ready(()=>{
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+
+
  function fillCategories(categories){
      categories.forEach(c=>{
          $('#category').append($('<option>', {
@@ -74,14 +81,18 @@ function search(){
 }
 
 function showError(msg){
-    $(".container").prepend(""   +
-            "<div class='alert alert-danger'>" +
-            "<strong>Error! </strong>" + msg + "</div>");
-
-    window.setTimeout(function() {$(".alert-danger").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove(); 
-        });
-        }, 4000);
+         $.notify({
+            title: "Error,",
+            icon:"fa fa-exclamation-triangle",
+            message: msg
+            },
+            {
+                type: 'danger'
+            }
+            , {
+	            newest_on_top: true
+            }
+        );
 }
 
 function displayGallery(data){
@@ -92,15 +103,18 @@ function displayGallery(data){
 }
 
 function showWarning(msg){
-     $(".container").prepend(""   +
-            "<div class='alert alert-warning'>" +
-              msg + "</div>");
-
-    window.setTimeout(function() {
-    $(".alert-warning").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove(); 
-        });
-        }, 4000);
+       $.notify({
+            title: "Warning,",
+            icon:"fa fa-exclamation-triangle",
+            message: msg
+            },
+            {
+                type: 'warning'
+            }
+            , {
+	            newest_on_top: true
+            }
+        );
 }
 
 function showWarningLimit(){
@@ -256,13 +270,16 @@ function readURL(input, number) {
 }
 
 function showSuccess(msg){
-     $(".container").prepend(""   +
-            "<div class='alert alert-side alert-success'>" +
-            msg+"</div>");
-
-     window.setTimeout(function() {
-    $(".alert-side").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove(); 
-        });
-        }, 4000);
+     $.notify({
+            title: "Success,",
+            icon:"fa fa-thumbs-up",
+            message: msg
+            },
+            {
+                type: 'success'
+            }
+            , {
+	            newest_on_top: true
+            }
+        );
 }

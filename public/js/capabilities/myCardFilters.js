@@ -113,8 +113,8 @@ function loadCategories(){
  function fillCategoriesFilter(categories){
      categories.forEach(c=>{
          $('#category-select').append($('<option>', {
-                value: c,
-                text: c
+                value: c.name,
+                text: c.name
             }));
      })
  }

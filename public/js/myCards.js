@@ -21,15 +21,14 @@ function deleteCard(id){
             removeCard(id);
         },
         error: err=>{
-            $(".main-content").prepend(""   +
-            "<div class='alert alert-danger'>" +
-            "<strong>Error! </strong>" + err + "</div>");
+            showError(err);
         }
     });
 }
 
 function removeCard(id){
-    $("#"+id).closest(".card").fadeOut(300, function(){ $(this).remove();});
+    $("#" + id).fadeOut(300, function(){ $(this).remove();});
+    showSuccess("Card was deleted!");
 }
 
 

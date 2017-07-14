@@ -13,13 +13,15 @@
   <title>FlashCardX</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
     crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/component/general.css">
   <link rel="stylesheet" href="assets/css/page/homeNL.css">
   <link rel="stylesheet" href="assets/css/page/discover.css">
   <link rel="stylesheet" href="assets/css/component/card.css">
   <link rel="stylesheet" href="assets/css/page/evclass.css">
   <link rel="stylesheet" href="assets/css/component/slideshow.css">
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
+    
 
 </head>
 
@@ -50,15 +52,13 @@
             <a class="nav-link" href="/practice">Practice</a>
           </li>
         </ul>
-        <a class="btn btn-warning my-2 my-sm-0 " href="/settings"> <i class="fa fa-cog fa-fw" aria-hidden="true"></i></a>
-
-        <a class="btn btn-danger my-2 my-sm-0 btn-space-left" href="/logout"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i></a>
+        <a data-toggle='tooltip' data-placement='right' title='Settings' class="btn btn-warning my-2 my-sm-0 round" href="/settings"> <i class="fa fa-cog fa-fw" aria-hidden="true"></i></a>
+        <a data-toggle='tooltip' data-placement='right' title='Sign out' class="btn btn-danger my-2 my-sm-0 btn-space-left round" href="/logout"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i></a>
       </div>
     </div>
   </nav>
 
-
-  <div class="container main-content">
+  <div class="container min-height">
     <% errors.forEach(err=>{%>
       <div class="alert alert-danger alert-dismissable">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -69,12 +69,37 @@
 
         <div class="row ev-pd-top">
           <div class="col-md-12 col-12">
-            <div class="row" id="card-deck">
+            <div class="row"id="card-deck">
               <!--Here in Jquery-->
             </div>
           </div>
         </div>
-  </div>
+
+
+          <!--Modal new category-->
+          <div class="modal fade" id="duplicate-on-class-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Select class for duplicate card:</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                  <input type="text" class="form-control" id="new-category" placeholder="Category's name">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" onCLick="newCategory()" data-dismiss="modal" class="btn btn-primary">Confirm</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+  </div><!--end main container -->
 
   <%- include('tiles/footer'); %>
 
@@ -82,13 +107,14 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
       crossorigin="anonymous"></script>
     <script src="assets/js/formatDate.js"></script>
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
-    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+   <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
     <script src="assets/js/discoverCards.js"></script>
     <script src="assets/js/general.js"></script>
+    <script src="assets/js/lib/bootstrap-notify.min.js"></script>
     <script src="assets/js/capabilities/duplicateCard.js"></script>
     <script src="assets/js/lib/articulate.min.js"></script>
 </body>

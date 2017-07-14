@@ -2,12 +2,13 @@
   display: block;
   width: 100%;
   display: center;
-  text-align: center;
+ 
   padding-left: 80px;
   padding-right: 100px;
 }
 
 .card {
+  text-align: left;
   margin: 10px;
   max-width: 641px;
   background-color: #FFF;
@@ -27,13 +28,19 @@
   margin-left: auto;
 }
 
-.mycard-footer{
-    bottom: 7px;
-    border:none;
-    position: absolute;
-    text-align: center;
-    width: calc(100% - 50px);
-    box-sizing: border-box;
+
+
+.card-buttons{
+    height:35px;
+}
+.card-title{
+  overflow: hidden;
 }
 
 
+.mycard-footer{
+    bottom: 7px;
+    border:none;
+    text-align: center;
+    box-sizing: border-box;
+}

@@ -16,7 +16,8 @@ function updateCard(cardId){
     descriptionElement.replaceWith("<textarea rows='5' name='description' id='update-description-"+cardId+"' type='text' class='form-control' placeholder='A description of the word'>"+oldDescription+"</textarea>");
     var category = textElement.attr("data-category");
     var selectHtml = setupSelect(cardId, category);
-    timeElement.replaceWith(selectHtml);
+    timeElement.hide();
+    textElement.append(selectHtml);
     fillWithCategories(cardId, category);
     loadUpdateButtons(cardId, backupText, backUpButtons);
 }
@@ -58,11 +59,11 @@ function fillWithCategories(cardId, category){
 function fillCategories(cardId, defaultCategory, categories){
     var selectElement = $("#select-category-"+cardId);
      categories.forEach(c=>{
-         if(c !== defaultCategory)
-         selectElement.append($('<option>', {
-                value: c,
-                text: c
-            }));
+         if(c.name !== defaultCategory)
+            selectElement.append($('<option>', {
+                    value: c.name,
+                    text: c.name
+                }));
      })
  }
 
@@ -156,13 +157,31 @@ function cancel(cardId, backupText, backUpButtons){
 
 
 function showSuccess(msg){
-     $(".container").prepend(""   +
-            "<div class='alert alert-side alert-success'>" +
-            msg+"</div>");
+       $.notify({
+            title: "Success,",
+            icon:"fa fa-thumbs-up",
+            message: msg
+            },
+            {
+                type: 'success'
+            }
+            , {
+	            newest_on_top: true
+            }
+        );
+}
 
-     window.setTimeout(function() {
-    $(".alert-side").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove(); 
-        });
-        }, 4000);
+function showError(msg){
+        $.notify({
+            title: "Error,",
+            icon:"fa fa-exclamation-triangle",
+            message: msg
+            },
+            {
+                type: 'danger'
+            }
+            , {
+	            newest_on_top: true
+            }
+        );
 }

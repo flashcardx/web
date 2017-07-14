@@ -13,13 +13,14 @@
   <title>FlashCardX</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
     crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/component/general.css">
   <link rel="stylesheet" href="assets/css/page/homeNL.css">
-  <link rel="stylesheet" href="assets/css/component/card.css">
+  <link rel="stylesheet" href="assets/css/page/evclass.css">
   <link rel="stylesheet" href="assets/css/page/homeL.css">
   <link rel="stylesheet" href="assets/css/component/slideshow.css">
-  <link rel="stylesheet" href="assets/css/page/evclass.css">
+  <link rel="stylesheet" href="assets/css/component/card.css">
+      <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
 </head>
 
 <body>
@@ -45,13 +46,13 @@
             <a class="nav-link" href="/practice">Practice</a>
           </li>
         </ul>
-        <a class="btn btn-warning my-2 my-sm-0 " href="/settings"> <i class="fa fa-cog fa-fw" aria-hidden="true"></i></a>
+        <a data-toggle='tooltip' data-placement='right' title='Settings' class="round btn btn-warning my-2 my-sm-0 " href="/settings"> <i class="fa fa-cog fa-fw" aria-hidden="true"></i></a>
 
-        <a class="btn btn-danger my-2 my-sm-0 btn-space-left" href="/logout"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i></a>
+        <a data-toggle='tooltip' data-placement='right' title='Sign out' class="round btn btn-danger my-2 my-sm-0 btn-space-left" href="/logout"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i></a>
       </div>
     </div>
   </nav>
-  <div class="main-content">
+  <div class="main-content min-height">
     <div class="container">
       <% errors.forEach(err=>{%>
         <div class="alert alert-danger alert-dismissable">
@@ -136,15 +137,14 @@
       crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
       crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
     <script src="assets/js/general.js"></script>
     <script src="assets/js/formatDate.js"></script>
     <script src="assets/js/myCards.js"></script>
     <script src="assets/js/capabilities/myCardFilters.js"></script>
+    <script src="assets/js/lib/bootstrap-notify.min.js"></script>
     <script src="assets/js/getMyCards.js"></script>
     <script src="assets/js/lib/articulate.min.js"></script>
-    <script src="assets/js/evfunction.js"></script>
     <script src="assets/js/capabilities/updateCard.js"></script>
 </body>
 

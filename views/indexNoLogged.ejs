@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Learn new languages with beautiful images. Create flashcards and share them with classmates">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>FlashCardX</title>
@@ -10,7 +11,7 @@
     <!-- Bootstrap -->
     <link href="assets/css/lib/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/lib/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="assets/css/page/landingPage.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/component/fbButton.css">
     
@@ -36,7 +37,7 @@
             <div class="form-group">
               <input type="password" name="password" placeholder="Password" class="form-control">
             </div>
-            <button type="submit" class="btn margin-left btn-outline-success">Sign in</button>
+            <button type="submit" class="btn margin-left btn-success">Sign in</button>
           </form>
         </div><!--/.navbar-collapse -->
       </div>
@@ -73,26 +74,22 @@
               <form class="form-horizontal" id="form-signup" action= "/signup" method="post">
               <input type="hidden" name="_csrf" value="<%=csrfTokenLogin%>"/>
            <div class="form-group">
-                <label class="control-label col-sm-2" for="email">Email:</label>
-                <div class="col-sm-10">
+                 <div class="col-sm-10">
                 <input name="email" type="email" required="true"class="form-control" id="email" placeholder="Your email">
                 </div>
             </div>
              <div class="form-group">
-                <label class="control-label col-sm-2" for="name">Name:</label>
-                <div class="col-sm-10">
+               <div class="col-sm-10">
                 <input name="name" type="text" class="form-control" id="name" placeholder="Your name(or how your friends call you)">
                 </div>
             </div>
            
             <div class="form-group">
-                <label class="control-label col-sm-2" for="pwd">Password:</label>
                 <div class="col-sm-10"> 
                 <input minlength="4" required="true" type="password" name="password" class="form-control" id="pwd" placeholder="Enter password">
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="pwd2">Verify Password:</label>
                 <div class="col-sm-10"> 
                 <input minlength="4" required="true" type="password" name="password2" class="form-control" id="pwd2" placeholder="Enter password again">
                 </div>
@@ -246,5 +243,6 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="assets/js/lib/bootstrap.min.js"></script>
     <script src="assets/js/landingPage.js"></script>
+    <script src="assets/js/lib/bootstrap-notify.min.js"></script>
   </body>
 </html>

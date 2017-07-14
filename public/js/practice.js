@@ -3,6 +3,11 @@ var actualCardId;
 
 getCards();
 
+$(document).ready(()=>{
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+
 function getCards() {
     $.ajax({
         url: "/practiceCards",

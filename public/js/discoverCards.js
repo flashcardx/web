@@ -5,6 +5,11 @@ var end = false;
 setScroll();
 getMoreCards();
 
+$(document).ready(()=>{
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+
 function setScroll() {
 
     $(window).scroll(function () {
@@ -23,10 +28,12 @@ function getMoreCards() {
     var queryString = "";
     if (!firstTime) {
         var last = getLast();
+        console.log("last: " + last);
         if (last === undefined)
             return;
         queryString = "?last=" + last;
     }
+    console.log("get more: " + queryString);
     $.ajax({
         url: "/getDiscoverCards" + queryString,
         success: result => {
@@ -61,15 +68,18 @@ function getLast() {
 }
 
 function showError(msg) {
-    $(".main-content").prepend("" +
-        "<div class='alert alert-danger'>" +
-        "<strong>Error! </strong>" + msg + "</div>");
-
-    window.setTimeout(function () {
-        $(".alert-danger").fadeTo(500, 0).slideUp(500, function () {
-            $(this).remove();
-        });
-    }, 4000);
+      $.notify({
+            title: "Error,",
+            icon:"fa fa-exclamation-triangle",
+            message: msg
+            },
+            {
+                type: 'danger'
+            }
+            , {
+	            newest_on_top: true
+            }
+        );
 }
 
 function appendCards(cards) {
@@ -77,7 +87,7 @@ function appendCards(cards) {
         if (card.description)
             var description = card.description.replace(/(\r\n|\n|\r)/g, "<br />");
         var view =
-            "<div class='ev-panel ev-panel-card ev-height-discovery'>" +
+            "<div id='"+card.counter+"' class='card ev-panel ev-panel-card ev-height-discovery'>" +
             "<div class='ev-item'>" +
             "<div id='carousel" + index1 + "' class='carousel slide'>" +
             "<div class='slick'>";
@@ -92,7 +102,7 @@ function appendCards(cards) {
 
             });
         } else {
-            view += "<div class='slide-fixed-size'>" +
+            view += "<div class='slide-fixed-size' style='height:250px; width: auto;overflow:hidden'>" +
                     "<img class='d-block img-fluid' data-lazy='assets/img/default.png' alt='One moment!...'>" +
                 "</div>"
         }
@@ -100,23 +110,27 @@ function appendCards(cards) {
             "</div>" +
             "</div>" +
             "<div class='ev-p'>" +
-            "<h3 style='text-align:center' id='speak" + card._id + "'>" + card.name + "" +
-            "<i style='margin-left:6px' onCLick=\"speak(\'" + card._id + "\', \'" + card.lang + "\');\" class='speaker fa fa-volume-up black' aria-hidden='true'></i>" +
-            "</h3>" +
-            "<p class='ev-more' id='description-" + card._id + "'>" +
-            checkUndefined(description) +
-            "</p>" +
-                "<div class='card-buttons'>" + 
-                    "<button md-ink-ripple='' onClick=\"duplicateCard('" + card._id + "')\" class='ev-btn-fab md-fab ev-md-fab ev-md-fab-offset ev-m-r ev-orange pull-right'>" +
+                "<h3 style='text-align:center' id='speak" + card._id + "'>" + card.name + "" +
+                "<i style='margin-left:6px' onCLick=\"speak(\'" + card._id + "\', \'" + card.lang + "\');\" class='speaker fa fa-volume-up black' aria-hidden='true'></i>" +
+                "</h3>" +
+                "<p style='text-align:left;' class='ev-more' id='description-" + card._id + "'>" +
+                checkUndefined(description) +
+                "</p>" +
+            "</div>" +
+            "<div class='card-buttons'>"+
+                    "<button data-toggle='tooltip' data-placement='right' title='Duplicate on my collection' onClick=\"duplicateCard('" + card._id + "')\" class=' ev-btn-fab md-fab ev-md-fab ev-md-fab-offset ev-m-r ev-orange pull-right'>" +
                     "<i class='fa fa-share fa-fw'></i>" +
                     "</button>" +
-                "</div" +
-            "</div>" +
-            
+                    "<span data-toggle='modal' data-target='#duplicate-on-class-modal'>" +
+                        "<button data-toggle='tooltip' data-placement='right' title='Duplicate on class' class='ev-btn-fab md-fab ev-md-fab ev-md-fab-offset ev-m-r ev-violet pull-right'>" +
+                        "<i class='fa fa-share fa-fw'></i>" +
+                        "</button>" +
+                    "</span>"+
+             "</div>" +
             "<p class='mycard-footer'>" +
-            "<small class='text-muted format-date'>Updated " + timeSince(new Date(card.updated_at)) + " ago. " +
-            "<span>By: " + checkUndefined(card.ownerName) + "</span>"
-        "</small>" +
+                "<small class='text-muted format-date'>Updated " + timeSince(new Date(card.updated_at)) + " ago. " +
+                    "<span>By: " + checkUndefined(card.ownerName) + "</span>"
+                "</small>" +
             "</p>" +
             "</div>";
 
@@ -129,27 +143,30 @@ function appendCards(cards) {
             nextArrow: "<img class='a-right control-c next slick-next' src='assets/img/right-arrow.png'>"
         });
     });
-    viewMore();
+    viewMore(cards);
+     $('[data-toggle="tooltip"]').tooltip();
 }
 
-function viewMore() {
-    console.log("Entre en view more");
-    var showChar = 45;
-    var ellipsestext = "...";
-    var moretext = "Show more >";
-    var lesstext = "Show less";
+    function viewMore(cards) {
+        var showChar = 45;  
+        var ellipsestext = "...";
+        var moretext = "Show more >";
+        var lesstext = "Show less";
 
-    $('.ev-more').each(function () {
-        var content = $(this).html();
-        var id = $(this).attr('id');
-        if (content.length > showChar) {
-            var initial = content.substr(0, showChar);
-            var more = content.substr(showChar, content.length - showChar);
-            var html = initial + "<span style='display:block;' id='ellipse-" + id + "'>" + ellipsestext + "</span><span id='morecontent-" + id + "' style='display:none'>" + more + "</span> <a id='btn-" + id + "' href='#' onClick=\"showtext(event,'morecontent-" + id + "','ellipse-" + id + "', 'btn-" + id + "')\" class='ev-morelink'>" + moretext + "</a>";
-            $(this).html(html);
-        }
-    });
-}
+
+        cards.forEach(c=>{
+            var id = "description-" + c._id;
+            var content = $("#" + id).html();
+            console.log("got here: " + c.description);
+            if(c.description && c.description.length > showChar){
+                console.log("got here: " + c.description);
+                var initial = content.substr(0, showChar);
+                var more = content.substr(showChar, content.length - showChar);
+                var html = initial + "<span style='display:block;' id='ellipse-"+id+"'>"+ellipsestext+"</span><span id='morecontent-"+id+"' style='display:none'>"+more+"</span> <a id='btn-"+id+"' href='#' onClick=\"showtext(event,'morecontent-"+id+"','ellipse-"+id+"', 'btn-"+id+"')\" class='ev-morelink'>" + moretext + "</a>";
+                $("#" + id).html(html);
+            }
+        });
+    }
 
 function showtext(event, id, ellipse, btn) {
     console.log(btn);
@@ -158,7 +175,7 @@ function showtext(event, id, ellipse, btn) {
     var txtmore = document.getElementById(id);
     var txtellipse = document.getElementById(ellipse);
     if (txtmore.style.display === 'none') {
-        txtmore.style.display = 'block';
+        txtmore.style.display = 'inline';
         txtellipse.style.display = 'none';
         btn.innerHTML = "Show Less";
     } else {
