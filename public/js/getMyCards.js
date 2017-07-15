@@ -51,6 +51,7 @@ function reloadForSearch(q){
     reloadCards();
 }
 
+var xhr;
 function getMoreCards(){
         if(end === true)
             return;
@@ -59,14 +60,14 @@ function getMoreCards(){
             queryString += "&q=" + searchParameter;
         if(!firstTime){
             var last = getLast();
-            console.log("last: " + last);
             if(last === undefined)
                 return;
             queryString += "&last=" + last;
         }
         if(category !== "*")
             queryString += "&category=" + category;
-        $.ajax({
+        try { xhr.abort(); } catch(e){}
+        xhr = $.ajax({
         url:"/getMyCards" + queryString,
         success: result=>{
             if(!result.success)
@@ -77,7 +78,10 @@ function getMoreCards(){
             }
         },
         error: err=>{
-                showError(err);
+            if(err.statusText === "abort")
+                return;
+            console.log("Something went wrong when retrieving cards : " + JSON.stringify(err));
+            showError("Something went wrong when retrieving cards :(");
         }
     });
 }
@@ -109,15 +113,26 @@ function getLast(){
     return $('#card-deck div.ev-item:last').attr('id');
 }
 
+
+function cardAlreadyListed(cardId){
+    var found = false;
+    idsUpdated.forEach((id, index)=>{
+        if(cardId === id)
+            found = true;
+    });
+    return found;
+}
+
 function appendCards(cards){
-    cards.forEach((card, index1)=>{// "<div class='card' id='" + containerId + "'>" +
+    cards.forEach((card, index1)=>{
+    if(sort==="asc" && cardAlreadyListed(card._id) === true)
+        return;
     var containerId = card.updated_at;
     var html = 
         "<div id='"+containerId+"' class='ev-item'>" +
             "<div id='carousel" + index1+"' class='carousel slide'>"+
                   "<div class='slick'>";
 
-  
     if (card.imgs.length>0) {
         card.imgs.forEach((img, index2)=>{
             var height = img.height;
@@ -158,8 +173,8 @@ function appendCards(cards){
                    "<div class='row'>"+
                        "<div class='col-12'>"+
                            "<div data-category='"+card.category+"'>"+//do not delete this div, updateCard.js needs it to update card
-                               "<h4 id='speak"+card._id+"' class='card-title'><span>"+ card.name +" </span><i onCLick=\"speak(\'"+card._id+"\', \'"+card.lang+"\');\" class='speaker fa fa-volume-up black' aria-hidden='true'></i></h4>"+
-                               "<p style='text-align:left;' id='description-"+card._id+"'class='card-text card-description ev-more'>"+ checkUndefined(description) +"</p>"+
+                               "<h4 style='word-wrap: break-word;' id='speak"+card._id+"' class='card-title'><span>"+ card.name +" </span><i onCLick=\"speak(\'"+card._id+"\', \'"+card.lang+"\');\" class='speaker fa fa-volume-up black' aria-hidden='true'></i></h4>"+
+                               "<p style='text-align:left; word-wrap: break-word;' id='description-"+card._id+"'class='card-text card-description ev-more'>"+ checkUndefined(description) +"</p>"+
                             "</div>" +
                        "</div>"+
                    "</div>"+
@@ -198,16 +213,14 @@ function appendCards(cards){
     function viewMore(cards) {
         var showChar = 45;  
         var ellipsestext = "...";
-        var moretext = "Show more >";
-        var lesstext = "Show less";
+        var moretext = "&zwnj;Show more >";
+        var lesstext = "&zwnj;Show less"; //first character is a delimiter for update
 
 
         cards.forEach(c=>{
             var id = "description-" + c._id;
             var content = $("#" + id).html();
-            console.log("got here: " + c.description);
             if(c.description && c.description.length > showChar){
-                console.log("got here: " + c.description);
                 var initial = content.substr(0, showChar);
                 var more = content.substr(showChar, content.length - showChar);
                 var html = initial + "<span style='display:block;' id='ellipse-"+id+"'>"+ellipsestext+"</span><span id='morecontent-"+id+"' style='display:none'>"+more+"</span> <a id='btn-"+id+"' href='#' onClick=\"showtext(event,'morecontent-"+id+"','ellipse-"+id+"', 'btn-"+id+"')\" class='ev-morelink'>" + moretext + "</a>";
@@ -217,22 +230,19 @@ function appendCards(cards){
     }
 
     function showtext(event, id, ellipse, btn) {
-        console.log(btn);
         var btn = document.getElementById(btn);
-        console.log(btn);
         var txtmore = document.getElementById(id);
         var txtellipse = document.getElementById(ellipse);
         if (txtmore.style.display === 'none') {
             txtmore.style.display = 'inline';
             txtellipse.style.display = 'none';
-            btn.innerHTML="Show Less";
+            btn.innerHTML="&zwnj;Show less";
         } else {
             txtmore.style.display = 'none';
             txtellipse.style.display = 'block';
-            btn.innerHTML="Show More";
+            btn.innerHTML="&zwnj;Show more >";
         }
         event.preventDefault();
-
     }
 
 

@@ -34,5 +34,6 @@ module.exports = {
     fbAuthCallbackUrl: fbAuth.callbackURL,
     apiGetPracticeCards: api.getPracticeCards,
     apiRankCard: api.rankCard,
-    apiSuggest: api.suggest
+    apiSuggest: api.suggest,
+    apiGetUserInfo: api.getUserInfo
 };

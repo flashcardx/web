@@ -1,4 +1,5 @@
 var lastCardId = "";
+var idsUpdated = []; // used for avoid listing updated cards again(whit older first filter)
 
 function updateCard(cardId){
     var nameElement = $("#update-" + cardId).find(".card-title");
@@ -11,7 +12,9 @@ function updateCard(cardId){
     var backupText = textElement.html();
     var backUpButtons = buttonsElement.html();
     var oldName = nameElement.text();
-    var oldDescription = descriptionElement.text();
+    console.log("before html: " + descriptionElement.html().replace(new RegExp("<br>", 'g'), "\n"));
+    var oldDescription = descriptionElement.html(descriptionElement.html().replace(new RegExp("<br>", 'g'), "\n")).text().replace(new RegExp("(\\.\\.\\.)|(\u200CShow more >)|(\u200CShow less)", 'g'), "");
+    console.log("after: " +oldDescription);
     nameElement.replaceWith("<input value='"+oldName+"' name='name' type='text' class='form-control card-title margin-title-update' id='update-title-"+cardId+"' placeholder='Enter new name'>");
     descriptionElement.replaceWith("<textarea rows='5' name='description' id='update-description-"+cardId+"' type='text' class='form-control' placeholder='A description of the word'>"+oldDescription+"</textarea>");
     var category = textElement.attr("data-category");
@@ -71,8 +74,8 @@ function loadUpdateButtons(cardId, backupText, backUpButtons){
     var buttonsElement = $("#buttons-"+cardId);
     buttonsElement.html("<div class='row'>"+
                           "<div class='col-md-12'>"+
-                            "<a 'role='button' id='confirm-update-"+cardId+"' class='btn nounderline btn-success my-2 my-sm-1 ev-mr-10'> <i class='fa fa-check fa-fw' aria-hidden='true'></i></a>"+
-                            "<a role='button' id='cancel-"+cardId+"' class='btn nounderline btn-danger delete-btn my-2 my-sm-1'> <i class='fa fa-times fa-fw' aria-hidden='true'></i></a>"+
+                            "<a 'role='button' id='confirm-update-"+cardId+"' class='round btn nounderline btn-success my-2 my-sm-1 ev-mr-10'> <i class='fa fa-check fa-fw' aria-hidden='true'></i></a>"+
+                            "<a role='button' id='cancel-"+cardId+"' class='round btn nounderline btn-danger delete-btn my-2 my-sm-1'> <i class='fa fa-times fa-fw' aria-hidden='true'></i></a>"+
                           "</div>"+ 
                         "</div>");
     $("#cancel-"+cardId).click(()=>{
@@ -111,6 +114,7 @@ function confirmUpdate(cardId, backupText, backUpButtons){
 }
 
 function updateDone(cardId, backupText, backUpButtons, name, description, category){
+     idsUpdated.push(cardId);
      var textElement =  $("#update-" + cardId).find(".card-title").parent();
      var oldCategory = textElement.attr("data-category");
      if(oldCategory !== category){
@@ -121,7 +125,7 @@ function updateDone(cardId, backupText, backUpButtons, name, description, catego
      var buttonsElement = $("#buttons-"+cardId);
      textElement.html(backupText);
      $("#speak"+cardId+" span").text(name);
-     $("#description-"+cardId).text(description);
+     $("#description-"+cardId).html(description.replace(/(\r\n|\n|\r)/g,"<br>"));
      buttonsElement.html(backUpButtons);
      textElement.attr("data-category", category);
      updateTime(cardId);

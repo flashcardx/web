@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="assets/css/page/evclass.css">
     <link rel="stylesheet" href="assets/css/page/homeNL.css">
     <link rel="stylesheet" href="assets/css/page/createCard.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
   </head>
 
   <body>
@@ -53,22 +55,58 @@
       <div class=container> 
         <div class= "main-content">
           <% errors.forEach(err=>{%>
-              <div class="alert alert-danger">
-                  <strong>Error!</strong> <%= err%>
-              </div> 
+              <script>
+                $(document).ready(()=>{
+                      $.notify({
+                            title: "Error,",
+                            icon:"fa fa-exclamation-triangle",
+                            message: <%-JSON.stringify(err)%>
+                            },
+                            {
+                                type: 'danger'
+                            }
+                            , {
+                              newest_on_top: true
+                            }
+                        );
+                });
+              </script>
           <%});%>
            <% if(success) { %>
-            <div class="alert alert-success">
-              <strong>Success!</strong> <%= success%>
-             </div>  
+             <script>
+                $(document).ready(()=>{
+                      $.notify({
+                            title: "Success,",
+                            icon:"fa fa-thumbs-up",
+                            message: <%- JSON.stringify(success)%>
+                            },
+                            {
+                                type: 'success'
+                            }
+                            , {
+                              newest_on_top: true
+                            }
+                        );
+                });
+              </script>
          <%}%>
+
+         <script>
+          var isPremium = <%=-data.isPremium%>;
+          </script>
 
         <div class="create-wrapper">
             <div class="col-md-12">
               <span>
-                <p><bold>Subscription type:</bold> <%=data.type%>. <button type="button" data-toggle="tooltip" data-placement="right" title="More plans are coming soon, if you can't wait email us to: contact@flashcard-x.com" class="fa fa-info" aria-hidden="true"></button></p>
                 <p>
-                  You are using <%=data.maxLimit - data.cardLimit%> cards out of <%=data.maxLimit%> which is your max limit, for increasing your limit you will need a better subscription plan 
+                 Hello <span id="user-name"></span>!
+                </p>
+                <p>
+                 Your account is linked with the email: <span id="user-email"></span>
+                </p>
+                 <p><bold>Subscription type: </bold><span id="user-plan"> </span> <button type="button" data-toggle="tooltip" data-placement="right" title="More plans are coming soon, if you can't wait email us to: contact@flashcard-x.com" class="fa fa-info" aria-hidden="true"></button></p>
+                <p>
+                  You are using <%=data.maxLimit - data.cardsLeft%> cards out of <%=data.maxLimit%> which is your max limit, for increasing your limit you will need a better subscription plan 
                 </p>
               </span>
             </div>
@@ -106,7 +144,6 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>

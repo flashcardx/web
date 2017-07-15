@@ -30,7 +30,6 @@ module.exports = function(app){
       app.post("/settings", controllerUtils.requireLogin, parseForm, csrfProtection, (req, res)=>{
         var errors = [];
         var lang = req.body.lang;
-        console.log("lang: " + lang);
         requestify.get(config.apiGetUserPlan,{headers:{
 			"x-access-token": req.session.token
 		}})
@@ -59,9 +58,15 @@ module.exports = function(app){
     });
 
     app.get("/getLangs", (req, res)=>{
-        requestify.get(config.apiGetLangs).then(response=>{
+        requestify.get(config.apiGetLangs)
+        .then(response=>{
 					langs = response.getBody();
 					return res.json(langs);
+			})
+        .fail(response=> {
+				const errorCode = response.getCode();
+                console.log("server got error code " + errorCode);
+				res.json({success:false, msg: "server got error code " + errorCode});	
 			});
 
     });
@@ -72,8 +77,29 @@ module.exports = function(app){
 		}}).then(response=>{
 					lang = response.getBody();
 					return res.json(lang);
+			})
+           .fail(response=> {
+				const errorCode = response.getCode();
+                console.log("server got error code " + errorCode);
+				res.json({success:false, msg: "server got error code " + errorCode});	
 			});
 
+    });
+
+    app.get("/getUserInfo", (req, res)=>{
+        requestify.get(config.apiGetUserInfo,{headers:{
+			"x-access-token": req.session.token
+		}})
+        .then(response=>{
+					r = response.getBody();
+                    console.log("got: " + r);
+					return res.json(r);
+			})
+        .fail(response=> {
+				const errorCode = response.getCode();
+                console.log("server got error code " + errorCode);
+				res.json({success:false, msg: "server got error code " + errorCode});	
+			});
     });
 
 }

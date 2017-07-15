@@ -26,10 +26,10 @@ module.exports = function(app){
 			});
     });
 
-    app.get("/rankCard/:cardId/:mark", controllerUtils.requireLogin, (req, res)=>{
+    app.get("/rankCard/:cardId/:addDays", controllerUtils.requireLogin, (req, res)=>{
         var cardId = req.params.cardId;
-        var mark = req.params.mark;
-        requestify.post(config.apiRankCard +"/"+cardId, {mark: mark}, {headers:{
+        var addDays = req.params.addDays;
+        requestify.post(config.apiRankCard +"/"+cardId, {addDays: addDays}, {headers:{
 			"x-access-token": req.session.token
 		}})
         .then(response=>{

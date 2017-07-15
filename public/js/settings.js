@@ -19,6 +19,35 @@ $(function () {
         }
     });
 
+  $.ajax({
+        url:"/getUserInfo",
+        success: result=>{
+            if(result.success === false)
+                showError(result.msg);
+            else{
+                renderUserInfo(result.msg);
+            }
+        },
+        error: err=>{
+                showError(err);
+        }
+    });
+
+function renderUserInfo(info){
+    $("#user-name").text(info.name);
+    $("#user-email").text(info.email);
+}
+
+
+
+
+$(document).ready(()=>{
+    var plan = (isPremium === true)?"Premium": "Basic";
+    $("#user-plan").text(plan);
+});
+
+
+
 function loadLangs(){
       $.ajax({
         url:"/getLangs",

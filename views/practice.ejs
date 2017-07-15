@@ -51,14 +51,13 @@
        </div>
     </div>
   </nav>
-  <div class="container cnt_main_practice">
+  <div class="main container cnt_main_practice min-height">
     <div class="row">
       <div class="col-md-12">
         <div class="card-deck" id="card-deck">
-
-
         </div>
       </div>
+        <button style='display: none;'id='showAnswer' onClick='showAnswer();' role='button' class='col-12 left-margin btn btn-success' type='button'>Show answer</button>
     </div>
 
 
@@ -69,12 +68,12 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title black" id="exampleModalLabel">How well you knew this one?</h5>
+          <h5 class="modal-title black" id="exampleModalLabel">How well you know this one?</h5>
         </div>
         <div class="modal-body">
-          <button type="button" onCLick="rankCard(0)" data-dismiss="modal" class="btn btn-primary">Bad</button>
-          <button type="button" onCLick="rankCard(3)" data-dismiss="modal" class="btn btn-primary">Ok</button>
-          <button type="button" onCLick="rankCard(5)" data-dismiss="modal" class="btn btn-primary">Perfect!</button>
+          <button type="button" onCLick="rankCardBad()" data-dismiss="modal" class="btn btn-primary">Bad <span id='rank-card-bad'></span> </button>
+          <button type="button" onCLick="rankCardOk()" data-dismiss="modal" class="btn btn-primary">Ok <span id='rank-card-ok'></span></button>
+          <button type="button" onCLick="rankCardPerfect()" data-dismiss="modal" class="btn btn-primary">Perfect! <span id='rank-card-perfect'></span></button>
         </div>
 
       </div>

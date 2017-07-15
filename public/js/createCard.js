@@ -61,7 +61,6 @@ function search(){
     parameter = $("#search-box").val();
     if(parameter === "" || parameter === " "){
         $("#gallery").html("");
-        $("#pagination").html("");
         $("#addButton").html("");
         return;
     }
@@ -72,7 +71,7 @@ function search(){
             if(!result.success)
                 showError(result.msg);
             else
-                displayGallery(result.msg);
+                displayGallery(result.msg.value);
         },
         error: err=>{
                 showError(err);
@@ -98,7 +97,6 @@ function showError(msg){
 function displayGallery(data){
     updateGallery(data);
     var addButton = "<button onClick='addImgs()'role='button' type='button' class='btn btn-success'>Add seleted cards</button>";
-    generatePagination(data);
     $("#addButton").html(addButton);
 }
 
@@ -121,23 +119,6 @@ function showWarningLimit(){
     showWarning("You can not select more images!");
 }
 
-function generatePagination(data){
-    var pages = 0;
-    if(data.hits.length !== 0)
-        pages = data.totalHits / data.hits.length;
-    var pagination = "<nav aria-label='Page navigation'>" +
-                     "<ul class='pagination' id='pagination'></ul>" +
-                    "</nav>";
-    $("#pagination-container").html(pagination);
-    var obj = $('#pagination').twbsPagination({
-            totalPages: pages,
-            visiblePages: 10,
-            onPageClick: function (event, page) {
-                updatePage(page);
-            }
-        });
-}
-
 function updatePage(page){
         $("#gallery").html(getLoading());
         $.ajax({
@@ -155,9 +136,10 @@ function updatePage(page){
 }
 
 function updateGallery(data){
+    console.log("data lenght: " + data.length);
     var gallery = "<select multiple='multiple' class='image-picker'>"; 
-    data.hits.forEach(img=>{
-        gallery += "<option data-img-previewWidth='"+img.previewWidth+"' data-img-previewHeight='"+img.previewHeight+"' data-img-width='"+img.webformatWidth+"' data-img-height='"+img.webformatHeight+"' data-img-src='"+img.previewURL+"' value='"+img.webformatURL+"'>   </option>";
+    data.forEach(img=>{
+        gallery += "<option data-img-previewWidth='"+img.thumbnail.width+"' data-img-previewHeight='"+img.thumbnail.height+"' data-img-width='"+img.width+"' data-img-height='"+img.height+"' data-img-src='"+img.thumbnailUrl+"' value='"+img.contentUrl+"'>   </option>";
      });
     gallery += "</select>";
     $("#gallery").html(gallery);

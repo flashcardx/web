@@ -14,7 +14,6 @@ function setScroll() {
 
     $(window).scroll(function () {
         if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-            console.log(":::");
             $(window).off("scroll");
             setTimeout(setScroll, 2000);
             getMoreCards();
@@ -22,19 +21,19 @@ function setScroll() {
     });
 }
 
+var xhr;
 function getMoreCards() {
     if (end === true)
         return;
     var queryString = "";
     if (!firstTime) {
         var last = getLast();
-        console.log("last: " + last);
         if (last === undefined)
             return;
         queryString = "?last=" + last;
     }
-    console.log("get more: " + queryString);
-    $.ajax({
+    try { xhr.abort(); } catch(e){}
+    xhr = $.ajax({
         url: "/getDiscoverCards" + queryString,
         success: result => {
             if (!result.success)
@@ -45,7 +44,10 @@ function getMoreCards() {
             }
         },
         error: err => {
-            showError(err);
+            if(err.statusText === "abort")
+                return;
+            console.log("Something went wrong when retrieving cards " + JSON.stringify(err));
+            showError("Something went wrong when retrieving cards :(");
         }
     });
 }
@@ -83,6 +85,7 @@ function showError(msg) {
 }
 
 function appendCards(cards) {
+     console.log("got: " + cards.length);
     cards.forEach((card, index1) => {
         if (card.description)
             var description = card.description.replace(/(\r\n|\n|\r)/g, "<br />");
@@ -110,10 +113,10 @@ function appendCards(cards) {
             "</div>" +
             "</div>" +
             "<div class='ev-p'>" +
-                "<h3 style='text-align:center' id='speak" + card._id + "'>" + card.name + "" +
+                "<h3 style='text-align:center; word-wrap: break-word;' id='speak" + card._id + "'>" + card.name + "" +
                 "<i style='margin-left:6px' onCLick=\"speak(\'" + card._id + "\', \'" + card.lang + "\');\" class='speaker fa fa-volume-up black' aria-hidden='true'></i>" +
                 "</h3>" +
-                "<p style='text-align:left;' class='ev-more' id='description-" + card._id + "'>" +
+                "<p style='text-align:left; word-wrap: break-word;' class='ev-more' id='description-" + card._id + "'>" +
                 checkUndefined(description) +
                 "</p>" +
             "</div>" +
@@ -157,9 +160,7 @@ function appendCards(cards) {
         cards.forEach(c=>{
             var id = "description-" + c._id;
             var content = $("#" + id).html();
-            console.log("got here: " + c.description);
             if(c.description && c.description.length > showChar){
-                console.log("got here: " + c.description);
                 var initial = content.substr(0, showChar);
                 var more = content.substr(showChar, content.length - showChar);
                 var html = initial + "<span style='display:block;' id='ellipse-"+id+"'>"+ellipsestext+"</span><span id='morecontent-"+id+"' style='display:none'>"+more+"</span> <a id='btn-"+id+"' href='#' onClick=\"showtext(event,'morecontent-"+id+"','ellipse-"+id+"', 'btn-"+id+"')\" class='ev-morelink'>" + moretext + "</a>";
@@ -169,19 +170,17 @@ function appendCards(cards) {
     }
 
 function showtext(event, id, ellipse, btn) {
-    console.log(btn);
     var btn = document.getElementById(btn);
-    console.log(btn);
     var txtmore = document.getElementById(id);
     var txtellipse = document.getElementById(ellipse);
     if (txtmore.style.display === 'none') {
         txtmore.style.display = 'inline';
         txtellipse.style.display = 'none';
-        btn.innerHTML = "Show Less";
+        btn.innerHTML = "Show less";
     } else {
         txtmore.style.display = 'none';
         txtellipse.style.display = 'block';
-        btn.innerHTML = "Show More";
+        btn.innerHTML = "Show more >";
     }
     event.preventDefault();
 
