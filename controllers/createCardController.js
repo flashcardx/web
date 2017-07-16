@@ -112,8 +112,7 @@ module.exports = function(app){
 
     app.get("/search/:parameter", controllerUtils.requireLogin, (req, res)=>{
         const parameter = req.params.parameter;
-        var url = config.apiSearchImage + "/" + parameter;
-        console.log("url: " + url);
+        var url = config.apiSearchImage + "/" + parameter + "/" + req.ip;
         requestify.get(url,
          {headers:{
 			"x-access-token": req.session.token

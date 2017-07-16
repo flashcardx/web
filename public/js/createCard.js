@@ -136,7 +136,6 @@ function updatePage(page){
 }
 
 function updateGallery(data){
-    console.log("data lenght: " + data.length);
     var gallery = "<select multiple='multiple' class='image-picker'>"; 
     data.forEach(img=>{
         gallery += "<option data-img-previewWidth='"+img.thumbnail.width+"' data-img-previewHeight='"+img.thumbnail.height+"' data-img-width='"+img.width+"' data-img-height='"+img.height+"' data-img-src='"+img.thumbnailUrl+"' value='"+img.contentUrl+"'>   </option>";

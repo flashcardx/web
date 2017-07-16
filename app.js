@@ -20,6 +20,7 @@ else
   app.use('/assets', express.static(__dirname + '/public'));
 
 app.set('view engine', 'ejs');
+app.enable('trust proxy'); //let me see the client's ip
 
 middleware(app);
 loginController(app);
