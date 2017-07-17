@@ -30,6 +30,7 @@ module.exports = function(app){
       app.post("/settings", controllerUtils.requireLogin, parseForm, csrfProtection, (req, res)=>{
         var errors = [];
         var lang = req.body.lang;
+        var userPlan;
         requestify.get(config.apiGetUserPlan,{headers:{
 			"x-access-token": req.session.token
 		}})
@@ -37,6 +38,7 @@ module.exports = function(app){
             var data = response.getBody();
             if(data.success === false)
                 errors.push(data.msg);
+            userPlan = data;
             var url = config.apiUpdateUserLang + "/" + lang;
             return requestify.get(url, {headers:{
                 "x-access-token": req.session.token
@@ -49,7 +51,7 @@ module.exports = function(app){
                 errors.push(data.msg);
             else
                 success += "Languaje updated succesfully!";
-            return res.render("settings", {errors:errors,success:success, data:data.msg, csrfToken:req.csrfToken()});
+            return res.render("settings", {errors:errors,success:success, data:userPlan.msg, csrfToken:req.csrfToken()});
         });
         if(req.session.error){
             errors.push(req.session.error);
