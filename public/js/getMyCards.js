@@ -6,9 +6,6 @@ var sort = "desc";
 var category = "*";
 var searchParameter;
 setScroll();
-$(document).ready(()=>{
-    $('[data-toggle="tooltip"]').tooltip();
-});
 
 
 function setScroll(){
@@ -70,7 +67,7 @@ function getMoreCards(){
         xhr = $.ajax({
         url:"/getMyCards" + queryString,
         success: result=>{
-            if(!result.success)
+            if(result.success == false)
                 showError(result.msg);
             else{
                 processResult(result.msg);

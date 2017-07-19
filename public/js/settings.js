@@ -1,9 +1,5 @@
 var userLang;
 
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
-
   $.ajax({
         url:"/getUserLang",
         success: result=>{

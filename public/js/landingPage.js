@@ -1,8 +1,6 @@
 var langsReady = false;
 
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
+
 
 function fillLangs(){
     if(langsReady)

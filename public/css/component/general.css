@@ -129,3 +129,42 @@ width: 40px;
   line-height: 1;
   border-radius: 50%;
 }
+
+/* CSS used here will be applied after bootstrap.css */
+.badge-notify{
+   background:red;
+   position:relative;
+   top: -20px;
+   left: -35px;
+  }
+
+
+  .background-blue{
+    background: #0080ff;
+  }
+
+  .background-blue:hover{
+    background: #0066cc;
+  }
+
+
+  .activity{
+    border: 1px solid red;
+    
+}
+
+
+#activity-content{
+    height: 150px;
+    width: 100%;
+    overflow: auto;
+}
+.unseen{
+    background-color: #bad2fa;
+}
+
+.seen{
+    background-color:  #e0ebfd;
+}
+
+.top-buffer { margin-top:20px; }

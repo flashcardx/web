@@ -15,8 +15,6 @@
   overflow-y: scroll;
 }
 
-max-height: 80px;
-overflow-y: scroll;
 
 .ev-col-centered {
   float: none;

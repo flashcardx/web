@@ -9,6 +9,7 @@ const env = process.env.NODE_ENV || "development";
 const preferencesController = require("./controllers/preferencesController");
 const settingsController = require("./controllers/settingsController");
 const practiceController = require("./controllers/practiceController");
+const classController = require("./controllers/classController");
 const middleware = require("./middleware");
 
 var port = process.env.PORT || 8081;
@@ -31,6 +32,8 @@ createCardController(app);
 preferencesController(app);
 settingsController(app);
 practiceController(app);
+classController(app);
+
 console.log("FlashCardX-Web Starting in port: " + port);
 
 app.listen(port);

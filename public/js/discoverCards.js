@@ -5,10 +5,6 @@ var end = false;
 setScroll();
 getMoreCards();
 
-$(document).ready(()=>{
-    $('[data-toggle="tooltip"]').tooltip();
-});
-
 
 function setScroll() {
 

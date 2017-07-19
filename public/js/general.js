@@ -1,3 +1,9 @@
+$(function () {
+    $('[data-tooltip="tooltip"]').tooltip({
+        trigger: 'hover'
+    });
+});
+
 
 function checkUndefined(value){
     if(value === undefined)

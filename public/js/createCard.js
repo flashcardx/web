@@ -16,9 +16,6 @@ var imgLoadAvailable = [1,2,3];
         }
     });
 
-$(document).ready(()=>{
-    $('[data-toggle="tooltip"]').tooltip();
-});
 
 
 

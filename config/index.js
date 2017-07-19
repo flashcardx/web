@@ -35,5 +35,7 @@ module.exports = {
     apiGetPracticeCards: api.getPracticeCards,
     apiRankCard: api.rankCard,
     apiSuggest: api.suggest,
-    apiGetUserInfo: api.getUserInfo
+    apiGetUserInfo: api.getUserInfo,
+    apiGetActivity: api.getActivity,
+    apiGetActivityCount: api.getActivityCount
 };

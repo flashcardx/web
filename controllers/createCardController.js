@@ -37,7 +37,6 @@ module.exports = function(app){
         var imgs = [];
         var errors = [];
         if(req.body.img1){
-            console.log("1img");
             imgs.push({
                 url: req.body.img1,
                 width: req.body.width1,
@@ -46,7 +45,6 @@ module.exports = function(app){
             });
         }
         else if(req.files["fileInput1"]){
-             console.log("1file");
              imgs.push({
                 width: req.body.width1,
                 height: req.body.height1,
@@ -55,7 +53,6 @@ module.exports = function(app){
             });
         }
         if(req.body.img2){
-            console.log("2img");
             imgs.push({
                 url: req.body.img2,
                 width: req.body.width2,
@@ -63,7 +60,6 @@ module.exports = function(app){
             });
         }
          else if(req.files["fileInput2"]){
-            console.log("2file");
             imgs.push({
                 width: req.body.width2,
                 height: req.body.height2,

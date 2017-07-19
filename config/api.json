@@ -28,7 +28,9 @@
             "getPracticeCards": "http://localhost:3000/practiceCards",
             "rankCard": "http://localhost:3000/rankCard",
             "suggest": "http://localhost:3000/suggest",
-            "getUserInfo": "http://localhost:3000/getUserInfo"
+            "getUserInfo": "http://localhost:3000/getUserInfo",
+            "getActivity": "http://localhost:3000/activity",
+            "getActivityCount": "http://localhost:3000/activityCount"
         },
         "pi":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -59,7 +61,9 @@
             "getPracticeCards":"http://localhost:3000/practiceCards",
             "rankCard":"http://localhost:3000/rankCard",
             "suggest":"http://localhost:3000/suggest",
-            "getUserInfo": "http://localhost:3000/getUserInfo"
+            "getUserInfo": "http://localhost:3000/getUserInfo",
+            "getActivity": "http://localhost:3000/activity",
+            "getActivityCount": "http://localhost:3000/activityCount"
             },
         "production":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -90,6 +94,8 @@
             "getPracticeCards":"http://localhost:3000/practiceCards",
             "rankCard":"http://localhost:3000/rankCard",
             "suggest":"http://localhost:3000/suggest",
-            "getUserInfo": "http://localhost:3000/getUserInfo"
+            "getUserInfo": "http://localhost:3000/getUserInfo",
+            "getActivity": "http://localhost:3000/activity",
+            "getActivityCount": "http://localhost:3000/activityCount"
         }
 }

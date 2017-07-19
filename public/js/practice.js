@@ -6,10 +6,6 @@ var addDaysBad,
 
 getCards();
 
-$(document).ready(()=>{
-    $('[data-toggle="tooltip"]').tooltip();
-});
-
 
 function getCards() {
     $.ajax({
