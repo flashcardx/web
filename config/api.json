@@ -30,7 +30,8 @@
             "suggest": "http://localhost:3000/suggest",
             "getUserInfo": "http://localhost:3000/getUserInfo",
             "getActivity": "http://localhost:3000/activity",
-            "getActivityCount": "http://localhost:3000/activityCount"
+            "getActivityCount": "http://localhost:3000/activityCount",
+            "getClasses": "http://localhost:3000/classes"
         },
         "pi":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -63,7 +64,8 @@
             "suggest":"http://localhost:3000/suggest",
             "getUserInfo": "http://localhost:3000/getUserInfo",
             "getActivity": "http://localhost:3000/activity",
-            "getActivityCount": "http://localhost:3000/activityCount"
+            "getActivityCount": "http://localhost:3000/activityCount",
+            "getClasses": "http://localhost:3000/classes"
             },
         "production":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -96,6 +98,7 @@
             "suggest":"http://localhost:3000/suggest",
             "getUserInfo": "http://localhost:3000/getUserInfo",
             "getActivity": "http://localhost:3000/activity",
-            "getActivityCount": "http://localhost:3000/activityCount"
+            "getActivityCount": "http://localhost:3000/activityCount",
+            "getClasses": "http://localhost:3000/classes"
         }
 }

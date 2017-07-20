@@ -1,12 +1,19 @@
   <div>
       <div data-toggle='tooltip' data-placement='right' title='Notifications'>
-            <button data-toggle="modal" data-target="#activity-modal" type="button" role="button"  class="round btn btn-danger my-2 my-sm-0 btn-space-left"> <i class="fa fa-bell fa-fw" aria-hidden="true"></i>
+            <button onClick="reloadActivity();" data-toggle="modal" data-target="#activity-modal" type="button" role="button"  class="round btn btn-danger my-2 my-sm-0 btn-space-left"> <i class="fa fa-bell fa-fw" aria-hidden="true"></i>
             </button>
-                <span id="activty-badge" style="display: none"class="badge badge-danger"></span>
+            <span id="activty-badge" style="display: none"class="badge badge-danger"></span>
       </div>        
   </div>
-<a data-toggle='tooltip' data-placement='right' title='Options' class="background-blue round btn btn-secondary my-2 my-sm-0 btn-space-left" > <i class="fa fa-caret-down fa-fw" aria-hidden="true"></i></a>
-     
+  <div class="dropdown show">
+      <span data-toggle='tooltip' data-placement='right' title='Options'>
+        <a style='color:white;' id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"  class="background-blue round btn btn-secondary my-2 my-sm-0 btn-space-left" > <i class="fa fa-caret-down fa-fw" aria-hidden="true"></i></a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item blue-hover" href="/settings">Settings</a>
+            <a class="dropdown-item blue-hover" href="/logout">Sign out</a>
+        </div>
+      </span>
+  </div>
 
  <!--Modal activity-->
          

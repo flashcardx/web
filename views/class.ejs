@@ -34,7 +34,7 @@
             <a class="nav-link" href="/discover">Discover</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">My collection</a>
+            <a class="nav-link" href="/">My collection</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/create">Create card</a>
@@ -46,9 +46,7 @@
             <a class="nav-link" href="/class">Classes</a>
           </li>
         </ul>
-        <a data-toggle='tooltip' data-placement='right' title='Settings' class="round btn btn-warning my-2 my-sm-0 " href="/settings"> <i class="fa fa-cog fa-fw" aria-hidden="true"></i></a>
-
-        <a data-toggle='tooltip' data-placement='right' title='Sign out' class="round btn btn-danger my-2 my-sm-0 btn-space-left" href="/logout"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i></a>
+         <%- include('tiles/sideOptions'); %>
       </div>
     </div>
   </nav>
@@ -59,11 +57,9 @@
         <div class="row">
         <div class="col classes">
             <h3>Your Classes:</h3>
-            <div id="classes-content">
-
+            <div id="classes-content" class="container">
             </div>
-            </div>
-        
+        </div>
         </div>
      <div class="row search-results top-buffer">
             <div class="input-group col">
@@ -85,11 +81,11 @@
         </div>
          
        
-
-    </div>
-  </div>
+        <%- include('tiles/modalActivity'); %>
+    </div> <!-- end container-->
+  </div><!--end container-->
   <%- include('tiles/footer'); %>
-    <!-- end container-->
+    
 
 
 
@@ -103,8 +99,9 @@
       crossorigin="anonymous"></script>
    <script src="assets/js/general.js"></script>
     <script src="assets/js/formatDate.js"></script>
-    <script src="assets/js/capabilities/classActivity.js"></script>
     <script src="assets/js/lib/bootstrap-notify.min.js"></script>
+    <script src="assets/js/capabilities/activity.js"></script>
+    <script src="assets/js/class.js"></script>
 </body>
 
 </html>

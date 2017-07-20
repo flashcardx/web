@@ -49,8 +49,7 @@
             <a class="nav-link" href="/class">Classes</a>
           </li>
         </ul>
-         <a data-toggle='tooltip' data-placement='right' title='Settings' class="round btn btn-warning my-2 my-sm-0 " href="/settings"> <i class="fa fa-cog fa-fw" aria-hidden="true"></i></a>
-         <a data-toggle='tooltip' data-placement='right' title='Sign out' class="round btn btn-danger my-2 my-sm-0 btn-space-left" href="/logout"> <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i></a>
+         <%- include('tiles/sideOptions'); %>
        </div>
     </div>
   </nav>
@@ -66,7 +65,9 @@
 
   </div>
 
+    <%- include('tiles/modalActivity'); %>
 
+    <!--modal rank card-->
   <div class="modal fade" id="rankCard-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -81,12 +82,14 @@
 
       </div>
     </div>
-  </div>
 
+
+
+  </div> <!-- end container-->
 
   <%- include('tiles/footer'); %>
 
-    <!-- end container-->
+   
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -102,6 +105,7 @@
     <script src="assets/js/lib/articulate.min.js"></script>
     <script src="assets/js/lib/bootstrap-notify.min.js"></script>
     <script src="assets/js/practice.js"></script>
+    <script src="assets/js/capabilities/activity.js"></script>
 </body>
 
 </html>

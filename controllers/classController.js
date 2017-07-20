@@ -15,10 +15,9 @@ module.exports = function(app){
     });
 
     app.get("/activity", controllerUtils.requireLogin, (req, res)=>{
-        var url = config.apiGetActivity;
-		var last = req.query.last;
-		if(last)
-			url += "?last=" + last;
+        console.log("page: "+ req.query.page);
+		var url = config.apiGetActivity + "?page=" + req.query.page;
+		console.log("url: " + url);
 		requestify.get(url, {headers:{
 				"x-access-token": req.session.token
 			}}).then(response=>{
@@ -26,7 +25,7 @@ module.exports = function(app){
 				res.json(data);
 			}).fail(response=> {
 				const errorCode = response.getCode();
-                console.log("server got error code " + errorCode);
+                console.error("server got error code " + errorCode);
 				res.json({success:false, msg: "server got error code " + errorCode});	
 			});
     });
@@ -40,7 +39,21 @@ module.exports = function(app){
 				res.json(data);
 			}).fail(response=> {
 				const errorCode = response.getCode();
-                console.log("server got error code " + errorCode);
+                console.error("server got error code " + errorCode);
+				res.json({success:false, msg: "server got error code " + errorCode});	
+			});
+    });
+
+	app.get("/classes", controllerUtils.requireLogin, (req, res)=>{
+        var url = config.apiGetClasses;
+		requestify.get(url, {headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				res.json(data);
+			}).fail(response=> {
+				const errorCode = response.getCode();
+                console.error("server got error code " + errorCode);
 				res.json({success:false, msg: "server got error code " + errorCode});	
 			});
     });

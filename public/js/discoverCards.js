@@ -143,7 +143,6 @@ function appendCards(cards) {
         });
     });
     viewMore(cards);
-     $('[data-toggle="tooltip"]').tooltip();
 }
 
     function viewMore(cards) {

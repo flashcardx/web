@@ -1,2 +1,9 @@
+#classes-content{
+    max-height: 250px;
+    overflow: auto;
+}
 
+.class{
+    border-style: solid;
+}
 
