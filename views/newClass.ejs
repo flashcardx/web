@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="assets/css/component/general.css">
   <link rel="stylesheet" href="assets/css/page/homeNL.css">
   <link rel="stylesheet" href="assets/css/page/class.css">
+  <link rel="stylesheet" href="assets/css/page/newClass.css">
       <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
 </head>
 
@@ -53,44 +54,35 @@
   <div class="main-content min-height">
     <div class="container">
      
+        <h2> New class</h2>
         
-        <div class="row class-group">
-          <div class="col classes">
-              <h3>Your Classes:</h3>
-              <div id="classes-content" class="container class-container">
-            </div>
-          </div>
-        </div>
-
-        <div class="class-group">
-              <div class="input-group row">
-                            <input id="search-box" type="text" class="form-control input-lg"
-                                placeholder="Search class" />
-                            <span class="input-group-btn">
-                                        <button id ="search-button" class="btn btn-success" role="button" type="button" onClick="searchClass();">
-                                            <i class="fa fa-search fa-fw" aria-hidden="true"></i>
-                                        </button>
-                            </span>
-              </div>
-            <div class="row">
-                <div class="col container" id="search-results">
-                </div>
-            </div>
-        </div>
-        <div class="row class-group">
-          <div class="col classes">
-              <h3>Other classes you may interest:</h3>
-              <div id="discover-classes-content" class="container class-container">
-              </div>
-          </div>
-        </div>
-
-        <div class="row class-group">
-            <div class="col">
+        <div class="row center">
+                <form class="form-horizontal center " action="#" method="post">
+                  <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
+                  <div class="form-group has-success" id="classname-group">
+                    <div class="row">
+                      <div class="col-12">
+                        <input name="name" type="text" required="true" class="form-control" id="title" placeholder="Class name">
+                        <div class="form-control-feedback" id="classname-feedback">Success! You've done it.</div>
+                        </div>
+                    </div>
+                  </div> 
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-12">
+                         <textarea rows="5" name="description" type="text" class="form-control" id="description" placeholder="A description for the class"></textarea>
+                      </div>
+                    </div>
+                  </div>
                 
-                <a type="button" href="/newClass" role="button" class="btn btn-danger class-btn">Create new awesome class!</a>
-               
-            </div>
+
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button role="button" type="submit" class="btn btn-default btn-success btn-gray">Create!</button>
+                    </div>
+                  </div>
+                </form>
+        
         </div>
          
        

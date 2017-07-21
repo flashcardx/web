@@ -56,8 +56,52 @@ module.exports = function(app){
                 console.error("server got error code " + errorCode);
 				res.json({success:false, msg: "server got error code " + errorCode});	
 			});
+	});
+		
+	app.get("/searchClass/:q", controllerUtils.requireLogin, (req, res)=>{
+        var url = config.apiSearchClass + "/" + req.params.q;
+		requestify.get(url, {headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				res.json(data);
+			}).fail(response=> {
+				const errorCode = response.getCode();
+                console.error("server got error code " + errorCode);
+				res.json({success:false, msg: "server got error code " + errorCode});	
+			});
     });
 
+	app.get("/recommendClasses", controllerUtils.requireLogin, (req, res)=>{
+        requestify.get(config.apiRecommendClasses, {headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				res.json(data);
+			}).fail(response=> {
+				const errorCode = response.getCode();
+                console.error("server got error code " + errorCode);
+				res.json({success:false, msg: "server got error code " + errorCode});	
+			});
+	});
+		
+	app.get("/joinClass/:classname", controllerUtils.requireLogin, (req, res)=>{
+		var url = config.apiJoinClass + "/" + req.params.classname;
+		requestify.get(url, {headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				res.json(data);
+			}).fail(response=> {
+				const errorCode = response.getCode();
+                console.error("server got error code " + errorCode);
+				res.json({success:false, msg: "server got error code " + errorCode});	
+			});
+	});
+		
+	app.get("/newClass", controllerUtils.requireLogin, csrfProtection, (req, res)=>{
+        return res.render("newClass", {csrfToken:req.csrfToken()});
+    });
 
     
 

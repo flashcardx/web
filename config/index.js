@@ -38,5 +38,8 @@ module.exports = {
     apiGetUserInfo: api.getUserInfo,
     apiGetActivity: api.getActivity,
     apiGetActivityCount: api.getActivityCount,
-    apiGetClasses: api.getClasses
+    apiGetClasses: api.getClasses,
+    apiSearchClass: api.searchClass,
+    apiRecommendClasses: api.recommendClasses,
+    apiJoinClass: api.joinClass
 };

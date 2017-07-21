@@ -31,7 +31,10 @@
             "getUserInfo": "http://localhost:3000/getUserInfo",
             "getActivity": "http://localhost:3000/activity",
             "getActivityCount": "http://localhost:3000/activityCount",
-            "getClasses": "http://localhost:3000/classes"
+            "getClasses": "http://localhost:3000/classes",
+            "searchClass": "http://localhost:3000/searchClass",
+            "recommendClasses": "http://localhost:3000/recommendClasses",
+            "joinClass": "http://localhost:3000/joinClass"
         },
         "pi":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -65,7 +68,10 @@
             "getUserInfo": "http://localhost:3000/getUserInfo",
             "getActivity": "http://localhost:3000/activity",
             "getActivityCount": "http://localhost:3000/activityCount",
-            "getClasses": "http://localhost:3000/classes"
+            "getClasses": "http://localhost:3000/classes",
+            "searchClass": "http://localhost:3000/searchClass",
+            "recommendClasses": "http://localhost:3000/recommendClasses",
+            "joinClass": "http://localhost:3000/joinClass"
             },
         "production":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -99,6 +105,9 @@
             "getUserInfo": "http://localhost:3000/getUserInfo",
             "getActivity": "http://localhost:3000/activity",
             "getActivityCount": "http://localhost:3000/activityCount",
-            "getClasses": "http://localhost:3000/classes"
+            "getClasses": "http://localhost:3000/classes",
+            "searchClass": "http://localhost:3000/searchClass",
+            "recommendClasses": "http://localhost:3000/recommendClasses",
+            "joinClass": "http://localhost:3000/joinClass"
         }
 }

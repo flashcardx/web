@@ -1,9 +1,24 @@
-#classes-content{
-    max-height: 250px;
-    overflow: auto;
-}
 
 .class{
-    border-style: solid;
+    border: 1px solid gray;
+    padding: 5px;
+}
+
+.class-group{
+    margin: 40px;
+    padding: 15px;
+    border:1px solid gray;
+    background: white;
+}
+
+.class-container{
+    max-height: 250px;
+    overflow: auto;
+    
+}
+
+.class-btn{
+    color:white !important;
+     font-weight: bold;
 }
 

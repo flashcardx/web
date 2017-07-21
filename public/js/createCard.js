@@ -97,20 +97,6 @@ function displayGallery(data){
     $("#addButton").html(addButton);
 }
 
-function showWarning(msg){
-       $.notify({
-            title: "Warning,",
-            icon:"fa fa-exclamation-triangle",
-            message: msg
-            },
-            {
-                type: 'warning'
-            }
-            , {
-	            newest_on_top: true
-            }
-        );
-}
 
 function showWarningLimit(){
     showWarning("You can not select more images!");

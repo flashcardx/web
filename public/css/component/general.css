@@ -169,11 +169,11 @@ width: 40px;
   padding-left:6px;
 }
 
-.unseen{
-    background-color: #bad2fa;
+.seen{
+    background-color: white;
 }
 
-.seen{
+.unseen{
     background-color:  #e0ebfd;
 }
 
@@ -188,10 +188,20 @@ width: 40px;
   border-color: #0080ff;
 }
 
-.thumbnail{
-  display:inline;
-     border: 1px solid #ddd; /* Gray border */
-    border-radius: 10px;  /* Rounded border */
-    padding: 5px; /* Some padding */
-    width: 100px; /* Set a small width */
+.my-thumbnail{
+      display:inline;
+      border: 1px solid #ddd; /* Gray border */
+      border-radius: 10px;  /* Rounded border */
+      padding: 5px; /* Some padding */
+      width: 100px; /* Set a small width */
 }
+  
+
+  .activity-body{
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+
+  hr{
+    border: 2px solid #0080ff;
+  }
