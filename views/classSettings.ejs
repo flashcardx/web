@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <script src="https://use.fontawesome.com/6cbcc3e9b8.js"></script>
+  <link rel="icon" href="assets/img/favicon.ico">
+  <title>FlashCardX</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+    crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/component/general.css">
+  <link rel="stylesheet" href="assets/css/page/homeNL.css">
+  <link rel="stylesheet" href="assets/css/page/class.css">
+  <link rel="stylesheet" href="assets/css/page/newClass.css">
+  <link rel="stylesheet" href="assets/css/page/classSettings.css">
+</head>
+
+<body>
+  <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+    <div class="container">
+      <button class="navbar-toggler pull-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
+        aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      <a class="navbar-brand" href="/">FlashCardX</a>
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/discover">Discover</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/">My collection</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/create">Create card</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/practice">Practice</a>
+          </li>
+         <li class="nav-item active">
+            <a class="nav-link" href="/class">Classes</a>
+          </li>
+        </ul>
+         <%- include('tiles/sideOptions'); %>
+      
+      </div>
+    </div>
+  </nav>
+  <div class="main-content min-height">
+    <div class="container">
+     
+            <div class="row class-group">
+                <h3> Class status:</h3>
+                <div class='col'>
+                    <span>name: xxx</span>
+                </div>
+                <div class='col'>
+                    <span>
+                    <button type="button" data-toggle="tooltip" data-placement="right"
+                            title="The owner is the only person that is allowed to delete users from the class and he can even delete the whole class" 
+                            class="fa fa-info" aria-hidden="true">
+                    </button>
+                          Owner/admin: you
+                    </span>
+                </div>
+                <div class='col'>
+                    <span>cards: 0/1000</span>
+                </div>
+                <div class='col'>
+                    <span>integrants: 5/30</span>
+                </div>
+            </div>
+        
+        <div class="row class-group">
+               <h3>
+                  <button style='font-size: 18px;' type="button" data-toggle="tooltip" data-placement="right"
+                            title="You need to enter the email of your classmates, they must have an account on FlashCardX. If they Don't know wich email their account is linked to they can see it on the Settings page." 
+                            class="fa fa-info" aria-hidden="true">
+                </button>
+              Add people:
+             </h3>
+            <div class="col form-horizontal center">
+                    <div class="form-group" id="classname-group">
+                        <div class="row">
+                            <div class="col-md-8 col-xs-12">
+                                <input required name="name" type="email" required="true" class="form-control" id="email" placeholder="Email">
+                            </div>
+                            <div class="col">
+                                <button type="button" role="button" onClick="addPeople();" class="btn btn-success class-btn">Add</button>        
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class="row class-group">
+          <div class="col">
+              <h3>People in the class:</h3>
+              <table class="table table-responsive">
+                        <tbody id="add-people">
+                            <!--<span id="nopeople">No people yet!</span> -->
+                                
+                                <tr>
+                                    <th scope="row"> <img class='img-fluid my-thumbnail float-left letterpic' title='Mark s'src='/fdrfr' alt='Default image'> </th>
+                                    <td>Mark</td>
+                                    <td><button class="btn btn-warning class-btn">Remove</button></td>
+                                </tr>
+                                 <tr>
+                                    <th scope="row"> <img class='img-fluid my-thumbnail float-left letterpic' title='Mark s'src='/fdrfr' alt='Default image'> </th>
+                                    <td>Mark</td>
+                                    <td><button class="btn btn-warning class-btn">Remove</button></td>
+                                </tr>
+                                 <tr>
+                                    <th scope="row"> <img class='img-fluid my-thumbnail float-left letterpic' title='Mark s'src='/fdrfr' alt='Default image'> </th>
+                                    <td>Mark</td>
+                                    <td><button class="btn btn-warning class-btn">Remove</button></td>
+                                </tr>
+                                   <tr>
+                                    <th scope="row"> <img class='img-fluid my-thumbnail float-left letterpic' title='Mark s'src='/fdrfr' alt='Default image'> </th>
+                                    <td>Mark</td>
+                                    <td><button class="btn btn-warning class-btn">Remove</button></td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                  </br>
+            </div>
+        </div>
+    
+        <div class="row class-group">
+            <div class="col">
+                <h3> Change class image:</h3>
+                <div class="col">
+                    <a target='_blank' href='assets/img/default.png'>
+                        <img class='img-fluid my-thumbnail float-left letterpic' title="f x" src="cfcf" alt='Default image'>
+                    </a>
+                </div>
+                  <div class="col">
+                        <button class="btn btn-warning class-btn">Remove image</button>
+                        <button class="btn btn-info class-btn">Upload image</button>   
+                  </div>
+            </div>
+        </div>
+
+         <div class="row class-group">
+            <div class="col">
+                <a class="btn btn-danger class-btn">Delete class</a>
+                  <button type="button" data-toggle="tooltip" data-placement="right"
+                            title="Since you are the admin, you can not leave the class. You are the only one who can delete this class" 
+                            class="fa fa-info" aria-hidden="true">
+                    </button>
+            </div>
+        </div>
+       
+        <%- include('tiles/modalActivity'); %>
+    </div> <!-- end main-content-->
+  </div><!--end container-->
+  <%- include('tiles/footer'); %>
+    
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+      crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+      crossorigin="anonymous"></script>
+   <script src="assets/js/general.js"></script>
+    <script src="assets/js/formatDate.js"></script>
+    <script src="assets/js/lib/bootstrap-notify.min.js"></script>
+    <script src="assets/js/capabilities/activity.js"></script>
+    <script src="assets/js/lib/jquery.letterpic.min.js"></script>
+    <script src="assets/js/classSettings.js"></script>
+    
+</body>
+
+</html>

@@ -1,0 +1,1 @@
+ $(".letterpic").letterpic({ fill: 'color' }); 

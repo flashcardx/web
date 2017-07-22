@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="assets/css/component/general.css">
   <link rel="stylesheet" href="assets/css/page/homeNL.css">
   <link rel="stylesheet" href="assets/css/page/class.css">
-      <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 
 <body>
@@ -52,19 +52,19 @@
   </nav>
   <div class="main-content min-height">
     <div class="container">
+       <% if(successMsg){%>
+           <script>
+                $(document).ready(()=>{
+                  showSuccess(<%-JSON.stringify(successMsg)%>);
+                   
+                });
+              </script>
+          <%}%>
      
-        
-        <div class="row class-group">
-          <div class="col classes">
-              <h3>Your Classes:</h3>
-              <div id="classes-content" class="container class-container">
-            </div>
-          </div>
-        </div>
 
-        <div class="class-group">
+         <div class="class-group">
               <div class="input-group row">
-                            <input id="search-box" type="text" class="form-control input-lg"
+                            <input id="search-box" type="search" class="form-control input-lg"
                                 placeholder="Search class" />
                             <span class="input-group-btn">
                                         <button id ="search-button" class="btn btn-success" role="button" type="button" onClick="searchClass();">
@@ -77,6 +77,16 @@
                 </div>
             </div>
         </div>
+        
+        <div class="row class-group">
+          <div class="col classes">
+              <h3>Your Classes:</h3>
+              <div id="classes-content" class="container class-container">
+            </div>
+          </div>
+        </div>
+
+       
         <div class="row class-group">
           <div class="col classes">
               <h3>Other classes you may interest:</h3>
@@ -88,7 +98,7 @@
         <div class="row class-group">
             <div class="col">
                 
-                <a type="button" href="/newClass" role="button" class="btn btn-danger class-btn">Create new awesome class!</a>
+                <a href="/newClass" role="button" class="btn btn-success class-btn">Create new awesome class!</a>
                
             </div>
         </div>
@@ -105,7 +115,6 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
       crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"

@@ -11,7 +11,9 @@ const controllerUtils = require("./utils");
 module.exports = function(app){
 
     app.get("/class", controllerUtils.requireLogin, (req, res)=>{
-        return res.render("class");
+		var successMsg = req.session.successMsg;
+		controllerUtils.cleanSessionMsgs(req);
+        return res.render("class", {successMsg:successMsg});
     });
 
     app.get("/activity", controllerUtils.requireLogin, (req, res)=>{
@@ -100,10 +102,91 @@ module.exports = function(app){
 	});
 		
 	app.get("/newClass", controllerUtils.requireLogin, csrfProtection, (req, res)=>{
-        return res.render("newClass", {csrfToken:req.csrfToken()});
+        return res.render("newClass1", {error:null, csrfToken:req.csrfToken()});
     });
 
-    
+	app.post("/newClass", controllerUtils.requireLogin, parseForm, csrfProtection, (req, res)=>{
+		var Class = {
+			name: req.body.name,
+			description: req.body.description,
+			isPrivate: false
+		}
+		requestify.post(config.apiNewClass, Class, {headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				if(data.success == true)
+					return res.render("newClass2", {classname:Class.name, csrfToken:req.csrfToken()});
+				else
+					return res.render("newClass1", {error:"Could not create class", csrfToken:req.csrfToken()});
+			}).fail(response=>{
+				const errorCode = response.getCode();
+				console.error("server got error code " + errorCode);
+				return res.render("newClass1", {error:"server got error code: " + errorCode, csrfToken:req.csrfToken()});
+			});
+	});
+		
+	app.post("/addUserToClass", controllerUtils.requireLogin, parseForm, (req, res)=>{
+		requestify.post(config.apiAddUserToClass, req.body, {headers:{
+				"x-access-token": req.session.token
+			}})
+			.then(response=>{
+				const data = response.getBody();
+				if(data.success == false){
+					res.json(data);
+					return Promise.resolve(null);
+				}
+				return Promise.resolve(1);
+			})
+			.then(r=>{
+				if(!r)
+					return Promise.resolve(null);
+				var url = config.apiGetUserInfo + "/" + req.body.userEmail;
+				return requestify.get(url, {headers:{
+					"x-access-token": req.session.token}}) 
+			})
+			.then(response=>{
+				if(!response)
+					return;
+				const data = response.getBody();
+				res.json(data);					
+			})
+			.fail(response=>{
+				const errorCode = response.getCode();
+				console.error("server got error code " + errorCode);
+				return res.json({success:false, msg:"Could not add user to class"});
+			});
+    });
+
+	app.delete("/userFromClass", controllerUtils.requireLogin, parseForm, (req, res)=>{
+			requestify.delete(config.apiDeleteUserFromClass, {body: req.body, headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				var data = response.getBody();
+				console.log("delete user: " + JSON.stringify(data));
+				res.json(data);
+			})
+			.fail(response=>{
+				const errorCode = response.getCode();
+				console.error("server got error code " + errorCode);
+				return res.json({success:false, msg:"Could not delete user from class"});
+			});
+	});
+
+	app.get("/finishNewClass", controllerUtils.requireLogin, (req, res)=>{
+		req.session.successMsg = "Your new class was added to your list";
+		res.redirect("/class");
+	})
+	
+	
+	app.get("/classSettings", controllerUtils.requireLogin, (req, res)=>{
+		var classname = req.query.q;
+		var userId = req.userId;
+		console.log("classname: " + classname);
+		res.render("classSettings");
+	})
+	
+
 
   
    

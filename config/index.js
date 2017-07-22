@@ -41,5 +41,8 @@ module.exports = {
     apiGetClasses: api.getClasses,
     apiSearchClass: api.searchClass,
     apiRecommendClasses: api.recommendClasses,
-    apiJoinClass: api.joinClass
+    apiJoinClass: api.joinClass,
+    apiNewClass: api.newClass,
+    apiAddUserToClass: api.addUserToClass,
+    apiDeleteUserFromClass: api.deleteUserFromClass
 };

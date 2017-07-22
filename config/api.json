@@ -34,7 +34,10 @@
             "getClasses": "http://localhost:3000/classes",
             "searchClass": "http://localhost:3000/searchClass",
             "recommendClasses": "http://localhost:3000/recommendClasses",
-            "joinClass": "http://localhost:3000/joinClass"
+            "joinClass": "http://localhost:3000/joinClass",
+            "newClass": "http://localhost:3000/class",
+            "addUserToClass": "http://localhost:3000/addUserToClass",
+            "deleteUserFromClass":"http://localhost:3000/userFromClass"
         },
         "pi":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -71,7 +74,10 @@
             "getClasses": "http://localhost:3000/classes",
             "searchClass": "http://localhost:3000/searchClass",
             "recommendClasses": "http://localhost:3000/recommendClasses",
-            "joinClass": "http://localhost:3000/joinClass"
+            "joinClass": "http://localhost:3000/joinClass",
+            "newClass": "http://localhost:3000/class",
+            "addUserToClass": "http://localhost:3000/addUserToClass",
+            "deleteUserFromClass":"http://localhost:3000/userFromClass"
             },
         "production":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -108,6 +114,9 @@
             "getClasses": "http://localhost:3000/classes",
             "searchClass": "http://localhost:3000/searchClass",
             "recommendClasses": "http://localhost:3000/recommendClasses",
-            "joinClass": "http://localhost:3000/joinClass"
+            "joinClass": "http://localhost:3000/joinClass",
+            "newClass": "http://localhost:3000/class",
+            "addUserToClass": "http://localhost:3000/addUserToClass",
+            "deleteUserFromClass":"http://localhost:3000/userFromClass"
         }
 }

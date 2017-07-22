@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="assets/css/page/homeNL.css">
   <link rel="stylesheet" href="assets/css/page/class.css">
   <link rel="stylesheet" href="assets/css/page/newClass.css">
-      <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 
 <body>
@@ -53,24 +53,42 @@
   </nav>
   <div class="main-content min-height">
     <div class="container">
+      <% if(error){%>
+           <script>
+                $(document).ready(()=>{
+                      $.notify({
+                            title: "Error,",
+                            icon:"fa fa-exclamation-triangle",
+                            message: <%-JSON.stringify(error)%>
+                            },
+                            {
+                                type: 'danger'
+                            }
+                            , {
+                              newest_on_top: true
+                            }
+                        );
+                });
+              </script>
+          <%}%>
      
         <h2> New class</h2>
         
-        <div class="row center">
+        <div class="row ">
                 <form class="form-horizontal center " action="#" method="post">
                   <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
-                  <div class="form-group has-success" id="classname-group">
+                  <div class="form-group" id="classname-group">
                     <div class="row">
                       <div class="col-12">
-                        <input name="name" type="text" required="true" class="form-control" id="title" placeholder="Class name">
-                        <div class="form-control-feedback" id="classname-feedback">Success! You've done it.</div>
+                        <input required name="name" type="text" required="true" class="form-control" id="title" placeholder="Class name">
+                        <div class="form-control-feedback" id="classname-feedback"></div>
                         </div>
                     </div>
                   </div> 
                   <div class="form-group">
                     <div class="row">
                       <div class="col-12">
-                         <textarea rows="5" name="description" type="text" class="form-control" id="description" placeholder="A description for the class"></textarea>
+                         <textarea required rows="5" name="description" type="text" class="form-control" id="description" placeholder="A description for the class"></textarea>
                       </div>
                     </div>
                   </div>
@@ -84,7 +102,25 @@
                 </form>
         
         </div>
-         
+              <br/>
+        <div class="stepwizard">
+            <div class="stepwizard-row">
+                <div class="stepwizard-step">
+                    <button type="button" class="btn btn-primary btn-circle">1</button>
+                    <p>Create class</p>
+                </div>
+                <div class="stepwizard-step">
+                    <button type="button" class="btn btn-default btn-circle">2</button>
+                    <p>Add people</p>
+                </div>
+                <div class="stepwizard-step">
+                    <button type="button" class="btn btn-default btn-circle">3</button>
+                    <p>Learn foreign languages as never before</p>
+                </div> 
+            </div>
+        </div>
+
+       
        
         <%- include('tiles/modalActivity'); %>
     </div> <!-- end container-->
@@ -97,8 +133,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
       crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
       crossorigin="anonymous"></script>
@@ -106,8 +141,8 @@
     <script src="assets/js/formatDate.js"></script>
     <script src="assets/js/lib/bootstrap-notify.min.js"></script>
     <script src="assets/js/capabilities/activity.js"></script>
-    <script src="assets/js/class.js"></script>
     <script src="assets/js/lib/jquery.letterpic.min.js"></script>
+    <script src="assets/js/newClass1.js"></script>
     
 </body>
 

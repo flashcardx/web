@@ -1,15 +1,3 @@
-reloadCategories();
-
-
-//
-// $('#element').donetyping(callback[, timeout=1000])
-// Fires callback when a user has finished typing. This is determined by the time elapsed
-// since the last keystroke and timeout parameter or the blur event--whichever comes first.
-//   @callback: function to be called when even triggers
-//   @timeout:  (default=1000) timeout, in ms, to to wait before triggering event if not
-//              caused by blur.
-// Requires jQuery 1.7+
-//
 (function($){
     $.fn.extend({
         donetyping: function(callback,timeout){
@@ -48,74 +36,42 @@ reloadCategories();
 })(jQuery);
 
 
-function makeRegExSearch(text){
-    text = text.replace(/\s/g,'');
-    var length = text.length;
-    if(length > 100)
-        throw new Exception("Search text too large");
-    var r = "";
-    for(var i=0; i < length; i++)
-        r += text[i] + "\\s*";
-    return r;
-}
-
-
-$('#search-box').donetyping(function(){
-    var regEx = makeRegExSearch(this.value);
-    console.log("reg ex: " + regEx);
-   reloadForSearch(regEx);
-});
-
-$('#category-select').on('change', function() {
-        reloadForCategory(this.value);
-})
-
-$('#sort-select').on('change', function() {
-     reloadForSort(this.value);
-})
-
-
-
-
-
-
-
-
-
-
-
-
-function reloadCategories(){
-    $('#category-select').html("<option selected='selected' value='*'>All categories</option>"+
-                                  "<option value=''>No category</option>");
-    loadCategories();
-}
-
-
-
-function loadCategories(){
-    $.ajax({
-        url:"/categories",
+var xhr;
+$('#title').donetyping(function(){
+    if(!this.value)
+        return;
+    var v = validateURL(this.value, "search parameter has invalid characters!");
+    try { xhr.abort(); } catch(e){}
+        xhr = $.ajax({
+        url: "/searchClass/" + v,
         success: result=>{
-            if(result.success === false)
+            if(result.success == false)
                 showError(result.msg);
-            else
-               fillCategoriesFilter(result.msg);
+            else{
+                renderValidationResult(result.msg);
+            }
         },
         error: err=>{
-                showError(err);
+            if(err.statusText === "abort")
+                return;
+            console.error("Something went wrong when searching class : " + JSON.stringify(err));
+            showError("Something went wrong when searching the class :(");
         }
     });
+});
+
+function renderValidationResult(r){
+    console.log("r:" + r);
+    $("#classname-group").removeClass("has-success");
+    $("#classname-group").removeClass("has-danger");
+    if(!r){
+        $("#classname-group").addClass("has-success");
+        $("#classname-feedback").text("This classname is available");
+    }
+    else{
+        $("#classname-group").addClass("has-danger");
+        $("#classname-feedback").text("This classname already exist, try another one!");
+    }
 }
 
-
-
- function fillCategoriesFilter(categories){
-     categories.forEach(c=>{
-         $('#category-select').append($('<option>', {
-                value: c.name,
-                text: c.name
-            }));
-     })
- }
-
+  $(".letterpic").letterpic({ fill: 'color' });   

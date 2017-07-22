@@ -20,7 +20,7 @@ function getMyClasses(){
             if(result.success == false)
                 showError(result.msg);
             else{
-                appendMyClasses(result.msg);
+                appendMyClasses(result.msg, result.userId);
             }
         },
         error: err=>{
@@ -32,7 +32,7 @@ function getMyClasses(){
     });
 }
 
-function appendMyClasses(classes){
+function appendMyClasses(classes, userId){
     if(classes.length == 0){
             $("#classes-content").html("You do not have classes(in the current language). Create or enroll to classes for sharing cards and connecting with your classmates!");  
             return;
@@ -47,12 +47,12 @@ function appendMyClasses(classes){
         else
             html += " <div class='class top-buffer'>";
             html += "<div class='row'>"+
-                          "<div class='col-2'>"+
+                          "<div class='col-xs-12 col-md-2'>"+
                            "<a target='_blank' href='assets/img/default.png'>"+
                               "<img class='img-fluid my-thumbnail float-left letterpic' title='" + c.name + "'src='" + c.thumbnail + "' alt='Default image'>"+
                             "</a>"+
                           "</div>"+
-                          "<div class='col-10'>" +
+                          "<div class='col-md-10'>" +
                                 "<div class='row'>" +
                                     "<div class='col'><h4>"+  c.name +"</h4></div>"+
                                     "<div class='col'>Type: "+ type +"</div>"+
@@ -68,9 +68,9 @@ function appendMyClasses(classes){
                       "<div class='row'>" +
                           "<div class='col'>  People: " + (c.maxUsers - c.usersLeft) + "/" + c.maxUsers + "</div>"+
                            "<div class='col'> Cards: "+ (c.maxLimit - c.cardsLeft) + "/" + c.maxLimit + "</div>"+
-                           "<div class='col-4'>"    +
-                           "<a class='btn btn-warning class-btn'>Settings</a>" +
-                           " <a class='btn btn-success class-btn'>Enter</a>"  + //do not delete the space at the beginning
+                           "<div class='col-md-4 col-xs-12'>"    +
+                           "<a href='/classSettings?q="+c.name+"' class='col btn btn-warning class-btn'>Settings</a>" +
+                           " <a class='col btn btn-success background-blue class-btn'>Enter</a>"  + //do not delete the space at the beginning
                            "</div>"     +
                       "</div>"+  
                 "</div>";
@@ -117,13 +117,13 @@ function appendSearchClass(Class, userId){
         if(userBelongs == false)
             lastButton = "<button onClick=\"join('"+ Class.name + "', 'search');\" class='col btn btn-success class-btn'>Join</button>";
         else
-            lastButton = "<a class='btn btn-warning class-btn'>Settings</a> <a class='btn btn-success class-btn'>Enter</a>";
+            lastButton = "<a href='/classSettings?q="+Class.name+"' class='col btn btn-warning class-btn'>Settings</a> <a class='col btn btn-info background-blue class-btn'>Enter</a>";
         var type = "Public";
         if(Class.isPrivate == "true")
             type = "Private";
         html += " <div class='class top-buffer'>";
         html += "<div class='row'>"+
-                          "<div class='col-2'>"+
+                          "<div class='col-md-2 col-xs-12'>"+
                            "<a target='_blank' href='assets/img/default.png'>"+
                               "<img class='img-fluid my-thumbnail float-left letterpic' title='" + Class.name + "'src='" + Class.thumbnail + "' alt='Default image'>"+
                             "</a>"+
@@ -135,7 +135,7 @@ function appendSearchClass(Class, userId){
                                     "<div class='col'>Admin: " + Class.owner.name +"</div>"+
                                 "</div>"+
                                 "<div class='row'>"+
-                                    "<div class='col-12'>"+ 
+                                    "<div class='col-md-4 col-xs-12'>"+ 
                                         Class.description  +
                                         "</div>"+
                                 "</div>"+
@@ -144,7 +144,7 @@ function appendSearchClass(Class, userId){
                       "<div class='row'>" +
                           "<div class='col'>  People: " + (Class.maxUsers - (Class.integrants.length + 1)) + "/" + Class.maxUsers + "</div>"+
                            "<div class='col'> Cards: "+ (Class.maxLimit - Class.cardsLeft) + "/" + Class.maxLimit + "</div>"+
-                           "<div class='col-4'>"    +
+                           "<div class='col-md-4 col-xs-12'>"    +
                            lastButton  +
                            "</div>"     +
                       "</div>"+  
@@ -156,14 +156,14 @@ function appendSearchClass(Class, userId){
 function checkUserIsInClass(Class, userId){
     if(Class.owner.id == userId)
         return true;
+    var r =  false; 
     Class.integrants.forEach(v=>{
-         if(v.id == userId)
-            return true;
+         if(v.id == userId){
+            r = true;
+         }
     });
-    return false;
+    return r;
 }
-
-
 
 function getDiscoverClasses(){
         $.ajax({
@@ -190,7 +190,7 @@ function appendDiscoverClasses(classes, userId){
         $("#discover-classes-content").html("Nothing at the moment(for the current language)! :(");   
         return;
     }     
-   
+
     classes.forEach((c, i)=>{
         var html = "";
         var type = "Public";
@@ -201,7 +201,7 @@ function appendDiscoverClasses(classes, userId){
         else
             html += " <div id='discover-class-"+c.name+"' class='class top-buffer'>";
         html += " <div class='row'>"+
-                          "<div class='col-2'>"+
+                          "<div class='col-md-2 col-xs-12'>"+
                            "<a target='_blank' href='assets/img/default.png'>"+
                               "<img class='img-fluid my-thumbnail float-left letterpic' title='" + c.name + "' src='" + c.thumbnail + "' alt='Default image'>"+
                             "</a>"+
@@ -222,7 +222,7 @@ function appendDiscoverClasses(classes, userId){
                 "<div class='row'>" +
                           "<div class='col'>  People: " + (c.maxUsers - c.usersLeft) + "/" + c.maxUsers + "</div>"+
                            "<div class='col'> Cards: "+ (c.maxLimit - c.cardsLeft) + "/" + c.maxLimit + "</div>"+
-                            "<div class='col-2'>"    +
+                            "<div class='col-md-4 col-xs-12'>"    +
                                 "<a onClick=\"join('"+ c.name + "', 'discover');\" class='col btn btn-success class-btn'>Join</a>"+
                            "</div>"+
                       "</div>"+  
