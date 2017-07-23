@@ -33,6 +33,7 @@ function getMyClasses(){
 }
 
 function appendMyClasses(classes, userId){
+    console.log("my classes: " + JSON.stringify(classes));
     if(classes.length == 0){
             $("#classes-content").html("You do not have classes(in the current language). Create or enroll to classes for sharing cards and connecting with your classmates!");  
             return;
@@ -70,7 +71,7 @@ function appendMyClasses(classes, userId){
                            "<div class='col'> Cards: "+ (c.maxLimit - c.cardsLeft) + "/" + c.maxLimit + "</div>"+
                            "<div class='col-md-4 col-xs-12'>"    +
                            "<a href='/classSettings?q="+c.name+"' class='col btn btn-warning class-btn'>Settings</a>" +
-                           " <a class='col btn btn-success background-blue class-btn'>Enter</a>"  + //do not delete the space at the beginning
+                           " <a class='col btn btn-success blue-btn class-btn'>Enter</a>"  + //do not delete the space at the beginning
                            "</div>"     +
                       "</div>"+  
                 "</div>";
@@ -117,7 +118,7 @@ function appendSearchClass(Class, userId){
         if(userBelongs == false)
             lastButton = "<button onClick=\"join('"+ Class.name + "', 'search');\" class='col btn btn-success class-btn'>Join</button>";
         else
-            lastButton = "<a href='/classSettings?q="+Class.name+"' class='col btn btn-warning class-btn'>Settings</a> <a class='col btn btn-info background-blue class-btn'>Enter</a>";
+            lastButton = "<a href='/classSettings?q="+Class.name+"' class='col btn btn-warning class-btn'>Settings</a> <a class='col btn btn-info blue-btn class-btn'>Enter</a>";
         var type = "Public";
         if(Class.isPrivate == "true")
             type = "Private";
@@ -142,7 +143,7 @@ function appendSearchClass(Class, userId){
                           "</div>"+
                 "</div>"+
                       "<div class='row'>" +
-                          "<div class='col'>  People: " + (Class.maxUsers - (Class.integrants.length + 1)) + "/" + Class.maxUsers + "</div>"+
+                          "<div class='col'>  People: " +  (Class.integrants.length + 1) + "/" + Class.maxUsers + "</div>"+
                            "<div class='col'> Cards: "+ (Class.maxLimit - Class.cardsLeft) + "/" + Class.maxLimit + "</div>"+
                            "<div class='col-md-4 col-xs-12'>"    +
                            lastButton  +
@@ -154,11 +155,11 @@ function appendSearchClass(Class, userId){
 }
 
 function checkUserIsInClass(Class, userId){
-    if(Class.owner.id == userId)
+    if(Class.owner._id == userId)
         return true;
     var r =  false; 
     Class.integrants.forEach(v=>{
-         if(v.id == userId){
+         if(v == userId){
             r = true;
          }
     });

@@ -1,12 +1,21 @@
 .loader {
   border: 14px solid #f3f3f3;
   border-radius: 50%;
-  border-top: 14px solid #3498db;
-  border-bottom: 14px solid #3498db;
+  border-top: 14px solid #4286f4;
+  border-bottom: 14px solid #4286f4;
   width: 100px;
   height: 100px;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
+}
+
+.blue-btn{
+  background: #4286f4;
+    border-color: #4286f4;
+}
+.blue-btn:hover{
+  background: #346bc3;
+    border-color: #346bc3;
 }
 
 a{
@@ -140,15 +149,15 @@ width: 40px;
 
 
   .background-blue{
-    background: #0080ff;
-    border-color: #0080ff;
+    background: #f0ad4e;
+    border-color: #f0ad4e;
   }
 
 
 
   .background-blue:hover{
-    background: #0066cc;
-    border-color: #0080ff;
+    background: #c08a3e;
+    border-color: #c08a3e;
   }
 
 
@@ -184,8 +193,8 @@ width: 40px;
 }
 
 .blue-hover:hover{
-  background: #0080ff;
-  border-color: #0080ff;
+  background: #f0ad4e;
+  border-color: #f0ad4e;
 }
 
 .my-thumbnail{
@@ -204,5 +213,31 @@ width: 40px;
   }
 
   hr{
-    border: 2px solid #0080ff;
+    border: 2px solid #4286f4;
+  }
+
+
+  .navbar-header{
+    background-color: #85DCB0;
+  }
+
+  .bg-inverse{
+    background-color: #4286f4 !important;
+  }
+
+  .nav-item{
+       color:white !important;
+  }
+
+   .nav-item:hover {
+     font-weight: bold;
+  }
+
+
+  .nav-item.active {
+     font-weight: bold;
+  }
+
+  .nav-link{
+    color:white !important;
   }

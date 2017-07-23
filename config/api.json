@@ -37,7 +37,9 @@
             "joinClass": "http://localhost:3000/joinClass",
             "newClass": "http://localhost:3000/class",
             "addUserToClass": "http://localhost:3000/addUserToClass",
-            "deleteUserFromClass":"http://localhost:3000/userFromClass"
+            "deleteUserFromClass":"http://localhost:3000/userFromClass",
+            "getClassStats": "http://localhost:3000/classStats",
+            "getIntegrants": "http://localhost:3000/classIntegrants"
         },
         "pi":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -77,7 +79,9 @@
             "joinClass": "http://localhost:3000/joinClass",
             "newClass": "http://localhost:3000/class",
             "addUserToClass": "http://localhost:3000/addUserToClass",
-            "deleteUserFromClass":"http://localhost:3000/userFromClass"
+            "deleteUserFromClass":"http://localhost:3000/userFromClass",
+            "getClassStats": "http://localhost:3000/classStats",
+            "getIntegrants": "http://localhost:3000/classIntegrants"
             },
         "production":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -117,6 +121,8 @@
             "joinClass": "http://localhost:3000/joinClass",
             "newClass": "http://localhost:3000/class",
             "addUserToClass": "http://localhost:3000/addUserToClass",
-            "deleteUserFromClass":"http://localhost:3000/userFromClass"
+            "deleteUserFromClass":"http://localhost:3000/userFromClass",
+            "getClassStats": "http://localhost:3000/classStats",
+            "getIntegrants": "http://localhost:3000/classIntegrants"
         }
 }

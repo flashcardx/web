@@ -54,14 +54,6 @@ body{
   margin-top:-14px;
 }
 
-/* Footer */
-#footer2{
-    padding: 0.5%;
-    color: #ffffff;
-   	background-color: #222222;
-    border-color: #080808;
-    margin-top: 2% !important;         
-}
 
 .alignVMiddle{
     float: none;
@@ -121,3 +113,12 @@ padding: 10px;
     margin: 15px;
 }
 
+/* Footer */
+#footer2 {
+  padding: .5%;
+  color: #ffffff;
+  background-color: #222222;
+  border-color: #080808;
+  margin-top: 2% !important;
+  font-size: 14px;
+}

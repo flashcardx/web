@@ -44,5 +44,7 @@ module.exports = {
     apiJoinClass: api.joinClass,
     apiNewClass: api.newClass,
     apiAddUserToClass: api.addUserToClass,
-    apiDeleteUserFromClass: api.deleteUserFromClass
+    apiDeleteUserFromClass: api.deleteUserFromClass,
+    apiGetClassStats: api.getClassStats,
+    apiGetIntegrants: api.getIntegrants
 };

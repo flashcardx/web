@@ -15,8 +15,8 @@ function getCards() {
                 return showError(result.msg);
             if (result.msg.length === 0) {
                 $("#card-deck").hide();
-                $(".main").prepend("<h2 class='row'style='margin-top:15px;'>Well done! There are no cards left to practice. " +
-                    "Come back tomorrow!</h2>");
+                $(".main").prepend("<h3 class='row'style='margin-top:15px;'>Well done! There are no cards left to practice. " +
+                    "Come back tomorrow!</h3>");
                 return;
             }
             cards.push(result.msg);

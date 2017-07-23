@@ -183,8 +183,36 @@ module.exports = function(app){
 		var classname = req.query.q;
 		var userId = req.userId;
 		console.log("classname: " + classname);
-		res.render("classSettings");
+		res.render("classSettings", {classname:classname, userId:userId});
 	})
+
+	app.get("/classStats/:classname", controllerUtils.requireLogin, (req, res)=>{
+		var url = config.apiGetClassStats + "/" + req.params.classname;
+		requestify.get(url, {headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				res.json(data);
+			}).fail(response=> {
+				const errorCode = response.getCode();
+                console.error("server got error code " + errorCode);
+				res.json({success:false, msg: "server got error code " + errorCode});	
+			});
+	}) 
+
+	app.get("/classIntegrants/:classname", controllerUtils.requireLogin, (req, res)=>{
+		var url = config.apiGetIntegrants + "/" + req.params.classname;
+		requestify.get(url, {headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				res.json(data);
+			}).fail(response=> {
+				const errorCode = response.getCode();
+                console.error("server got error code " + errorCode);
+				res.json({success:false, msg: "server got error code " + errorCode});	
+			});
+	}) 
 	
 
 
