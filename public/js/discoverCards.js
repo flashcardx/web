@@ -121,7 +121,7 @@ function appendCards(cards) {
                     "<i class='fa fa-share fa-fw'></i>" +
                     "</button>" +
                     "<span data-toggle='modal' data-target='#duplicate-on-class-modal'>" +
-                        "<button data-toggle='tooltip' data-placement='right' title='Duplicate on class' class='ev-btn-fab md-fab ev-md-fab ev-md-fab-offset ev-m-r ev-violet pull-right'>" +
+                        "<button onClick=\"getClasses('"+card._id+"');\" data-toggle='tooltip' data-placement='right' title='Duplicate on class' class='ev-btn-fab md-fab ev-md-fab ev-md-fab-offset ev-m-r ev-violet pull-right'>" +
                         "<i class='fa fa-share fa-fw'></i>" +
                         "</button>" +
                     "</span>"+
@@ -189,3 +189,55 @@ function completeFooter(n) {
 }
 
 
+var classId2Duplicate;
+function getClasses(classId){
+    classId2Duplicate = classId;
+     $.ajax({
+        url: "/classesShort",
+        success: result => {
+            if (!result.success)
+                showError(result.msg);
+            else 
+                fillClasses(result.msg);
+        },
+        error: err => {
+            if(err.statusText === "abort")
+                return;
+            console.log("Something went wrong when retrieving your classes " + JSON.stringify(err));
+            showError("Something went wrong when retrieving your classes:(");
+        }
+    });
+}
+
+function fillClasses(classes){
+    var html = "";
+    classes.forEach(c=>{
+        html += "<option value='"+c.name+"'>"+c.name+"</option>";    
+    });
+    $("#class-select").html(html);
+}
+
+function duplicate2Class(){
+    var classname = $( "#class-select" ).val();
+    $.ajax({
+        url: "/duplicateCard2Class",
+        method: "post",
+        data: {
+            classname: classname,
+            cardId: classId2Duplicate
+        },
+        success: result=>{
+            console.log("result duplicate class: " + JSON.stringify(result));
+            if (!result.success)
+                showError(result.msg);
+            else 
+                showSuccess("Card duplicated on class");
+        },
+        error: err => {
+            if(err.statusText === "abort")
+                return;
+            console.log("Something went wrong when retrieving your classes " + JSON.stringify(err));
+            showError("Something went wrong when retrieving your classes:(");
+        }
+    });
+}

@@ -111,33 +111,10 @@
         <div class="row class-group">
           <div class="col">
               <h3>People in the class:</h3>
-              <table class="table table-responsive">
+              <table class="table">
                         <tbody id="add-people">
-                            <!--<span id="nopeople">No people yet!</span> -->
-                                
-                                <tr>
-                                    <th scope="row"> <img class='img-fluid my-thumbnail float-left letterpic' title='Mark s'src='/fdrfr' alt='Default image'> </th>
-                                    <td>Mark</td>
-                                    <td><button class="btn btn-warning class-btn">Remove</button></td>
-                                </tr>
-                                 <tr>
-                                    <th scope="row"> <img class='img-fluid my-thumbnail float-left letterpic' title='Mark s'src='/fdrfr' alt='Default image'> </th>
-                                    <td>Mark</td>
-                                    <td><button class="btn btn-warning class-btn">Remove</button></td>
-                                </tr>
-                                 <tr>
-                                    <th scope="row"> <img class='img-fluid my-thumbnail float-left letterpic' title='Mark s'src='/fdrfr' alt='Default image'> </th>
-                                    <td>Mark</td>
-                                    <td><button class="btn btn-warning class-btn">Remove</button></td>
-                                </tr>
-                                   <tr>
-                                    <th scope="row"> <img class='img-fluid my-thumbnail float-left letterpic' title='Mark s'src='/fdrfr' alt='Default image'> </th>
-                                    <td>Mark</td>
-                                    <td><button class="btn btn-warning class-btn">Remove</button></td>
-                                </tr>
-                                
-                            </tbody>
-                        </table>
+                        </tbody>
+                </table>
                   </br>
             </div>
         </div>
@@ -159,16 +136,41 @@
         </div>
 
          <div class="row class-group">
-            <div class="col">
-                <a class="btn btn-danger class-btn">Delete class</a>
-                  <button type="button" data-toggle="tooltip" data-placement="right"
-                            title="Since you are the admin, you can not leave the class. You are the only one who can delete this class" 
-                            class="fa fa-info" aria-hidden="true">
-                    </button>
+            <div class="col" id="last-button">
             </div>
         </div>
        
         <%- include('tiles/modalActivity'); %>
+
+         <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <div >
+                                If you delete the class all its data will be deleted,
+                                There is no turning back from this.
+                                <b>All there cards that were duplicated from the class to users collections will persist</b>                            </div>
+                        </div>
+                  </div>
+                 </div>
+                <div class="modal-footer">
+                    <a href="/deleteClass/<%=classname%>" class="btn btn-danger" >I undestand the risks and want to continue</a>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
     </div> <!-- end main-content-->
   </div><!--end container-->
   <%- include('tiles/footer'); %>

@@ -86,17 +86,18 @@
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Select class for duplicate card:</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">Select class to duplicate card:</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
                 </div>
                 <div class="modal-body">
-                  <input type="text" class="form-control" id="new-category" placeholder="Category's name">
+                    <select name="class" class="form-control filter-margin" id="class-select">
+                    </select>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" onCLick="newCategory()" data-dismiss="modal" class="btn btn-primary">Confirm</button>
+                  <button type="button" onCLick="duplicate2Class();" data-dismiss="modal" class="btn btn-primary">Confirm</button>
                 </div>
               </div>
             </div>

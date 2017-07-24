@@ -12,8 +12,9 @@ module.exports = function(app){
 
     app.get("/class", controllerUtils.requireLogin, (req, res)=>{
 		var successMsg = req.session.successMsg;
+		var errorMsg = req.session.error;
 		controllerUtils.cleanSessionMsgs(req);
-        return res.render("class", {successMsg:successMsg});
+        return res.render("class", {errorMsg: errorMsg, successMsg:successMsg});
     });
 
     app.get("/activity", controllerUtils.requireLogin, (req, res)=>{
@@ -48,6 +49,20 @@ module.exports = function(app){
 
 	app.get("/classes", controllerUtils.requireLogin, (req, res)=>{
         var url = config.apiGetClasses;
+		requestify.get(url, {headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				res.json(data);
+			}).fail(response=> {
+				const errorCode = response.getCode();
+                console.error("server got error code " + errorCode);
+				res.json({success:false, msg: "server got error code " + errorCode});	
+			});
+	});
+
+	app.get("/classesShort", controllerUtils.requireLogin, (req, res)=>{
+        var url = config.apiGetClassesShort;
 		requestify.get(url, {headers:{
 				"x-access-token": req.session.token
 			}}).then(response=>{
@@ -213,9 +228,75 @@ module.exports = function(app){
 				res.json({success:false, msg: "server got error code " + errorCode});	
 			});
 	}) 
-	
 
+	app.get("/deleteClass/:classname", controllerUtils.requireLogin, (req, res)=>{
+		var url = config.apiDeleteClass + "/" + req.params.classname;
+		requestify.delete(url, {headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				if(data.success == true)
+					req.session.successMsg = "The class was deleted";
+				else{
+					logger.error("could not delete class: " + err);
+					req.session.error = "Could not delete class";
+				}
+				res.redirect("/class");
+			}).fail(response=> {
+				const errorCode = response.getCode();
+                console.error("server got error code " + errorCode);
+				req.session.error = "Could not delete class";
+				res.redirect("/class");
+			});
+	}) 
 
+	app.get("/leaveClass/:classname", controllerUtils.requireLogin, (req, res)=>{
+		var url = config.apiLeaveClass + "/" + req.params.classname;
+		requestify.get(url, {headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				if(data.success == true)
+					req.session.successMsg = "You left the class";
+				else{
+					logger.error("User could not leave class: " + err);
+					req.session.error = "Could not leave class";
+				}
+				res.redirect("/class");
+			}).fail(response=> {
+				const errorCode = response.getCode();
+                console.error("server got error code " + errorCode);
+				req.session.error = "Could not leave class";
+				res.redirect("/class");
+			});
+	}) 
+
+	app.delete("/userFromClass", controllerUtils.requireLogin, parseForm, (req, res)=>{
+		var url = config.apiRemoveUserFromClass;
+		requestify.get(url, {body: req.body, headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				res.json(data);
+			}).fail(response=> {
+				const errorCode = response.getCode();
+                console.error("server got error code " + errorCode);
+				res.json({success:false, msg: "server got error code " + errorCode});	
+			});
+	}) 
+
+	app.post("/duplicateCard2Class", controllerUtils.requireLogin, parseForm, (req, res)=>{
+		requestify.post(config.apiDuplicateCard2Class, req.body, {headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				res.json(data);
+			}).fail(response=>{
+				const errorCode = response.getCode();
+				console.error("server got error code " + errorCode);
+				return res.json({success:false, msg:"Could not duplicate card"});
+			});
+	});
   
    
 

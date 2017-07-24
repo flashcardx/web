@@ -39,6 +39,7 @@ module.exports = {
     apiGetActivity: api.getActivity,
     apiGetActivityCount: api.getActivityCount,
     apiGetClasses: api.getClasses,
+    apiGetClassesShort: api.getClassesShort,
     apiSearchClass: api.searchClass,
     apiRecommendClasses: api.recommendClasses,
     apiJoinClass: api.joinClass,
@@ -46,5 +47,9 @@ module.exports = {
     apiAddUserToClass: api.addUserToClass,
     apiDeleteUserFromClass: api.deleteUserFromClass,
     apiGetClassStats: api.getClassStats,
-    apiGetIntegrants: api.getIntegrants
+    apiGetIntegrants: api.getIntegrants,
+    apiDeleteClass: api.deleteClass,
+    apiLeaveClass: api.leaveClass,
+    apiRemoveUserFromClass: api.removeUserFromClass,
+    apiDuplicateCard2Class: api.duplicateCard2Class
 };
