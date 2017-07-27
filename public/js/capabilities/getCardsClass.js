@@ -22,6 +22,7 @@ function reloadCards(){
     end = false;
     firstTime = true;
     $("#card-deck").html("");
+    idsUpdated = [];
     getMoreCards();
      $(window).off("scroll");
      setTimeout(setScroll, 2000);
@@ -65,7 +66,7 @@ function getMoreCards(){
             queryString += "&category=" + category;
         try { xhr.abort(); } catch(e){}
         xhr = $.ajax({
-        url:"/getMyCards" + queryString,
+        url:"/classCards/" + classname + queryString,
         success: result=>{
             if(result.success == false)
                 showError(result.msg);
@@ -88,7 +89,7 @@ getMoreCards();
 function completeFooter(n){
     var html = "";
     if(n === 0){
-        html += "You don't have cards, start now and learn vocabulary as never before!";
+        html += "There are no cards in this class yet. You can duplicate the cards in your collection to a class and share them with classmates!";
     }
     $("#card-deck").append(html);
 }
@@ -155,7 +156,7 @@ function appendCards(cards){
     } else { /*default image, when there is not image*/
        html +="<div class='slide-fixed-size'>"+
                    "<div class='slide-size' style='max-height: 200px; height:183px;width:274px;overflow:hidden'>"+
-                        "<img class='d-block img-fluid' data-lazy='assets/img/default.png' alt='One moment!...'>" +
+                        "<img class='d-block img-fluid' data-lazy='/assets/img/default.png' alt='One moment!...'>" +
                   "</div>"+
              "</div>"
     }
@@ -178,22 +179,20 @@ function appendCards(cards){
                    "<div style='margin-top:33px;' class='row'>" + 
                         "<div class='col-md-12'>"+
                             "<div  id='buttons-"+card._id+"' style='float:right;' class='card-buttons' id='buttons-"+card._id+"'>"+
-                                "<button  style='float:right;' data-toggle='tooltip' data-placement='right' title='Delete' onClick=\"deleteCard('"+card._id+"','"+ card.updated_at +"')\"  class=' ev-btn-fab md-fab ev-md-fab ev-md-fab-offset ev-m-r ev-red pull-right'>" +
+                                "<button  style='float:right;' data-toggle='tooltip' data-placement='right' title='Delete' onClick=\"deleteCard('"+card._id+"')\"  class=' ev-btn-fab md-fab ev-md-fab ev-md-fab-offset ev-m-r ev-red pull-right'>" +
                                     "<i class='fa fa-trash fa-fw'></i>" +
                                 "</button>" +
                                 "<button id='update-button-"+card._id+"' style='float:right;' data-toggle='tooltip' onClick=\"updateCard('"+ card._id +"')\" data-placement='right' title='Edit' class='ev-btn-fab md-fab ev-md-fab ev-md-fab-offset ev-m-r ev-yellow pull-right'>" +
                                         "<i class='fa fa-pencil-square-o fa-fw'></i>" +
                                     "</button>" +
-                                    "<span data-toggle='modal' data-target='#duplicate-on-class-modal'>" +
-                                    "<button onClick=\"getClasses('"+card._id+"');\" style='float:right;' data-toggle='tooltip' data-placement='right' title='Duplicate on class' class='ev-btn-fab md-fab ev-md-fab ev-md-fab-offset ev-m-r ev-violet pull-right'>" +
+                                "<button onClick=\"duplicateCard('"+card._id+"');\" style='float:right;' data-toggle='tooltip' data-placement='right' title='Duplicate on my collection' class='ev-btn-fab md-fab ev-md-fab ev-md-fab-offset ev-m-r ev-orange pull-right'>" +
                                         "<i class='fa fa-share fa-fw'></i>" +
                                     "</button>" +
-                                    "</span>"+
                             "</div>" +
                         "</div>"+
                    "</div>"+
                    "<div class='mycard-footer'>"+
-                   "<p class='card-time card-text'><small id='update-time-"+card._id+"'class='text-muted format-date'>Updated "+ timeSince(new Date(card.updated_at)) +" ago. "+"</small>"+
+                   "<p class='card-time card-text'><small id='update-time-"+card._id+"'class='text-muted format-date'>Updated "+ timeSince(new Date(card.updated_at)) +" ago. By: "+ card.ownerName +"</small>"+
                                "</p>"+
                    "</div>"+
                "</div>";
@@ -202,8 +201,8 @@ function appendCards(cards){
             lazyLoad: 'ondemand',
             slidesToShow: 1,
             slidesToScroll: 1,
-            prevArrow:"<img class='a-left control-c prev slick-prev' src='assets/img/left-arrow.png'>",
-            nextArrow:"<img class='a-right control-c next slick-next' src='assets/img/right-arrow.png'>"
+            prevArrow:"<img class='a-left control-c prev slick-prev' src='/assets/img/left-arrow.png'>",
+            nextArrow:"<img class='a-right control-c next slick-next' src='/assets/img/right-arrow.png'>"
         });
     });
     viewMore(cards);
@@ -245,56 +244,3 @@ function appendCards(cards){
     }
 
 
-
-var classId2Duplicate;
-function getClasses(classId){
-    classId2Duplicate = classId;
-     $.ajax({
-        url: "/classesShort",
-        success: result => {
-            if (!result.success)
-                showError(result.msg);
-            else 
-                fillClasses(result.msg);
-        },
-        error: err => {
-            if(err.statusText === "abort")
-                return;
-            console.log("Something went wrong when retrieving your classes " + JSON.stringify(err));
-            showError("Something went wrong when retrieving your classes:(");
-        }
-    });
-}
-
-function fillClasses(classes){
-    var html = "";
-    classes.forEach(c=>{
-        html += "<option value='"+c.name+"'>"+c.name+"</option>";    
-    });
-    $("#class-select").html(html);
-}
-
-function duplicate2Class(){
-    var classname = $( "#class-select" ).val();
-    $.ajax({
-        url: "/duplicateCard2Class",
-        method: "post",
-        data: {
-            classname: classname,
-            cardId: classId2Duplicate
-        },
-        success: result=>{
-            console.log("result duplicate class: " + JSON.stringify(result));
-            if (!result.success)
-                showError(result.msg);
-            else 
-                showSuccess("Card duplicated on class");
-        },
-        error: err => {
-            if(err.statusText === "abort")
-                return;
-            console.log("Something went wrong when retrieving your classes " + JSON.stringify(err));
-            showError("Something went wrong when retrieving your classes:(");
-        }
-    });
-}

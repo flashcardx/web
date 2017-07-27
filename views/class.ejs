@@ -34,16 +34,21 @@
             <a class="nav-link" href="/discover">Discover</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="/feed">Feed</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="/">My collection</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/create">Create card</a>
           </li>
+          <U>
+            <li class="nav-item active">
+              <a class="nav-link" href="/class">Classes</a>
+            </li>
+          </U>
           <li class="nav-item">
             <a class="nav-link" href="/practice">Practice</a>
-          </li>
-         <li class="nav-item active">
-            <a class="nav-link" href="/class">Classes</a>
           </li>
         </ul>
          <%- include('tiles/sideOptions'); %>
@@ -55,8 +60,14 @@
        <% if(successMsg){%>
            <script>
                 $(document).ready(()=>{
-                  showSuccess(<%-JSON.stringify(successMsg)%>);
-                   
+                  showSuccess(<%-JSON.stringify(successMsg)%>);            
+                });
+              </script>
+          <%}%>
+          <% if(errorMsg){%>
+           <script>
+                $(document).ready(()=>{
+                  showError(<%-JSON.stringify(errorMsg)%>);
                 });
               </script>
           <%}%>

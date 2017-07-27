@@ -70,6 +70,7 @@ function showCards() {
         "<div class='col-12'>" +
         "<div data-category='" + card.category + "'>" +//do not delete this div, updateCard.js needs it to update card
         "<h4 id='speak" + card._id + "' class='card-title'><span>" + card.name + " </span><i onCLick=\"speak(\'" + card._id + "\', \'" + card.lang + "\');\" class='speaker fa fa-volume-up black' aria-hidden='true'></i></h4>" +
+        "  <button style='display: none;'id='showAnswer' onClick='showAnswer();' role='button' class='col-12 left-margin btn btn-success' type='button'>Show answer</button>"+
         "<p id='description-" + card._id + "'class='card-text card-description'>" + checkUndefined(description).replace(new RegExp(card.name, 'g'),"??? ") + "</p>" +
         "<p class='card-time card-text'><small id='update-time-" + card._id + "'class='text-muted format-date'>Updated " + timeSince(new Date(card.updated_at)) + " ago. " + "</small>" +
         "</p>" +

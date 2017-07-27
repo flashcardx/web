@@ -62,6 +62,7 @@ function makeRegExSearch(text){
 
 $('#search-box').donetyping(function(){
     var regEx = makeRegExSearch(this.value);
+    console.log("reg ex: " + regEx);
    reloadForSearch(regEx);
 });
 
@@ -74,16 +75,6 @@ $('#sort-select').on('change', function() {
 })
 
 
-
-
-
-
-
-
-
-
-
-
 function reloadCategories(){
     $('#category-select').html("<option selected='selected' value='*'>All categories</option>"+
                                   "<option value=''>No category</option>");
@@ -94,7 +85,7 @@ function reloadCategories(){
 
 function loadCategories(){
     $.ajax({
-        url:"/categories",
+        url:"/classCategories/" + classname,
         success: result=>{
             if(result.success === false)
                 showError(result.msg);

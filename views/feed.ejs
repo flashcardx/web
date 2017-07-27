@@ -9,17 +9,17 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <script src="https://use.fontawesome.com/6cbcc3e9b8.js"></script>
-  <link rel="icon" href="assets/img/favicon.ico">
+  <link rel="icon" href="/assets/img/favicon.ico">
   <title>FlashCardX</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
     crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/component/general.css">
-  <link rel="stylesheet" href="assets/css/page/homeNL.css">
-  <link rel="stylesheet" href="assets/css/page/evclass.css">
-  <link rel="stylesheet" href="assets/css/page/homeL.css">
-  <link rel="stylesheet" href="assets/css/component/slideshow.css">
-  <link rel="stylesheet" href="assets/css/component/card.css">
+  <link rel="stylesheet" href="/assets/css/component/general.css">
+  <link rel="stylesheet" href="/assets/css/page/homeNL.css">
+  <link rel="stylesheet" href="/assets/css/page/evclass.css">
+  <link rel="stylesheet" href="/assets/css/page/homeL.css">
+  <link rel="stylesheet" href="/assets/css/component/slideshow.css">
+  <link rel="stylesheet" href="/assets/css/component/card.css">
       <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
 </head>
 
@@ -36,20 +36,20 @@
           <li class="nav-item">
             <a class="nav-link" href="/discover">Discover</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/feed">Feed</a>
-          </li>
           <U>
             <li class="nav-item active">
-              <a class="nav-link" href="#">My collection</a>
+                <a class="nav-link" href="/feed">Feed</a>
             </li>
           </U>
           <li class="nav-item">
-            <a class="nav-link" href="/create">Create card</a>
+            <a class="nav-link" href="/">My collection</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/class">Classes</a>
+            <a class="nav-link" href="/create">Create card</a>
           </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/class">Classes</a>
+            </li>
           <li class="nav-item">
             <a class="nav-link" href="/practice">Practice</a>
           </li>
@@ -58,45 +58,11 @@
           </div>
     </div>
   </nav>
+
+
   <div class="main-content min-height">
           <div class="container">
-            <% errors.forEach(err=>{%>
-              <div class="alert alert-danger alert-dismissable">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Error!</strong>
-                <%= err%>
-              </div>
-              <%});%>
-
-                <div class="row">
-                  <div class="col-md-2"></div>
-                  <div class="col-md-8">
-                    <div class="row">
-                      <div class="col-md-4 filters">
-                        <div class="filter-container">
-                        <!-- <span>  Sort by:</span> -->
-                          <select name="sort" class="form-control filter-margin" id="sort-select">
-                                <option selected="selected" value="desc">Newer first</option>
-                                <option value="asc">Older first</option>
-                            </select>
-                        </div>
-                      </div>
-                      <div class="col-md-4 filters">
-                        <div class="filter-container">
-                          <!-- <span>  Category:</span> -->
-                          <select name="category" class="form-control filter-margin" id="category-select">
-                            </select>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="filter-container">
-                          <!--<span>  Search card's title:</span> -->
-                          <input id="search-box" type="search" class="form-control filter-margin" placeholder="card's title" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+             
 
 
                 <div class="row ev-pd-top">
@@ -109,27 +75,7 @@
 
                 <%- include('tiles/modalActivity'); %>
 
-                <!--modal classes list-->
-          <div class="modal fade" id="duplicate-on-class-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Select class to duplicate card:</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-                </div>
-                <div class="modal-body">
-                    <select name="class" class="form-control filter-margin" id="class-select">
-                    </select>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" onCLick="duplicate2Class();" data-dismiss="modal" class="btn btn-primary">Confirm</button>
-                </div>
-              </div>
-            </div>
-          </div>
+            
 
                 <!--Modal new category-->
                 <div class="modal fade" id="new-category-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -170,13 +116,13 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
     <script src="/assets/js/general.js"></script>
     <script src="/assets/js/formatDate.js"></script>
-    <script src="/assets/js/myCards.js"></script>
-    <script src="/assets/js/capabilities/myCardFilters.js"></script>
+    <script src="/assets/js/capabilities/updateCardClass.js"></script>
     <script src="/assets/js/lib/bootstrap-notify.min.js"></script>
-    <script src="/assets/js/capabilities/getMyCards.js"></script>
     <script src="/assets/js/lib/articulate.min.js"></script>
-    <script src="/assets/js/capabilities/updateCard.js"></script>
     <script src="/assets/js/capabilities/activity.js"></script>
+    <script src="/assets/js/capabilities/getFeed.js"></script>
+    <script src="/assets/js/myCardsClass.js"></script>
+    <script src="/assets/js/capabilities/duplicateCardClass.js"></script>
 </body>
 
 </html>

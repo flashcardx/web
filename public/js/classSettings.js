@@ -1,6 +1,21 @@
 getClassStats();
 getClassIntegrants(); // will fill isOwner and call RenderButton()
 
+(function($) {
+    $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+            attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+            return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+    }
+})(jQuery);
+
+
 function getClassStats(){
         $.ajax({
             url: "/classStats/"+classname,
@@ -185,3 +200,82 @@ function validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
+
+
+//THUMBNAIL IMAGE UPLOAD
+var imgPreviewBackup;
+function readURL(input) {
+  const idPreview = "preview-img";
+  if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var image = new Image();
+            image.src = e.target.result;
+            image.onload = function() {
+                imgPreviewBackup = $("#"+idPreview +"-container").html(); 
+                $("#"+idPreview).changeElementType("img");
+                $('#' + idPreview).attr('src', this.src);
+                showConfirmButtons();
+            };
+        };
+        reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function showConfirmButtons(){
+    $("#img-buttons").hide();
+    $("#confirm-buttons").show();
+}
+
+function submitChangeImg(){
+    $("#form-update-img").submit();
+    $("#confirm-buttons").hide();
+    $("#img-buttons").show();
+}
+
+function cancelChangeImg(){
+    $("#confirm-buttons").hide();
+    $("#img-buttons").show();
+    $("#preview-img-container").html(imgPreviewBackup);
+    $(".letterpic").letterpic({ fill: 'color' });
+    $('#form-update-img').trigger("reset");
+}
+
+
+$(document).ready(function () {
+    $('#form-update-img').on('submit', e=>{
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        var form = new FormData($("#form-update-img")[0]);
+        $.ajax({
+            url :"/classImg/"+classname,
+            method: "post",
+            data: form,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: data=>{
+                console.log("got back: " +JSON.stringify(data));
+                if(data.success == false){
+                    showError(data.msg);
+                    cancelChangeImg();
+                }
+                else
+                    showSuccess("Class image changed");
+            },
+            error: function (jXHR, textStatus, errorThrown) {
+                cancelChangeImg
+                console.error("error, textStatus: " + textStatus + ", error:"  + errorThrown);
+                showError("Could not set class image");
+            }
+        });
+    });
+});
+
+ function chooseFile() {
+      const idInput = "fileInput";
+      $("#" + idInput).click();
+   }
+
+
+

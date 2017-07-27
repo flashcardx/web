@@ -44,8 +44,15 @@
             "deleteClass": "http://localhost:3000/class",
             "leaveClass": "http://localhost:3000/leaveClass",
             "removeUserFromClass": "http://localhost:3000/userFromClass",
-            "duplicateCard2Class": "http://localhost:3000/duplicateCard2Class"
-        },
+            "duplicateCard2Class": "http://localhost:3000/duplicateCard2Class",
+            "getClassCategories": "http://localhost:3000/classCategories",
+            "getClassCards": "http://localhost:3000/classCards",
+            "updateCardClass": "http://localhost:3000/updateCardClass",
+            "deleteClassCard": "http://localhost:3000/classCard",
+            "duplicateCardClassUser": "http://localhost:3000/duplicateCardClassUser",
+            "getFeed": "http://localhost:3000/feed",
+            "uploadClassProfileImage": "http://localhost:3000/uploadClassProfileImage"
+            },
         "pi":{
             "getInitialCards": "http://localhost:3000/allCards",
             "getImg": "http://localhost:3000/image",
@@ -91,7 +98,14 @@
             "deleteClass": "http://localhost:3000/class",
             "leaveClass": "http://localhost:3000/leaveClass",
             "removeUserFromClass": "http://localhost:3000/userFromClass",
-            "duplicateCard2Class": "http://localhost:3000/duplicateCard2Class"
+            "duplicateCard2Class": "http://localhost:3000/duplicateCard2Class",
+            "getClassCategories": "http://localhost:3000/classCategories",
+            "getClassCards": "http://localhost:3000/classCards",
+            "updateCardClass": "http://localhost:3000/updateCardClass",
+            "deleteClassCard": "http://localhost:3000/classCard",
+            "duplicateCardClassUser": "http://localhost:3000/duplicateCardClassUser",
+            "getFeed": "http://localhost:3000/feed",
+            "uploadClassProfileImage": "http://localhost:3000/uploadClassProfileImage"
             },
         "production":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -138,6 +152,13 @@
             "deleteClass": "http://localhost:3000/class",
             "leaveClass": "http://localhost:3000/leaveClass",
             "removeUserFromClass": "http://localhost:3000/userFromClass",
-            "duplicateCard2Class": "http://localhost:3000/duplicateCard2Class"
+            "duplicateCard2Class": "http://localhost:3000/duplicateCard2Class",
+            "getClassCategories": "http://localhost:3000/classCategories",
+            "getClassCards": "http://localhost:3000/classCards",
+            "updateCardClass": "http://localhost:3000/updateCardClass",
+            "deleteClassCard": "http://localhost:3000/classCard",
+            "duplicateCardClassUser": "http://localhost:3000/duplicateCardClassUser",
+            "getFeed": "http://localhost:3000/feed",
+            "uploadClassProfileImage": "http://localhost:3000/uploadClassProfileImage"
         }
 }

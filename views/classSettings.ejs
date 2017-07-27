@@ -35,16 +35,21 @@
             <a class="nav-link" href="/discover">Discover</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="/feed">Feed</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="/">My collection</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/create">Create card</a>
           </li>
+          <U>
+            <li class="nav-item active">
+              <a class="nav-link" href="/class">Classes</a>
+            </li>
+          </U>
           <li class="nav-item">
             <a class="nav-link" href="/practice">Practice</a>
-          </li>
-         <li class="nav-item active">
-            <a class="nav-link" href="/class">Classes</a>
           </li>
         </ul>
          <%- include('tiles/sideOptions'); %>
@@ -123,14 +128,21 @@
                 <div class="col">
                     <h3> Change class image:</h3>
                 </div>
-                <div class="col">
-                    <a target='_blank' href='assets/img/default.png'>
-                        <img class='img-fluid my-thumbnail float-left letterpic' title="f x" src="cfcf" alt='Default image'>
-                    </a>
+                <div class="col" id="preview-img-container">
+                     <img id="preview-img" class='img-fluid my-thumbnail float-left letterpic' title="<%=classname%>" src="" alt='Default image'>
                 </div>
-                  <div class="col">
-                        <button class="btn btn-warning class-btn">Remove image</button>
-                        <button class="btn btn-info class-btn">Upload image</button>   
+                  <div class="col" id="img-buttons" >
+                        <button type="button" class="btn btn-warning class-btn">Remove image</button>
+                        <form enctype="multipart/form-data" id="form-update-img">
+                            <div style="height:0px;overflow:hidden"> 
+                                  <input accept="image/*" type="file" onchange="readURL(this);" id="fileInput" name="fileInput" ></input>
+                            </div>
+                        <button type="button" class="btn btn-info class-btn" onclick="chooseFile();">Upload image</button>   
+                        </form> 
+                  </div>
+                  <div class="col" style="display:none;" id="confirm-buttons" >
+                        <button type="button" onClick="cancelChangeImg();" class="btn btn-warning class-btn">Cancel</button>
+                        <button type="button" class="btn btn-info class-btn" onclick="submitChangeImg();">Confirm</button>    
                   </div>
         
         </div>
@@ -157,7 +169,7 @@
                             <div >
                                 If you delete the class all its data will be deleted,
                                 There is no turning back from this.
-                                <b>All there cards that were duplicated from the class to users collections will persist</b>                            </div>
+                                <b>All the cards that were duplicated to users collections will persist</b>                            </div>
                         </div>
                   </div>
                  </div>

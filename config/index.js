@@ -51,5 +51,12 @@ module.exports = {
     apiDeleteClass: api.deleteClass,
     apiLeaveClass: api.leaveClass,
     apiRemoveUserFromClass: api.removeUserFromClass,
-    apiDuplicateCard2Class: api.duplicateCard2Class
+    apiDuplicateCard2Class: api.duplicateCard2Class,
+    apiGetClassCategories: api.getClassCategories,
+    apiGetClassCards: api.getClassCards,
+    apiUpdateCardClass: api.updateCardClass,
+    apiDeleteClassCard: api.deleteClassCard,
+    apiDuplicateCardClassUser: api.duplicateCardClassUser,
+    apiGetFeed: api.getFeed,
+    apiUploadClassProfileImage: api.uploadClassProfileImage
 };

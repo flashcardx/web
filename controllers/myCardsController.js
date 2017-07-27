@@ -54,6 +54,32 @@ module.exports = function(app){
 			});
 	})
 
+	app.get("/classCards/:classname", controllerUtils.requireLogin, (req, res)=>{
+		var url = config.apiGetClassCards + "/" + req.params.classname + "?limit=8";
+		var last = req.query.last;
+		var category = req.query.category;
+		var sort = req.query.sort;
+		var q = req.query.q;
+		if(q)
+			url += "&q=" + q;
+		if(sort)
+			url += "&sort=" + sort;
+		if(last)
+			url += "&last=" + last;
+		if(category !== undefined && category !== "undefined")
+			url += "&category=" + category;
+		requestify.get(url, {headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				res.json(data);
+			}).fail(response=> {
+				const errorCode = response.getCode();
+                console.log("server got error code " + errorCode);
+				res.json({success:false, msg: "server got error code " + errorCode});	
+			});
+})
+
 	app.post("/updateCard/:id", controllerUtils.requireLogin, bodyParser.urlencoded({ extended: false }), (req, res)=>{
 		var url = config.apiUpdateCard + "/" + req.params.id;
 		var name = req.body.name.replace(/</g, "&lt;").replace(/>/g, "&gt;")// avoids html injection
@@ -65,7 +91,61 @@ module.exports = function(app){
 			.then(response=>{
 				const data = response.getBody();
 				res.json(data);
+			}).fail(response=> {
+				const errorCode = response.getCode();
+                console.log("server got error code " + errorCode);
+				res.json({success:false, msg: "server got error code " + errorCode});	
 			});
 	});
 
-};
+app.post("/updateCardClass/:classname/:id", controllerUtils.requireLogin, bodyParser.urlencoded({ extended: false }), (req, res)=>{
+		var url = config.apiUpdateCardClass + "/" + req.params.classname +"/" + req.params.id;
+		var name = req.body.name.replace(/</g, "&lt;").replace(/>/g, "&gt;")// avoids html injection
+		var description = req.body.description.replace(/</g, "&lt;").replace(/>/g, "&gt;")
+		var category = req.body.category.replace(/</g, "&lt;").replace(/>/g, "&gt;")
+		requestify.post(url, {name: name, description: description, category:category}, {headers:{
+				"x-access-token": req.session.token
+			}})
+			.then(response=>{
+				const data = response.getBody();
+				res.json(data);
+			}).fail(response=> {
+				const errorCode = response.getCode();
+                console.log("server got error code " + errorCode);
+				res.json({success:false, msg: "server got error code " + errorCode});	
+			});
+	});
+
+app.get("/duplicateCardClassUser/:classname/:id", controllerUtils.requireLogin, bodyParser.urlencoded({ extended: false }), (req, res)=>{
+	console.log("got duplicate class user");
+	var url = config.apiDuplicateCardClassUser + "/" + req.params.classname +"/" + req.params.id;
+		requestify.get(url, {headers:{
+				"x-access-token": req.session.token
+			}})
+			.then(response=>{
+				const data = response.getBody();
+				res.json(data);
+			}).fail(response=> {
+				const errorCode = response.getCode();
+                console.log("server got error code " + errorCode);
+				res.json({success:false, msg: "server got error code " + errorCode});	
+			});
+	});
+
+app.delete("/classCard/:classname/:id", controllerUtils.requireLogin, bodyParser.urlencoded({ extended: false }), (req, res)=>{
+	var url = config.apiDeleteClassCard + "/" + req.params.classname +"/" + req.params.id;
+		requestify.delete(url, {headers:{
+				"x-access-token": req.session.token
+			}})
+			.then(response=>{
+				const data = response.getBody();
+				res.json(data);
+			})
+			.fail(response=> {
+				const errorCode = response.getCode();
+                console.log("server got error code " + errorCode);
+				res.json({success:false, msg: "server got error code " + errorCode});	
+			});
+	});
+
+}

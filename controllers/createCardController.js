@@ -18,7 +18,6 @@ function multerErrorHandler(err, req, res, next){
         return res.redirect("/create");
     }
     next();
-
 }
 
 module.exports = function(app){

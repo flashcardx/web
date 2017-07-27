@@ -67,11 +67,15 @@ function appendMyClasses(classes, userId){
                           "</div>"+
                 "</div>"+
                       "<div class='row'>" +
-                          "<div class='col'>  People: " + (c.maxUsers - c.usersLeft) + "/" + c.maxUsers + "</div>"+
-                           "<div class='col'> Cards: "+ (c.maxLimit - c.cardsLeft) + "/" + c.maxLimit + "</div>"+
+                          "<div class='col'> "+
+                                "<p>People: " + (c.maxUsers - c.usersLeft) + "/" + c.maxUsers +"</p>"+
+                                "<p>Cards: "+ (c.maxLimit - c.cardsLeft) + "/" + c.maxLimit+"</p>"+
+                            "</div>"+
                            "<div class='col-md-4 col-xs-12'>"    +
                            "<a href='/classSettings?q="+c.name+"' class='col btn btn-warning class-btn'>Settings</a>" +
-                           " <a class='col btn btn-success blue-btn class-btn'>Enter</a>"  + //do not delete the space at the beginning
+                           "</div>"+
+                           "<div class='col-md-4 col-xs-12'>"+
+                           "<a href='/class/"+c.name+"' class='col btn btn-success blue-btn class-btn'>Enter</a>"  + //do not delete the space at the beginning
                            "</div>"     +
                       "</div>"+  
                 "</div>";
@@ -116,9 +120,16 @@ function appendSearchClass(Class, userId){
         var lastButton;
         var userBelongs = checkUserIsInClass(Class, userId);
         if(userBelongs == false)
-            lastButton = "<button onClick=\"join('"+ Class.name + "', 'search');\" class='col btn btn-success class-btn'>Join</button>";
+            lastButton = "<div class='col-md-4 col-xs-12'>"+
+                            "<button onClick=\"join('"+ Class.name + "', 'search');\" class='col btn btn-success class-btn'>Join</button>"+
+                        "</div>";
         else
-            lastButton = "<a href='/classSettings?q="+Class.name+"' class='col btn btn-warning class-btn'>Settings</a> <a class='col btn btn-info blue-btn class-btn'>Enter</a>";
+            lastButton = "<div class='col-md-4 col-xs-12'>"+
+                                "<a href='/classSettings?q="+Class.name+"' class='col btn btn-warning class-btn'>Settings</a>"+
+                        "</div>"+
+                        "<div class='col-md-4 col-xs-12'>"+
+                            "<a href='/class/"+Class.name+"' class='col btn btn-info blue-btn class-btn'>Enter</a>"+
+                        "</div>";
         var type = "Public";
         if(Class.isPrivate == "true")
             type = "Private";
@@ -136,18 +147,18 @@ function appendSearchClass(Class, userId){
                                     "<div class='col'>Admin: " + Class.owner.name +"</div>"+
                                 "</div>"+
                                 "<div class='row'>"+
-                                    "<div class='col-md-4 col-xs-12'>"+ 
+                                    "<div class='col'>"+ 
                                         Class.description  +
                                         "</div>"+
                                 "</div>"+
                           "</div>"+
                 "</div>"+
                       "<div class='row'>" +
-                          "<div class='col'>  People: " +  (Class.integrants.length + 1) + "/" + Class.maxUsers + "</div>"+
-                           "<div class='col'> Cards: "+ (Class.maxLimit - Class.cardsLeft) + "/" + Class.maxLimit + "</div>"+
-                           "<div class='col-md-4 col-xs-12'>"    +
+                          "<div class='col'>"+
+                          "<p> People: " +  (Class.integrants.length + 1) + "/" + Class.maxUsers + "</p>"+
+                           "<p>Cards: "+ (Class.maxLimit - Class.cardsLeft) + "/" + Class.maxLimit + "</p>"+
+                           "</div>"+
                            lastButton  +
-                           "</div>"     +
                       "</div>"+  
                 "</div>";
        $("#search-results").html(html);

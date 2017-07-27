@@ -16,10 +16,22 @@ var imgLoadAvailable = [1,2,3];
         }
     });
 
+$("#search-box").keyup(function(event){
+    if(event.keyCode == 13){
+        $("#search-button").click();
+    }
+});
+
+$("form").submit(function(){
+    var title = $("#title")
+});
+
+$('#title').bind('keypress keyup blur', function() {
+    $('#search-box').val($(this).val());
+});
 
 
-
- function fillCategories(categories){
+function fillCategories(categories){
      categories.forEach(c=>{
          $('#category').append($('<option>', {
                 value: c,
@@ -39,20 +51,6 @@ var imgLoadAvailable = [1,2,3];
             }));
      showSuccess("Your new category has been added to the list!");
  }
-
-$("#search-box").keyup(function(event){
-    if(event.keyCode == 13){
-        $("#search-button").click();
-    }
-});
-
-$("form").submit(function(){
-    var title = $("#title")
-});
-
-$('#title').bind('keypress keyup blur', function() {
-    $('#search-box').val($(this).val());
-});
 
 function search(){
     parameter = $("#search-box").val();
@@ -76,20 +74,7 @@ function search(){
     });
 }
 
-function showError(msg){
-         $.notify({
-            title: "Error,",
-            icon:"fa fa-exclamation-triangle",
-            message: msg
-            },
-            {
-                type: 'danger'
-            }
-            , {
-	            newest_on_top: true
-            }
-        );
-}
+
 
 function displayGallery(data){
     updateGallery(data);
@@ -231,19 +216,4 @@ function readURL(input, number) {
         };
         reader.readAsDataURL(input.files[0]);
   }
-}
-
-function showSuccess(msg){
-     $.notify({
-            title: "Success,",
-            icon:"fa fa-thumbs-up",
-            message: msg
-            },
-            {
-                type: 'success'
-            }
-            , {
-	            newest_on_top: true
-            }
-        );
 }
