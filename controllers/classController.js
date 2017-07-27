@@ -340,8 +340,8 @@ module.exports = function(app){
 			controllerUtils.cleanSessionMsgs(req);
 			return res.json({success:false, msg: error});
 		}
-	
-		requestify.post(config.apiUploadClassProfileImage, req.file.buffer, {headers:{
+		var url = config.apiUploadClassProfileImage +"/" + req.params.classname;
+		requestify.post(url, req.file.buffer, {headers:{
 				"x-access-token": req.session.token
 			}}).then(response=>{
 				const data = response.getBody();

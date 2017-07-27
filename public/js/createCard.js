@@ -34,8 +34,8 @@ $('#title').bind('keypress keyup blur', function() {
 function fillCategories(categories){
      categories.forEach(c=>{
          $('#category').append($('<option>', {
-                value: c,
-                text: c
+                value: c.name,
+                text: c.name
             }));
      })
  }
