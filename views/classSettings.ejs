@@ -116,7 +116,7 @@
         <div class="row class-group">
           <div class="col">
               <h3>People in the class:</h3>
-              <table class="table">
+              <table class="table table-responsive" style="overflow:auto;">
                         <tbody id="add-people">
                         </tbody>
                 </table>
@@ -129,20 +129,20 @@
                     <h3> Change class image:</h3>
                 </div>
                 <div class="col" id="preview-img-container">
-                     <img id="preview-img" class='img-fluid my-thumbnail float-left letterpic' title="<%=classname%>" src="" alt='Default image'>
+                     <img onerror="imgError('preview-img');" id="preview-img" class='img-fluid my-thumbnail float-left letterpic' title="<%=classname%>" alt='Default image'>
                 </div>
                   <div class="col" id="img-buttons" >
-                        <button type="button" class="btn btn-warning class-btn">Remove image</button>
+                        <button onclick="deleteImg();" type="button" class="btn btn-warning class-btn margin5">Remove image</button>
                         <form enctype="multipart/form-data" id="form-update-img">
                             <div style="height:0px;overflow:hidden"> 
                                   <input accept="image/*" type="file" onchange="readURL(this);" id="fileInput" name="fileInput" ></input>
                             </div>
-                        <button type="button" class="btn btn-info class-btn" onclick="chooseFile();">Upload image</button>   
+                        <button type="button" class="btn btn-info class-btn margin5" onclick="choseFile();">Upload image</button>   
                         </form> 
                   </div>
                   <div class="col" style="display:none;" id="confirm-buttons" >
-                        <button type="button" onClick="cancelChangeImg();" class="btn btn-warning class-btn">Cancel</button>
-                        <button type="button" class="btn btn-info class-btn" onclick="submitChangeImg();">Confirm</button>    
+                        <button type="button" onClick="cancelChangeImg();" class="btn btn-warning class-btn margin5">Cancel</button>
+                        <button type="button" class="btn btn-info class-btn margin5" onclick="submitChangeImg();">Confirm</button>    
                   </div>
         
         </div>

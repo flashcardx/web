@@ -42,6 +42,11 @@ function getClassStats(){
     $("#st-cards").text(cards);
     $("#st-users").text(users);
     $("#st-type").text(type);
+    console.log("src: " + stats.thumbnail);
+    if(!stats.thumbnail || stats.thumbnail == "undefined" || stats.thumbnail == undefined)
+        imgError("preview-img");
+    else
+        $("#preview-img").attr("src", stats.thumbnail);
  }
 
 function getClassIntegrants(){
@@ -97,13 +102,12 @@ function getClassIntegrants(){
                 button = "";
         }
         html += "<tr id='user-"+i._id+"'>" +
-                "<th scope='row'> <img class='img-fluid my-thumbnail float-left letterpic' title='"+i.name+"' src='"+i.thumbnail+"' alt='User thumbnail'> </th>"+
+                "<th scope='row'> <img class='img-fluid my-thumbnail float-left' title='"+i.name+"' src='"+i.thumbnail+"' alt='User thumbnail'> </th>"+
                                     "<td>"+name+"</td>" +
                                     "<td>"+button+"</td>"+
                                 "</tr>";
         });
     $("#add-people").append(html);
-    $(".letterpic").letterpic({ fill: 'color' });
     renderLastButton(isOwner);
 }
 
@@ -141,7 +145,7 @@ function renderLastButton(isOwner){
             button = "<button data-toggle='modal' data-target='#delete-modal' class='btn btn-danger class-btn'>Delete class</button>"+
                   "<button type='button' data-toggle='tooltip' data-placement='right'"+
                             "title='Since you are the admin, you can not leave the class. You are the only one who can delete this class'"+ 
-                            "class='fa fa-info' aria-hidden='true'>"+
+                            "class='fa fa-info margin5' aria-hidden='true'>"+
                     "</button>";
     }
     else{
@@ -272,10 +276,32 @@ $(document).ready(function () {
     });
 });
 
- function chooseFile() {
+ function choseFile() {
       const idInput = "fileInput";
       $("#" + idInput).click();
    }
 
+function deleteImg(){
+     $.ajax({
+            url :"/classImg/"+classname,
+            method: "delete",
+            success: data=>{
+                console.log("got back: " +JSON.stringify(data));
+                if(data.success == false){
+                    showError(data.msg);
+                }
+                else{
+                    $("#preview-img").attr("src", "http://");
+                    imgError("preview-img");
+                    showSuccess("Class image removed");
+                    $('#form-update-img').trigger("reset");
+                }
+            },
+            error: function (jXHR, textStatus, errorThrown) {
+                console.error("error, textStatus: " + textStatus + ", error:"  + errorThrown);
+                showError("Could not set class image");
+            }
+        });
+} 
 
 

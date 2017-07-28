@@ -353,4 +353,18 @@ module.exports = function(app){
 			});
 	});
 
+	app.delete("/classImg/:classname", controllerUtils.requireLogin, (req, res)=>{
+		var url = config.apiDeleteClassProfileImage +"/" + req.params.classname;
+		requestify.delete(url, {headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				res.json(data);
+			}).fail(response=>{
+				const errorCode = response.getCode();
+				console.error("server got error code " + errorCode);
+				return res.json({success:false, msg:"Could not delete image"});
+			});
+	});
+
 }

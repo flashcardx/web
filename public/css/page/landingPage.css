@@ -34,7 +34,8 @@ body{
 @media (min-width: 481px) and (max-width: 767px){
 	.carousel-indicators {
 	bottom: 5px;
-	}
+    }
+    
 }
 
 /* Seccion con info en index */
@@ -121,4 +122,9 @@ padding: 10px;
   border-color: #080808;
   margin-top: 2% !important;
   font-size: 14px;
+}
+
+#form-signup{
+    padding-left:40px;
+    padding-right:40px;
 }

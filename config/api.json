@@ -51,7 +51,8 @@
             "deleteClassCard": "http://localhost:3000/classCard",
             "duplicateCardClassUser": "http://localhost:3000/duplicateCardClassUser",
             "getFeed": "http://localhost:3000/feed",
-            "uploadClassProfileImage": "http://localhost:3000/uploadClassProfileImage"
+            "uploadClassProfileImage": "http://localhost:3000/uploadClassProfileImage",
+            "deleteClassProfileImage": "http://localhost:3000/deleteClassProfileImage"
             },
         "pi":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -105,7 +106,8 @@
             "deleteClassCard": "http://localhost:3000/classCard",
             "duplicateCardClassUser": "http://localhost:3000/duplicateCardClassUser",
             "getFeed": "http://localhost:3000/feed",
-            "uploadClassProfileImage": "http://localhost:3000/uploadClassProfileImage"
+            "uploadClassProfileImage": "http://localhost:3000/uploadClassProfileImage",
+            "deleteClassProfileImage": "http://localhost:3000/deleteClassProfileImage"
             },
         "production":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -159,6 +161,7 @@
             "deleteClassCard": "http://localhost:3000/classCard",
             "duplicateCardClassUser": "http://localhost:3000/duplicateCardClassUser",
             "getFeed": "http://localhost:3000/feed",
-            "uploadClassProfileImage": "http://localhost:3000/uploadClassProfileImage"
+            "uploadClassProfileImage": "http://localhost:3000/uploadClassProfileImage",
+            "deleteClassProfileImage": "http://localhost:3000/deleteClassProfileImage"
         }
 }

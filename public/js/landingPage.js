@@ -29,17 +29,6 @@ function fillLangsSelect(langs){
     langsReady = true;
 }
 
-function showError(msg){
-    $(".main").prepend(""   +
-            "<div class='alert alert-danger'>" +
-            "<strong>Error! </strong>" + msg + "</div>");
-
-    window.setTimeout(function() {$(".alert-danger").fadeTo(500, 0).slideUp(500, function(){
-        $(this).remove(); 
-        });
-        }, 4000);
-}
-
 function showInfo(msg){
     $(".main").prepend(""   +
             "<div class='alert alert-info'>" +

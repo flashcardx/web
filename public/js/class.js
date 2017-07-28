@@ -49,9 +49,7 @@ function appendMyClasses(classes, userId){
             html += " <div class='class top-buffer'>";
             html += "<div class='row'>"+
                           "<div class='col-xs-12 col-md-2'>"+
-                           "<a target='_blank' href='assets/img/default.png'>"+
-                              "<img class='img-fluid my-thumbnail float-left letterpic' title='" + c.name + "'src='" + c.thumbnail + "' alt='Default image'>"+
-                            "</a>"+
+                          "<img id='"+c._id+"' onerror=\"imgError('"+c._id+"');\" class='img-fluid my-thumbnail float-left letterpic' title='" + c.name + "'src='" + c.thumbnail + "' alt='Default image'>"+
                           "</div>"+
                           "<div class='col-md-10'>" +
                                 "<div class='row'>" +
@@ -79,8 +77,7 @@ function appendMyClasses(classes, userId){
                            "</div>"     +
                       "</div>"+  
                 "</div>";
-       $("#classes-content").append(html); 
-       $(".letterpic").letterpic({ fill: 'color' });        
+       $("#classes-content").append(html);
     });
 }
 
@@ -137,7 +134,7 @@ function appendSearchClass(Class, userId){
         html += "<div class='row'>"+
                           "<div class='col-md-2 col-xs-12'>"+
                            "<a target='_blank' href='assets/img/default.png'>"+
-                              "<img class='img-fluid my-thumbnail float-left letterpic' title='" + Class.name + "'src='" + Class.thumbnail + "' alt='Default image'>"+
+                              "<img id='"+Class._id+"' onerror=\"imgError('"+Class._id+"');\"  class='img-fluid my-thumbnail float-left letterpic' title='" + Class.name + "'src='" + Class.thumbnail + "' alt='Default image'>"+
                             "</a>"+
                           "</div>"+
                           "<div class='col-10'>" +
@@ -162,7 +159,9 @@ function appendSearchClass(Class, userId){
                       "</div>"+  
                 "</div>";
        $("#search-results").html(html);
-       $(".letterpic").letterpic({ fill: 'color' });       
+       setTimeout(function() {
+            $(".letterpic").letterpic({ fill: 'color' });        
+       }, 200);      
 }
 
 function checkUserIsInClass(Class, userId){
@@ -215,7 +214,7 @@ function appendDiscoverClasses(classes, userId){
         html += " <div class='row'>"+
                           "<div class='col-md-2 col-xs-12'>"+
                            "<a target='_blank' href='assets/img/default.png'>"+
-                              "<img class='img-fluid my-thumbnail float-left letterpic' title='" + c.name + "' src='" + c.thumbnail + "' alt='Default image'>"+
+                              "<img id='"+c._id+"' onerror=\"imgError('"+c._id+"');\" class='img-fluid my-thumbnail float-left letterpic' title='" + c.name + "' src='" + c.thumbnail + "' alt='Default image'>"+
                             "</a>"+
                           "</div>"+
                           "<div class='col-10'>" +
@@ -241,7 +240,6 @@ function appendDiscoverClasses(classes, userId){
                 "</div>";
         $("#discover-classes-content").append(html);
     });
-     $(".letterpic").letterpic({ fill: 'color' });    
 }
 
 

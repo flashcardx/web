@@ -72,10 +72,11 @@ body {
 #footer2 {
   padding: .5%;
   color: #ffffff;
-  background-color: #222222;
+  background-color: #191919;
   border-color: #080808;
   margin-top: 2% !important;
   font-size: 14px;
+  box-sizing: initial;
 }
 
 .alignVMiddle {
@@ -240,4 +241,8 @@ width: 40px;
 
   .nav-link{
     color:white !important;
+  }
+
+  .margin5{
+    margin:5px;
   }
