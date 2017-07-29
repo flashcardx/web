@@ -59,5 +59,7 @@ module.exports = {
     apiDuplicateCardClassUser: api.duplicateCardClassUser,
     apiGetFeed: api.getFeed,
     apiUploadClassProfileImage: api.uploadClassProfileImage,
-    apiDeleteClassProfileImage: api.deleteClassProfileImage 
+    apiDeleteClassProfileImage: api.deleteClassProfileImage,
+    apiChangeUserImg: api.changeUserImg,
+    apiDeleteUserProfileImage: api.deleteUserProfileImage
 };

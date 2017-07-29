@@ -120,7 +120,7 @@
         <div class="create-wrapper">
           <div class="col-md-12">
             <span>
-            <p><bold>Change languaje:</bold></p>
+            <p><bold>Change languaje: <button type="button" data-toggle="tooltip" data-placement="right" title="This will not change the language of the webpage, but will change the recommendations that you get and all the cards,classes and categories that you see, since everything is linked to it. This Allows you to flip between languages without mixing your content!" class="fa fa-info" aria-hidden="true"></button></bold></p>
               <form class="form-horizontal" action= "#" method="post">
                   <input type="hidden" name="_csrf" value="<%=csrfToken%>"/>
                  <div class="form-group">
@@ -134,7 +134,29 @@
               </form>
             </span>
           </div>
+        </div>
 
+          <div class="row class-group create-wrapper">
+                <div class="col">
+                    <h3>Profile image:</h3>
+                </div>
+                <div class="col" id="profile-img-container">
+                     <img onerror="imgError('profile-img');" id="profile-img" class='img-fluid my-thumbnail float-left letterpic' alt='Default image'>
+                </div>
+                  <div class="col" id="img-buttons" >
+                        <button onclick="deleteImg();" type="button" class="btn btn-warning class-btn margin5">Remove image</button>
+                        <form enctype="multipart/form-data" id="form-update-img">
+                            <div style="height:0px;overflow:hidden"> 
+                                  <input accept="image/*" type="file" onchange="readURL(this);" id="fileInput" name="fileInput" ></input>
+                            </div>
+                        <button type="button" class="btn btn-info class-btn margin5" onclick="choseFile();">Upload image</button>   
+                        </form> 
+                  </div>
+                  <div class="col" style="display:none;" id="confirm-buttons" >
+                        <button type="button" onClick="cancelChangeImg();" class="btn btn-warning class-btn margin5">Cancel</button>
+                        <button type="button" class="btn btn-info class-btn margin5" onclick="submitChangeImg();">Confirm</button>    
+                  </div>
+        
         </div>
 
     </div>
@@ -152,10 +174,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
-    <script src="assets/js/lib/bootstrap-notify.min.js"></script>
-    <script src="assets/js/general.js"></script>
-    <script src="assets/js/settings.js"></script>
-    <script src="assets/js/formatDate.js"></script>
-    <script src="assets/js/capabilities/activity.js"></script>
+    <script src="/assets/js/lib/bootstrap-notify.min.js"></script>
+    <script src="/assets/js/settings.js"></script>
+    <script src="/assets/js/general.js"></script>
+     <script src="/assets/js/lib/jquery.letterpic.min.js"></script>
+    <script src="/assets/js/formatDate.js"></script>
+    <script src="/assets/js/capabilities/activity.js"></script>
 
 </html>

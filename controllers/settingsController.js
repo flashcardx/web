@@ -6,7 +6,20 @@ var csrf = require('csurf')
 var csrfProtection = csrf({ cookie: true });
 var parseForm = bodyParser.urlencoded({ extended: false });
 const controllerUtils = require("./utils");
+const multer = require("multer");
 
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage,
+                        limits: { fileSize: 1900000 } });
+
+function multerErrorHandler(err, req, res, next){
+    if(err && err.code === "LIMIT_FILE_SIZE"){
+		console.log("limit size");
+        req.session.error = "File size is too large and can not be updated";
+        next();
+    }
+    next();
+}
 
 module.exports = function(app){
 
@@ -93,8 +106,8 @@ module.exports = function(app){
 			"x-access-token": req.session.token
 		}})
         .then(response=>{
-					r = response.getBody();
-                    console.log("got: " + r);
+                    r = response.getBody();
+                    console.log("response: " + JSON.stringify(r));
 					return res.json(r);
 			})
         .fail(response=> {
@@ -103,5 +116,41 @@ module.exports = function(app){
 				res.json({success:false, msg: "server got error code " + errorCode});	
 			});
     });
+
+    app.post("/userImg", controllerUtils.requireLogin, upload.single('fileInput'),
+	multerErrorHandler,
+	(req, res)=>{
+		if(req.session.error){
+			var error = req.session.error;
+			controllerUtils.cleanSessionMsgs(req);
+			return res.json({success:false, msg: error});
+		}
+		var url = config.apiChangeUserImg;
+		requestify.post(url, req.file.buffer, {headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				res.json(data);
+			}).fail(response=>{
+				const errorCode = response.getCode();
+				console.error("server got error code " + errorCode);
+				return res.json({success:false, msg:"Could not change image"});
+			});
+    });
+        
+    app.delete("/userImg", controllerUtils.requireLogin, (req, res)=>{
+		var url = config.apiDeleteUserProfileImage;
+		requestify.delete(url, {headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				res.json(data);
+			}).fail(response=>{
+				const errorCode = response.getCode();
+				console.error("server got error code " + errorCode);
+				return res.json({success:false, msg:"Could not delete image"});
+			});
+	});
+
 
 }

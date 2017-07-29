@@ -25,7 +25,6 @@ function addPeople(){
             classname: classname
         },
         success: result=>{
-            console.log("add user got: " + JSON.stringify(result));
             if(result.success == false)
                 showError(result.msg);
             else{
@@ -40,25 +39,20 @@ function addPeople(){
             showError("Something went wrong when trying to add user to class :(");
         }
     });
-        console.log("email: " + email);
-        console.log("Classname: " + classname);
 }
 function renderUserAdded(user){ 
-    console.log("Will render: " + JSON.stringify(user));
     var html = "  <tr id='user-"+user._id+"' >"+
-                    "<th scope='row'> <img class='img-fluid my-thumbnail float-left letterpic' title='" + user.name + "' src='"+user.thumbnail+"' alt='Default image'> </th>"+
+                    "<th scope='row'> <img onerror=\"imgError('img-"+user._id+"');\" id='img-"+user._id+"' class='img-fluid my-thumbnail float-left' title='" + user.name + "' src='"+user.thumbnail+"' alt='Default image'> </th>"+
                                     "<td>"+user.name+"</td>"+
                                     "<td><button onClick=\"removeUser('"+user._id+"');\" class='btn btn-warning class-btn'>Remove</button></td>"+
                                 "</tr>"+
                                 "<tr>";
     $("#nopeople").hide();
     $("#add-people").append(html);
-    $(".letterpic").letterpic({ fill: 'color' });    
 }
 
 function removeUser(userId){
     var containerId = "user-" + userId;
-    console.log("classname : " + classname);
       $.ajax({
         url: "/userFromClass",
         method: "delete",

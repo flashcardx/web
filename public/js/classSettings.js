@@ -33,6 +33,16 @@ function getClassStats(){
         });
  }
 
+$('#email').bind("enterKey",function(e){
+    $("#add-button").click();
+});
+$('#email').keyup(function(e){
+    if(e.keyCode == 13)
+    {
+        $(this).trigger("enterKey");
+    }
+});
+
  function fillStats(stats){
     var owner = (stats.owner._id==userId)? "You" : stats.owner.name; 
     var cards = (stats.maxLimit - stats.cardsLeft) + "/" + stats.maxLimit; 
@@ -84,8 +94,9 @@ function getClassIntegrants(){
         isOwner = false;
         button = "This is the class admin";
     }
+    var url = (integrants.owner.thumbnail)? integrants.owner.thumbnail : "http://";
     html += "<tr>" +
-                "<th scope='row'> <img class='img-fluid my-thumbnail float-left letterpic' title='"+integrants.owner.name+"' src='"+integrants.owner.thumbnail+"' alt='User thumbnail'> </th>"+
+                "<th scope='row'> <img id='img-"+integrants.owner._id+"' onerror=\"imgError('img-"+integrants.owner._id+"');\"  class='img-fluid my-thumbnail float-left letterpic' title='"+integrants.owner.name+"' src='"+url+"' alt='User thumbnail'> </th>"+
                                     "<td>"+name+"</td>" +
                                     "<td>"+button+"</td>"+
                                 "</tr>";
@@ -102,7 +113,7 @@ function getClassIntegrants(){
                 button = "";
         }
         html += "<tr id='user-"+i._id+"'>" +
-                "<th scope='row'> <img class='img-fluid my-thumbnail float-left' title='"+i.name+"' src='"+i.thumbnail+"' alt='User thumbnail'> </th>"+
+                "<th scope='row'> <img id='img-"+i._id+"' onerror=\"imgError('img-"+i._id+"');\" class='img-fluid my-thumbnail float-left' title='"+i.name+"' src='"+i.thumbnail+"' alt='User thumbnail'> </th>"+
                                     "<td>"+name+"</td>" +
                                     "<td>"+button+"</td>"+
                                 "</tr>";
@@ -183,19 +194,15 @@ function addPeople(){
             showError("Something went wrong when trying to add user to class :(");
         }
     });
-        console.log("email: " + email);
-        console.log("Classname: " + classname);
 }
 
 function renderUserAdded(user){
-    console.log("user added: " + JSON.stringify(user));
     var html = "<tr id='user-"+user._id+"'>" +
-                "<th scope='row'> <img class='img-fluid my-thumbnail float-left letterpic' title='"+user.name+"' src='"+user.thumbnail+"' alt='User thumbnail'> </th>"+
+                "<th scope='row'> <img id='img-"+user._id+"' onerror=\"imgError('img-"+user._id+"');\" class='img-fluid my-thumbnail float-left letterpic' title='"+user.name+"' src='"+user.thumbnail+"' alt='User thumbnail'> </th>"+
                                     "<td>"+user.name+"</td>" +
                                     "<td><button onClick=\"removeUser('"+user._id+"');\" class='btn btn-warning class-btn'>remove</button></td>"+
                                 "</tr>";
     $("#add-people").append(html);
-    $(".letterpic").letterpic({ fill: 'color' });
 }
 
 

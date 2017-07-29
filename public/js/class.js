@@ -33,7 +33,6 @@ function getMyClasses(){
 }
 
 function appendMyClasses(classes, userId){
-    console.log("my classes: " + JSON.stringify(classes));
     if(classes.length == 0){
             $("#classes-content").html("You do not have classes(in the current language). Create or enroll to classes for sharing cards and connecting with your classmates!");  
             return;
@@ -53,12 +52,12 @@ function appendMyClasses(classes, userId){
                           "</div>"+
                           "<div class='col-md-10'>" +
                                 "<div class='row'>" +
-                                    "<div class='col'><h4>"+  c.name +"</h4></div>"+
+                                    "<a href='/class/"+c.name+"'> <div class='col'><h4>"+  c.name +"</h4></div></a>"+
                                     "<div class='col'>Type: "+ type +"</div>"+
                                     "<div class='col'>Admin: " + c.owner.name +"</div>"+
                                 "</div>"+
                                 "<div class='row'>"+
-                                    "<div class='col-12'>"+ 
+                                    "<div class='col-12'>Description: "+ 
                                         c.description  +
                                         "</div>"+
                                 "</div>"+
@@ -88,7 +87,6 @@ function searchClass(){
     if(!q)
         return;
     var url = "/searchClass/"+ q;
-    console.log("url: " + url);
     try { xhr3.abort(); } catch(e){}
         xhr3 = $.ajax({
         url: url,
@@ -114,19 +112,24 @@ function appendSearchClass(Class, userId){
              return;      
         }
         var html = "";
+        var name;
         var lastButton;
         var userBelongs = checkUserIsInClass(Class, userId);
-        if(userBelongs == false)
+        if(userBelongs == false){
+            name = "<div class='col'><h4>"+  Class.name +"</h4></div>";
             lastButton = "<div class='col-md-4 col-xs-12'>"+
                             "<button onClick=\"join('"+ Class.name + "', 'search');\" class='col btn btn-success class-btn'>Join</button>"+
                         "</div>";
-        else
+        }
+        else{
+            name = "<a href='/class/"+Class.name+"'><div class='col'><h4>"+  Class.name +"</h4></div></a>";
             lastButton = "<div class='col-md-4 col-xs-12'>"+
                                 "<a href='/classSettings?q="+Class.name+"' class='col btn btn-warning class-btn'>Settings</a>"+
                         "</div>"+
                         "<div class='col-md-4 col-xs-12'>"+
                             "<a href='/class/"+Class.name+"' class='col btn btn-info blue-btn class-btn'>Enter</a>"+
                         "</div>";
+        }
         var type = "Public";
         if(Class.isPrivate == "true")
             type = "Private";
@@ -139,12 +142,12 @@ function appendSearchClass(Class, userId){
                           "</div>"+
                           "<div class='col-10'>" +
                                 "<div class='row'>" +
-                                    "<div class='col'><h4>"+  Class.name +"</h4></div>"+
+                                    name+
                                     "<div class='col'>Type: "+ type +"</div>"+
                                     "<div class='col'>Admin: " + Class.owner.name +"</div>"+
                                 "</div>"+
                                 "<div class='row'>"+
-                                    "<div class='col'>"+ 
+                                    "<div class='col'> Description: "+ 
                                         Class.description  +
                                         "</div>"+
                                 "</div>"+
@@ -196,7 +199,6 @@ function getDiscoverClasses(){
 }
 
 function appendDiscoverClasses(classes, userId){
-    console.log("discover classes: " + JSON.stringify(classes));
     if(classes.length == 0){
         $("#discover-classes-content").html("Nothing at the moment(for the current language)! :(");   
         return;
@@ -224,7 +226,7 @@ function appendDiscoverClasses(classes, userId){
                                     "<div class='col'>Admin: " + c.owner.name +"</div>"+
                                 "</div>"+
                                 "<div class='row'>"+
-                                    "<div class='col-12'>"+ 
+                                    "<div class='col-12'>Description: "+ 
                                         c.description  +
                                         "</div>"+
                                 "</div>"+

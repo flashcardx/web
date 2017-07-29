@@ -21,7 +21,7 @@ passport.deserializeUser(function(obj, done) {
 	    clientID: configFbAuth.clientID,
 	    clientSecret: configFbAuth.clientSecret,
 	    callbackURL: configFbAuth.callbackURL,
-        profileFields: ['id', 'emails', 'name'],
+        profileFields: ['id', 'emails', 'name', "picture.type(large)"],
         passReqToCallback: true
 	  },
 	  function(req, accessToken, refreshToken, profile, done) {
@@ -40,7 +40,8 @@ passport.deserializeUser(function(obj, done) {
                             facebookId: profile.id,
                             facebookToken: accessToken,
                             name: profile.name.givenName + ' ' + profile.name.familyName,
-                            email: profile.emails[0].value
+                            email: profile.emails[0].value,
+                            picture: profile.photos[0].value
                     }
                     return requestify.post(config.apiFbSignup, user);
             })
