@@ -17,9 +17,10 @@
   <link rel="stylesheet" href="/assets/css/component/general.css">
   <link rel="stylesheet" href="/assets/css/page/homeNL.css">
   <link rel="stylesheet" href="/assets/css/page/evclass.css">
+  <link rel="stylesheet" href="/assets/css/page/classConnect.css">
   <link rel="stylesheet" href="/assets/css/component/slideshow.css">
-  <link href="/assets/css/lib/emoji.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
+  <link rel="stylesheet" href="/assets/css/lib/emojionearea.min.css">
 </head>
 
 <body>
@@ -60,15 +61,29 @@
     <script>
         var classname = '<%=classname%>';
     </script>
+     <% if(errorMsg){%>
+           <script>
+                $(document).ready(()=>{
+                  showError(<%-JSON.stringify(errorMsg)%>);
+                });
+              </script>
+          <%}%>
 
   <div class="main-content min-height">
           <div class="container">
                     <div class="container">
                         <div class="row">
-                                <div class="col-2">
-                                    <span>Class: <%=classname%></span>
-                                </div>
-                                <div class="col-8">
+                                    <div class="col-3">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <img style="float:left;" onerror="imgError('class-img');" id="class-img" class='img-fluid my-thumbnail-2 float-left' src="<%=thumbnail%>" title="<%=classname%>" alt='Default image'>
+                                            </div>
+                                              <div class="col-md-6">
+                                                <span>Class: <%=classname%></span>
+                                              </div>
+                                        </div>
+                                    </div>
+                                <div class="col-7">
                                     <ul class="list-inline">  
                                         <li class="list-inline-item"><a href="/class/<%=classname%>">Cards</a></li>
                                         <li class="list-inline-item"><a href="#"><u>Connect</u></a></li>
@@ -82,24 +97,54 @@
             <div class="row">
                 <div class="col">
                     <form class="" id="rendered-form">
-                        <div class="fb-textarea form-group field-textarea-1501483512653">
-                            <label for="textarea-1501483512653" class="fb-textarea-label">
-                            </label>
-                            <textarea type="textarea" data-emojiable="true" placeholder="Say something awesome!" class="form-control" name="textarea-1501483512653" rows="6" id="textarea-1501483512653" required="required" aria-required="true"></textarea>
+                        <div class="fb-textarea form-group">
+                            <textarea style="float: left;" type="textarea" placeholder="Share something awesome!" class="form-control emoji-wrap" rows="6" id="textarea-1501483512653" required="required"></textarea>
                         </div>
                         <div class="fb-button form-group field-button-1501483602997">
-                            <button type="button" class="btn btn-success" name="button-1501483602997" style="success" id="button-1501483602997">Publish
+                            <button onClick="publish();" type="button" class="btn btn-success" name="button-1501483602997" style="success" id="button-1501483602997">
+                              Publish
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
-              
+            
+            <div class="row">
+                  <div class="col publication">
+                            <div class="post-container">
+                              <img style="float:left;" onerror="imgError('class-img-2');" id="class-img-2" class='img-fluid my-thumbnail-2 float-left' src="<%=thumbnail%>" title="<%=classname%>" alt='Default image'>
+                            <div class="post-detail">
+                            <div class="user-info">
+                              <h5><a href="timeline.html" class="profile-link">Sarah Cruiz</a> <span class="following">following</span></h5>
+                              <p class="text-muted">Published a photo about 15 mins ago</p>
+                            </div>
+                            <div class="reaction">
+                              <a class="btn text-green"><i class="icon ion-thumbsup"></i> 13</a>
+                              <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 0</a>
+                            </div>
+                            <div class="line-divider"></div>
+                            <div class="post-text">
+                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>
+                            </div>
+                            <div class="line-divider"></div>
+                            <div class="post-comment">
+                              <img src="images/users/user-11.jpg" alt="" class="profile-photo-sm">
+                              <p><a href="timeline.html" class="profile-link">Diana </a><i class="em em-laughing"></i> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
+                            </div>
+                            <div class="post-comment">
+                              <img src="images/users/user-1.jpg" alt="" class="profile-photo-sm">
+                              <input type="text" class="form-control" placeholder="Post a comment">
+                            </div>
+                          </div>
+                        </div>
+                  </div>
+
+
+            </div>
+
                
 
                 <%- include('tiles/modalActivity'); %>
-
-            
 
               
 
@@ -124,11 +169,9 @@
     <script src="/assets/js/lib/bootstrap-notify.min.js"></script>
     <script src="/assets/js/lib/articulate.min.js"></script>
     <script src="/assets/js/capabilities/activity.js"></script>
-     <script src="/assets/js/classConnect.js"></script>
-    <script src="/assets/js/lib/emoji_config.js"></script>
-    <script src="/assets/js/lib/emoji_util.js"></script>
-    <script src="/assets/js/lib/jquery.emojiarea.js"></script>
-    <script src="/assets/js/lib/emoji-picker.js"></script>
-</body>
+    <script src="/assets/js/classConnect.js"></script>
+    <script type="text/javascript" src="/assets/js/lib/emojionearea.min.js"></script>
+    <script src="/assets/js/lib/jquery.letterpic.min.js"></script>  
+  </body>
 
 </html>

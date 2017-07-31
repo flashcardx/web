@@ -61,15 +61,29 @@
     <script>
         var classname = '<%=classname%>';
     </script>
+      <% if(errorMsg){%>
+           <script>
+                $(document).ready(()=>{
+                  showError(<%-JSON.stringify(errorMsg)%>);
+                });
+              </script>
+          <%}%>
 
   <div class="main-content min-height">
           <div class="container">
             <div class="container">
                   <div class="row">
-                        <div class="col-2">
-                              <span>Class: <%=classname%></span>
-                        </div>
-                        <div class="col-8">
+                        <div class="col-3">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <img style="float:left;" onerror="imgError('class-img');" id="class-img" class='img-fluid my-thumbnail-2 float-left' src="<%=thumbnail%>" title="<%=classname%>" alt='Default image'>
+                                            </div>
+                                              <div class="col-md-6">
+                                                <span>Class: <%=classname%></span>
+                                              </div>
+                                        </div>
+                                    </div>
+                        <div class="col-7">
                             <ul class="list-inline">  
                                 <li class="list-inline-item"><a href="#"><u>Cards</u></a></li>
                                 <li class="list-inline-item"><a href="/class/<%=classname%>/connect">Connect</a></li>
@@ -171,6 +185,7 @@
     <script src="/assets/js/capabilities/getCardsClass.js"></script>
     <script src="/assets/js/myCardsClass.js"></script>
     <script src="/assets/js/capabilities/duplicateCardClass.js"></script>
+    <script src="/assets/js/lib/jquery.letterpic.min.js"></script> 
 </body>
 
 </html>

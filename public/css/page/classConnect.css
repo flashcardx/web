@@ -1,0 +1,17 @@
+.emojionearea-editor{
+  text-align: left;
+  
+}
+
+.emojionearea .emojionearea-editor:empty:before{
+   color: #A8A8A8 !important;
+}
+
+.fb-textarea{
+  margin-top: 10px;
+}
+
+.publication{
+  border: 1px solid black;
+  border-radius: 4px;
+}

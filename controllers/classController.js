@@ -313,8 +313,20 @@ module.exports = function(app){
   
 	app.get("/class/:classname", controllerUtils.requireLogin, (req, res)=>{
 		var classname = req.params.classname;
-		console.log("classname: " + classname);
-		return res.render("classCollection", {classname: classname});
+		var url = config.apiGetClassThumbnail + classname;
+		requestify.get(url, {headers:{
+				"x-access-token": req.session.token
+			}})
+			.then(response=>{
+				const data = response.getBody();
+				if(data.success == "false")
+						return res.render("classCollection", {classname: classname, errorMsg:"could not get class picture"});	
+				return res.render("classCollection", {classname: classname, errorMsg:undefined, thumbnail:data.msg.thumbnail});
+			}).fail(response=>{
+				const errorCode = response.getCode();
+				console.error("server got error code " + errorCode);
+				return res.render("classCollection", {classname: classname, errorMsg:"could not get class picture"});	
+			});
     });
    
 	app.get("/classCategories/:classname", controllerUtils.requireLogin, (req, res)=>{
@@ -371,9 +383,37 @@ module.exports = function(app){
 	app.get("/class/:classname/connect", controllerUtils.requireLogin, (req, res)=>{
 		var classname = req.params.classname;
 		var userId = req.userId;
-		console.log("classname: " + classname);
-		console.log("userId: " + userId);
-		return res.render("classConnect", {classname: classname, userId:userId});
+		var url = config.apiGetClassThumbnail + classname;
+		requestify.get(url, {headers:{
+				"x-access-token": req.session.token
+			}})
+			.then(response=>{
+				const data = response.getBody();
+				if(data.success == "false")
+						return res.render("classConnect", {classname: classname, errorMsg:"could not get class picture", userId:userId});	
+				return res.render("classConnect", {classname: classname, errorMsg:undefined, thumbnail:data.msg.thumbnail, userId:userId});
+			}).fail(response=>{
+				const errorCode = response.getCode();
+				console.error("server got error code " + errorCode);
+				return res.render("classConnect", {classname: classname, errorMsg:"could not get class picture", userId:userId});	
+			});
+	});
+	
+	app.post("/classConnect/post/:classname", controllerUtils.requireLogin, parseForm, (req, res)=>{
+        var userId = req.userId;
+		var url = config.apiClassConnectPost + req.params.classname;
+		console.log("url: " + url);
+		requestify.post(url, req.body, {headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				res.json(data);
+			}).fail(response=>{
+				const errorCode = response.getCode();
+				console.error("server got error code " + errorCode);
+				return res.json({success:false, msg:"Could not publish post"});
+			});
+		
     });
 
 }

@@ -61,5 +61,7 @@ module.exports = {
     apiUploadClassProfileImage: api.uploadClassProfileImage,
     apiDeleteClassProfileImage: api.deleteClassProfileImage,
     apiChangeUserImg: api.changeUserImg,
-    apiDeleteUserProfileImage: api.deleteUserProfileImage
+    apiDeleteUserProfileImage: api.deleteUserProfileImage,
+    apiClassConnectPost: api.classConnectPost,
+    apiGetClassThumbnail: api.getClassThumbnail
 };

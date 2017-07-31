@@ -206,6 +206,14 @@ width: 40px;
       width: 110px; /* Set a small width */
       height: auto;
 }
+.my-thumbnail-2{
+      display:inline-block;
+      border: 1px solid #ddd; /* Gray border */
+      border-radius: 5px;  /* Rounded border */
+      padding: 2px; /* Some padding */
+      width: 90px; /* Set a small width */
+      height: auto;
+}
   
 
   .activity-body{
