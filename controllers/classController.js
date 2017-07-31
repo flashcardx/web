@@ -368,5 +368,12 @@ module.exports = function(app){
 	});
 
 	
+	app.get("/class/:classname/connect", controllerUtils.requireLogin, (req, res)=>{
+		var classname = req.params.classname;
+		var userId = req.userId;
+		console.log("classname: " + classname);
+		console.log("userId: " + userId);
+		return res.render("classConnect", {classname: classname, userId:userId});
+    });
 
 }
