@@ -22,8 +22,6 @@ function fillActivityBadge(n){
     }
 }
 
-
-
 var xhr2;
 var activityPage=0;
 var firstTimeActivity = true;
@@ -31,7 +29,7 @@ var bussy = false;
 
 function setActivityScroll(){
     jQuery(function($) {
-    $('#activity-content').on('scroll', function() {
+    $('#activity-feed').on('scroll', function() {
         if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight - 20) {
             getActivity();
             bussy = true;
@@ -40,13 +38,12 @@ function setActivityScroll(){
     });
 }
 
-
 function unsetActivityScroll(){
-      $('#activity-content').off("scroll"); 
+      $('#activity-feed').off("scroll"); 
 }
 
 function reloadActivity(){
-      $("#activity-content").empty();
+      $("#activity-feed").empty();
       activityPage = 0;
       getActivity();
       firstTimeActivity = true;
@@ -84,29 +81,23 @@ function processResultActivity(result){
     if(result===undefined || result.length === 0){
         unsetActivityScroll();
         if(firstTimeActivity)
-             $("#activity-content").append("<p>Create a class for sharing cards and connectng with classmates!</p>");
-       // $(window).off("scroll"); 
-    }
+             $("#activity-feed").append("<p><a href='/newClass'>Create a class</a> for sharing cards and connectng with classmates!</p>");
+   }
     else
         appendActivity(result);
 }
 
 function appendActivity(elements){
     var html = "";
-    if(firstTimeActivity == true)
-        html += "<table style='width:100%'>";
     elements.forEach(e=>{
+        html += "<div class='feed-item' data-date='"+e.date+"'>";
+        html += "<div class='date'>" + timeSince(new Date(e.date)) + " ago.</div>";
         if(e.seen == false)
-            html += "<tr class='unseen' data-date='"+e.date+"'>";
-        else 
-            html += "<tr class='seen' data-date='"+ e.date+"'>";
-        html += "<td class='activity-padding'>" + e.text + "</td><td>"+timeSince(new Date(e.date))+" ago.</td>     </tr>";
+            html += "<div class='text unseen'>" + e.text + "</div>";
+        else
+            html += "<div class='text seen'>" + e.text + "</div>";
+        html += "</div>";
     });
-    if(firstTimeActivity == true){
-        html += "</table";
-        $("#activity-content").append(html);
-    }
-    else
-        $("#activity-content table").append(html);
+    $("#activity-feed").append(html);
 }
 

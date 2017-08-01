@@ -111,6 +111,7 @@ function appendSearchClass(Class, userId){
              $("#search-results").html("This class does not exist (for the current languaje) yet!");
              return;      
         }
+        console.log("Class: " + JSON.stringify(Class));
         var html = "";
         var name;
         var lastButton;
@@ -118,7 +119,7 @@ function appendSearchClass(Class, userId){
         if(userBelongs == false){
             name = "<div class='col'><h4>"+  Class.name +"</h4></div>";
             lastButton = "<div class='col-md-4 col-xs-12'>"+
-                            "<button onClick=\"join('"+ Class.name + "', 'search');\" class='col btn btn-success class-btn'>Join</button>"+
+                            "<button onClick=\"join('"+ Class.name + "', 'search', '"+Class._id+"');\" class='col btn btn-success class-btn'>Join</button>"+
                         "</div>";
         }
         else{
@@ -210,9 +211,9 @@ function appendDiscoverClasses(classes, userId){
         if(c.isPrivate == "true")
             type = "Private";
         if(i == 0) 
-            html +=  " <div id='discover-class-"+c.name+"' class='class'>";
+            html +=  " <div id='discover-class-"+c._id+"' class='class'>";
         else
-            html += " <div id='discover-class-"+c.name+"' class='class top-buffer'>";
+            html += " <div id='discover-class-"+c._id+"' class='class top-buffer'>";
         html += " <div class='row'>"+
                           "<div class='col-md-2 col-xs-12'>"+
                            "<a target='_blank' href='assets/img/default.png'>"+
@@ -236,7 +237,7 @@ function appendDiscoverClasses(classes, userId){
                           "<div class='col'>  People: " + (c.maxUsers - c.usersLeft) + "/" + c.maxUsers + "</div>"+
                            "<div class='col'> Cards: "+ (c.maxLimit - c.cardsLeft) + "/" + c.maxLimit + "</div>"+
                             "<div class='col-md-4 col-xs-12'>"    +
-                                "<a onClick=\"join('"+ c.name + "', 'discover');\" class='col btn btn-success class-btn'>Join</a>"+
+                                "<a onClick=\"join('"+ c.name + "', 'discover', '"+c._id+"');\" class='col btn btn-success class-btn'>Join</a>"+
                            "</div>"+
                       "</div>"+  
                 "</div>";
@@ -245,16 +246,20 @@ function appendDiscoverClasses(classes, userId){
 }
 
 
-function join(classname, src){
+function join(classname, src, classId){
     if(src != "search" && src != "discover")
         throw new Exception("src invalid, got: " + src);
     console.log("clasnname: " + classname + " , src: " + src);
     joinClass(classname, result=>{
-        console.log("result: " + JSON.stringify(result));
+        if(result.success == false){
+            showError("Could not join class");
+            console.error("Could not join class, "  + result.msg);
+            return;
+        }
         showSuccess("You are now an important part of the class ;)!");
         $("#search-results").html("");
         $("#classes-content").html("");
-        $("#discover-class-"+classname).hide();
+        $("#discover-class-"+classId).hide();
         getMyClasses();
     });
 }

@@ -1,17 +1,5 @@
 
-/* Move down content because we have a fixed navbar that is 50px tall */
-.fixed-top {
-  position: relative;
-}
 
-.main-content {
-  margin: 10px;
-  text-align: center;
-}
-
-.btn-space-left {
-  margin-left: 10px;
-}
 
 .card-deck {
   display: block;

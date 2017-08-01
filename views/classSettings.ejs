@@ -67,7 +67,7 @@
             <div class="row class-group">
                 <h3 class="col"> Class status:</h3>
                 <div class='col'>
-                    <span>Name: <%=classname%></span>
+                    <span>Name: <a href="/class/<%=classname%>"><%=classname%></a></span>
                 </div>
                 <div class='col'>
                     <span>
@@ -95,16 +95,16 @@
         <div class="row class-group">
                <h3>
                   <button style='font-size: 18px;' type="button" data-toggle="tooltip" data-placement="right"
-                            title="You need to enter the email of your classmates, they must have an account on FlashCardX. If they Don't know which email their account is linked to they can see it on the Settings page." 
+                            title="You need to enter the email of the people you want to add. They must have an account on FlashCardX. If they Don't know which email their account is linked to they can see it on the Settings page." 
                             class="fa fa-info" aria-hidden="true">
                 </button>
-              Add people:
+              Add classmate:
              </h3>
             <div class="col form-horizontal center">
                     <div class="form-group" id="classname-group">
                         <div class="row">
                             <div class="col-md-8 col-xs-12">
-                                <input required name="name" type="email" required="true" class="form-control" id="email" placeholder="Email">
+                                <input required name="name" type="email" required="true" class="form-control" id="email" placeholder="User's Email!">
                             </div>
                             <div class="col">
                                 <button id="add-button" type="button" role="button" onClick="addPeople();" class="btn btn-success class-btn">Add</button>        
@@ -170,8 +170,8 @@
                                 If you delete the class all its data will be deleted,
                                 There is no turning back from this.
                                 <b>All the cards that were duplicated to users collections will persist</b>                            </div>
-                        </div>
-                  </div>
+                          </div>
+                      </div>
                  </div>
                 <div class="modal-footer">
                     <a href="/deleteClass/<%=classname%>" class="btn btn-danger" >I undestand the risks and want to continue</a>

@@ -52,7 +52,6 @@ $('#email').keyup(function(e){
     $("#st-cards").text(cards);
     $("#st-users").text(users);
     $("#st-type").text(type);
-    console.log("src: " + stats.thumbnail);
     if(!stats.thumbnail || stats.thumbnail == "undefined" || stats.thumbnail == undefined)
         imgError("preview-img");
     else
@@ -79,7 +78,6 @@ function getClassIntegrants(){
 
 
  function fillIntegrants(integrants){
-    console.log("fill integrants: " + JSON.stringify(integrants));
     var html = "";
     var button = "";
     var name;

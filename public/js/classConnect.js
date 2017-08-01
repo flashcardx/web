@@ -8,7 +8,8 @@ $(document).ready(()=>{
 })
 
 function publish(){
-    var text = $("#textarea-1501483512653").val();
+    var text = $("#textarea-1501483512653")[0].emojioneArea.getText();
+    console.log("text: " + text);
     if(!text){
         showWarning("You must write something in order to publish it :)");
         return;
@@ -22,6 +23,7 @@ function publish(){
                 showError(result.msg);
             else{
                 showSuccess("Content published!");
+                $("#textarea-1501483512653")[0].emojioneArea.setText("");
             }
         },
         error: err=>{
