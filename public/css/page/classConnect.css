@@ -20,20 +20,35 @@
   border: 1px solid gray;
 }
 
-.emotion-btn:hover{
+.selectorFace:hover{
     color: #4286f4;
     border-color: #4286f4;
 }
 
-.emotion-btn{
+.selectorFace{
   padding: 4px;
+  height: 34px !important;
+  width: 40px !important; 
   border: 1px solid gray;
 }
-/*
-@media only screen and (max-width: 500px) {
-    body {
-        background-color: lightblue;
-    }
+
+.selectorFace:before {
+    content: "+ \f118";
+    text-align: inline;
+    font-family: FontAwesome;
+    text-align: center;
+}​
+
+.button-like-a{
+  font: bold 11px Arial;
+  text-decoration: none;
+  background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
 }
 
-*/
+

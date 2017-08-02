@@ -5,7 +5,9 @@ $(document).ready(()=>{
                                     tonesStyle: "radio"
                                     }
                                 );
-      $(".facemocion").faceMocion();                          
+      $(".facemocion").faceMocion({},(emotion, inputId)=>{
+          console.log("emotion: " + emotion + ", id: " + inputId);
+      });                          
 })
 
 function publish(){
