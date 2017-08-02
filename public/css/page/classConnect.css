@@ -39,6 +39,14 @@
     text-align: center;
 }​
 
+.emotion-btn-sm > .selectorFace{
+  height: 20px !important;
+  width: 20px !important; 
+   font-size: 18px !important;
+}
+
+
+
 .button-like-a{
   font: bold 11px Arial;
   text-decoration: none;
@@ -51,4 +59,33 @@
   border-left: 1px solid #CCCCCC;
 }
 
+.btn-a{
+  color:  #4286f4 !important;
+  border: 1px solid gray;
+}
 
+.btn-a:hover{
+  text-decoration: underline !important;
+  cursor:pointer;
+}
+
+.comments-box{
+  border: 1px solid gray;
+  font-size: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.comment-text{
+  display: inline-block;
+  margin: 5px;
+}
+
+.col-center{
+  float: none;
+  margin: 0 auto;
+} 
+
+.margin-top{
+  margin-top: 20px;
+}

@@ -228,6 +228,15 @@ button:focus {outline:0;}
       height: auto;
 }
   
+.my-thumbnail-4{
+      display:inline-block;
+      border: 1px solid #ddd; /* Gray border */
+      border-radius: 3px;  /* Rounded border */
+      padding: 2px; /* Some padding */
+      width: 35px; /* Set a small width */
+      height: auto;
+}
+  
 
   .activity-body{
     padding-top: 0px;

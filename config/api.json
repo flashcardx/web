@@ -57,7 +57,8 @@
             "deleteUserProfileImage":"http://localhost:3000/userProfileImage",
             "classConnectPost": "http://localhost:3000/class/",
             "classConnectPost": "http://localhost:3000/classConnect/post/",
-            "getClassThumbnail": "http://localhost:3000/classProfileImage/"
+            "getClassThumbnail": "http://localhost:3000/classProfileImage/",
+            "getClassPosts": "http://localhost:3000/class/posts/"
             },
         "pi":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -116,7 +117,8 @@
             "changeUserImg": "http://localhost:3000/changeUserImg",
             "deleteUserProfileImage":"http://localhost:3000/userProfileImage",
             "classConnectPost": "http://localhost:3000/classConnect/post/",
-            "getClassThumbnail": "http://localhost:3000/classProfileImage/"
+            "getClassThumbnail": "http://localhost:3000/classProfileImage/",
+            "getClassPosts": "http://localhost:3000/class/posts/"
             },
         "production":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -175,6 +177,7 @@
             "changeUserImg": "http://localhost:3000/changeUserImg",
             "deleteUserProfileImage":"http://localhost:3000/userProfileImage",
             "classConnectPost": "http://localhost:3000/classConnect/post/",
-            "getClassThumbnail": "http://localhost:3000/classProfileImage/"
+            "getClassThumbnail": "http://localhost:3000/classProfileImage/",
+            "getClassPosts": "http://localhost:3000/class/posts/"
         }
 }

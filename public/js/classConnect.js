@@ -10,6 +10,8 @@ $(document).ready(()=>{
       });                          
 })
 
+getPosts();
+
 function publish(){
     var text = $("#textarea-1501483512653")[0].emojioneArea.getText();
     console.log("text: " + text);
@@ -38,6 +40,26 @@ function publish(){
     });
 }
 
-function reaction(){
-    console.log("reaction");
+function getPosts(){
+	  $.ajax({
+        url: "/class/posts/"+classname,
+        success: result=>{
+			console.log("result: " + JSON.stringify(result));
+            if(result.success == false)
+                showError(result.msg);
+            else{
+				renderPosts(results);
+			}
+        },
+        error: err=>{
+            if(err.statusText === "abort")
+                return;
+            console.error("Something went wrong when gettings posts: " + JSON.stringify(err));
+            showError("Something went wrong when getting posts :(");
+        }
+    });
+}
+
+function renderPosts(posts){
+
 }

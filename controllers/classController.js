@@ -414,6 +414,23 @@ module.exports = function(app){
 				return res.json({success:false, msg:"Could not publish post"});
 			});
 		
-    });
+	});
+		
+	app.get("/class/posts/:classname", controllerUtils.requireLogin, (req, res)=>{
+		var classname = req.params.classname;
+		var userId = req.userId;
+		var url = config.apiGetClassPosts + classname;
+		requestify.get(url, {headers:{
+				"x-access-token": req.session.token
+			}})
+			.then(response=>{
+				const data = response.getBody();
+				return res.json(data);
+			}).fail(response=>{
+				const errorCode = response.getCode();
+				console.error("server got error code " + errorCode);
+				return res.json(data);	
+			});
+	});
 
 }
