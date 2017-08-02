@@ -19,3 +19,21 @@
   padding: 10px;
   border: 1px solid gray;
 }
+
+.emotion-btn:hover{
+    color: #4286f4;
+    border-color: #4286f4;
+}
+
+.emotion-btn{
+  padding: 4px;
+  border: 1px solid gray;
+}
+/*
+@media only screen and (max-width: 500px) {
+    body {
+        background-color: lightblue;
+    }
+}
+
+*/

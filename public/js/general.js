@@ -75,7 +75,9 @@ function validateURL(q, msg){
 }
 
 function imgError(id){
-    console.log("error id: " + id);
-    $("#"+id).letterpic({ fill: 'color' });
+    $(document).ready(()=>{
+        console.log("error id: " + id);
+        $("#"+id).letterpic({ fill: 'color' });
+    });
 }
 

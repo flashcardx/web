@@ -5,6 +5,7 @@ $(document).ready(()=>{
                                     tonesStyle: "radio"
                                     }
                                 );
+      $(".facemocion").faceMocion();                          
 })
 
 function publish(){
@@ -33,4 +34,8 @@ function publish(){
             showError("Something went wrong when publishing :(");
         }
     });
+}
+
+function reaction(){
+    console.log("reaction");
 }
