@@ -61,7 +61,6 @@
 
 .btn-a{
   color:  #4286f4 !important;
-  border: 1px solid gray;
 }
 
 .btn-a:hover{
@@ -70,8 +69,7 @@
 }
 
 .comments-box{
-  border: 1px solid gray;
-  font-size: 12px;
+  font-size: 14px;
   max-height: 300px;
   overflow-y: auto;
 }
@@ -88,4 +86,12 @@
 
 .margin-top{
   margin-top: 20px;
+}
+
+.post-text{
+  margin-top: 15px;
+}
+
+.comment-input{
+  margin-top: 10px;
 }
