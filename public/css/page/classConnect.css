@@ -60,11 +60,13 @@
 }
 
 .btn-a{
-  color:  #4286f4 !important;
+
 }
 
 .btn-a:hover{
-  text-decoration: underline !important;
+  padding: 2px;
+  font-size: 18px;
+  border: 1px solid gray;
   cursor:pointer;
 }
 

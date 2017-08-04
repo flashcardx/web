@@ -20,34 +20,10 @@ function renderEmojisText(text){
     return emojione.toImage(text);
 }
 
-function renderReactions(selector){
-      $(selector).faceMocion({},(emotion, inputId)=>{
-          console.log("inputId: " + inputId);
-          console.log("emotion: " + emotion);
-          var postId = $("#"+inputId).attr("data-post");
-          var commentId = $("#"+inputId).attr("data-comment");
-          console.log("postId: " + postId + ", commentId" + commentId);
-          var em;
-          switch (emotion) {
-                case "amo": em = "loves"
-                            break;
-                case "gusta": em = "likes"
-                              break;
-                case "divierte": em = "hahas"
-                                 break;
-                case "asombro": em = "wows"
-                                break;
-                case "triste": em = "sads"
-                              break;
-                case "molesto": em = "angrys"
-                                break;
-                default:{
-                        console.error("invalid reaction");
-                        return;
-                     }
-          }
-         // submitReaction(em, postId, commentId);
-      });                          
+function renderReactions(selector1, selector2){
+    loadReactions(selector1, selector2, ()=>{
+        console.log("reactions trigered");
+    })                  
 }
 
 function submitReaction(emotion, postId, commentId){
@@ -58,6 +34,7 @@ function submitReaction(emotion, postId, commentId){
 
 function publish(){
     var text = $("#textarea-1501483512653")[0].emojioneArea.getText();
+    var reactions = renderEmojisText("");
     if(!text){
         showWarning("You must write something in order to publish it :)");
         return;
@@ -82,6 +59,45 @@ function publish(){
         }
     });
 }
+function publishReaction(reaction, inputId){
+    $("#"+inputId).hide();
+    var postId = $("#"+inputId).attr("data-post");
+    var commentId = $("#"+inputId).attr("data-comment");
+    console.log("postId: " + postId + ", commentId: " + commentId);
+    if(commentId)
+        reactComment(reaction, postId, commentId);
+    else
+        reactPost(reaction, postId);
+}
+
+function reactPost(reaction, postId){
+    $.ajax({
+        url: "/class/postReaction/" + classname,
+        method: "post",
+        data: {
+            reaction: reaction,
+            postId: postId
+        },
+        success: result=>{
+            if(result.success == false)
+                showError(result.msg);
+            else{
+                showSuccess("Reaction sended!");
+                // reload reactions for postId
+            }
+        },
+        error: err=>{
+            if(err.statusText === "abort")
+                return;
+            console.error("Something went wrong when sending reaction: " + JSON.stringify(err));
+            showError("Something went wrong when sending reaction :(");
+        }
+    });
+}
+
+function reactComment(reaction, postId, commentId){
+
+}
 
 function getPosts(callback){
 	  $.ajax({
@@ -104,8 +120,8 @@ function getPosts(callback){
 }
 
 function renderPosts(posts){
+    var html="";
     posts.forEach((p, i)=>{
-        var html="";
         var reactionId = "post-reaction-"+p._id;
         var thumbnail = (p.userId.thumbnail)? p.userId.thumbnail : "http://undefined";
         if(i==0)
@@ -140,22 +156,23 @@ function renderPosts(posts){
                             "<div class='row facebook-reaction'>"+
                                "<div class='col-2'>"+ 
                                         "<div class='emotion-btn'>"+
-                                            "<input data-post='"+p._id+"' id='"+reactionId+"' type='hidden' class='facemocion'/>"+
+                                            "<div onClick=\"showReactions('"+reactionId+"')\" data-toggle='tooltip' data-placement='right' title='Add reaction' class='reaction-btn'>+ <i class='fa fa-smile-o' aria-hidden='true'></i> </div>"+
+                                            "<div data-post='"+p._id+"' id='"+reactionId+"' class='reactions'><span onClick=\"publishReaction('likes','"+reactionId+"')\"class='reaction-emoji'>"+renderEmojisText("👍🏿") +"</span><span onClick=\"publishReaction('loves','"+reactionId+"')\" class='reaction-emoji'> "+renderEmojisText("❤") +"</span><span onClick=\"publishReaction('hahas','"+reactionId+"')\" class='reaction-emoji'> "+renderEmojisText("😂") +"</span><span onClick=\"publishReaction('wows','"+reactionId+"')\" class='reaction-emoji'> "+renderEmojisText("😲") +"</span><span onClick=\"publishReaction('sads','"+reactionId+"')\" class='reaction-emoji'> "+renderEmojisText("😢") +"</span><span onClick=\"publishReaction('angrys','"+reactionId+"')\" class='reaction-emoji'> "+renderEmojisText("😠") +"</span> </div>"+
                                         "</div>"+
                                 "</div>"+      
                                 "<div class='col-8'>";
                                 if(parseInt(p.likes.count)!=0)
-                                    html += "<a class='btn-a'> Like: "+p.likes.count+"</a>";
+                                    html += "<a class='btn-a'>"+ renderEmojisText("👍🏿")+": "+p.likes.count+"</a>";
                                 if(parseInt(p.loves.count)!=0)
-                                    html += "<a class='btn-a'> Love: "+p.loves.count+"</a>";
+                                    html += "<a class='btn-a'>"+ renderEmojisText("❤") +": "+p.loves.count+"</a>";
                                 if(parseInt(p.hahas.count)!=0)
-                                    html += "<a class='btn-a'> Haha: "+p.hahas.count+"</a>";
+                                    html += "<a class='btn-a'>"+ renderEmojisText("😂") +": "+p.hahas.count+"</a>";
                                 if(parseInt(p.wows.count)!=0)
-                                    html += "<a class='btn-a'> Wow: "+p.wows.count+"</a>";
+                                    html += "<a class='btn-a'>"+ renderEmojisText("😲") +": "+p.wows.count+"</a>";
                                 if(parseInt(p.sads.count)!=0)
-                                    html += "<a class='btn-a'> Sad: "+p.sads.count+"</a>";
+                                    html += "<a class='btn-a'>"+ renderEmojisText("😢") +": "+p.sads.count+"</a>";
                                 if(parseInt(p.angrys.count)!=0)
-                                    html += "<a class='btn-a'> Angry: "+p.angrys.count+"</a>";
+                                    html += "<a class='btn-a'>"+ renderEmojisText("😠") +": "+p.angrys.count+"</a>";
                                 html+="</div>"+
                                 "<div class='col-md-2 col-xs-12'>"+
                                     "<span> "+p.commentsSize+" Comments</span>"+
@@ -172,10 +189,9 @@ function renderPosts(posts){
                                             "</span>"+
                                     "</div>"+
                           "</div>";
-                          $("#posts").append(html);
-                          renderReactions("#" + reactionId);
                           p.comments.forEach((c,i)=>{
-                                 html += "<br/>";
+                                html += "<br/>";
+                                var reactionId = "comment-reaction-"+c._id;
                                 var thumbnail = (c.userId.thumbnail)? c.userId.thumbnail : "http://undefined";
                                 html += "<div class='row'>"+
                                             "<div class='col comments-box comments-"+p._id+"'>"+
@@ -201,9 +217,10 @@ function renderPosts(posts){
                                                     "<div class='row facebook-reaction'>"+
                                                                 "<div class='col-2'>"+ 
                                                                         "<div class='emotion-btn-sm'>"+
-                                                                            "<input data-comment='"+c._id+"' data-post='"+p._id+"' id='comment-reaction-"+c._id+"' type='hidden' class='facemocion'/>"+
+                                                                            "<div onClick=\"showReactions('"+reactionId+"')\" data-toggle='tooltip' data-placement='right' title='Add reaction' class='reaction-btn'>+ <i class='fa fa-smile-o' aria-hidden='true'></i> </div>"+
+                                                                            "<div data-comment='"+c._id+"' data-post='"+p._id+"' id='"+reactionId+"' class='reactions'><span onClick=\"publishReaction('likes','"+reactionId+"')\"class='reaction-emoji'>"+renderEmojisText("👍🏿") +"</span><span onClick=\"publishReaction('loves','"+reactionId+"')\" class='reaction-emoji'> "+renderEmojisText("❤") +"</span><span onClick=\"publishReaction('hahas','"+reactionId+"')\" class='reaction-emoji'> "+renderEmojisText("😂") +"</span><span onClick=\"publishReaction('wows','"+reactionId+"')\" class='reaction-emoji'> "+renderEmojisText("😲") +"</span><span onClick=\"publishReaction('sads','"+reactionId+"')\" class='reaction-emoji'> "+renderEmojisText("😢") +"</span><span onClick=\"publishReaction('angrys','"+reactionId+"')\" class='reaction-emoji'> "+renderEmojisText("😠") +"</span> </div>"+
                                                                         "</div>"+
-                                                                "</div>   "+   
+                                                                "</div>"+   
                                                                 "<div class='col-8'>";
                                                                         if(parseInt(c.likes.count)!=0)
                                                                             html += "<a class='btn-a'> Like: "+c.likes.count+"</a>";
@@ -233,6 +250,7 @@ function renderPosts(posts){
                             }
                     html += "</div></div>"; 
     });
+    $("#posts").append(html);
     renderEmojisInput(".emoji-input");
 }
 

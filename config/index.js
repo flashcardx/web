@@ -65,5 +65,7 @@ module.exports = {
     apiClassConnectPost: api.classConnectPost,
     apiGetClassThumbnail: api.getClassThumbnail,
     apiGetClassPosts: api.getClassPosts,
-    apiClassCommentPost: api.classCommentPost
+    apiClassCommentPost: api.classCommentPost,
+    apiClassPostReaction: api.classPostReaction,
+    apiClassCommentReaction: api.classCommentReaction
 };
