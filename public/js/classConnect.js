@@ -1,8 +1,7 @@
-$(document).ready(()=>{
+
+getPosts(()=>{
     renderEmojisInput("#textarea-1501483512653");
 });
-
-getPosts();
 
 function renderEmojisInput(selector){
     $(selector).emojioneArea({ pickerPosition: "bottom",
@@ -11,15 +10,50 @@ function renderEmojisInput(selector){
                             });
 }
 
-function renderEmojisText(id){
+function renderEmojis(id){
     var input = $("#"+id).text();
     var output = emojione.toImage(input);
     var input = $("#"+id).html(output);
 }
 
-function renderReactions(){
-      $(".facemocion").faceMocion({},(emotion, inputId)=>{
+function renderEmojisText(text){
+    return emojione.toImage(text);
+}
+
+function renderReactions(selector){
+      $(selector).faceMocion({},(emotion, inputId)=>{
+          console.log("inputId: " + inputId);
+          console.log("emotion: " + emotion);
+          var postId = $("#"+inputId).attr("data-post");
+          var commentId = $("#"+inputId).attr("data-comment");
+          console.log("postId: " + postId + ", commentId" + commentId);
+          var em;
+          switch (emotion) {
+                case "amo": em = "loves"
+                            break;
+                case "gusta": em = "likes"
+                              break;
+                case "divierte": em = "hahas"
+                                 break;
+                case "asombro": em = "wows"
+                                break;
+                case "triste": em = "sads"
+                              break;
+                case "molesto": em = "angrys"
+                                break;
+                default:{
+                        console.error("invalid reaction");
+                        return;
+                     }
+          }
+         // submitReaction(em, postId, commentId);
       });                          
+}
+
+function submitReaction(emotion, postId, commentId){
+    console.log("emotion: " + emotion );
+    console.log("postId: " + postId);
+    console.log("commentId: " + commentId);
 }
 
 function publish(){
@@ -49,7 +83,7 @@ function publish(){
     });
 }
 
-function getPosts(){
+function getPosts(callback){
 	  $.ajax({
         url: "/class/posts/"+classname,
         success: result=>{
@@ -57,7 +91,8 @@ function getPosts(){
                 showError(result.msg);
             else{
 				renderPosts(result.msg);
-			}
+            }
+            callback();
         },
         error: err=>{
             if(err.statusText === "abort")
@@ -71,9 +106,8 @@ function getPosts(){
 function renderPosts(posts){
     posts.forEach((p, i)=>{
         var html="";
-        console.log("t1: " + p.userId.thumbnail);
-        var thumbnail = (p.userId.thumbnail)? p.userId.thumbnail : "http://";
-        console.log("t2: " + thumbnail);
+        var reactionId = "post-reaction-"+p._id;
+        var thumbnail = (p.userId.thumbnail)? p.userId.thumbnail : "http://undefined";
         if(i==0)
             html += "<div class='col mx-auto'>";
         else
@@ -99,14 +133,14 @@ function renderPosts(posts){
                               "</div>"+
                                     "<div class='row'>"+
                                             "<div id='post-text-"+p._id+"' class='col post-text'>"+
-                                                p.text+
+                                                renderEmojisText(p.text)+
                                             "</div>"+
                                     "</div>"+
                                 "<br/>"+
                             "<div class='row facebook-reaction'>"+
                                "<div class='col-2'>"+ 
                                         "<div class='emotion-btn'>"+
-                                            "<input id='public1' type='hidden' class='facemocion'/>"+
+                                            "<input data-post='"+p._id+"' id='"+reactionId+"' type='hidden' class='facemocion'/>"+
                                         "</div>"+
                                 "</div>"+      
                                 "<div class='col-8'>";
@@ -138,14 +172,17 @@ function renderPosts(posts){
                                             "</span>"+
                                     "</div>"+
                           "</div>";
-                          p.comments.forEach(c=>{
-                                var thumbnail = (c.userId.thumbnail)? c.userId.thumbnail : "http://";
+                          $("#posts").append(html);
+                          renderReactions("#" + reactionId);
+                          p.comments.forEach((c,i)=>{
+                                 html += "<br/>";
+                                var thumbnail = (c.userId.thumbnail)? c.userId.thumbnail : "http://undefined";
                                 html += "<div class='row'>"+
-                                            "<div class='comments-box comments-"+p._id+"'>"+
+                                            "<div class='col comments-box comments-"+p._id+"'>"+
                                                 "<div class='col panel-heading'>"+
                                                     "<div class='row'>"+
                                                         "<div class='col'>"+
-                                                            "<img style='float:left;' onerror='imgError('img-c-"+c._id+"');' id='img-c-"+c._id+"' class='img-fluid my-thumbnail-4 float-left' src='"+thumbnail+"' title='"+p.userId.name+"' alt='User image'>"+
+                                                            "<img style='float:left;' onerror=\"imgError('img-c-"+c._id+"');\" id='img-c-"+c._id+"' class='img-fluid my-thumbnail-4 float-left' src='"+thumbnail+"' title='"+p.userId.name+"' alt='User image'>"+
                                                         "</div>"+
                                                         "<div class='col'>"+
                                                             "<h6>"+
@@ -153,23 +190,34 @@ function renderPosts(posts){
                                                             "</h6>"+
                                                         "</div>"+
                                                         "<div class='col'>" + 
-                                                            "<span class='text-muted'>Some short time ago. </span>"+        
+                                                            "<span class='text-muted'>"+ timeSince(new Date(p.updated_at)) +" ago. </span>"+        
                                                         "</div>"+
                                                     "</div>"+
                                                     "<div class='row comment-text'>"+
                                                         "<div class='col'>"+
-                                                            c.text+
+                                                            renderEmojisText(c.text)+
                                                         "</div>"+
                                                     "</div>"+
                                                     "<div class='row facebook-reaction'>"+
                                                                 "<div class='col-2'>"+ 
                                                                         "<div class='emotion-btn-sm'>"+
-                                                                            "<input id='public1' type='hidden' class='facemocion'/>"+
+                                                                            "<input data-comment='"+c._id+"' data-post='"+p._id+"' id='comment-reaction-"+c._id+"' type='hidden' class='facemocion'/>"+
                                                                         "</div>"+
                                                                 "</div>   "+   
-                                                                "<div class='col-8'>"+
-                                                                    "<a class='btn-a'> Like: 5 </a> <a class='btn-a'> Love: 1000</a> <a class='btn-a'> Haha: 1000</a> <a class='btn-a'> Wow: 1000</a> <a class='btn-a'> Sad: 1000</a> <a class='btn-a'> Angry: 1000</a>"+
-                                                                "</div>"+
+                                                                "<div class='col-8'>";
+                                                                        if(parseInt(c.likes.count)!=0)
+                                                                            html += "<a class='btn-a'> Like: "+c.likes.count+"</a>";
+                                                                        if(parseInt(c.loves.count)!=0)
+                                                                            html += "<a class='btn-a'> Love: "+c.loves.count+"</a>";
+                                                                        if(parseInt(c.hahas.count)!=0)
+                                                                            html += "<a class='btn-a'> Haha: "+c.hahas.count+"</a>";
+                                                                        if(parseInt(c.wows.count)!=0)
+                                                                            html += "<a class='btn-a'> Wow: "+c.wows.count+"</a>";
+                                                                        if(parseInt(c.sads.count)!=0)
+                                                                            html += "<a class='btn-a'> Sad: "+c.sads.count+"</a>";
+                                                                        if(parseInt(c.angrys.count)!=0)
+                                                                            html += "<a class='btn-a'> Angry: "+c.angrys.count+"</a>";
+                                                                html+="</div>"+
                                                     "</div>"+
                                             "</div>"+
                                         "</div>"+
@@ -184,13 +232,36 @@ function renderPosts(posts){
                                     "</div>";
                             }
                     html += "</div></div>"; 
-    $("#posts").append(html);
-    renderEmojisText('post-text-'+p._id);
     });
-    renderReactions();
     renderEmojisInput(".emoji-input");
 }
 
 function postComment(inputId, postId){
     console.log("inputId: " + inputId + ", postId: " + postId);
+    var text = $("#"+inputId).val();
+    console.log("text: " + text);
+    var data = {
+        text: text,
+        postId: postId
+    };
+    $.ajax({
+        url: "/class/commentPost/"+classname,
+        method: "post",
+        data: data,
+        success: result=>{
+            console.log("post comment: " + JSON.stringify(result));
+            if(result.success == false)
+                showError(result.msg);
+            else{
+                showSuccess("You just commented!");
+                $("#"+inputId)[0].emojioneArea.setText("");
+            }
+        },
+        error: err=>{
+            if(err.statusText === "abort")
+                return;
+            console.error("Something went wrong when posting comment: " + JSON.stringify(err));
+            showError("Something went wrong when posting comment :(");
+        }
+    });
 }

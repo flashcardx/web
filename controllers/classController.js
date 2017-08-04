@@ -433,4 +433,20 @@ module.exports = function(app){
 			});
 	});
 
+	app.post("/class/commentPost/:classname", controllerUtils.requireLogin, parseForm, (req, res)=>{
+        var userId = req.userId;
+		var url = config.apiClassCommentPost + req.params.classname;
+		console.log("url: " + url);
+		requestify.post(url, req.body, {headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				res.json(data);
+			}).fail(response=>{
+				const errorCode = response.getCode();
+				console.error("server got error code " + errorCode);
+				return res.json({success:false, msg:"Could not publish comment"});
+			});
+	});
+
 }
