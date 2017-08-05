@@ -60,7 +60,10 @@
             "getClassPosts": "http://localhost:3000/class/posts/",
             "classCommentPost": "http://localhost:3000/class/commentPost/",
             "classPostReaction": "http://localhost:3000/class/postReaction/",
-            "classCommentReaction": "http://localhost:3000/class/commentReaction/"
+            "classCommentReaction": "http://localhost:3000/class/commentReaction/",
+            "getPostReactions": "http://localhost:3000/class/postReactions/",
+            "getCommentReactions": "http://localhost:3000/class/commentReactions/",
+            "getPostReactionDetail": "http://localhost:3000/class/postReactionDetail/"
             },
         "pi":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -123,7 +126,10 @@
             "getClassPosts": "http://localhost:3000/class/posts/",
             "classCommentPost": "http://localhost:3000/class/commentPost/",
             "classPostReaction": "http://localhost:3000/class/postReaction/",
-            "classCommentReaction": "http://localhost:3000/class/commentReaction/"
+            "classCommentReaction": "http://localhost:3000/class/commentReaction/",
+            "getPostReactions": "http://localhost:3000/class/postReactions/",
+            "getCommentReactions": "http://localhost:3000/class/commentReactions/",
+            "getPostReactionDetail": "http://localhost:3000/class/postReactionDetail/"
             },
         "production":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -186,6 +192,9 @@
             "getClassPosts": "http://localhost:3000/class/posts/",
             "classCommentPost": "http://localhost:3000/class/commentPost/",
             "classPostReaction": "http://localhost:3000/class/postReaction/",
-            "classCommentReaction": "http://localhost:3000/class/commentReaction/"
+            "classCommentReaction": "http://localhost:3000/class/commentReaction/",
+            "getPostReactions": "http://localhost:3000/class/postReactions/",
+            "getCommentReactions": "http://localhost:3000/class/commentReactions/",
+            "getPostReactionDetail": "http://localhost:3000/class/postReactionDetail/"
         }
 }

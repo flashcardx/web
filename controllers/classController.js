@@ -481,6 +481,52 @@ module.exports = function(app){
 			});
 	});
 
+	app.get("/class/postReactions/:postId", controllerUtils.requireLogin, (req, res)=>{
+		var url = config.apiGetPostReactions + req.params.postId;
+		requestify.get(url, {headers:{
+				"x-access-token": req.session.token
+			}})
+			.then(response=>{
+				const data = response.getBody();
+				return res.json(data);
+			}).fail(response=>{
+				const errorCode = response.getCode();
+				console.error("server got error code " + errorCode);
+				return res.json(data);	
+			});
+	});
+
+	app.get("/class/commentReactions/:postId/:commentId", controllerUtils.requireLogin, (req, res)=>{
+		var url = config.apiGetCommentReactions + req.params.postId+"/"+req.params.commentId;
+		requestify.get(url, {headers:{
+				"x-access-token": req.session.token
+			}})
+			.then(response=>{
+				const data = response.getBody();
+				console.log("comment reactions: " + JSON.stringify(data));
+				return res.json(data);
+			}).fail(response=>{
+				const errorCode = response.getCode();
+				console.error("server got error code " + errorCode);
+				return res.json(data);	
+			});
+	});
+
+	app.get("/class/postReactionDetail/:postId/:reaction", controllerUtils.requireLogin, (req, res)=>{
+		var url = config.apiGetPostReactionDetail + req.params.postId + "/" +req.params.reaction;
+		requestify.get(url, {headers:{
+				"x-access-token": req.session.token
+			}})
+			.then(response=>{
+				const data = response.getBody();
+				return res.json(data);
+			}).fail(response=>{
+				const errorCode = response.getCode();
+				console.error("server got error code " + errorCode);
+				return res.json(data);	
+			});
+	});
+
 	
 
 }

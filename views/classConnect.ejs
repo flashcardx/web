@@ -102,7 +102,7 @@
                 <div class="col">
                     <form  id="rendered-form">
                         <div class="fb-textarea form-group">                                                                                              
-                            <textarea style="float: left;" type="textarea" placeholder="Share something awesome!" class="form-control emoji-wrap" rows="6" id="textarea-1501483512653" required="required"></textarea>
+                            <textarea style="float: left;" type="textarea" placeholder="Share something awesome!" class="form-control emoji-wrap emoji-input" rows="6" id="textarea-1501483512653" required="required"></textarea>
                         </div>
                         <div class="fb-button form-group field-button-1501483602997">
                             <button onClick="publish();" type="button" class="btn btn-success" name="button-1501483602997"  id="button-1501483602997">
@@ -116,7 +116,28 @@
               </div>
              
 
-            
+     <div class="modal fade" id="reactions-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div id="reaction-modal-dialog" class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Reaction detail</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body reactions-body">
+                        <div id ="modal-reactions-body">
+                        
+                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+              </div>
+            </div>
+          </div>
+    </div>        
+
+
 
             <%- include('tiles/modalActivity'); %>
 
