@@ -98,3 +98,8 @@
   margin-top: 10px;
 }
 
+.comment-box{
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

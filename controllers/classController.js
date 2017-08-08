@@ -191,7 +191,6 @@ module.exports = function(app){
 				"x-access-token": req.session.token
 			}}).then(response=>{
 				var data = response.getBody();
-				console.log("delete user: " + JSON.stringify(data));
 				res.json(data);
 			})
 			.fail(response=>{
@@ -210,7 +209,6 @@ module.exports = function(app){
 	app.get("/classSettings", controllerUtils.requireLogin, (req, res)=>{
 		var classname = req.query.q;
 		var userId = req.userId;
-		console.log("classname: " + classname);
 		res.render("classSettings", {classname:classname, userId:userId});
 	})
 
@@ -331,7 +329,6 @@ module.exports = function(app){
    
 	app.get("/classCategories/:classname", controllerUtils.requireLogin, (req, res)=>{
 		var url = config.apiGetClassCategories + "/" + req.params.classname;
-		console.log("class categories for: " + url);
 		requestify.get(url, {headers:{
 				"x-access-token": req.session.token
 			}}).then(response=>{
@@ -402,7 +399,6 @@ module.exports = function(app){
 	app.post("/classConnect/post/:classname", controllerUtils.requireLogin, parseForm, (req, res)=>{
         var userId = req.userId;
 		var url = config.apiClassConnectPost + req.params.classname;
-		console.log("url: " + url);
 		requestify.post(url, req.body, {headers:{
 				"x-access-token": req.session.token
 			}}).then(response=>{
@@ -436,7 +432,6 @@ module.exports = function(app){
 	app.post("/class/commentPost/:classname", controllerUtils.requireLogin, parseForm, (req, res)=>{
         var userId = req.userId;
 		var url = config.apiClassCommentPost + req.params.classname;
-		console.log("url: " + url);
 		requestify.post(url, req.body, {headers:{
 				"x-access-token": req.session.token
 			}}).then(response=>{
@@ -452,7 +447,6 @@ module.exports = function(app){
 	app.post("/class/postReaction/:classname", controllerUtils.requireLogin, parseForm, (req, res)=>{
         var userId = req.userId;
 		var url = config.apiClassPostReaction + req.params.classname;
-		console.log("url: " + url);
 		requestify.post(url, req.body, {headers:{
 				"x-access-token": req.session.token
 			}}).then(response=>{
@@ -468,7 +462,6 @@ module.exports = function(app){
 	app.post("/class/commentReaction/:classname", controllerUtils.requireLogin, parseForm, (req, res)=>{
         var userId = req.userId;
 		var url = config.apiClassCommentReaction + req.params.classname;
-		console.log("url: " + url);
 		requestify.post(url, req.body, {headers:{
 				"x-access-token": req.session.token
 			}}).then(response=>{
@@ -503,7 +496,6 @@ module.exports = function(app){
 			}})
 			.then(response=>{
 				const data = response.getBody();
-				console.log("comment reactions: " + JSON.stringify(data));
 				return res.json(data);
 			}).fail(response=>{
 				const errorCode = response.getCode();
@@ -524,6 +516,39 @@ module.exports = function(app){
 				const errorCode = response.getCode();
 				console.error("server got error code " + errorCode);
 				return res.json(data);	
+			});
+	});
+
+	app.get("/class/commentReactionDetail/:postId/:commentId/:reaction", controllerUtils.requireLogin, (req, res)=>{
+		var url = config.apiGetCommentReactionDetail + req.params.postId +"/" +req.params.commentId+ "/" +req.params.reaction;
+		requestify.get(url, {headers:{
+				"x-access-token": req.session.token
+			}})
+			.then(response=>{
+				const data = response.getBody();
+				return res.json(data);
+			}).fail(response=>{
+				const errorCode = response.getCode();
+				console.error("server got error code " + errorCode);
+				return res.json(data);	
+			});
+	});
+
+
+	app.get("/class/comments/:postId", controllerUtils.requireLogin, (req, res)=>{
+		var postId = req.params.postId; 
+        var skip = req.query.skip;
+        var limit = req.query.limit;
+		var url = config.apiGetComments + req.params.postId+"?skip="+skip+"&limit="+limit;
+		requestify.get(url, {headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				res.json(data);
+			}).fail(response=> {
+				const errorCode = response.getCode();
+                console.error("server got error code " + errorCode);
+				res.json({success:false, msg: "server got error code " + errorCode});	
 			});
 	});
 

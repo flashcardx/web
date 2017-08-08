@@ -63,7 +63,9 @@
             "classCommentReaction": "http://localhost:3000/class/commentReaction/",
             "getPostReactions": "http://localhost:3000/class/postReactions/",
             "getCommentReactions": "http://localhost:3000/class/commentReactions/",
-            "getPostReactionDetail": "http://localhost:3000/class/postReactionDetail/"
+            "getPostReactionDetail": "http://localhost:3000/class/postReactionDetail/",
+            "getCommentReactionDetail": "http://localhost:3000/class/commentReactionDetail/",
+            "getComments": "http://localhost:3000/class/comments/"
             },
         "pi":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -129,7 +131,9 @@
             "classCommentReaction": "http://localhost:3000/class/commentReaction/",
             "getPostReactions": "http://localhost:3000/class/postReactions/",
             "getCommentReactions": "http://localhost:3000/class/commentReactions/",
-            "getPostReactionDetail": "http://localhost:3000/class/postReactionDetail/"
+            "getPostReactionDetail": "http://localhost:3000/class/postReactionDetail/",
+            "getCommentReactionDetail": "http://localhost:3000/class/commentReactionDetail/",
+            "getComments": "http://localhost:3000/class/comments/"
             },
         "production":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -195,6 +199,8 @@
             "classCommentReaction": "http://localhost:3000/class/commentReaction/",
             "getPostReactions": "http://localhost:3000/class/postReactions/",
             "getCommentReactions": "http://localhost:3000/class/commentReactions/",
-            "getPostReactionDetail": "http://localhost:3000/class/postReactionDetail/"
+            "getPostReactionDetail": "http://localhost:3000/class/postReactionDetail/",
+            "getCommentReactionDetail": "http://localhost:3000/class/commentReactionDetail/",
+            "getComments": "http://localhost:3000/class/comments/"
         }
 }

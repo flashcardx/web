@@ -1,4 +1,5 @@
 getPosts();
+var commentsCount = {};
 
 function renderEmojisInput(selector){
     $(selector).emojioneArea({ pickerPosition: "bottom",
@@ -17,11 +18,6 @@ function renderEmojisText(text){
     return emojione.toImage(text);
 }
 
-function renderReactions(selector1, selector2){
-    loadReactions(selector1, selector2, ()=>{
-        console.log("reactions trigered");
-    })                  
-}
 
 
 function publish(){
@@ -112,7 +108,7 @@ function reloadReactionsComment(postId, commentId){
             if(result.success == false)
                 showError(result.msg);
             else{
-				renderCommentReactions(result.msg.comments[0], commentId);
+				renderCommentReactions(result.msg.comments[0], postId, commentId);
             }
         },
         error: err=>{
@@ -152,15 +148,13 @@ function reactComment(reaction, postId, commentId){
 }
 
 function renderPostReactions(p, postId){
-    var id = "post-reaction-count-"+postId;
     var html = generateReactionsPost(p, postId);
-    $("#"+id).html(html);
+    $("#"+postId).html(html);
 }
 
-function renderCommentReactions(p, commentId){
-    console.log("rendering: " + JSON.stringify(p) + " for comment: " + commentId);
+function renderCommentReactions(p, postId, commentId){
     var id = "comment-reaction-count-"+commentId;
-    var html = generateReactionsComment(p, commentId);
+    var html = generateReactionsComment(p, postId, commentId);
     $("#"+id).html(html);
 }
 
@@ -181,21 +175,40 @@ function generateReactionsPost(p, postId){
     return html;
 }
 
-function generateReactionsComment(p, commentId){
+function generateReactionsComment(p, postId, commentId){
      var html = "";
         if(parseInt(p.likes.count)!=0)
-                html += "<a data-toggle='modal' data-target='#reactions-modal' onClick=\"showPostReactionPeople('"+commentId+"', 'likes');\" class='btn-a'>"+ renderEmojisText("👍🏿")+": "+p.likes.count+"</a>";
+                html += "<a data-toggle='modal' data-target='#reactions-modal' onClick=\"showCommentReactionPeople('"+postId+"', '"+commentId+"', 'likes');\" class='btn-a'>"+ renderEmojisText("👍🏿")+": "+p.likes.count+"</a>";
         if(parseInt(p.loves.count)!=0)
-                html += "<a data-toggle='modal' data-target='#reactions-modal' onClick=\"showPostReactionPeople('"+commentId+"', 'loves');\" class='btn-a'>"+ renderEmojisText("❤") +": "+p.loves.count+"</a>";
+                html += "<a data-toggle='modal' data-target='#reactions-modal' onClick=\"showCommentReactionPeople('"+postId+"', '"+commentId+"', 'loves');\" class='btn-a'>"+ renderEmojisText("❤") +": "+p.loves.count+"</a>";
         if(parseInt(p.hahas.count)!=0)
-                html += "<a data-toggle='modal' data-target='#reactions-modal' onClick=\"showPostReactionPeople('"+commentId+"', 'hahas');\" class='btn-a'>"+ renderEmojisText("😂") +": "+p.hahas.count+"</a>";
+                html += "<a data-toggle='modal' data-target='#reactions-modal' onClick=\"showCommentReactionPeople('"+postId+"', '"+commentId+"', 'hahas');\" class='btn-a'>"+ renderEmojisText("😂") +": "+p.hahas.count+"</a>";
         if(parseInt(p.wows.count)!=0)
-                html += "<a data-toggle='modal' data-target='#reactions-modal' onClick=\"showPostReactionPeople('"+commentId+"', 'wows');\" class='btn-a'>"+ renderEmojisText("😲") +": "+p.wows.count+"</a>";
+                html += "<a data-toggle='modal' data-target='#reactions-modal' onClick=\"showCommentReactionPeople('"+postId+"', '"+commentId+"', 'wows');\" class='btn-a'>"+ renderEmojisText("😲") +": "+p.wows.count+"</a>";
         if(parseInt(p.sads.count)!=0)
-                html += "<a data-toggle='modal' data-target='#reactions-modal' onClick=\"showPostReactionPeople('"+commentId+"', 'sads');\" class='btn-a'>"+ renderEmojisText("😢") +": "+p.sads.count+"</a>";
+                html += "<a data-toggle='modal' data-target='#reactions-modal' onClick=\"showCommentReactionPeople('"+postId+"', '"+commentId+"', 'sads');\" class='btn-a'>"+ renderEmojisText("😢") +": "+p.sads.count+"</a>";
         if(parseInt(p.angrys.count)!=0)
-                html += "<a data-toggle='modal' data-target='#reactions-modal' onClick=\"showPostReactionPeople('"+commentId+"', 'angrys');\" class='btn-a'>"+ renderEmojisText("😠") +": "+p.angrys.count+"</a>";
+                html += "<a data-toggle='modal' data-target='#reactions-modal' onClick=\"showCommentReactionPeople('"+postId+"', '"+commentId+"', 'angrys');\" class='btn-a'>"+ renderEmojisText("😠") +": "+p.angrys.count+"</a>";
     return html;
+}
+
+function showCommentReactionPeople(postId, commentId, reaction){
+    $.ajax({
+        url: "/class/commentReactionDetail/"+postId+"/"+ commentId+"/" + reaction,
+        success: result=>{
+            if(result.success == false)
+                showError(result.msg);
+            else{
+				renderReactionModal(result.msg.comments[0][reaction].usersId);
+            }
+        },
+        error: err=>{
+            if(err.statusText == "abort")
+                return;
+            console.error("Something went wrong when getting reaction detail: " + JSON.stringify(err));
+            showError("Something went wrong when getting reaction detail :(");
+        }
+    });
 }
 
 function showPostReactionPeople(postId, emotion){
@@ -220,11 +233,10 @@ function showPostReactionPeople(postId, emotion){
 function renderReactionModal(users){
     var html = "<table class='table table-responsive'> <tbody>";
     users.forEach(u=>{
-        var thumbnail = "http://undefined";
+        var thumbnail = "http://undefined" + Math.random();
         if(u.thumbnail)
             thumbnail = u.thumbnail;
-        html += "<tr><td><img id='user-img-"+u._id+"' onerror=\"imgError('user-img-"+u._id+"');\" class='img-fluid my-thumbnail float-left' title='"+u.name+"' src='"+thumbnail+"' alt='User thumbnail'></td>"+
-        
+        html += "<tr><td><img id='img-modal-reaction-"+u._id+"' onerror=\"imgError('img-modal-reaction-"+u._id+"');\" class='img-fluid my-thumbnail float-left' title='"+u.name+"' src='"+thumbnail+"' alt='User thumbnail'></td>"+
         "<td>"+u.name+"</td> </tr>";
     })
     html+= "</tbody></table>";
@@ -247,6 +259,7 @@ function getPosts(){
             console.error("Something went wrong when gettings posts: " + JSON.stringify(err));
             showError("Something went wrong when getting posts :(");
         }
+        
     });
 }
 
@@ -260,12 +273,12 @@ function renderPosts(posts){
         else
             html += "<div class='col mx-auto margin-top'>";
         
-           html+= "<div class='container card post'>"+
+           html+= "<div id='post-" + p._id + "' class='container card post'>"+
                               "<div class='row'>"+
                                   "<div class='col panel-heading'>"+
                                         "<div class='row'>"+
                                             "<div class='col'>"+
-                                                    "<img style='float:left;' onerror=\"imgError('post-"+p._id+"');\" id='post-"+p._id+"' class='img-fluid my-thumbnail-3 float-left' src='"+thumbnail+"' title='"+p.userId.name+"' alt='User image'>"+
+                                                    "<img style='float:left;' onerror=\"imgError('img-post-"+p._id+"');\" id='img-post-"+p._id+"' class='img-fluid my-thumbnail-3 float-left' src='"+thumbnail+"' title='"+p.userId.name+"' alt='User image'>"+
                                             "</div>"+
                                             "<div class='col'>" +
                                                     "<h4>" +
@@ -273,7 +286,7 @@ function renderPosts(posts){
                                                     "</h4>"+
                                             "</div>"+
                                             "<div class='col'>"+
-                                                    "<span class='text-muted'>"+ timeSince(new Date(p.updated_at)) +" ago. </span>"+        
+                                                    "<span class='text-muted'>"+ timeSince(new Date(p.created_at)) +" ago. </span>"+        
                                             "</div>"+
                                         "</div>"+
                                     "</div>"+
@@ -308,8 +321,10 @@ function renderPosts(posts){
                                                 "</button>"+
                                             "</span>"+
                                     "</div>"+
-                          "</div>";
-                          p.comments.forEach((c,i)=>{
+                          "</div><div id='comment-box-"+p._id+"' class='comment-box'>";
+                          var length = p.comments.length;
+                          for(var i=0; i<length; i++){
+                                var c = p.comments.pop();
                                 html += "<br/>";
                                 var reactionId = "comment-reaction-"+c._id;
                                 var thumbnail = (c.userId.thumbnail)? c.userId.thumbnail : "http://undefined";
@@ -326,7 +341,7 @@ function renderPosts(posts){
                                                             "</h6>"+
                                                         "</div>"+
                                                         "<div class='col'>" + 
-                                                            "<span class='text-muted'>"+ timeSince(new Date(p.updated_at)) +" ago. </span>"+        
+                                                            "<span class='text-muted'>"+ timeSince(new Date(c.date)) +" ago. </span>"+        
                                                         "</div>"+
                                                     "</div>"+
                                                     "<div class='row comment-text'>"+
@@ -342,27 +357,121 @@ function renderPosts(posts){
                                                                         "</div>"+
                                                                 "</div>"+   
                                                                 "<div id='comment-reaction-count-"+c._id+"' class='col-8'>";
-                                                                        html += generateReactionsComment(c, c._id);
+                                                                        html += generateReactionsComment(c, p._id, c._id);
                                                                 html+="</div>"+
                                                     "</div>"+
                                             "</div>"+
                                         "</div>"+
                                 "</div>";
-                          });
+                          }
+                            commentsCount[p._id] = length;
                             var oldCommentsListed = $(".comments-"+p._id).length;
-                        if(p.commentsSize > (p.comments.length + oldCommentsListed)){
-                            html += "<div class='row'>"+
+                        if(p.commentsSize > (length + oldCommentsListed)){
+                            html += "<div id='more-comments-btn-"+p._id+"' class='row'>"+
                                         "<div class='col-2 col-center'>"+
-                                            "<button class='btn btn-info' id='more-comments-btn-"+p._id+"'> More comments</button>"+
+                                            "<button onClick=\"loadMoreComments('"+p._id+"', '"+p.commentsSize+"');\" class='btn btn-info'> More comments</button>"+
                                         "</div>"+
                                     "</div>";
                             }
-                    html += "</div></div>"; 
+                    html += "</div></div></div>"; 
     });
     $("#posts").append(html);
     setTimeout(function() {
         renderEmojisInput(".emoji-input");
     }, 60);
+}
+
+function loadMoreComments(postId, commentsSize){
+    var listed = commentsCount[postId];
+    console.log("listed: " + listed);
+    var roof = commentsSize - listed;
+    var skip = roof - 6;
+    if(skip < 0)
+        skip = 0;
+    var limit = Math.abs(commentsSize - (listed+skip));
+    console.log("limit: " + limit + ", skip: " + skip);
+ //   console.log("commentsSize: " + commentsSize);
+    if(limit <= 0)
+        throw "limit can not be negative";
+    if(limit > 6 )
+        limit = 6;
+    $.ajax({
+        url: "/class/comments/"+postId +"?skip="+skip + "&limit=" + limit,
+        success: result=>{
+            if(result.success == false)
+                showError(result.msg);
+            else{
+				renderComments(result.msg.comments, result.msg.commentsSize, postId);
+            }
+        },
+        error: err=>{
+            if(err.statusText == "abort")
+                return;
+            console.error("Something went wrong when gettings posts: " + JSON.stringify(err));
+            showError("Something went wrong when getting posts :(");
+        }
+        
+    });
+}
+
+function renderComments(comments, commentsSize, postId){
+    var html = "";
+    var length = comments.length;
+    var listed = commentsCount[postId];
+    for(var i=0; i< length; i++){
+            var c = comments.pop();
+            html += "<br/>";
+            var reactionId = "comment-reaction-"+c._id;
+            var thumbnail = (c.userId.thumbnail)? c.userId.thumbnail : "http://undefined";
+            html += "<div class='row'>"+
+                        "<div class='col comments-box comments-"+postId+"'>"+
+                            "<div class='col panel-heading'>"+
+                                "<div class='row'>"+
+                                    "<div class='col'>"+
+                                        "<img style='float:left;' onerror=\"imgError('img-c-"+c._id+"');\" id='img-c-"+c._id+"' class='img-fluid my-thumbnail-4 float-left' src='"+thumbnail+"' title='"+c.userId.name+"' alt='User image'>"+
+                                    "</div>"+
+                                    "<div class='col'>"+
+                                        "<h6>"+
+                                            c.userId.name+
+                                        "</h6>"+
+                                    "</div>"+
+                                    "<div class='col'>" + 
+                                            "<span class='text-muted'>"+ timeSince(new Date(c.date)) +" ago. </span>"+        
+                                    "</div>"+
+                                "</div>"+
+                                "<div class='row comment-text'>"+
+                                    "<div class='col'>"+
+                                        renderEmojisText(c.text)+
+                                    "</div>"+
+                                "</div>"+
+                                "<div style='margin-top:5px;' class='row facebook-reaction'>"+
+                                    "<div class='col-2'>"+ 
+                                        "<div class='emotion-btn-sm'>"+
+                                            "<div onClick=\"showReactions('"+reactionId+"')\" data-toggle='tooltip' data-placement='right' title='Add reaction' class='reaction-btn'>+ <i class='fa fa-smile-o' aria-hidden='true'></i> </div>"+
+                                                "<div data-comment='"+c._id+"' data-post='"+postId+"' id='"+reactionId+"' class='reactions'><span onClick=\"publishReaction('likes','"+reactionId+"')\"class='reaction-emoji'>"+renderEmojisText("👍🏿") +"</span><span onClick=\"publishReaction('loves','"+reactionId+"')\" class='reaction-emoji'> "+renderEmojisText("❤") +"</span><span onClick=\"publishReaction('hahas','"+reactionId+"')\" class='reaction-emoji'> "+renderEmojisText("😂") +"</span><span onClick=\"publishReaction('wows','"+reactionId+"')\" class='reaction-emoji'> "+renderEmojisText("😲") +"</span><span onClick=\"publishReaction('sads','"+reactionId+"')\" class='reaction-emoji'> "+renderEmojisText("😢") +"</span><span onClick=\"publishReaction('angrys','"+reactionId+"')\" class='reaction-emoji'> "+renderEmojisText("😠") +"</span> </div>"+
+                                                "</div>"+
+                                            "</div>"+   
+                                            "<div id='comment-reaction-count-"+c._id+"' class='col-8'>";
+                                                html += generateReactionsComment(c, postId, c._id);
+                                            html+="</div>"+
+                                        "</div>"+
+                                    "</div>"+
+                                "</div>"+
+                            "</div>" + 
+                        "</div>"
+                    "</div>";
+    }
+                var oldCommentsListed = $(".comments-"+postId).length;
+                if(commentsSize > (length + oldCommentsListed)){
+                    html += "<div id='more-comments-btn-"+postId+"' class='row'>"+
+                            "<div class='col-2 col-center'>"+
+                                "<button onClick=\"loadMoreComments('"+postId+"', '"+commentsSize+"');\" class='btn btn-info'> More comments</button>"+
+                            "</div>"+
+                        "</div>";
+                    }
+    commentsCount[postId] = listed + length;
+    $("#more-comments-btn-"+postId).remove();
+    $("#comment-box-"+postId).append(html);
 }
 
 function postComment(inputId, postId){
@@ -376,7 +485,6 @@ function postComment(inputId, postId){
         method: "post",
         data: data,
         success: result=>{
-            console.log("post comment: " + JSON.stringify(result));
             if(result.success == false)
                 showError(result.msg);
             else{
