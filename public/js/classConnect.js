@@ -149,7 +149,7 @@ function reactComment(reaction, postId, commentId){
 
 function renderPostReactions(p, postId){
     var html = generateReactionsPost(p, postId);
-    $("#"+postId).html(html);
+    $("#post-reaction-count-"+postId).html(html);
 }
 
 function renderCommentReactions(p, postId, commentId){
