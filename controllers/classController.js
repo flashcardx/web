@@ -415,7 +415,10 @@ module.exports = function(app){
 	app.get("/class/posts/:classname", controllerUtils.requireLogin, (req, res)=>{
 		var classname = req.params.classname;
 		var userId = req.userId;
-		var url = config.apiGetClassPosts + classname + "?last=" + req.query.last;
+		var lastId = req.query.last
+		var url = config.apiGetClassPosts + classname;
+		if(lastId)
+			url += "?last=" + lastId;
 		requestify.get(url, {headers:{
 				"x-access-token": req.session.token
 			}})
@@ -460,7 +463,7 @@ module.exports = function(app){
 	});
 
 	app.post("/class/commentReaction/:classname", controllerUtils.requireLogin, parseForm, (req, res)=>{
-        var userId = req.userId;
+		var userId = req.userId;
 		var url = config.apiClassCommentReaction + req.params.classname;
 		requestify.post(url, req.body, {headers:{
 				"x-access-token": req.session.token

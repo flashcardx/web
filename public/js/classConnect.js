@@ -1,10 +1,15 @@
 var commentsCount = {};
 var commentsSize = {};
+var time = 0;   // used for just loading emojis on new posts every time getPosts is called
+getPosts(()=>{
+    renderEmojisInput("#textarea-1501483512653");
+});
 setScroll();
 
 function setScroll(){
     $(window).scroll(function() {
     if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+        console.log("scroll trigered!");
         $(window).off("scroll"); 
         setTimeout(setScroll, 2000);
         getPosts();
@@ -259,17 +264,21 @@ function getLastId(){
     return lastPost.attr("data-postId");
 }
 
-function getPosts(){
+function getPosts(callback){
     var lastId = getLastId();
-    var url ="/class/posts/" + classname + "?last=" + lastId;   
+    var url ="/class/posts/" + classname;
+    if(lastId) 
+        url += "?last=" + lastId;
     $.ajax({
         url: url,
         success: result=>{
             if(result.success == false)
                 showError(result.msg);
             else{
-				renderPosts(result.msg);
+                renderPosts(result.msg);
             }
+            if(callback)
+                callback();
         },
         error: err=>{
             if(err.statusText == "abort")
@@ -331,7 +340,7 @@ function renderPosts(posts){
                           "</div>" +
                           "<div class='row'>" +
                                     "<div class='comment-input input-group col'>"+
-                                        "<input autocomplete='off' id='new-comment-"+p._id+"' type='text' class='form-control input-lg emoji-input'"+
+                                        "<input autocomplete='off' id='new-comment-"+p._id+"' type='text' class='form-control input-lg emoji-input"+time+"'"+
                                         "placeholder='New comment'/>"+
                                         "<span class='input-group-btn'>"+
                                                 "<button onClick=\"postComment('new-comment-"+p._id+"', '"+p._id+"')\";id ='search-button' class='btn btn-info' role='button' type='button'>"+
@@ -396,7 +405,8 @@ function renderPosts(posts){
     });
     $("#posts").append(html);
     setTimeout(function() {
-        renderEmojisInput(".emoji-input");
+        renderEmojisInput(".emoji-input"+time);
+        time++;
     }, 60);
 }
 
@@ -430,7 +440,7 @@ function loadMoreComments(postId, commentsSize){
     });
 }
 
-function renderComments(comments, commentsSize, postId){
+function renderComments(comments, commentsSize, postId, order){
     var html = "";
     var length = comments.length;
     var listed = commentsCount[postId];
@@ -476,9 +486,8 @@ function renderComments(comments, commentsSize, postId){
                             "</div>" + 
                         "</div>"
                     "</div>";
-    }
-                var oldCommentsListed = $(".comments-"+postId).length;
-                if(commentsSize > (length + oldCommentsListed)){
+                }
+                if(order!="prepend" && commentsSize > (length + listed)){
                     html += "<div id='more-comments-btn-"+postId+"' class='row'>"+
                             "<div class='col-2 col-center'>"+
                                 "<button onClick=\"loadMoreComments('"+postId+"', '"+commentsSize+"');\" class='btn btn-info'> More comments</button>"+
@@ -487,7 +496,19 @@ function renderComments(comments, commentsSize, postId){
                     }
     commentsCount[postId] = listed + length;
     $("#more-comments-btn-"+postId).remove();
-    $("#comment-box-"+postId).append(html);
+    if(order == "prepend"){
+        $("#comment-box-"+postId).prepend(html);
+        if(commentsSize > (length + listed)){
+                    var html2 = "<div id='more-comments-btn-"+postId+"' class='row'>"+
+                            "<div class='col-2 col-center'>"+
+                                "<button onClick=\"loadMoreComments('"+postId+"', '"+commentsSize+"');\" class='btn btn-info'> More comments</button>"+
+                            "</div>"+
+                        "</div>";
+                    $("#comment-box-"+postId).append(html2);    
+            }
+    }
+    else
+        $("#comment-box-"+postId).append(html);
 }
 
 function postComment(inputId, postId){
@@ -501,13 +522,14 @@ function postComment(inputId, postId){
         method: "post",
         data: data,
         success: result=>{
+            console.log("result from comment: " + JSON.stringify(result));
             if(result.success == false)
                 showError(result.msg);
             else{
                 showSuccess("You just commented!");
                 $("#"+inputId)[0].emojioneArea.setText("");
                 // result should return comment from db with userId populated
-                pushComment(result.msg, postId);
+                pushComment(result.msg.comments, postId);
             }
         },
         error: err=>{
@@ -519,8 +541,8 @@ function postComment(inputId, postId){
     });
 }
 
-function pushComment(comment, postId){
+function pushComment(comments, postId){
     var newSize = commentsSize[postId]+1; //should be old commentsize +1
     commentsSize[postId] = newSize; 
-    renderComments(new Array(comment), newSize, postId);
+    renderComments(comments, newSize, postId, "prepend");
 }
