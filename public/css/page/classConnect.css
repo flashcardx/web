@@ -59,9 +59,6 @@
   border-left: 1px solid #CCCCCC;
 }
 
-.btn-a{
-
-}
 
 .btn-a:hover{
   padding: 2px;
@@ -88,6 +85,10 @@
 
 .margin-top{
   margin-top: 20px;
+}
+
+.margin-bottom{
+  margin-bottom: 20px;
 }
 
 .post-text{

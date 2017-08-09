@@ -1,12 +1,15 @@
 var commentsCount = {};
 var commentsSize = {};
 var time = 0;   // used for just loading emojis on new posts every time getPosts is called
+var scroll = true;
 getPosts(()=>{
     renderEmojisInput("#textarea-1501483512653");
 });
 setScroll();
 
 function setScroll(){
+    if(scroll == false)
+        return;
     $(window).scroll(function() {
     if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
         console.log("scroll trigered!");
@@ -15,6 +18,11 @@ function setScroll(){
         getPosts();
         }
     });
+}
+
+function unsetScroll4ever(){
+    $(window).off("scroll");
+    scroll = false;
 }
 
 function renderEmojisInput(selector){
@@ -46,11 +54,13 @@ function publish(){
         method: "post",
         data: {text:text},
         success: result=>{
+            console.log("result publish: " + JSON.stringify(result.msg));
             if(result.success == false)
                 showError(result.msg);
             else{
                 showSuccess("Content published!");
                 $("#textarea-1501483512653")[0].emojioneArea.setText("");
+                renderPosts(new Array(result.msg), "prepend");
             }
         },
         error: err=>{
@@ -275,6 +285,8 @@ function getPosts(callback){
             if(result.success == false)
                 showError(result.msg);
             else{
+                if(result.msg.length == 0)
+                    unsetScroll4ever();
                 renderPosts(result.msg);
             }
             if(callback)
@@ -290,16 +302,20 @@ function getPosts(callback){
     });
 }
 
-function renderPosts(posts){
+var firstTime = true;
+function renderPosts(posts, order){
     var html="";
     posts.forEach((p, i)=>{
         var reactionId = "post-reaction-"+p._id;
         var thumbnail = (p.userId.thumbnail)? p.userId.thumbnail : "http://undefined";
-        if(i==0)
+        if((i==0 && firstTime==true))
             html += "<div class='col mx-auto'>";
-        else
-            html += "<div class='col mx-auto margin-top'>";
-        
+        else{
+            if(order=="prepend")
+                html += "<div class='col mx-auto margin-bottom'>";
+            else
+                html += "<div class='col mx-auto margin-top'>";
+        }
            html+= "<div data-postId='"+p._id+"' id='post-" + p._id + "' class='container card post'>"+
                               "<div class='row'>"+
                                   "<div class='col panel-heading'>"+
@@ -403,11 +419,15 @@ function renderPosts(posts){
                             }
                     html += "</div></div></div>"; 
     });
-    $("#posts").append(html);
+    if(order == "prepend")
+        $("#posts").prepend(html);
+    else
+        $("#posts").append(html);
     setTimeout(function() {
         renderEmojisInput(".emoji-input"+time);
         time++;
     }, 60);
+    firstTime = false;
 }
 
 function loadMoreComments(postId, commentsSize){
