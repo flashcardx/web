@@ -1,5 +1,16 @@
-getPosts();
 var commentsCount = {};
+var commentsSize = {};
+setScroll();
+
+function setScroll(){
+    $(window).scroll(function() {
+    if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+        $(window).off("scroll"); 
+        setTimeout(setScroll, 2000);
+        getPosts();
+        }
+    });
+}
 
 function renderEmojisInput(selector){
     $(selector).emojioneArea({ pickerPosition: "bottom",
@@ -17,8 +28,6 @@ function renderEmojis(id){
 function renderEmojisText(text){
     return emojione.toImage(text);
 }
-
-
 
 function publish(){
     var text = $("#textarea-1501483512653")[0].emojioneArea.getText();
@@ -243,9 +252,18 @@ function renderReactionModal(users){
     $("#modal-reactions-body").html(html);
 }
 
+function getLastId(){
+    var lastPost = $(".post").last();
+    if(!lastPost)
+        return undefined;
+    return lastPost.attr("data-postId");
+}
+
 function getPosts(){
-	  $.ajax({
-        url: "/class/posts/"+classname,
+    var lastId = getLastId();
+    var url ="/class/posts/" + classname + "?last=" + lastId;   
+    $.ajax({
+        url: url,
         success: result=>{
             if(result.success == false)
                 showError(result.msg);
@@ -273,7 +291,7 @@ function renderPosts(posts){
         else
             html += "<div class='col mx-auto margin-top'>";
         
-           html+= "<div id='post-" + p._id + "' class='container card post'>"+
+           html+= "<div data-postId='"+p._id+"' id='post-" + p._id + "' class='container card post'>"+
                               "<div class='row'>"+
                                   "<div class='col panel-heading'>"+
                                         "<div class='row'>"+
@@ -365,6 +383,7 @@ function renderPosts(posts){
                                 "</div>";
                           }
                             commentsCount[p._id] = length;
+                            commentsSize[p._id] = p.commentsSize;
                             var oldCommentsListed = $(".comments-"+p._id).length;
                         if(p.commentsSize > (length + oldCommentsListed)){
                             html += "<div id='more-comments-btn-"+p._id+"' class='row'>"+
@@ -383,14 +402,11 @@ function renderPosts(posts){
 
 function loadMoreComments(postId, commentsSize){
     var listed = commentsCount[postId];
-    console.log("listed: " + listed);
     var roof = commentsSize - listed;
     var skip = roof - 6;
     if(skip < 0)
         skip = 0;
     var limit = Math.abs(commentsSize - (listed+skip));
-    console.log("limit: " + limit + ", skip: " + skip);
- //   console.log("commentsSize: " + commentsSize);
     if(limit <= 0)
         throw "limit can not be negative";
     if(limit > 6 )
@@ -490,6 +506,8 @@ function postComment(inputId, postId){
             else{
                 showSuccess("You just commented!");
                 $("#"+inputId)[0].emojioneArea.setText("");
+                // result should return comment from db with userId populated
+                pushComment(result.msg, postId);
             }
         },
         error: err=>{
@@ -499,4 +517,10 @@ function postComment(inputId, postId){
             showError("Something went wrong when posting comment :(");
         }
     });
+}
+
+function pushComment(comment, postId){
+    var newSize = commentsSize[postId]+1; //should be old commentsize +1
+    commentsSize[postId] = newSize; 
+    renderComments(new Array(comment), newSize, postId);
 }

@@ -415,7 +415,7 @@ module.exports = function(app){
 	app.get("/class/posts/:classname", controllerUtils.requireLogin, (req, res)=>{
 		var classname = req.params.classname;
 		var userId = req.userId;
-		var url = config.apiGetClassPosts + classname;
+		var url = config.apiGetClassPosts + classname + "?last=" + req.query.last;
 		requestify.get(url, {headers:{
 				"x-access-token": req.session.token
 			}})
