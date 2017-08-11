@@ -19,16 +19,13 @@
   <link rel="stylesheet" href="assets/css/page/discover.css">
   <link rel="stylesheet" href="assets/css/component/card.css">
   <link rel="stylesheet" href="assets/css/page/evclass.css">
+  <link rel="stylesheet" href="assets/css/page/class.css">
   <link rel="stylesheet" href="assets/css/component/slideshow.css">
   <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
-    
 
 </head>
 
 <body>
-  <script type='text/javascript'>
-    var cards = <%-JSON.stringify(cards) %>;
-  </script>
 
   <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
     <div class="container">
@@ -67,27 +64,38 @@
 
 <div class="main-content  min-height">
   <div class=" container ">
-    <% errors.forEach(err=>{%>
-      <div class="alert alert-danger alert-dismissable">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong>Error!</strong>
-        <%= err%>
-      </div>
-      <%});%>
+
       <div class="row">
         <div class="col">
                             <ul class="list-inline">  
-                                <li class="list-inline-item"><a href="#"><u>Cards</u></a></li>
-                                <li class="list-inline-item"><a href="/discoverClasses">Classes</a></li>
+                                <li class="list-inline-item"><a href="/discover">Cards</a></li>
+                                <li class="list-inline-item"><a href="#"><u>Classes</u></a></li>
                             </ul>
         </div>
       </div>
+      <div style="margin-top:0px;" class="class-group">
+                <div class="input-group row">
+                              <input id="search-box" type="search" class="form-control input-lg"
+                                  placeholder="Search class" />
+                              <span class="input-group-btn">
+                                          <button id ="search-button" class="btn btn-success" role="button" type="button" onClick="searchClass();">
+                                              <i class="fa fa-search fa-fw" aria-hidden="true"></i>
+                                          </button>
+                              </span>
+                </div>
+              <div class="row">
+                  <div class="col container" id="search-results">
+                  </div>
+              </div>
+        </div>
 
-        <div class="row ev-pd-top">
-          <div class="col-md-12 col-12">
-            <div class="row"id="card-deck">
-              <!--Here in Jquery-->
-            </div>
+
+
+
+        <div class="row">
+          <div class="col classes">
+              <div id="discover-classes-content" class="container">
+              </div>
           </div>
         </div>
 
@@ -126,17 +134,17 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
       crossorigin="anonymous"></script>
     <script src="assets/js/formatDate.js"></script>
-   <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
-    <script src="assets/js/discoverCards.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
     <script src="assets/js/general.js"></script>
+    <script src="assets/js/capabilities/recommendClasses.js"></script>
+    <script src="assets/js/class.js"></script>
     <script src="assets/js/lib/bootstrap-notify.min.js"></script>
-    <script src="assets/js/capabilities/duplicateCard.js"></script>
-    <script src="assets/js/lib/articulate.min.js"></script>
     <script src="assets/js/capabilities/activity.js"></script>
+     <script src="assets/js/lib/jquery.letterpic.min.js"></script>
 </body>
 
 </html>

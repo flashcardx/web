@@ -40,10 +40,6 @@ function showInfo(msg){
         }, 4000);
 }
 
-function submit(){
-    $("#form-signup").submit();
-}
-
 function resendEmail(){
     $(".errorMsg").html("Loading...");
     $.ajax({

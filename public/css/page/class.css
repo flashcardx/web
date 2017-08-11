@@ -3,6 +3,7 @@
     border: 1px solid gray;
     border-radius: 5px;
     padding: 15px;
+    background-color: white;
 }
 
 
@@ -20,7 +21,7 @@
 }
 
 .class-container{
-    max-height: 350px;
+    max-height: 500px;
     overflow-y: auto;
 }
 

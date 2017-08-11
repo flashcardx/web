@@ -109,7 +109,13 @@
                   <div class="form-group">
                     <div class="row">
                       <div class="col-sm-10 ev-easyautocomplete">
-                        <input name="name" type="text" required="true" class="form-control" id="title" placeholder="What is it?">
+                          <input name="name" type="text" required="true" class="form-control" id="title" placeholder="What is it?">
+                      </div>
+                      <div class="col-sm-2">
+                          <div class="inline">
+                              <span class="text-black">Autocomplete:</span>
+                              <input type="checkbox" class="js-switch" checked />
+                          </div>
                       </div>
                     </div>
                   </div> 
@@ -203,10 +209,7 @@
                     </div>
                   </div>
                 </form>
-                <div class="inline">
-                  <span class="text-black">Autocomplete:</span>
-                  <input type="checkbox" class="js-switch" checked />
-                </div>
+                
 
                 <%- include('tiles/modalActivity'); %>
 

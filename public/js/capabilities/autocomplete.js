@@ -5,6 +5,7 @@ var on = false;
 $.ajax({
         url: "/userPreferences",
         success: result=>{
+            console.log("user preferences: " + JSON.stringify(result));
             if(!result.success)
                 showError(result.msg);
             else
@@ -16,7 +17,7 @@ $.ajax({
     });
 
 function start(preferences){
-      if(preferences.autoComplete === false)
+      if(preferences.autoComplete == false)
             $(".js-switch").click();
       else
         activate();
@@ -52,10 +53,15 @@ function changeMode(){
 
 function activate(){
     on = true;
-    $("#title").blur(function(){
-        defineAndFill($("#title").val());
+    $('#title').donetyping(function(){
+            defineAndFill($("#title").val());
     });
+
+    
 }
+
+
+
 
 
 function desactivate(){
@@ -69,8 +75,10 @@ function defineAndFill(word){
     $.ajax({
         url: "/define/" + word,
         success: result=>{
-            if(!result.success)
-                showError(result.msg);
+            if(!result.success){
+                $(".js-switch").click();
+                console.error(result.msg);
+            }
             else{
                 var text = result.msg;
                 fillDescription(text);
@@ -85,3 +93,50 @@ function defineAndFill(word){
 function fillDescription(text){
     $("#description").val(text);
 }
+
+
+//
+// $('#element').donetyping(callback[, timeout=1000])
+// Fires callback when a user has finished typing. This is determined by the time elapsed
+// since the last keystroke and timeout parameter or the blur event--whichever comes first.
+//   @callback: function to be called when even triggers
+//   @timeout:  (default=1000) timeout, in ms, to to wait before triggering event if not
+//              caused by blur.
+// Requires jQuery 1.7+
+//
+(function($){
+    $.fn.extend({
+        donetyping: function(callback,timeout){
+            timeout = timeout || 1e3; // 1 second default timeout
+            var timeoutReference,
+                doneTyping = function(el){
+                    if (!timeoutReference) return;
+                    timeoutReference = null;
+                    callback.call(el);
+                };
+            return this.each(function(i,el){
+                var $el = $(el);
+                // Chrome Fix (Use keyup over keypress to detect backspace)
+                // thank you @palerdot
+                $el.is(':input') && $el.on('keyup keypress paste',function(e){
+                    // This catches the backspace button in chrome, but also prevents
+                    // the event from triggering too preemptively. Without this line,
+                    // using tab/shift+tab will make the focused element fire the callback.
+                    if (e.type=='keyup' && e.keyCode!=8) return;
+                    
+                    // Check if timeout has been set. If it has, "reset" the clock and
+                    // start over again.
+                    if (timeoutReference) clearTimeout(timeoutReference);
+                    timeoutReference = setTimeout(function(){
+                        // if we made it here, our timeout has elapsed. Fire the
+                        // callback
+                        doneTyping(el);
+                    }, timeout);
+                }).on('blur',function(){
+                    // If we can, fire the event since we're leaving the field
+                    doneTyping(el);
+                });
+            });
+        }
+    });
+})(jQuery);

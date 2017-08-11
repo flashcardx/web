@@ -36,6 +36,23 @@ module.exports = function(app){
 		});
     });
 
+	app.get("/discoverClasses", controllerUtils.requireLogin, (req, res)=>{
+    		return res.render('discoverClasses');		
+	});
+		
+	app.get("/recommendClasses", controllerUtils.requireLogin, (req, res)=>{
+        requestify.get(config.apiRecommendClasses, {headers:{
+				"x-access-token": req.session.token
+			}}).then(response=>{
+				const data = response.getBody();
+				console.log("recommend classes: " + JSON.stringify(data));
+				res.json(data);
+			}).fail(response=> {
+				const errorCode = response.getCode();
+                console.error("server got error code " + errorCode);
+				res.json({success:false, msg: "server got error code " + errorCode});	
+			});
+	});
 
 	app.get("/getDiscoverCards", controllerUtils.requireLogin, (req, res)=>{
 		var url = config.apiDiscoverCards;

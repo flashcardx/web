@@ -79,7 +79,7 @@ getFeed();
 function completeFooter(n){
     var html = "";
     if(n === 0){
-        html += "In your feed you can see everything that happens in the classes you are part of. Right now there is nothing to show, create a class with other people and change the way you learn vocabulary!";
+        html += "In your feed you can see everything that happens in the classes you are part of. Right now there is nothing to show, create a class with other people and change the way you learn forever!";
     }
     $("#card-deck").append(html);
 }
