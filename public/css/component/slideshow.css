@@ -11,10 +11,9 @@
 }
 
 .slide-fixed-size{
-   width:640px; 
-   max-width:640px;
-   height:410px;
-   max-height:410px;
+   height:250px;
+   width: auto;
+   overflow:hidden;
 }
 .responsive {
     width: 100%;

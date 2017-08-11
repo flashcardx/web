@@ -36,30 +36,12 @@ function showCards() {
     var containerId = card.updated_at;
     var html = "<div class='card ev-panel ev-panel-card' id='" + containerId + "'>" +
         "<div id='carousel' class='carousel slide'>" +
-        "<div class='slick'>";
-
+        "<div class='owl-carousel owl-theme'>";
     if (card.imgs)
         card.imgs.forEach((img, index2) => {
-            var height = img.height;
-            var width = img.width;
-            while (height > 500 || width > 650) {
-                width--;
-                height--;
-            }
-            if (index2 === 0) {
-                html += "<div class='active slide-fixed-size'>" +
-                    "<div class='slide-size' style='height:" + height + "px;width:" + width + "px;overflow:hidden'>" +
-                    "<img class='d-block img-fluid' data-lazy='" + img.hash + "' alt='One moment!...'>" +
-                    "</div>" +
+            html += "<div '>" +
+                        "<img class='d-block img-fluid owl-lazy' data-src='" + img.hash + "' alt='One moment!...'>" +
                     "</div>";
-            }
-            else {
-                html += "<div class='slide-fixed-size'>" +
-                    "<div class='slide-size' style='height:" + height + "px;width:" + width + "px;overflow:hidden'>" +
-                    "<img class='d-block img-fluid' data-lazy='" + img.hash + "' alt='One moment!...'>" +
-                    "</div>" +
-                    "</div>";
-            }
         });
     if (card.description)
         var description = card.description.replace(/(\r\n|\n|\r)/g, "<br />");
@@ -83,12 +65,10 @@ function showCards() {
     $(".card").hide();
     $(".card").slideToggle('slow');
     $(".card-title").hide();
-    $(".slick").not('.slick-initialized').slick({
-        lazyLoad: 'ondemand',
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        prevArrow: "<img class='a-left control-c prev slick-prev' src='assets/img/left-arrow.png'>",
-        nextArrow: "<img class='a-right control-c next slick-next' src='assets/img/right-arrow.png'>"
+    $('.owl-carousel').owlCarousel({
+            items:1,
+            lazyLoad:true,
+            margin:0
     });
     calcAndfillAddDays(card.supermemo);
     $("#showAnswer").fadeIn();

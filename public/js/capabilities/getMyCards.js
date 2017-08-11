@@ -132,11 +132,11 @@ function appendCards(cards){
     var html = 
         "<div id='"+containerId+"' class='ev-item'>" +
             "<div id='carousel" + index1+"' class='carousel slide'>"+
-                  "<div class='slick'>";
+                  "<div class='owl-carousel owl-theme'>";
 
     if (card.imgs.length>0) {
         card.imgs.forEach((img, index2)=>{
-            var height = img.height;
+            var height = img.height; 
             var width = img.width;
             while(height > 500 || width > 650){
                 width--;
@@ -145,25 +145,16 @@ function appendCards(cards){
             if (height>200) {
                 height=200;
             }
-            if(index2===0){
-                    html += "<div class='active slide-fixed-size' style='height:250px; width: auto;overflow:hidden'>" +
-                                  "<img class='d-block img-fluid' data-lazy='" + img.hash +"' alt='One moment!...'>" +
-                                 "</div>";
-                }
-            else{
-                    html +="<div class='slide-fixed-size' style='height:250px; width: auto;overflow:hidden'>"+
-                                   "<img class='d-block img-fluid' data-lazy='" + img.hash +"' alt='One moment!...'>" +
-                            "</div>";
-                }
+            html += "<div class='slide-fixed-size'>" +
+                            "<img class='d-block img-fluid owl-lazy' data-src='" + img.hash +"' alt='One moment!...'>" +
+                    "</div>";
         });
-    } else { /*default image, when there is not image*/
-       html +="<div class='slide-fixed-size'>"+
-                   "<div class='slide-size' style='max-height: 200px; height:183px;width:274px;overflow:hidden'>"+
-                        "<img class='d-block img-fluid' data-lazy='assets/img/default.png' alt='One moment!...'>" +
-                  "</div>"+
-             "</div>"
     }
-
+     else { /*default image, when there is no image*/
+       html +=   "<div class='slide-fixed-size'>"+
+                        "<img class='d-block img-fluid' src='assets/img/default.png' alt='One moment!...'>" +
+                  "</div>";
+    }
 
     if(card.description)
             var description = card.description.replace(/(\r\n|\n|\r)/g,"<br />");
@@ -202,13 +193,11 @@ function appendCards(cards){
                    "</div>"+
                "</div>";
     $("#card-deck").append("<div id='"+card._id+"' class='col-lg-4 col-md-6 col-sm-12'><div class='ev-panel ev-panel-card ev-height-collection'>"+html+"</div></div>");
-    $(".slick").not('.slick-initialized').slick({
-            lazyLoad: 'ondemand',
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            prevArrow:"<img class='a-left control-c prev slick-prev' src='assets/img/left-arrow.png'>",
-            nextArrow:"<img class='a-right control-c next slick-next' src='assets/img/right-arrow.png'>"
-        });
+    });
+    $('.owl-carousel').owlCarousel({
+            items:1,
+            lazyLoad:true,
+            margin:0
     });
     viewMore(cards);
 }

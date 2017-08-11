@@ -81,7 +81,6 @@ function showError(msg) {
 }
 
 function appendCards(cards) {
-     console.log("got: " + cards.length);
     cards.forEach((card, index1) => {
         if (card.description)
             var description = card.description.replace(/(\r\n|\n|\r)/g, "<br />");
@@ -89,20 +88,16 @@ function appendCards(cards) {
             "<div id='"+card.counter+"' class='card ev-panel ev-panel-card ev-height-discovery'>" +
             "<div class='ev-item'>" +
             "<div id='carousel" + index1 + "' class='carousel slide'>" +
-            "<div class='slick'>";
+            "<div class='owl-carousel owl-theme'>";
         if (card.imgs.length > 0) {
             card.imgs.forEach((img, index2) => {
-        
-                view += "<div class='active slide-fixed-size'>" +
-                    "<div class='slide-size' style='height:250px; width: auto;overflow:hidden'>" +
-                    "<img class='d-block img-fluid' data-lazy='" + img.hash + "' alt='One moment!...'>" +
-                    "</div>" +
-                    "</div>";
-
+                view += "<div class='slide-size'>" +
+                            "<img class='d-block img-fluid owl-lazy' data-src='" + img.hash + "' alt='One moment!...'>" +
+                        "</div>";
             });
         } else {
-            view += "<div class='slide-fixed-size' style='height:250px; width: auto;overflow:hidden'>" +
-                    "<img class='d-block img-fluid' data-lazy='assets/img/default.png' alt='One moment!...'>" +
+            view += "<div class='slide-fixed-size'>" +
+                    "<img class='d-block img-fluid' src='assets/img/default.png' alt='One moment!...'>" +
                 "</div>"
         }
         view += "</div>" +
@@ -134,13 +129,11 @@ function appendCards(cards) {
             "</div>";
 
         $("#card-deck").append("<div class='col-lg-4 col-md-6 col-sm-12'>" + view + "</div>");
-        $(".slick").not('.slick-initialized').slick({
-            lazyLoad: 'ondemand',
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            prevArrow: "<img class='a-left control-c prev slick-prev' src='assets/img/left-arrow.png'>",
-            nextArrow: "<img class='a-right control-c next slick-next' src='assets/img/right-arrow.png'>"
-        });
+    });
+    $('.owl-carousel').owlCarousel({
+            items:1,
+            lazyLoad:true,
+            margin:0
     });
     viewMore(cards);
 }
