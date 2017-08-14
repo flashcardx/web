@@ -12,6 +12,7 @@ module.exports = function(app) {
 
 	
 	app.post("/signup",parseForm, csrfProtection,(req, res)=>{
+			console.log("body: " + JSON.stringify(req.body));
 			if(req.body.password !== req.body.password2){
 				req.session.error = "Passwords do not match!";
 				res.redirect("/home");
@@ -21,17 +22,18 @@ module.exports = function(app) {
 					email: req.body.email,
 					name: req.body.name,
 					lang: req.body.lang,
-					password: req.body.password 
+					password: req.body.password,
+					"g-recaptcha-response": req.body["recaptcha"],
+					ip: req.ip
 				};
 				req.session.email = req.body.email; 
-				requestify.post(config.apiSignup,user).then(response=>{
+				requestify.post(config.apiSignup, user).then(response=>{
 					var result = response.getBody();
 					if(result.success)
 						req.session.successMsg = result.msg;
 					else{
 						req.session.error = result.msg;
 						if(result.errorCode === 1){
-							console.log("resend");
 							req.session.resend = 1;
 						}
 					}

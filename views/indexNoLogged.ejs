@@ -15,13 +15,29 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link href="assets/css/page/landingPage.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/component/fbButton.css">
-
+  <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+  <!-- Hotjar Tracking Code for www.flashcard-x.com -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:571531,hjsv:5};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
 </head>
+             <div id='recaptcha' class="g-recaptcha"
+                              data-sitekey="<%=reCaptchaKey%>"
+                              data-size="invisible"
+                              data-callback="submit">
+            </div>
 
 <body>
   <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
+    <div class="container ">
+      <div class="navbar-header ">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
           aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
@@ -32,15 +48,17 @@
         <a class="navbar-brand" href="#">FlashCardX</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
-        <form method="POST" action="#" class="navbar-form navbar-right">
-          <input type="hidden" name="_csrf" value="<%=csrfTokenLogin%>" />
-          <div class="form-group">
-            <input type="text" name="email" placeholder="Email" class="form-control">
-          </div>
-          <div class="form-group">
-            <input type="password" name="password" placeholder="Password" class="form-control">
-          </div>
-          <button type="submit" class="btn margin-left btn-success">Sign in</button>
+        <form method="POST" id="form-signin" action="#" class="navbar-form navbar-right">
+            <input type="hidden" name="_csrf" value="<%=csrfTokenLogin%>" />
+            <div class="form-group">
+              <input type="text" name="email" placeholder="Email" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" name="password" placeholder="Password" class="form-control">
+            </div>
+            <input id="recaptcha-input-signin" type="hidden" name="recaptcha" value="">
+            <button onclick="validateSignin()" id="recaptcha-signin-btn" type="button" class="btn margin-left btn-success">Sign in</button>
+            <button type="submit" id="submit-signin-btn" form="form-signin" value="Submit" class="hide"></button>
         </form>
       </div>
       <!--/.navbar-collapse -->
@@ -100,12 +118,13 @@
                         <input minlength="4" required="true" type="password" name="password2" class="form-control" id="pwd2" placeholder="Enter password again">
                       </div>
                     </div>
-
                     <div class="form-group">
                       <div class="col-sm-offset-2 col-sm-12">
-                        <button type="submit" form="form-signup" role="button" class="btn btn-success">Sign up!</button>
+                        <button type="button" onclick="validateSignup()" id="recaptcha-signup-btn" role="button" class="btn btn-success ">Sign up!</button>
                       </div>
                     </div>
+                    <input id="recaptcha-input-signup" type="hidden" name="recaptcha" value="">
+                    <button type="submit" id="submit-signup-btn" form="form-signup" value="Submit" class="hide"></button>
                   </form>
                 </div>
                 <div class="margin-5">
@@ -128,7 +147,7 @@
     </div> 
     <div class="row">
       <div class="col-md-12 text-center">
-        <h2>Creating a card takes 10 seconds,<br> and you will end up with the most useful vocabulary list ever!</h2>
+          <h2>Creating a card takes 10 seconds,<br> and you will end up with the most useful vocabulary list ever!</h2>
       </div>
     </div>
 
@@ -139,10 +158,10 @@
         <h2 class="text-center">Image seach engine</h2>
         <p class="text-center">Image search engines <br>for creating cards super fast</p>
         <p class="text-center icons">
-          <span class="fa-stack fa-4x">
+            <span class="fa-stack fa-4x">
                   <i class="fa blue fa-circle fa-stack-2x"></i> 
                   <i class="fa fa-picture-o fa-stack-1x"></i>
-             </span>
+            </span>
         </p>
 
       </div>
@@ -176,10 +195,10 @@
         <p class="text-center">The system automatically completes your card's description with definitions of the word</p>
 
         <p class="text-center icons">
-          <span class="fa-stack fa-4x">
+            <span class="fa-stack fa-4x">
                   <i class="fa green fa-circle fa-stack-2x"></i>
                   <i class="fa fa-magic fa-stack-1x"></i>
-                </span>
+            </span>
         </p>
       </div>
 

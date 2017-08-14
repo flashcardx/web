@@ -3,7 +3,7 @@ const appRoot = require('app-root-path');
 var FacebookStrategy = require('passport-facebook').Strategy;
 const requestify = require("requestify");
 const config = require(appRoot + "/config");
-const configFbAuth = require("./fbAuth.json")[env];
+const configFbAuth = require("./keys.json")[env].fbAuth;
 
 
 module.exports = function(passport) {

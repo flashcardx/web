@@ -1,6 +1,6 @@
 const env = process.env.NODE_ENV || "development";
 const api = require("./api.json")[env];
-const fbAuth = require("./fbAuth.json")[env];
+const keys = require("./keys.json")[env];
 
 module.exports = {
 
@@ -29,9 +29,9 @@ module.exports = {
     apiUpdateUserLang: api.updateUserLang,
     apiFbLogin: api.fbLogin,
     apiFbSignup: api.fbSignup,
-    fbAuthId: fbAuth.clientID,
-    fbAuthSecret: fbAuth.clientSecret,
-    fbAuthCallbackUrl: fbAuth.callbackURL,
+    fbAuthId: keys.fbAuth.clientID,
+    fbAuthSecret: keys.fbAuth.clientSecret,
+    fbAuthCallbackUrl: keys.fbAuth.callbackURL,
     apiGetPracticeCards: api.getPracticeCards,
     apiRankCard: api.rankCard,
     apiSuggest: api.suggest,
@@ -72,5 +72,6 @@ module.exports = {
     apiGetCommentReactions: api.getCommentReactions,
     apiGetPostReactionDetail: api.getPostReactionDetail,
     apiGetCommentReactionDetail: api.getCommentReactionDetail,
-    apiGetComments: api.getComments
+    apiGetComments: api.getComments,
+    recaptchaSiteKey: keys.reCaptcha.siteKey,
 };

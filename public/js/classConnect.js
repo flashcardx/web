@@ -533,6 +533,10 @@ function renderComments(comments, commentsSize, postId, order){
 
 function postComment(inputId, postId){
     var text = $("#"+inputId).val();
+    if(!text || text == ""){
+        showWarning("Comment can not be empty!");
+        return;
+    }
     var data = {
         text: text,
         postId: postId

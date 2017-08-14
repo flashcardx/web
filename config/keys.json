@@ -1,0 +1,31 @@
+{"development" : {
+	"fbAuth":{
+				"clientID": "731168503758461",
+				"clientSecret": "8a44c61f16fb81b56aba126dd80fc9a1",
+				"callbackURL": "http://localhost:8081/auth/facebook/callback"
+			},
+	"reCaptcha":{
+					"siteKey": "6LcsqSwUAAAAACvwzZfJjFh0y0Pj6v34XVZZedtl"
+			}
+	},
+"pi" : {
+		"fbAuth":{
+				"clientID": "731168503758461",
+				"clientSecret": "8a44c61f16fb81b56aba126dd80fc9a1",
+				"callbackURL": "http://localhost:8081/auth/facebook/callback"
+			},
+		"reCaptcha":{
+					"siteKey": "6LcrqSwUAAAAAPby-Rm9KnQVI_DulbhGzQmWcOGo"
+			}
+	},
+"production":{
+		"fbAuth":{
+				"clientID": "1949034375312261",
+				"clientSecret": "ea1192b1862a60cfbb09e265dbaaea83",
+				"callbackURL": "https://flashcard-x.com/auth/facebook/callback"
+		},
+		"reCaptcha":{
+					"siteKey": "6LcrqSwUAAAAAPby-Rm9KnQVI_DulbhGzQmWcOGo"
+			}
+	}
+}

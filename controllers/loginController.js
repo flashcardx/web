@@ -21,11 +21,17 @@ module.exports = function(app) {
 		var successMsg = req.session.successMsg;
 		var resend = req.session.resend;
 		controllerUtils.cleanSessionMsgs(req);
-		res.render('indexNoLogged', {resend: resend, successMsg:successMsg, errors:errors, csrfTokenLogin: req.csrfToken()});		
+		res.render('indexNoLogged', {reCaptchaKey:config.recaptchaSiteKey, resend: resend, successMsg:successMsg, errors:errors, csrfTokenLogin: req.csrfToken()});		
 	});
 
 	app.post("/home", parseForm, (req, res)=>{
-			requestify.post(config.apiLogin, {email:req.body.email, password:req.body.password}).then(function(response) {
+			var data = {
+				"g-recaptcha-response": req.body["recaptcha"],
+				ip:req.ip,
+				email:req.body.email,
+				password:req.body.password
+			};
+			requestify.post(config.apiLogin, data).then(function(response) {
 				const data = response.getBody();
 				if(!data.success){
 					req.session.error = data.msg;
@@ -36,7 +42,7 @@ module.exports = function(app) {
 					res.redirect("/");
 				}
 			});
-		});
+	});
 
 	app.get("/getAllCards", (req, res)=>{
 		var url = config.apiGetInitialCards;

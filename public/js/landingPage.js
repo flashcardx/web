@@ -1,32 +1,22 @@
-var langsReady = false;
+var form2Validate = "";
+var input2fillReCaptcha = "";
 
+function submit(token){
+    $("#" + input2fillReCaptcha).val(token);
+    $("#" + form2Validate).click();
+    grecaptcha.reset();
+} 
 
-
-function fillLangs(){
-    if(langsReady)
-        return;
-      $.ajax({
-        url:"/getLangs",
-        success: result=>{
-                 fillLangsSelect(result);
-        },
-        error: err=>{
-                showError(err);
-        }
-    });
+function validateSignin(){
+    form2Validate = "submit-signin-btn";
+    input2fillReCaptcha = "recaptcha-input-signin";
+    grecaptcha.execute();
 }
 
-function fillLangsSelect(langs){
-    var element = $("#select-lang");
-    langs.forEach(l=>{
-        var html = "";
-        if(l.code === "en")
-            html += "<option selected='selected' value='"+l.code+"'>"+l.name+"</option>";
-        else
-            html += "<option value='"+l.code+"'>"+l.name+"</option>";
-        element.append(html);
-    });
-    langsReady = true;
+function validateSignup(){
+    form2Validate = "submit-signup-btn";
+    input2fillReCaptcha = "recaptcha-input-signup";
+    grecaptcha.execute();
 }
 
 function showInfo(msg){

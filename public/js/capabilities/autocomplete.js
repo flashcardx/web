@@ -1,6 +1,7 @@
 var elem = document.querySelector('.js-switch');
 var init = new Switchery(elem, { size: 'small'});
 var on = false;
+var autocompleteLastValue;
 
 $.ajax({
         url: "/userPreferences",
@@ -54,10 +55,18 @@ function changeMode(){
 function activate(){
     on = true;
     $('#title').donetyping(function(){
-            defineAndFill($("#title").val());
+            autocomplete();
     });
+}
 
-    
+function autocomplete(){
+    if(on == false)
+        return;
+    var newVal = $("#title").val();
+    if(newVal == autocompleteLastValue)
+        return;
+    autocompleteLastValue = newVal; 
+    defineAndFill(autocompleteLastValue);
 }
 
 
@@ -77,7 +86,6 @@ function defineAndFill(word){
         success: result=>{
             if(!result.success){
                 $(".js-switch").click();
-                console.error(result.msg);
             }
             else{
                 var text = result.msg;
