@@ -12,7 +12,7 @@ function updateCard(cardId){
     var backupText = textElement.html();
     var backUpButtons = buttonsElement.html();
     var oldName = nameElement.text();
-    var oldDescription = descriptionElement.html(descriptionElement.html().replace(new RegExp("<br>", 'g'), "\n")).text().replace(new RegExp("(\\.\\.\\.)|(\u200CShow more >)|(\u200CShow less)", 'g'), "");
+    var oldDescription = descriptionElement.html(descriptionElement.attr("data-rawtext").replace(new RegExp("<br>", 'g'), "\n")).text().replace(new RegExp("(\\.\\.\\.)|(\u200CShow more >)|(\u200CShow less)", 'g'), "");
     nameElement.replaceWith("<input value='"+oldName+"' name='name' type='text' class='form-control card-title margin-title-update' id='update-title-"+cardId+"' placeholder='Enter new name'>");
     descriptionElement.replaceWith("<textarea rows='5' name='description' id='update-description-"+cardId+"' type='text' class='form-control' placeholder='A description of the word'>"+oldDescription+"</textarea>");
     var category = textElement.attr("data-category");
