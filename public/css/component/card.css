@@ -43,3 +43,7 @@
     text-align: center;
     box-sizing: border-box;
 }
+
+.card-description{
+    margin-bottom: 3px;
+}
