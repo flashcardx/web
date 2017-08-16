@@ -12,7 +12,7 @@
 		"fbAuth":{
 				"clientID": "731168503758461",
 				"clientSecret": "8a44c61f16fb81b56aba126dd80fc9a1",
-				"callbackURL": "http://localhost:8081/auth/facebook/callback"
+				"callbackURL": "http://192.241.134.52/auth/facebook/callback"
 			},
 		"reCaptcha":{
 					"siteKey": "6LcrqSwUAAAAAPby-Rm9KnQVI_DulbhGzQmWcOGo"
