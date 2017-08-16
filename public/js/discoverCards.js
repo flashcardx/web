@@ -107,8 +107,8 @@ function appendCards(cards) {
                 "<h3 style='text-align:center; word-wrap: break-word;' id='speak" + card._id + "'>" + card.name + "" +
                 "<i style='margin-left:6px' onCLick=\"speak(\'" + card._id + "\', \'" + card.lang + "\');\" class='speaker fa fa-volume-up black' aria-hidden='true'></i>" +
                 "</h3>" +
-                "<p style='text-align:left; word-wrap: break-word;' class='ev-more' id='description-" + card._id + "'>" +
-                checkUndefined(description) +
+                "<p style='text-align:left; word-wrap: break-word;' class='card-text card-description ev-more' id='description-" + card._id + "'>" +
+                        checkUndefined(description) +
                 "</p>" +
             "</div>" +
             "<div class='card-buttons'>"+
@@ -135,44 +135,11 @@ function appendCards(cards) {
             lazyLoad:true,
             margin:0
     });
+    mathResetAll();
     viewMore(cards);
 }
 
-    function viewMore(cards) {
-        var showChar = 45;  
-        var ellipsestext = "...";
-        var moretext = "Show more >";
-        var lesstext = "Show less";
 
-
-        cards.forEach(c=>{
-            var id = "description-" + c._id;
-            var content = $("#" + id).html();
-            if(c.description && c.description.length > showChar){
-                var initial = content.substr(0, showChar);
-                var more = content.substr(showChar, content.length - showChar);
-                var html = initial + "<span style='display:block;' id='ellipse-"+id+"'>"+ellipsestext+"</span><span id='morecontent-"+id+"' style='display:none'>"+more+"</span> <a id='btn-"+id+"' href='#' onClick=\"showtext(event,'morecontent-"+id+"','ellipse-"+id+"', 'btn-"+id+"')\" class='ev-morelink'>" + moretext + "</a>";
-                $("#" + id).html(html);
-            }
-        });
-    }
-
-function showtext(event, id, ellipse, btn) {
-    var btn = document.getElementById(btn);
-    var txtmore = document.getElementById(id);
-    var txtellipse = document.getElementById(ellipse);
-    if (txtmore.style.display === 'none') {
-        txtmore.style.display = 'inline';
-        txtellipse.style.display = 'none';
-        btn.innerHTML = "Show less";
-    } else {
-        txtmore.style.display = 'none';
-        txtellipse.style.display = 'block';
-        btn.innerHTML = "Show more >";
-    }
-    event.preventDefault();
-
-}
 
 function completeFooter(n) {
     var html = "";

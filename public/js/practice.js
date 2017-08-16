@@ -72,6 +72,7 @@ function showCards() {
     });
     calcAndfillAddDays(card.supermemo);
     $("#showAnswer").fadeIn();
+    mathResetAll();
 }
 
 function calcAndfillAddDays(supermemo){

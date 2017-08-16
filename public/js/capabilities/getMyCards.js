@@ -131,31 +131,17 @@ function appendCards(cards){
     var containerId = card.updated_at;
     var html = 
         "<div id='"+containerId+"' class='ev-item'>" +
-            "<div id='carousel" + index1+"' class='carousel slide'>"+
+            "<div id='carousel" + index1+"'>"+
                   "<div class='owl-carousel owl-theme'>";
 
     if (card.imgs.length>0) {
-        card.imgs.forEach((img, index2)=>{
-            var height = img.height; 
-            var width = img.width;
-            while(height > 500 || width > 650){
-                width--;
-                height--;
-            }
-            if (height>200) {
-                height=200;
-            }
-            html += "<div class='slide-fixed-size'>" +
-                            "<img class='d-block img-fluid owl-lazy' data-src='" + img.hash +"' alt='One moment!...'>" +
-                    "</div>";
+        card.imgs.forEach(img=>{
+            html += "<img class=' owl-lazy' data-src='" + img.hash +"' alt='One moment!...'>";
         });
     }
      else { /*default image, when there is no image*/
-       html +=   "<div class='slide-fixed-size'>"+
-                        "<img class='d-block img-fluid' src='assets/img/default.png' alt='One moment!...'>" +
-                  "</div>";
+       html +=  "<img class='img-fluid' src='assets/img/default.png' alt='One moment!...'>";
     }
-    console.log("description: " + card.description);
     if(card.description)
             var description = card.description.replace(/(\r\n|\n|\r)/g,"<br />");
     html += "</div>"+
@@ -167,7 +153,7 @@ function appendCards(cards){
                            "<div data-category='"+card.category+"'>"+//do not delete this div, updateCard.js needs it to update card
                                "<h4 style='word-wrap: break-word;' id='speak"+card._id+"' class='card-title'><span>"+ card.name +" </span><i onCLick=\"speak(\'"+card._id+"\', \'"+card.lang+"\');\" class='speaker fa fa-volume-up black' aria-hidden='true'></i></h4>"+
                                "<p data-rawtext='"+  checkUndefined(description) +"' style='text-align:left; word-wrap: break-word;' id='description-"+card._id+"' class='card-text card-description ev-more'>"+ checkUndefined(description) +"</p>"+
-                            "</div>" +
+                            "</div>"+
                        "</div>"+
                    "</div>"+
                    "<div style='margin-top:33px;' class='row'>" + 
@@ -199,14 +185,10 @@ function appendCards(cards){
             lazyLoad:true,
             margin:0
     });
+    mathResetAll();
     viewMore(cards);
 }
 
-function viewMore(cards) {
-        cards.forEach(c=>{
-            showMoreRender("#description-"+c._id);
-        });
-}
 
 
 

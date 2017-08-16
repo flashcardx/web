@@ -11,7 +11,7 @@
 }
 
 .slide-fixed-size{
-   height:250px;
+   max-height:270px;
    width: auto;
    overflow:hidden;
 }

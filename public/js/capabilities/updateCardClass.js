@@ -9,10 +9,11 @@ function updateCard(cardId){
     var textElement = nameElement.parent();
     var timeElement = textElement.children(".card-time");
 
+    showMoreDestroyElement(descriptionElement, cardId);
     var backupText = textElement.html();
     var backUpButtons = buttonsElement.html();
     var oldName = nameElement.text();
-    var oldDescription = descriptionElement.html(descriptionElement.html().replace(new RegExp("<br>", 'g'), "\n")).text().replace(new RegExp("(\\.\\.\\.)|(\u200CShow more >)|(\u200CShow less)", 'g'), "");
+    var oldDescription = descriptionElement.html(descriptionElement.attr("data-rawtext").replace(new RegExp("<br>", 'g'), "\n")).text().replace(new RegExp("(\\.\\.\\.)|(\u200CShow more >)|(\u200CShow less)", 'g'), "");
     nameElement.replaceWith("<input value='"+oldName+"' name='name' type='text' class='form-control card-title margin-title-update' id='update-title-"+cardId+"' placeholder='Enter new name'>");
     descriptionElement.replaceWith("<textarea rows='5' name='description' id='update-description-"+cardId+"' type='text' class='form-control' placeholder='A description of the word'>"+oldDescription+"</textarea>");
     var category = textElement.attr("data-category");
@@ -205,9 +206,12 @@ function updateDone(cardId, backupText, backUpButtons, name, description, catego
      textElement.html(backupText);
      $("#speak"+cardId+" span").text(name);
      $("#description-"+cardId).html(description.replace(/(\r\n|\n|\r)/g,"<br>"));
+     $("#description-"+cardId).attr("data-rawtext", description);
+     showMoreRender("#description-"+cardId, cardId);
      buttonsElement.html(backUpButtons);
      textElement.attr("data-category", category);
      updateTime(cardId);
+     mathResetAll();
      showSuccess("Card was updated successfully!");
 }
 
@@ -222,6 +226,7 @@ function cancel(cardId, backupText, backUpButtons){
     var textElement =  $("#update-" + cardId).find(".card-title").parent();
     textElement.html(backupText);
     buttonsElement.html(backUpButtons);
+    showMoreRender("#description-"+cardId, cardId);
 }
 
 
