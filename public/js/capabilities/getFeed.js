@@ -80,9 +80,9 @@ function completeFooter(n){
 }
 
 function processResult(result){
-    if(end === true)
+    if(end == true)
         return;
-    if(result===undefined || result.length === 0){
+    if(result==undefined || result.length == 0){
         end = true;
         $(window).off("scroll"); 
     }
@@ -107,16 +107,34 @@ function cardAlreadyListed(cardId){
     return found;
 }
 
-function appendFeed(cards){
-    cards.forEach((card, index1)=>{
-        
+function appendFeed(objs){
+    objs.forEach((obj, index)=>{
+        switch (obj.type) {
+            case "c":
+                    var html = htmlCard(obj, index);
+                    $("#card-deck").append(html);
+                    break;
+            case "p":
+                    break;
+            default: throw "invalid type";
+        }
+    });
+    $('.owl-carousel').owlCarousel({
+                items:1,
+                lazyLoad:true,
+                margin:0
+        });
+    mathResetAll();
+    viewMore(objs);
+}
+
+function htmlCard(card, index){
     if(sort==="asc" && cardAlreadyListed(card._id) === true)
         return;
-    
     var containerId = card.id;
     var html = 
         "<div id='"+containerId+"' class='ev-item'>" +
-            "<div id='carousel" + index1+"' class='carousel slide'>"+
+            "<div id='carousel" + index+"' class='carousel slide'>"+
                   "<div class='owl-carousel owl-theme'>";
 
     if (card.imgs.length>0) {
@@ -139,7 +157,6 @@ function appendFeed(cards){
                         "<img class='d-block img-fluid' src='assets/img/default.png' alt='One moment!...'>" +
              "</div>"
     }
-
 
     if(card.description)
             var description = card.description.replace(/(\r\n|\n|\r)/g,"<br />");
@@ -171,19 +188,11 @@ function appendFeed(cards){
                         "</div>"+
                    "</div>"+
                    "<div class='mycard-footer'>"+
-                   "<p class='card-time card-text'><small id='update-time-"+card._id+"'class='text-muted format-date'>Updated "+ timeSince(new Date(card.updated_at)) +" ago. By:"+ card.ownerName+ " on class: "+ card.classname + "</small>"+
+                   "<p class='card-time card-text'><small id='update-time-"+card._id+"'class='text-muted format-date'>Updated "+ timeSince(new Date(card.updated_at)) +" ago. By: "+ card.ownerName+ " on class: "+ card.classname + "</small>"+
                                "</p>"+
                    "</div>"+
                "</div>";
-    $("#card-deck").append("<div id='"+card._id+"' class='col-lg-4 col-md-6 col-sm-12'><div class='ev-panel ev-panel-card ev-height-collection'>"+html+"</div></div>");
-    $('.owl-carousel').owlCarousel({
-                items:1,
-                lazyLoad:true,
-                margin:0
-        });
-    });
-    mathResetAll();
-    viewMore(cards);
+    return "<div id='"+card._id+"' class='col-lg-4 col-md-6 col-sm-12'><div class='ev-panel ev-panel-card ev-height-collection'>"+html+"</div></div>";
 }
 
 
