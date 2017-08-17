@@ -85,50 +85,48 @@ function appendCards(cards) {
         if (card.description)
             var description = card.description.replace(/(\r\n|\n|\r)/g, "<br />");
         var view =
-            "<div id='"+card.counter+"' class='card ev-panel ev-panel-card ev-height-discovery'>" +
-            "<div class='ev-item'>" +
-            "<div id='carousel" + index1 + "' class='carousel slide'>" +
+            "<div id='"+card.counter+"' class='ev-item'>" +
+            "<div id='carousel" + index1 + "' >" +
             "<div class='owl-carousel owl-theme'>";
         if (card.imgs.length > 0) {
             card.imgs.forEach((img, index2) => {
-                view += "<div class='slide-size'>" +
-                            "<img class='d-block img-fluid owl-lazy' data-src='" + img.hash + "' alt='One moment!...'>" +
-                        "</div>";
+                view += "<img class='d-block img-fluid owl-lazy' data-src='" + img.hash + "' alt='One moment!...'>";
             });
         } else {
-            view += "<div class='slide-fixed-size'>" +
-                    "<img class='d-block img-fluid' src='assets/img/default.png' alt='One moment!...'>" +
-                "</div>"
+            view += "<img class='d-block img-fluid' src='assets/img/default.png' alt='One moment!...'>";
         }
         view += "</div>" +
             "</div>" +
             "</div>" +
-            "<div class='ev-p'>" +
-                "<h3 style='text-align:center; word-wrap: break-word;' id='speak" + card._id + "'>" + card.name + "" +
-                "<i style='margin-left:6px' onCLick=\"speak(\'" + card._id + "\', \'" + card.lang + "\');\" class='speaker fa fa-volume-up black' aria-hidden='true'></i>" +
-                "</h3>" +
-                "<p style='text-align:left; word-wrap: break-word;' class='card-text card-description ev-more' id='description-" + card._id + "'>" +
-                        checkUndefined(description) +
-                "</p>" +
-            "</div>" +
-            "<div class='card-buttons'>"+
-                    "<button data-toggle='tooltip' data-placement='right' title='Duplicate on my collection' onClick=\"duplicateCard('" + card._id + "')\" class=' ev-btn-fab md-fab ev-md-fab ev-md-fab-offset ev-m-r ev-orange pull-right'>" +
-                    "<i class='fa fa-share fa-fw'></i>" +
-                    "</button>" +
-                    "<span data-toggle='modal' data-target='#duplicate-on-class-modal'>" +
-                        "<button onClick=\"getClasses('"+card._id+"');\" data-toggle='tooltip' data-placement='right' title='Duplicate on class' class='ev-btn-fab md-fab ev-md-fab ev-md-fab-offset ev-m-r ev-violet pull-right'>" +
-                        "<i class='fa fa-share fa-fw'></i>" +
-                        "</button>" +
-                    "</span>"+
-             "</div>" +
-            "<p class='mycard-footer'>" +
-                "<small class='text-muted format-date'>Updated " + timeSince(new Date(card.updated_at)) + " ago. " +
-                    "<span>By: " + checkUndefined(card.ownerName) + "</span>"
-                "</small>" +
-            "</p>" +
-            "</div>";
+            "<div class='card-block container'>" +
+                "<div class='row'>"+
+                       "<div class='col-12'>"+
+                               "<h4 style='word-wrap: break-word;' id='speak"+card._id+"' class='card-title'><span>"+ card.name +" </span><i onCLick=\"speak(\'"+card._id+"\', \'"+card.lang+"\');\" class='speaker fa fa-volume-up black' aria-hidden='true'></i></h4>"+
+                               "<p style='text-align:left; word-wrap: break-word;' id='description-"+card._id+"' class='card-text card-description ev-more'>"+ checkUndefined(description) +"</p>"+
+                       "</div>" +
+                "</div>"+
+                "<div style='margin-top:33px;' class='row'>" + 
+                    "<div class='col-md-12'>" +
+                        "<div style='float:right;' class='card-buttons'>"+
+                            "<button data-toggle='tooltip' data-placement='right' title='Duplicate on my collection' onClick=\"duplicateCard('" + card._id + "')\" class=' ev-btn-fab md-fab ev-md-fab ev-md-fab-offset ev-m-r ev-orange pull-right'>" +
+                            "<i class='fa fa-share fa-fw'></i>" +
+                            "</button>" +
+                            "<span data-toggle='modal' data-target='#duplicate-on-class-modal'>" +
+                                "<button onClick=\"getClasses('"+card._id+"');\" data-toggle='tooltip' data-placement='right' title='Duplicate on class' class='ev-btn-fab md-fab ev-md-fab ev-md-fab-offset ev-m-r ev-violet pull-right'>" +
+                                "<i class='fa fa-share fa-fw'></i>" +
+                                "</button>" +
+                            "</span>"+
+                        "</div>" +
+                    "</div>" + 
+                "</div>" +
+                "<div class='mycard-footer'>" +
+                    "<small class='text-muted format-date'>Updated " + timeSince(new Date(card.updated_at)) + " ago. " +
+                        "<span>By: " + checkUndefined(card.ownerName) + "</span>"
+                    "</small>" +
+                "</div>" +
+        "</div>";
 
-        $("#card-deck").append("<div class='col-lg-4 col-md-6 col-sm-12'>" + view + "</div>");
+        $("#card-deck").append("<div class='col-lg-4 col-md-6 col-sm-12'><div class='ev-panel ev-panel-card ev-height-collection'>" + view + "</div></div>");
     });
     $('.owl-carousel').owlCarousel({
             items:1,

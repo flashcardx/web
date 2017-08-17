@@ -151,7 +151,7 @@ function appendFeed(cards){
                        "<div class='col-12'>"+
                            "<div data-category='"+card.category+"'>"+//do not delete this div, updateCard.js needs it to update card
                                "<h4 style='word-wrap: break-word;' id='speak"+card._id+"' class='card-title'><span>"+ card.name +" </span><i onCLick=\"speak(\'"+card._id+"\', \'"+card.lang+"\');\" class='speaker fa fa-volume-up black' aria-hidden='true'></i></h4>"+
-                               "<p style='text-align:left; word-wrap: break-word;' id='description-"+card._id+"'class='card-text card-description ev-more'>"+ checkUndefined(description) +"</p>"+
+                               "<p data-rawtext='"+  checkUndefined(description) +"' style='text-align:left; word-wrap: break-word;' id='description-"+card._id+"'class='card-text card-description ev-more'>"+ checkUndefined(description) +"</p>"+
                             "</div>" +
                        "</div>"+
                    "</div>"+
@@ -182,44 +182,9 @@ function appendFeed(cards){
                 margin:0
         });
     });
+    mathResetAll();
     viewMore(cards);
 }
-
-    function viewMore(cards) {
-        var showChar = 45;  
-        var ellipsestext = "...";
-        var moretext = "&zwnj;Show more >";
-        var lesstext = "&zwnj;Show less"; //first character is a delimiter for update
-
-
-        cards.forEach(c=>{
-            var id = "description-" + c._id;
-            var content = $("#" + id).html();
-            if(c.description && c.description.length > showChar){
-                var initial = content.substr(0, showChar);
-                var more = content.substr(showChar, content.length - showChar);
-                var html = initial + "<span style='display:block;' id='ellipse-"+id+"'>"+ellipsestext+"</span><span id='morecontent-"+id+"' style='display:none'>"+more+"</span> <a id='btn-"+id+"' href='#' onClick=\"showtext(event,'morecontent-"+id+"','ellipse-"+id+"', 'btn-"+id+"')\" class='ev-morelink'>" + moretext + "</a>";
-                $("#" + id).html(html);
-            }
-        });
-    }
-
-    function showtext(event, id, ellipse, btn) {
-        var btn = document.getElementById(btn);
-        var txtmore = document.getElementById(id);
-        var txtellipse = document.getElementById(ellipse);
-        if (txtmore.style.display === 'none') {
-            txtmore.style.display = 'inline';
-            txtellipse.style.display = 'none';
-            btn.innerHTML="&zwnj;Show less";
-        } else {
-            txtmore.style.display = 'none';
-            txtellipse.style.display = 'block';
-            btn.innerHTML="&zwnj;Show more >";
-        }
-        event.preventDefault();
-    }
-
 
 
 var classId2Duplicate;
@@ -260,7 +225,6 @@ function duplicate2Class(){
             cardId: classId2Duplicate
         },
         success: result=>{
-            console.log("result duplicate class: " + JSON.stringify(result));
             if (!result.success)
                 showError(result.msg);
             else 

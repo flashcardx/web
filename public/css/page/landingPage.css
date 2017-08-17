@@ -2,6 +2,10 @@ body{
 	font-family: 'Roboto', sans-serif;
 }
 
+.min-height {
+  min-height: 650px;
+}
+
 /* Botones */
 .btn-outline-success{
     color: #5cb85c;

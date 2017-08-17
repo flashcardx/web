@@ -11,6 +11,11 @@ require(appRoot + "/config/passport")(passport);
 
 module.exports = function(app) {
 	
+	app.get('/features', csrfProtection, function(req, res) {
+
+		res.render('features');		
+	});
+
 	app.get('/home', csrfProtection, function(req, res) {
 		if(req.session.token)
 			return res.redirect("/");

@@ -126,11 +126,11 @@ function updateDone(cardId, backupText, backUpButtons, name, description, catego
      $("#speak"+cardId+" span").text(name);
      $("#description-"+cardId).html(description.replace(/(\r\n|\n|\r)/g,"<br>"));
      $("#description-"+cardId).attr("data-rawtext", description);
-     showMoreRender("#description-"+cardId, cardId);
      buttonsElement.html(backUpButtons);
      textElement.attr("data-category", category);
      updateTime(cardId);
      mathResetAll();
+     showMoreRender("#description-"+cardId, cardId);
      showSuccess("Card was updated successfully!");
 }
 
@@ -147,8 +147,6 @@ function cancel(cardId, backupText, backUpButtons){
     buttonsElement.html(backUpButtons);
     showMoreRender("#description-"+cardId, cardId);
 }
-
-
 
  function newCategory(){
      var category = $('#new-category').val();
