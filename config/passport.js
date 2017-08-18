@@ -29,21 +29,28 @@ passport.use(new FacebookStrategy({
             var user = {
                 'facebookId': profile.id
             };
-            requestify.post(config.apiFbLogin, user)
+            requestify.request(config.apiFbLogin, {method:"post",
+                headers:{"x-secret-token":config.apiSecret},
+                body: user})
             .then(response=>{
                     var r = response.getBody();
-                    if (r.success === true){
+                    console.log("got back with: " + JSON.stringify(r));
+                    if (r.success == true){
                         	req.session.token = r.token;
-					        return done();
+				return done();
                     }
-                    var user = {
-                            facebookId: profile.id,
-                            facebookToken: accessToken,
-                            name: profile.name.givenName + ' ' + profile.name.familyName,
-                            email: profile.emails[0].value,
-                            picture: profile.photos[0].value
+                    if(r.code==0){
+                        var user = {
+                                facebookId: profile.id,
+                                facebookToken: accessToken,
+                                name: profile.name.givenName + ' ' + profile.name.familyName,
+                                email: profile.emails[0].value,
+                                picture: profile.photos[0].value
+                        }
+                        return requestify.post(config.apiFbSignup, user);
                     }
-                    return requestify.post(config.apiFbSignup, user);
+                    req.session.error = "internal error please contact support, detail: " + r.msg;
+                    return done(null, false, r.msg);
             })
             .then(response=>{
                     var r = response.getBody();

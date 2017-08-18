@@ -4,6 +4,7 @@ const keys = require("./keys.json")[env];
 
 module.exports = {
 
+    apiSecret: keys.apiSecret,
     apiGetInitialCards: api.getInitialCards,
     apiGetImg: api.getImg,
     apiSignup: api.signup,

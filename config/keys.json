@@ -6,7 +6,8 @@
 			},
 	"reCaptcha":{
 					"siteKey": "6LcsqSwUAAAAACvwzZfJjFh0y0Pj6v34XVZZedtl"
-			}
+			},
+	"apiSecret": "5cNe5Z96BViuhQjH"
 	},
 "pi" : {
 		"fbAuth":{
@@ -16,7 +17,8 @@
 			},
 		"reCaptcha":{
 					"siteKey": "6LcrqSwUAAAAAPby-Rm9KnQVI_DulbhGzQmWcOGo"
-			}
+			},
+	"apiSecret": "5cNe5Z96BViuhQjH"
 	},
 "production":{
 		"fbAuth":{
@@ -26,6 +28,7 @@
 		},
 		"reCaptcha":{
 					"siteKey": "6LcrqSwUAAAAAPby-Rm9KnQVI_DulbhGzQmWcOGo"
-			}
+			},
+	"apiSecret": "5cNe5Z96BViuhQjH"
 	}
 }
