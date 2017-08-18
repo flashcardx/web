@@ -31,6 +31,7 @@ function cleanSessionMsgs(req){
   req.session.resend = undefined;
 }
 
+
 module.exports = {
     requireLogin: requireLogin,
     cleanSessionMsgs: cleanSessionMsgs

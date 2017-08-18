@@ -12,7 +12,6 @@ require(appRoot + "/config/passport")(passport);
 module.exports = function(app) {
 	
 	app.get('/features', csrfProtection, function(req, res) {
-
 		res.render('features');		
 	});
 

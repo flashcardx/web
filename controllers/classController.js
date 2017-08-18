@@ -14,7 +14,6 @@ const upload = multer({ storage: storage,
 
 function multerErrorHandler(err, req, res, next){
     if(err && err.code === "LIMIT_FILE_SIZE"){
-		console.log("limit size");
         req.session.error = "File size is too large and can not be updated";
         next();
     }
@@ -31,9 +30,7 @@ module.exports = function(app){
     });
 
     app.get("/activity", controllerUtils.requireLogin, (req, res)=>{
-        console.log("page: "+ req.query.page);
 		var url = config.apiGetActivity + "?page=" + req.query.page;
-		console.log("url: " + url);
 		requestify.get(url, {headers:{
 				"x-access-token": req.session.token
 			}}).then(response=>{

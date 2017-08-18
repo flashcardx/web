@@ -114,7 +114,7 @@ function appendFeed(objs){
                     var html = htmlCard(obj, index);
                     $("#card-deck").append(html);
                     break;
-            case "p":
+            case "p"://TODO: render post 
                     break;
             default: throw "invalid type";
         }
@@ -127,6 +127,7 @@ function appendFeed(objs){
     mathResetAll();
     viewMore(objs);
 }
+
 
 function htmlCard(card, index){
     if(sort==="asc" && cardAlreadyListed(card._id) === true)

@@ -8,7 +8,6 @@ var cookieParser = require('cookie-parser');
 module.exports = app=>{
    
     app.use('/', function (req, res, next) {
-	    console.log('Request Url:' + req.url);
 	    next();
     });
 

@@ -9,10 +9,7 @@ var parseForm = bodyParser.urlencoded({ extended: false })
 var langs = undefined;
 module.exports = function(app) {
 	
-
-	
 	app.post("/signup",parseForm, csrfProtection,(req, res)=>{
-			console.log("body: " + JSON.stringify(req.body));
 			if(req.body.password !== req.body.password2){
 				req.session.error = "Passwords do not match!";
 				res.redirect("/home");

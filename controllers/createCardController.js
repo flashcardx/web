@@ -32,7 +32,10 @@ module.exports = function(app){
     });
 
 
-    app.post("/create", controllerUtils.requireLogin, upload.fields([{ name: 'fileInput1', maxCount: 1 }, { name: 'fileInput2', maxCount: 2 }, { name: 'fileInput3', maxCount: 1 }]),multerErrorHandler, csrfProtection, (req, res)=>{
+    app.post("/create", controllerUtils.requireLogin, upload.fields([{ name: 'fileInput1', maxCount: 1 }, { name: 'fileInput2', maxCount: 2 }, { name: 'fileInput3', maxCount: 1 }]),
+     multerErrorHandler,
+     csrfProtection,
+     (req, res)=>{
         var imgs = [];
         var errors = [];
         if(req.body.img1){
@@ -82,8 +85,8 @@ module.exports = function(app){
             });
         }
         var card = {
-            name: req.body.name.replace(/</g, "&lt;").replace(/>/g, "&gt;"),// avoids html injection
-            description: req.body.description.replace(/</g, "&lt;").replace(/>/g, "&gt;"),
+            name: req.body.name,
+            description: req.body.description,
             imgs: imgs,
             category: req.body.category
         };
@@ -100,7 +103,6 @@ module.exports = function(app){
             else{
                 success = answer.msg;
             }
-           
             res.render("createCard", {errors:errors,success:success, csrfToken:req.csrfToken()});
         });
     });

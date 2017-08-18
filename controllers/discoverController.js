@@ -45,7 +45,6 @@ module.exports = function(app){
 				"x-access-token": req.session.token
 			}}).then(response=>{
 				const data = response.getBody();
-				console.log("recommend classes: " + JSON.stringify(data));
 				res.json(data);
 			}).fail(response=> {
 				const errorCode = response.getCode();
