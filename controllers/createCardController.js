@@ -28,7 +28,7 @@ module.exports = function(app){
             errors.push(req.session.error);
             controllerUtils.cleanSessionMsgs(req);
         }
-        res.render("createCard", {errors:errors, success:"", csrfToken:req.csrfToken()});
+        res.render("createCard", {errors:errors, warning:"",success:"", csrfToken:req.csrfToken()});
     });
 
 
@@ -97,13 +97,17 @@ module.exports = function(app){
         }).then(response=>{
             var answer = response.getBody();
             var success = "";
+            var warning;
             if(answer.success === false){
                 errors.push(answer.msg);
+            }
+            else if(answer.success === "warning"){
+                warning = answer.msg;
             }
             else{
                 success = answer.msg;
             }
-            res.render("createCard", {errors:errors,success:success, csrfToken:req.csrfToken()});
+            res.render("createCard", {warning:warning, errors:errors,success:success, csrfToken:req.csrfToken()});
         });
     });
 

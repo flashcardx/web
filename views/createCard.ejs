@@ -116,6 +116,25 @@
                 });
               </script>
               <%};%>
+               <% if(warning){%>
+              <script>
+                $(document).ready(()=>{
+                      $.notify({
+                            title: "Warning,",
+                            icon:"fa fa-exclamation-triangle",
+                            message: <%- JSON.stringify(warning)%>
+                            },
+                            {
+                                type: 'warning'
+                            }
+                            , {
+                              newest_on_top: true
+                            }
+                        );
+                });
+              </script>
+              <%};%>
+
 
                 <form enctype="multipart/form-data" class="form-horizontal " action="#" method="post">
                   <input type="hidden" name="_csrf" value="<%=csrfToken%>" />

@@ -3,7 +3,7 @@ var limitSelectCards = 3;
 const IMGS_LOAD_LIMIT = 3;
 var imgLoadAvailable = [1,2,3]; 
 
-  $.ajax({
+$.ajax({
         url:"/categories",
         success: result=>{
             if(result.success === false)
@@ -14,7 +14,7 @@ var imgLoadAvailable = [1,2,3];
         error: err=>{
                 showError(err);
         }
-    });
+});
 
 $("#search-box").keyup(function(event){
     if(event.keyCode == 13){
