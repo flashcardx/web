@@ -5,7 +5,7 @@
 				"callbackURL": "http://localhost:8081/auth/facebook/callback"
 			},
 	"reCaptcha":{
-					"siteKey": "6LcsqSwUAAAAACvwzZfJjFh0y0Pj6v34XVZZedtl"
+					"siteKey": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
 			},
 	"apiSecret": "5cNe5Z96BViuhQjH"
 	},
@@ -16,7 +16,7 @@
 				"callbackURL": "http://192.241.134.52/auth/facebook/callback"
 			},
 		"reCaptcha":{
-					"siteKey": "6LcrqSwUAAAAAPby-Rm9KnQVI_DulbhGzQmWcOGo"
+					"siteKey": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
 			},
 	"apiSecret": "5cNe5Z96BViuhQjH"
 	},
