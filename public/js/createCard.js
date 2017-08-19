@@ -74,6 +74,29 @@ function search(){
     });
 }
 
+function searchGif(){
+    parameter = $("#search-box").val();
+    if(parameter === "" || parameter === " "){
+        $("#gallery").html("");
+        $("#addButton").html("");
+        return;
+    }
+    $("#gallery").html(getLoading());
+    $.ajax({
+        url:"/searchGif/" + parameter,
+        success: result=>{
+            if(!result.success)
+                showError(result.msg);
+            else
+                displayGalleryGif(result.msg.results);
+        },
+        error: err=>{
+                console.err("error: " + err);
+                showError(err);
+        }
+    });
+}
+
 
 
 function displayGallery(data){
@@ -81,6 +104,13 @@ function displayGallery(data){
     var addButton = "<button onClick='addImgs()'role='button' type='button' class='btn btn-success'>Add seleted cards</button>";
     $("#addButton").html(addButton);
 }
+
+function displayGalleryGif(data){
+    updateGalleryGif(data);
+    var addButton = "<button onClick='addImgs()'role='button' type='button' class='btn btn-success'>Add seleted cards</button>";
+    $("#addButton").html(addButton);
+}
+
 
 
 function showWarningLimit(){
@@ -119,6 +149,25 @@ function updateGallery(data){
         });
     });
 }
+
+function updateGalleryGif(data){
+    console.log("data: " + JSON.stringify(data));
+    var gallery = "<select multiple='multiple' class='image-picker'>"; 
+    data.forEach(img=>{
+        gallery += "<option data-img-previewWidth='"+img.media[0].tinygif.dims[0]+"' data-img-previewHeight='"+img.media[0].tinygif.dims[1]+"' data-img-width='"+img.media[0].mediumgif.dims[0]+"' data-img-height='"+img.media[0].mediumgif.dims[1]+"' data-img-src='"+img.media[0].tinygif.url+"' value='"+img.media[0].mediumgif.url+"'>   </option>";
+     });
+    gallery += "</select>";
+    $("#gallery").html(gallery);
+    $("select.image-picker").imagepicker({limit: limitSelectCards, limit_reached: showWarningLimit}); 
+    var $container = $('.image_picker_selector');
+    $container.imagesLoaded(function () {
+        $container.masonry({
+            columnWidth: 30,
+            itemSelector: '.thumbnail'
+        });
+    });
+}
+
 
 function extractDataAndLoad(element){
          var preview = element.getAttribute("data-img-src");

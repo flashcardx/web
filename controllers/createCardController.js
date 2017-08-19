@@ -118,12 +118,25 @@ module.exports = function(app){
          {headers:{
 			"x-access-token": req.session.token
 		}})
-            .then(
+        .then(
                 response=>{
                         return res.json(response.getBody());
                 }
-            );
-        });
+        );
+    });
+
+    app.get("/searchGif/:parameter", controllerUtils.requireLogin, (req, res)=>{
+        const parameter = req.params.parameter;
+        var url = config.apiSearchGif + parameter;
+        requestify.get(url,
+         {headers:{
+			"x-access-token": req.session.token
+		}})
+        .then(response=>{
+                        return res.json(response.getBody());
+                }
+        );
+    });
 
     app.get("/define/:word", controllerUtils.requireLogin, (req, res)=>{
         const url = config.apiDefine + "/" + req.params.word;

@@ -34,23 +34,22 @@ passport.use(new FacebookStrategy({
                 body: user})
             .then(response=>{
                     var r = response.getBody();
-                    console.log("got back with: " + JSON.stringify(r));
                     if (r.success == true){
                         	req.session.token = r.token;
-				return done();
+				            return done();
                     }
-                    if(r.code==0){
-                        var user = {
+                    if(r.code==1){
+                        req.session.error = "internal error please contact support, detail: " + r.msg;
+                        return done(null, false, r.msg);
+                    }
+                    var user = {
                                 facebookId: profile.id,
                                 facebookToken: accessToken,
                                 name: profile.name.givenName + ' ' + profile.name.familyName,
                                 email: profile.emails[0].value,
                                 picture: profile.photos[0].value
                         }
-                        return requestify.post(config.apiFbSignup, user);
-                    }
-                    req.session.error = "internal error please contact support, detail: " + r.msg;
-                    return done(null, false, r.msg);
+                     return requestify.post(config.apiFbSignup, user);
             })
             .then(response=>{
                     var r = response.getBody();
