@@ -151,9 +151,10 @@ function updateGallery(data){
 }
 
 function updateGalleryGif(data){
-    console.log("data: " + JSON.stringify(data));
     var gallery = "<select multiple='multiple' class='image-picker'>"; 
     data.forEach(img=>{
+        if(img.media[0].tinygif.url=="https://media.tenor.com/images/95549e593e4731cc9e0047b187ec2808/tenor.gif")
+            console.log("url: " + img.media[0].mediumgif.url);
         gallery += "<option data-img-previewWidth='"+img.media[0].tinygif.dims[0]+"' data-img-previewHeight='"+img.media[0].tinygif.dims[1]+"' data-img-width='"+img.media[0].mediumgif.dims[0]+"' data-img-height='"+img.media[0].mediumgif.dims[1]+"' data-img-src='"+img.media[0].tinygif.url+"' value='"+img.media[0].mediumgif.url+"'>   </option>";
      });
     gallery += "</select>";

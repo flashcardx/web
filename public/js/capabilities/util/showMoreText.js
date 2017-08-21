@@ -12,6 +12,7 @@ function showMoreDestroyElement(element, cardId){
 
 function viewMore(cards) {
        cards.forEach(c=>{
+           console.log("rendering show more for: #description-"+c._id);
             showMoreRender("#description-"+c._id, c._id);
         });
 }

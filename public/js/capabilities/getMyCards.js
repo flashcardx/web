@@ -152,7 +152,7 @@ function appendCards(cards){
                        "<div class='col-12'>"+
                            "<div data-category='"+card.category+"'>"+//do not delete this div, updateCard.js needs it to update card
                                "<h4 style='word-wrap: break-word;' id='speak"+card._id+"' class='card-title'><span>"+ card.name +" </span><i onCLick=\"speak(\'"+card._id+"\', \'"+card.lang+"\');\" class='speaker fa fa-volume-up black' aria-hidden='true'></i></h4>"+
-                               "<p data-rawtext='"+  checkUndefined(description) +"' style='text-align:left; word-wrap: break-word;' id='description-"+card._id+"' class='card-text card-description ev-more'>"+ checkUndefined(description) +"</p>"+
+                               "<p data-rawtext='" + checkUndefined(description) + "' style='text-align:left; word-wrap: break-word;' id='description-"+card._id+"' class='card-text card-description ev-more'>"+ checkUndefined(description) +"</p>"+
                             "</div>"+
                        "</div>"+
                    "</div>"+
