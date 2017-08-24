@@ -6,10 +6,6 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 
 module.exports = app=>{
-   
-    app.use('/', function (req, res, next) {
-	    next();
-    });
 
     app.use(helmet());
     app.use(session({
@@ -31,4 +27,10 @@ module.exports = app=>{
     // parse cookies
     // we need this because "cookie" is true in csrfProtection
     app.use(cookieParser());
+    
+    app.use('/', function (req, res, next) {
+        if (req.session.token) 
+            return res.sendFile(appRoot+'/public/html/index.html');
+        next();
+    });
 }
