@@ -4,6 +4,9 @@
   "description": "NodeJS Test App",
   "main": "app.js",
   "scripts": {
+    "bundle:dev": "webpack --config ./webpack.config.js --colors",
+    "bundle:prod": "webpack --config ./webpack.config.prod.js --colors",
+    "start": "nodemon --use_strict app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -21,6 +24,23 @@
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "randomstring": "^1.1.5",
-    "requestify": "^0.2.5"
+    "requestify": "^0.2.5",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.21.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "express": "^4.15.4",
+    "nodemon": "^1.11.0",
+    "webpack": "^3.5.5"
   }
 }
