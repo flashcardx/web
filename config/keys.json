@@ -13,7 +13,7 @@
 		"fbAuth":{
 				"clientID": "731168503758461",
 				"clientSecret": "8a44c61f16fb81b56aba126dd80fc9a1",
-				"callbackURL": "http://192.241.134.52/auth/facebook/callback"
+				"callbackURL": "http://pi.flashcardx.co/auth/facebook/callback"
 			},
 		"reCaptcha":{
 					"siteKey": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
@@ -24,7 +24,7 @@
 		"fbAuth":{
 				"clientID": "1949034375312261",
 				"clientSecret": "ea1192b1862a60cfbb09e265dbaaea83",
-				"callbackURL": "https://flashcard-x.com/auth/facebook/callback"
+				"callbackURL": "https://flashcardx.co/auth/facebook/callback"
 		},
 		"reCaptcha":{
 					"siteKey": "6LcrqSwUAAAAAPby-Rm9KnQVI_DulbhGzQmWcOGo"
