@@ -49,3 +49,14 @@ function resendEmail(){
         }
     });
 }
+
+$('#password-input').bind("enterKey",function(e){
+   validateSignin();
+});
+
+$('#password-input').keyup(function(e){
+    if(e.keyCode == 13)
+    {
+        $(this).trigger("enterKey");
+    }
+});
