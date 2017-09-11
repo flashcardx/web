@@ -9,6 +9,10 @@
   animation: spin 2s linear infinite;
 }
 
+#react{
+  min-height: 450px;
+}
+
 .blue-btn{
   background: #4286f4;
     border-color: #4286f4;

@@ -30,7 +30,7 @@ module.exports = app=>{
     
     app.use('/', function (req, res, next) {
         if (req.session.token) 
-            return res.sendFile(appRoot+'/public/html/index.html');
+            return res.render(appRoot+'/public/html/index.ejs');
         next();
     });
 }

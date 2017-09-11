@@ -10,6 +10,7 @@ let config = {
         path: BUILD_DIR,
         filename: 'app.js'
     },
+    devtool: 'source-map',
     module: {
         rules: [{
             test: /\.jsx?$/,
