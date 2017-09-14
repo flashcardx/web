@@ -7,36 +7,20 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import Badge from 'material-ui/Badge';
-import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
-
+import NotificationBadge from "../containers/notificationBadge";
+import {signout} from "../actions/auth";
+import {connect} from "react-redux";
 
 var style = {
     colorBase:{
         backgroundColor: "#4286f4"
     },
-    inkBar:{
-        backgroundColor: "green",
-        color: "green"
-    },
-    logo:{
-        color: "white",
-        float: "left"
-    },
     options:{
         color: "white"
     },
-    badge:{
-        fontSize:"10px",
-        width: "18px",
-        height: "18px",
-        top: 0,
-        right: 0,
-        padding: "0px"
-    },
-    notifications:{
-        margin: "0px",
-        padding: "0px"
+    logo:{
+        maxWidth: "40px",
+        height: "auto"
     }
 };
 
@@ -55,7 +39,14 @@ class Navbar extends Component{
     render(){
     return (
         <div style={style.colorBase} className="row">
-            <div className="col-10">
+            <div className="col-1">
+                <div className="container">
+                        <Link to="/">
+                            <img className="img-fluid" style={style.logo} src="/assets/img/favicon.ico"/>
+                        </Link>
+                </div>
+            </div>
+            <div className="col-9">
                 <Tabs style={style.colorBase} value={this.state.active}>
                         <Tab style={style.colorBase} value="discover" label="Discover" data-route="/discover" onActive={this.handleActive}>
                         </Tab>
@@ -92,7 +83,7 @@ class Navbar extends Component{
     }
 }
 
-function Options(props){
+const Options = connect(null, {signout})(props=>{
     return (
         <IconMenu
                         style={style.colorBase}
@@ -101,26 +92,11 @@ function Options(props){
                         targetOrigin={{horizontal: 'middle', vertical: 'top'}}
                         >
                         <MenuItem onClick={()=>props.history.push("/settings")} primaryText="Settings" />
-                        <MenuItem primaryText="Sign out" />
+                        <MenuItem onClick={props.signout} primaryText="Sign out" />
         </IconMenu>
     );
-}
+})
 
-function NotificationBadge(){
-    return (
-         <div style={style.notifications}>
-             <Badge
-                style={style.notifications}
-                badgeStyle={style.badge}
-                badgeContent={10}
-                secondary={true}
-                >
-                <IconButton style={style.notifications} tooltip="Notifications">
-                    <NotificationsIcon style={style.notifications} />
-                </IconButton>
-                </Badge>
-        </div>
-    );
-}
+
 
 export default withRouter(Radium(Navbar));

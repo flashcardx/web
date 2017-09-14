@@ -10,10 +10,18 @@ let config = {
         path: BUILD_DIR,
         filename: 'app.js'
     },
+    plugins: [
+    new webpack.DefinePlugin({
+      'process.env':{
+        'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      }
+    })
+    ],
     devtool: 'source-map',
     module: {
         rules: [{
             test: /\.jsx?$/,
+            exclude: /node_modules/,
             use: [{
                 loader: 'babel-loader',
                 options: {

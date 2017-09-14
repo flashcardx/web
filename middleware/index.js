@@ -29,8 +29,6 @@ module.exports = app=>{
     app.use(cookieParser());
     
     app.use('/', function (req, res, next) {
-        if (req.session.token) 
-            return res.render(appRoot+'/public/html/index.ejs');
-        next();
+        return res.render(appRoot+'/public/html/index.ejs');
     });
 }

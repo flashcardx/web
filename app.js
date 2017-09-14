@@ -14,12 +14,7 @@ const feedController = require("./controllers/feedController");
 const middleware = require("./middleware");
 
 var port = process.env.PORT || 8081;
-if(env === "production")
-app.use('/assets', express.static(__dirname + '/public', {
-  maxage: '1h'
-}));
-else
-  app.use('/assets', express.static(__dirname + '/public'));
+app.use('/assets', express.static(__dirname + '/public'));
 
 app.set('view engine', 'ejs');
 app.enable('trust proxy'); //let me see the client's ip

@@ -402,3 +402,6 @@ button:focus {outline:0;}
 
 .social-icons .fa-instagram{background-color: #c32aa3;}
 
+.hide{
+  display: none;
+}
