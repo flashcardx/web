@@ -3,9 +3,8 @@ export default function({dispatch}){
     return next=>action=>{
         if(action.originAPI){
             _.forIn(action.payload.data, (value, key)=>{
-                action[key] = value;
+                action.payload[key] = value;
             });
-            console.log("new action: ", action);
             return next(action);
         }
         return next(action);

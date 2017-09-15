@@ -1,5 +1,8 @@
 export const NOTIFICATIONS_COUNT = "NOTIFICATIONS_COUNT";
+export const SIGNUP = "SIGNUP";
+export const SIGNUP_RESEND_EMAIL = "SIGNUP_RESEND_EMAIL";
 export const SIGNIN = "SIGNIN";
+export const RE_SIGNIN = "RE_SIGNIN";
 export const SIGNOUT = "SIGNOUT";
 export const ERROR_ALERT = "ERROR_ALERT";
 export const SUCCESS_ALERT = "SUCCESS_ALERT";

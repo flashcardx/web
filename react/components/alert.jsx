@@ -2,11 +2,13 @@ import React, {Component} from 'react'
 import AlertContainer from 'react-alert'
 import PropTypes from 'prop-types';
  
+const TIME = 7000
+
  const alertOptions = {
     offset: 14,
     position: 'top right',
     theme: 'light',
-    time: 6000,
+    time: TIME,
     transition: 'scale'
   }
 
@@ -23,7 +25,7 @@ class Alert extends Component {
 
   showAlert = () => {
     this.msg.show(this.state.msg, {
-      time: 6000,
+      time: TIME,
       type: this.state.type
     })
   }

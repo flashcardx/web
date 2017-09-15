@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {reduxForm } from 'redux-form'
+import {reduxForm } from 'redux-form';
 import TextField from "./textField.jsx";
 import RaisedButton from 'material-ui/RaisedButton';
 import Radium from "radium";
@@ -18,11 +18,14 @@ class SigninForm extends Component{
     constructor(props){
         super(props);
         this.state = {className: props.className};
+        this.captchaExecute = props.captchaExecute.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }    
 
     onSubmit(values){
-        this.props.SigninAction(values);
+        this.captchaExecute(key=>{
+            this.props.SigninAction(values, key);
+        });
     }
 
     render(){
@@ -54,8 +57,7 @@ function validate({email, password}){
     return errors;
 }
 
-const c = withRouter(SigninForm);
-export default reduxForm({validate, form:"SigninForm"})(connect(null, {SigninAction})(Radium(c)));
+export default reduxForm({validate, form:"SigninForm"})(connect(null, {SigninAction})(Radium(SigninForm)));
 
 
 

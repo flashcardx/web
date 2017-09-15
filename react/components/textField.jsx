@@ -10,10 +10,10 @@ const style = {
   }
 }
 
-function renderField(field, type){
+function renderField(field){
   return(
     <div className="form-group has-danger">
-        <input {...field.input} type={type} className="form-control"/>
+        <input {...field.input} type={field.type} placeholder={field.placeholder} className="form-control"/>
         <div style={style.error}>
           {field.meta.touched && field.meta.error}
         </div>
@@ -21,23 +21,19 @@ function renderField(field, type){
   );
 }
 
-const TextInput = ({name, label, onChange, placeholder, value, error, type="text", style}) => {
+const TextInput = ({name, label, onChange, placeholder, value, type="text", style}) => {
   let wrapperClass = 'form-group';
-  if (error && error.length > 0) {
-    wrapperClass += " " + 'has-error';
-  }
   return (
     <div style={style} className={wrapperClass}>
       {label && <label htmlFor={name}>{label}</label>}
       <div className="field">
         <Field
-          component={field=>renderField(field, type)}
+          component={renderField}
+          placeholder={placeholder}
           type={type}
           name={name}
-          placeholder={placeholder}
           value={value}
           onChange={onChange}/>
-        {error && <div className="alert alert-danger">{error}</div>}
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ import Practice from "./pages/practice.jsx";
 import Settings from "./pages/settings.jsx";
 import Landing from "./pages/landing.jsx";
 import reducers from "./reducers";
-import {requireAuth, redirectIfAuth} from "./utils/authRedirect.jsx";
+import {requireAuth, redirectIfAuth} from "./containers/authRedirect.jsx";
 import Alert from "./components/alert.jsx";
 import promiseMDW from "./middlewares/promise";
 import errorHandlerMDW from "./middlewares/errorHandler.js";

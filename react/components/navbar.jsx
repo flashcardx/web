@@ -16,7 +16,7 @@ var style = {
         backgroundColor: "#4286f4"
     },
     options:{
-        color: "white"
+        color: "#fff"
     },
     logo:{
         maxWidth: "40px",
