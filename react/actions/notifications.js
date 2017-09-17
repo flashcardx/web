@@ -7,10 +7,11 @@ import {NOTIFICATIONS_COUNT} from "./types";
 
 
 export function fetchCount(){
-    
+    const request = axios.get(GET_COUNT_URL,
+                {headers: {'x-access-token': localStorage.getItem("jwt")}});
     return {
         type: NOTIFICATIONS_COUNT,
         originAPI: true,
-        payload: 1
+        payload: request
     }
 }

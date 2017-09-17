@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
-import {reSignin} from "../actions/auth";
+import {reSignin, emailVerification} from "../actions/auth";
 
 export function requireAuth(ComposedComponent, route){
     class Authenticate extends Component{
@@ -55,4 +55,21 @@ export function redirectIfAuth(ComposedComponent, route){
     }
 
     return connect(mapStateToProps)(withRouter(Authenticate));
+}
+
+
+export function validateEmail(ComposedComponent, route){
+    class Authenticate extends Component{
+
+        componentWillMount(){
+            const {id} = this.props.match.params;
+            this.props.emailVerification(id);
+        }
+
+        render(){
+            return <ComposedComponent {...this.props}/>
+        }
+    }
+
+    return connect(null, {emailVerification})(withRouter(Authenticate));
 }

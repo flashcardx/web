@@ -6,11 +6,12 @@ import Radium from "radium";
 import RaisedButton from 'material-ui/RaisedButton';
 import SigninForm from "../components/signinForm.jsx";
 import SignupForm from "../components/signupForm.jsx";
-import {resendEmailSignup} from "../actions/auth";
+import {resendEmailSignup, fbAuth} from "../actions/auth";
 import ReCAPTCHA from "react-google-recaptcha";
-import apiKeys from "../../config/keys.json";
-const env = process.env.NODE_ENV || "development";
-const RECAPTCHA_KEY = apiKeys[env].reCaptcha.siteKey;
+import config from "../../config";
+import FacebookLogin from 'react-facebook-login';
+const RECAPTCHA_KEY = config.recaptchaSiteKey;
+const FB_APPID = config.fbAppId;
 
 const style = {
     base:{
@@ -110,7 +111,7 @@ class Landing extends Component{
                                 </nav>
                                 <div className="container">
                                     {signupMsg}
-                                    <Details/>
+                                    <Details fbAuth={this.props.fbAuth}/>
                                 </div>
                     </div>
             </MuiThemeProvider>  
@@ -118,7 +119,7 @@ class Landing extends Component{
     }
 }
 
-function Details(){
+function Details({fbAuth}){
     return(
         <div>   
               <div className="alert alert-info" role="alert">
@@ -128,7 +129,13 @@ function Details(){
                             <div className="col-md-6">
                                     <h1>Learn anything with beautiful images</h1>
                                     <p></p>
-                                <RaisedButton  icon={<i style={style.white} className="fa fa-facebook-official" aria-hidden="true"/>} labelPosition="after" labelColor="#fff" onClick="location.href='/auth/facebook'"  backgroundColor="#3b5998" label="Continue with facebook" />
+                                <FacebookLogin
+                                    appId={FB_APPID}
+                                    fields="name,email,picture"
+                                    textButton="Continue with facebook"
+                                    size="small"
+                                    icon="fa fa-facebook-official"
+                                    callback={fbAuth} />
                             </div>
                             <div className="col-md-6">
                                     <SignupForm captchaExecute={signupExecute} className="form-horizontal"/>
@@ -184,5 +191,5 @@ function mapStateToProps({signupMsg}){
     return {signupMsg};
 }
 
-export default connect(mapStateToProps,{resendEmailSignup})(Radium(Landing));
+export default connect(mapStateToProps,{resendEmailSignup, fbAuth})(Radium(Landing));
 

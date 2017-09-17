@@ -7,3 +7,4 @@ export const SIGNOUT = "SIGNOUT";
 export const ERROR_ALERT = "ERROR_ALERT";
 export const SUCCESS_ALERT = "SUCCESS_ALERT";
 export const INFO_ALERT = "INFO_ALERT";
+export const EMAIL_VERIFICATION = "EMAIL_VERIFICATION";
