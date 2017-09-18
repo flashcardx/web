@@ -17,14 +17,15 @@ import promiseMDW from "./middlewares/promise";
 import errorHandlerMDW from "./middlewares/errorHandler.js";
 import parseApiMDW from "./middlewares/parseApiResponse.js";
 import AlertsDisplay from "./containers/alertsDisplay.jsx";
-import reduxThunk from 'redux-thunk' 
+import reduxThunk from 'redux-thunk';
+import ReactTooltip from 'react-tooltip';
 
 const createStoreWithMiddleware = applyMiddleware(promiseMDW, reduxThunk, parseApiMDW, errorHandlerMDW)(createStore);
 class App extends Component{
     constructor(props){
         super(props);
     }
-    
+
     render(){
        return ( <BrowserRouter>
                     <Switch>
@@ -47,6 +48,7 @@ ReactDOM.render(
         <Provider store={createStoreWithMiddleware(reducers)}>
             <div>
                 <AlertsDisplay/>
+                <ReactTooltip delayShow={500}/>
                 <App/>
             </div>
         </Provider>

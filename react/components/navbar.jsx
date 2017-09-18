@@ -87,7 +87,7 @@ const Options = connect(null, {signout})(props=>{
     return (
         <IconMenu
                         style={style.colorBase}
-                        iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                        iconButtonElement={<IconButton data-tip="Options"><MoreVertIcon /></IconButton>}
                         anchorOrigin={{horizontal: 'middle', vertical: 'bottom'}}
                         targetOrigin={{horizontal: 'middle', vertical: 'top'}}
                         >

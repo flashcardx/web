@@ -1,8 +1,8 @@
 import axios from "axios";
-const env = process.env.NODE_ENV || "development";
-import apiUrls from "../../config/api.json";
-const GET_COUNT_URL = apiUrls[env].getActivityCount;
-import {NOTIFICATIONS_COUNT} from "./types";
+import config from "../../config";
+import {NOTIFICATIONS_COUNT, SHOW_NOTIFS, HIDE_NOTIFS, GET_NOTIFICATIONS} from "./types";
+const GET_COUNT_URL = config.apiGetActivityCount;
+const GET_NOTIFICATIONS_URL = config.apiGetActivity;
 
 
 
@@ -11,6 +11,31 @@ export function fetchCount(){
                 {headers: {'x-access-token': localStorage.getItem("jwt")}});
     return {
         type: NOTIFICATIONS_COUNT,
+        originAPI: true,
+        payload: request
+    }
+}
+
+export function showNotifs(){
+    return function(dispatch){
+        dispatch({
+            type: SHOW_NOTIFS
+        });
+        dispatch(getNotifications());
+    }
+}
+
+export function hideNotifs(){
+    return {
+        type: HIDE_NOTIFS
+    };
+}
+
+export function getNotifications(){
+    const request = axios.get(GET_NOTIFICATIONS_URL,
+                {headers: {'x-access-token': localStorage.getItem("jwt")}});
+    return {
+        type: GET_NOTIFICATIONS,
         originAPI: true,
         payload: request
     }

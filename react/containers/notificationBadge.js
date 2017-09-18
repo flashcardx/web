@@ -3,12 +3,11 @@ import {connect} from "react-redux";
 import Radium from "radium";
 import axios from "axios";
 import Badge from 'material-ui/Badge';
-import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 import IconButton from 'material-ui/IconButton';
-import {fetchCount} from "../actions/notifications";
-import InfiniteScroll from "react-infinite";
+import {fetchCount, showNotifs} from "../actions/notifications";
+import NotificationModal from "./notificationModal.jsx";
 
 const style = {
     badge:{
@@ -33,147 +32,26 @@ class NotificationBadge extends Component{
     constructor(props){
         super(props);
         this.state = {count: props.count, open:false};
-        this.loadMore = this.loadMore.bind(this);
-        this.renderModal = this.renderModal.bind(this);
-  }
-
-    loadMore() {
-        console.log("handle scroll");
+        this.openModal = this.openModal.bind(this);
     }
 
-    handleOpen = () => {
-        this.setState({open: true});
-    };
-
-    handleClose = () => {
-        this.setState({open: false});
+    openModal(){
+        this.props.showNotifs();
     };
 
     componentDidMount(){
         this.props.fetchCount();
     }
 
-
     componentWillReceiveProps(nextProps){
         this.setState({count: nextProps.count});
-    }
-
-    renderModal(){
-         const actions = [
-      <FlatButton
-        label="Close"
-        primary={true}
-        onClick={this.handleClose}
-      />
-    ];
-    return (
-                <Dialog
-                    title="Notifications"
-                    actions={actions}
-                    modal={false}
-                    open={this.state.open}
-                    onRequestClose={this.handleClose}
-                    autoScrollBodyContent={false}>
-                        <InfiniteScroll
-                        className="activity-feed"
-                        containerHeight={500}
-                        elementHeight={50}
-                        infiniteLoadBeginEdgeOffset={70}
-                        onInfiniteLoad={this.loadMore}>
-                                    <div className="feed-item" data-date="2017-08-17T14:29:37.296Z">
-                                        <div className="date">30 days ago.</div>
-                                        <div className="text seen">asdf joined class: best class ever</div>
-                                    </div>
-                                    <div className="feed-item" data-date="2017-08-17T14:29:37.296Z">
-                                        <div className="date">30 days ago.</div>
-                                        <div className="text seen">asdf joined class: best class ever</div>
-                                    </div>
-                                    <div className="feed-item" data-date="2017-08-17T14:29:37.296Z">
-                                        <div className="date">30 days ago.</div>
-                                        <div className="text seen">asdf joined class: best class ever</div>
-                                    </div>
-                                    <div className="feed-item" data-date="2017-08-17T14:29:37.296Z">
-                                        <div className="date">30 days ago.</div>
-                                        <div className="text seen">asdf joined class: best class ever</div>
-                                    </div>
-                                    <div className="feed-item" data-date="2017-08-17T14:29:37.296Z">
-                                        <div className="date">30 days ago.</div>
-                                        <div className="text seen">asdf joined class: best class ever</div>
-                                    </div>
-                                    <div className="feed-item" data-date="2017-08-17T14:29:37.296Z">
-                                        <div className="date">30 days ago.</div>
-                                        <div className="text seen">asdf joined class: best class ever</div>
-                                    </div>
-                                    <div className="feed-item" data-date="2017-08-14T03:32:37.037Z">
-                                        <div className="date">33 days ago.</div>
-                                        <div className="text seen">Agustina Marino added you to the class: best class ever</div>
-                                    </div>
-                                    <div className="feed-item" data-date="2017-08-14T03:32:37.037Z">
-                                        <div className="date">33 days ago.</div>
-                                        <div className="text seen">Agustina Marino added you to the class: best class ever</div>
-                                    </div>
-                                    <div className="feed-item" data-date="2017-08-14T03:32:37.037Z">
-                                        <div className="date">33 days ago.</div>
-                                        <div className="text seen">Agustina Marino added you to the class: best class ever</div>
-                                    </div>
-                                    <div className="feed-item" data-date="2017-08-14T03:32:37.037Z">
-                                        <div className="date">33 days ago.</div>
-                                        <div className="text seen">Agustina Marino added you to the class: best class ever</div>
-                                    </div>
-                                    <div className="feed-item" data-date="2017-08-14T03:32:37.037Z">
-                                        <div className="date">33 days ago.</div>
-                                        <div className="text seen">Agustina Marino added you to the class: best class ever</div>
-                                    </div>
-                                    <div className="feed-item" data-date="2017-08-14T03:32:37.037Z">
-                                        <div className="date">33 days ago.</div>
-                                        <div className="text seen">Agustina Marino added you to the class: best class ever</div>
-                                    </div>
-                                    <div className="feed-item" data-date="2017-08-14T03:32:37.037Z">
-                                        <div className="date">33 days ago.</div>
-                                        <div className="text seen">Agustina Marino added you to the class: best class ever</div>
-                                    </div>
-                                    <div className="feed-item" data-date="2017-08-14T03:32:37.037Z">
-                                        <div className="date">33 days ago.</div>
-                                        <div className="text seen">Agustina Marino added you to the class: best class ever</div>
-                                    </div>
-                                    <div className="feed-item" data-date="2017-08-14T03:32:37.037Z">
-                                        <div className="date">33 days ago.</div>
-                                        <div className="text seen">Agustina Marino added you to the class: best class ever</div>
-                                    </div>
-                                    <div className="feed-item" data-date="2017-08-14T03:32:37.037Z">
-                                        <div className="date">33 days ago.</div>
-                                        <div className="text seen">Agustina Marino added you to the class: best class ever</div>
-                                    </div>
-                                    <div className="feed-item" data-date="2017-08-14T03:32:37.037Z">
-                                        <div className="date">33 days ago.</div>
-                                        <div className="text seen">Agustina Marino added you to the class: best class ever</div>
-                                    </div>
-                                    <div className="feed-item" data-date="2017-08-14T03:32:37.037Z">
-                                        <div className="date">33 days ago.</div>
-                                        <div className="text seen">Agustina Marino added you to the class: best class ever</div>
-                                    </div>
-                                    <div className="feed-item" data-date="2017-08-14T03:32:37.037Z">
-                                        <div className="date">33 days ago.</div>
-                                        <div className="text seen">Agustina Marino added you to the class: best class ever</div>
-                                    </div>
-                                    <div className="feed-item" data-date="2017-08-14T03:32:37.037Z">
-                                        <div className="date">33 days ago.</div>
-                                        <div className="text seen">Agustina Marino added you to the class: best class ever</div>
-                                    </div>
-                                    <div className="feed-item" data-date="2017-08-14T03:32:37.037Z">
-                                        <div className="date">33 days ago.</div>
-                                        <div className="text seen">Agustina Marino added you to the class: best class ever</div>
-                                    </div>
-                        </InfiniteScroll>
-                </Dialog>
-        );
     }
 
     render(){
     if(this.state.count)
             return (
                 <div>
-                    {this.renderModal()}
+                    <NotificationModal/>
                     <div style={style.notifications}>
                         <Badge
                             style={style.notifications}
@@ -181,7 +59,7 @@ class NotificationBadge extends Component{
                             badgeContent={this.state.count}
                             secondary={true}
                             >
-                            <IconButton style={style.notifications} onClick={this.handleOpen} tooltip="Notifications">
+                            <IconButton style={style.notifications} onClick={this.openModal} data-tip="Notifications">
                                 <NotificationsIcon style={style.notifications} />
                             </IconButton>
                         </Badge>
@@ -190,8 +68,8 @@ class NotificationBadge extends Component{
             );
     else
         return (<div>
-                    {this.renderModal()}
-                    <IconButton style={style.notifications} onClick={this.handleOpen} tooltip="Notifications">
+                    <NotificationModal/>
+                    <IconButton style={style.notifications} onClick={this.openModal} data-tip="Notifications">
                         <NotificationsIcon style={style.notifications} />
                     </IconButton>
                 </div>);
@@ -205,4 +83,4 @@ function mapStateToProps(state){
 const radiumComponent = Radium(NotificationBadge)
 
 
-export default connect(mapStateToProps, {fetchCount})(radiumComponent);
+export default connect(mapStateToProps, {fetchCount, showNotifs})(radiumComponent);

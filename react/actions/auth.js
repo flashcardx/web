@@ -1,12 +1,11 @@
 import axios from "axios";
-import apiUrls from "../../config/api.json";
+import config from "../../config";
 import {SIGNIN, SIGNUP, SIGNUP_RESEND_EMAIL, SIGNOUT, RE_SIGNIN, EMAIL_VERIFICATION} from "./types";
-const env = process.env.NODE_ENV || "development";
-const SIGNIN_URL = apiUrls[env].login;
-const SIGNUP_URL = apiUrls[env].signup;
-const RESEND_EMAIL_URL = apiUrls[env].resendEmailVerification;
-const EMAIL_VERIFICATION_URL = apiUrls[env].emailVerification;
-const FB_AUTH_URL = apiUrls[env].fbAuth;
+const SIGNIN_URL = config.apiLogin;
+const SIGNUP_URL = config.apiSignup;
+const RESEND_EMAIL_URL = config.apiResendEmailVerification;
+const EMAIL_VERIFICATION_URL = config.apiEmailVerification;
+const FB_AUTH_URL = config.apiFbAuthUrl;
 export function signin({email, password}, key){
     const request = axios.post(SIGNIN_URL, {
         email,

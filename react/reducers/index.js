@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import {countReducer} from "./reducer_notifications";
+import {countReducer, showNotifsReducer, getNotifsReducer} from "./reducer_notifications";
 import {authReducer, signupReducer} from "./reducer_auth";
 import {alertsReducer} from "./reducer_alerts";
 import {reducer as formReducer} from "redux-form";
@@ -9,7 +9,9 @@ const rootReducer = combineReducers({
   isAuthenticated: authReducer,
   form: formReducer,
   alert: alertsReducer,
-  signupMsg: signupReducer
+  signupMsg: signupReducer,
+  showNotifs: showNotifsReducer,
+  notifs: getNotifsReducer
 });
 
 export default rootReducer;

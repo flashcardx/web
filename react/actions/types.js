@@ -8,3 +8,6 @@ export const ERROR_ALERT = "ERROR_ALERT";
 export const SUCCESS_ALERT = "SUCCESS_ALERT";
 export const INFO_ALERT = "INFO_ALERT";
 export const EMAIL_VERIFICATION = "EMAIL_VERIFICATION";
+export const SHOW_NOTIFS = "SHOW_NOTIFS";
+export const HIDE_NOTIFS = "HIDE_NOTIFS";
+export const GET_NOTIFICATIONS = "GET_NOTIFICATIONS";
