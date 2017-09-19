@@ -7,7 +7,6 @@ import Radium from "radium";
 import {connect} from "react-redux";
 import {signup as SignupAction} from "../actions/auth";
 
-
 const style = {
     borderForm:{
         border: "1px solid gray",
@@ -92,6 +91,10 @@ function validate({email, name, password, password2}){
     if(password !== password2)
         errors.password2 = "Oops! Password and confirmation password must be the same ;)";
     return errors;
+}
+
+SignupForm.PropTypes = {
+    className: PropTypes.string
 }
 
 export default reduxForm({validate, form:"SignupForm"})(connect(null, {SignupAction})(Radium(SignupForm)));

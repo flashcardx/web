@@ -10,6 +10,8 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import NotificationBadge from "../containers/notificationBadge";
 import {signout} from "../actions/auth";
 import {connect} from "react-redux";
+import PropTypes from 'prop-types';
+ 
 
 var style = {
     colorBase:{
@@ -92,11 +94,13 @@ const Options = connect(null, {signout})(props=>{
                         targetOrigin={{horizontal: 'middle', vertical: 'top'}}
                         >
                         <MenuItem onClick={()=>props.history.push("/settings")} primaryText="Settings" />
-                        <MenuItem onClick={props.signout} primaryText="Sign out" />
+                        <MenuItem onClick={()=>props.history.push("/signout")} primaryText="Sign out" />
         </IconMenu>
     );
 })
 
-
+Navbar.PropTypes = {
+    active: PropTypes.string.isRequired
+}
 
 export default withRouter(Radium(Navbar));

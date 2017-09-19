@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import {countReducer, showNotifsReducer, getNotifsReducer} from "./reducer_notifications";
 import {authReducer, signupReducer} from "./reducer_auth";
 import {alertsReducer} from "./reducer_alerts";
+import {getUserInfoReducer} from "./reducer_user";
 import {reducer as formReducer} from "redux-form";
 
 const rootReducer = combineReducers({
@@ -11,7 +12,8 @@ const rootReducer = combineReducers({
   alert: alertsReducer,
   signupMsg: signupReducer,
   showNotifs: showNotifsReducer,
-  notifs: getNotifsReducer
+  notifs: getNotifsReducer,
+  user:  getUserInfoReducer
 });
 
 export default rootReducer;

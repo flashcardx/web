@@ -31,7 +31,7 @@ class NotificationBadge extends Component{
     
     constructor(props){
         super(props);
-        this.state = {count: props.count, open:false};
+        this.state = {open:false};
         this.openModal = this.openModal.bind(this);
     }
 
@@ -43,12 +43,8 @@ class NotificationBadge extends Component{
         this.props.fetchCount();
     }
 
-    componentWillReceiveProps(nextProps){
-        this.setState({count: nextProps.count});
-    }
-
     render(){
-    if(this.state.count)
+    if(this.props.count)
             return (
                 <div>
                     <NotificationModal/>
@@ -56,7 +52,7 @@ class NotificationBadge extends Component{
                         <Badge
                             style={style.notifications}
                             badgeStyle={style.badge}
-                            badgeContent={this.state.count}
+                            badgeContent={this.props.count}
                             secondary={true}
                             >
                             <IconButton style={style.notifications} onClick={this.openModal} data-tip="Notifications">
@@ -81,6 +77,5 @@ function mapStateToProps(state){
 }
 
 const radiumComponent = Radium(NotificationBadge)
-
 
 export default connect(mapStateToProps, {fetchCount, showNotifs})(radiumComponent);

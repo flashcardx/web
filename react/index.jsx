@@ -9,6 +9,7 @@ import Discover from "./pages/discover.jsx";
 import Classes from "./pages/classes.jsx";
 import Practice from "./pages/practice.jsx";
 import Settings from "./pages/settings.jsx";
+import Signout from "./pages/signout.jsx";
 import Landing from "./pages/landing.jsx";
 import reducers from "./reducers";
 import {requireAuth, redirectIfAuth, validateEmail} from "./containers/authRedirect.jsx";
@@ -36,6 +37,7 @@ class App extends Component{
                         <Route path="/settings" component={requireAuth(Settings, "/landing")}/>
                         <Route path="/email-verification/:id" component={validateEmail(Landing, "/landing")}/>
                         <Route path="/landing" component={redirectIfAuth(Landing, "/")}/>
+                        <Route path="/signout" component={Signout}/>
                         <Route path="/" component={requireAuth(Home, "/landing")}/>
                         <Redirect from='*' to='/'/>
                     </Switch>

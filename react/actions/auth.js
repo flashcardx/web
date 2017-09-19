@@ -6,6 +6,7 @@ const SIGNUP_URL = config.apiSignup;
 const RESEND_EMAIL_URL = config.apiResendEmailVerification;
 const EMAIL_VERIFICATION_URL = config.apiEmailVerification;
 const FB_AUTH_URL = config.apiFbAuthUrl;
+
 export function signin({email, password}, key){
     const request = axios.post(SIGNIN_URL, {
         email,

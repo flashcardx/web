@@ -4,40 +4,50 @@ import Radium from "radium";
 import axios from "axios";
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import {hideNotifs} from "../actions/notifications";
+import {hideNotifs, appendNotifications} from "../actions/notifications";
 import Date from "../components/date.jsx";
+import Modal from "../components/modal.jsx";
 import ReactTooltip from 'react-tooltip';
+import CircularProgress from 'material-ui/CircularProgress';
+
+const style = {
+    center:{
+        margin: "0 auto"
+    },
+    noScroll:{
+        overflow:"hidden"
+    }
+}
 
 class NotificationModal extends Component{
 
     constructor(props){
         super(props);
-        this.state = {loading:false};
+        this.state = {loadingMore:false, page:1, countLastAdded:0};
         this.loadMore = this.loadMore.bind(this);
         this.handleClose = this.handleClose.bind(this);
     }
 
     loadMore() {
-        this.setState({loading:true});
+        this.setState({loadingMore:true});
+        this.setState({page:this.state.page+1});
+        this.props.appendNotifications(this.state.page); 
     }
 
-    componentWillMount(){
-         ReactTooltip.rebuild();
-    }
-
-    componentDidUpdate(){
-        setTimeout(function() {
-            ReactTooltip.rebuild();
-        }, 1000);
+    componentWillReceiveProps(newProps){
+        this.setState({loadingMore:false});
+        if(newProps.notifs){
+            const newCount = newProps.notifs.length - this.state.countLastAdded;
+            this.setState({countLastAdded: newCount});
+        }
     }
 
     handleClose(){
         this.props.hideNotifs();
-        this.setState({open: false, loading:false});
+        this.setState({loadingMore:false});
     };
 
     renderNotif(n){
-        console.log("rendering: ", n);
         const cssClass = n.seen? "seen": "unseen";
         return (
             <li key={n._id} className="list-group-item feed-item">
@@ -48,34 +58,30 @@ class NotificationModal extends Component{
     }
 
     render(){
-        const actions = [
-      <FlatButton
-        label="Close"
-        primary={true}
-        onClick={this.handleClose}
-      />
-    ];
-    return (
-                <Dialog
-                    title="Notifications"
-                    actions={actions}
-                    modal={false}
-                    open={this.props.open}
-                    onRequestClose={this.handleClose}
-                    autoScrollBodyContent={true}>
-                    <ReactTooltip delayShow={500}/>
-                            <ul className="list-group activity-feed">
-                                {this.props.notifs.length!=0? (this.props.notifs.map(n=>this.renderNotif(n)))
-                                : (<p>You don't have notifications at the moment :( </p>)}
+        var content=null;
+        if(this.props.notifs == null)
+            content =  <div style={style.center} ><CircularProgress size={80} thickness={7}/> </div>;
+        else
+            if(this.props.notifs.length!=0)
+                content = this.props.notifs.map(n=>this.renderNotif(n));
+            else
+                content = <p style={style.center} >You don't have notifications at the moment :( </p>;
+        var btn = null;
+        if(this.state.countLastAdded>=12)
+            btn = <FlatButton onClick={this.loadMore}label="Show more" primary={true} />;
+        return (
+                <Modal title="Notifications" onClose={this.handleClose} closeLabel="Close" open={this.props.open}>
+                            <ul style={style.noScroll} className="list-group activity-feed">
+                                {content} 
                             </ul>
                             <div style={{textAlign:"center"}}>
-                                {this.state.loading?
-                                    (<p>Loading...</p>)
+                                {this.state.loadingMore?
+                                    (<p>Loading more...</p>)
                                 :
-                                    this.props.notifs.length!=0 &&(<FlatButton onClick={this.loadMore}label="Show more" primary={true} />)
+                                    btn
                                 }
                             </div>
-                </Dialog>
+                </Modal>
         );
     }
 }
@@ -84,4 +90,4 @@ function mapStateToProps(state){
     return {open: state.showNotifs, notifs: state.notifs};
 }
 
-export default connect(mapStateToProps,{hideNotifs})(Radium(NotificationModal));
+export default connect(mapStateToProps,{hideNotifs, appendNotifications})(Radium(NotificationModal));

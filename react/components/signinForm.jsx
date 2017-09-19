@@ -57,6 +57,10 @@ function validate({email, password}){
     return errors;
 }
 
+SigninForm.PropTypes = {
+    className: PropTypes.string
+}
+
 export default reduxForm({validate, form:"SigninForm"})(connect(null, {SigninAction})(Radium(SigninForm)));
 
 

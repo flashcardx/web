@@ -1,4 +1,4 @@
-import {NOTIFICATIONS_COUNT, SHOW_NOTIFS, HIDE_NOTIFS, GET_NOTIFICATIONS} from "../actions/types";
+import {NOTIFICATIONS_COUNT, SHOW_NOTIFS, HIDE_NOTIFS, GET_NOTIFICATIONS, APPEND_NOTIFICATIONS} from "../actions/types";
 import _ from "lodash";
 
 export function countReducer(state=0, action){
@@ -16,11 +16,11 @@ export function showNotifsReducer(state=false, action){
     return state;
 }
 
-export function getNotifsReducer(state=[], action){
+export function getNotifsReducer(state=null, action){
     switch (action.type) {
-        case GET_NOTIFICATIONS: console.log("got: ", action.payload.msg);
-                                return action.payload.msg;
-    }
+        case GET_NOTIFICATIONS: return action.payload.msg;
+        case APPEND_NOTIFICATIONS: return [...state, ...action.payload.msg];
+        }
     return state;
 }
 
