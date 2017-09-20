@@ -10,8 +10,9 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import NotificationBadge from "../containers/notificationBadge";
 import {signout} from "../actions/auth";
 import {connect} from "react-redux";
-import PropTypes from 'prop-types';
- 
+import PropTypes from "prop-types";
+import Responsive from 'react-responsive';
+import AppBar from 'material-ui/AppBar';
 
 var style = {
     colorBase:{
@@ -32,15 +33,15 @@ class Navbar extends Component{
         super(props);
         this.state = {active: props.active};
         this.handleActive = this.handleActive.bind(this);
+        this.renderDesktop = this.renderDesktop.bind(this);
     }
 
     handleActive(tab) {
         this.props.history.push(tab.props['data-route']);
     }
 
-    render(){
-    return (
-        <div style={style.colorBase} className="row">
+    renderDesktop(){
+        return ( <div style={style.colorBase} className="row">
             <div className="col-1">
                 <div className="container">
                         <Link to="/">
@@ -73,8 +74,54 @@ class Navbar extends Component{
                         </div>
                     </div>
                 </div>
-        </div>
-        );  
+        </div>);
+    }
+
+    mobileMenu(){
+        return (
+            <IconMenu
+                iconButtonElement={
+                <IconButton><MoreVertIcon /></IconButton>
+                }
+                targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+            >
+                <Link to="/discover">  <MenuItem primaryText="DISCOVER" /></Link>
+                <Link to="/feed"><MenuItem primaryText="FEED" /></Link>
+                <Link to="/"><MenuItem primaryText="MY COLLECTION" /></Link>
+                <Link to="/classes"><MenuItem primaryText="CLASSES" /></Link>
+                <Link to="/practice"><MenuItem primaryText="PRACTICE" /></Link>
+                <Link to="/settings"><MenuItem primaryText="SETTINGS" /></Link>
+                <Link to="/signout"> <MenuItem primaryText="SIGN OUT" /></Link>
+            </IconMenu>
+        );
+    }
+
+    renderMobile(){
+        return (
+             <AppBar
+                title="FlashCardX"
+                style={style.colorBase}
+                iconElementLeft = {this.mobileMenu()}
+                iconElementRight= {<NotificationBadge/>}
+                />
+        );
+    }
+
+    render(){
+        return (
+            <div>
+                <Responsive minWidth={670}>
+                    {(matches) => {
+                        if (matches) {
+                         return this.renderDesktop()
+                        } else {
+                        return this.renderMobile()
+                        }
+                    }}
+            </Responsive>
+            </div>
+        );
     }
 }
 
