@@ -16,6 +16,7 @@ export function signin({email, password}, key){
     return {
         type: SIGNIN,
         originAPI: true,
+        bigLoading: true,
         payload: request
     }
 }
@@ -30,6 +31,7 @@ export function signup({name, email, password}, key){
     return {
         type: SIGNUP,
         originAPI: true,
+        bigLoading:true, 
         payload: request
     }
 } 
@@ -40,6 +42,7 @@ export function resendEmailSignup(email){
     return {
         type: SIGNUP_RESEND_EMAIL,
         originAPI: true,
+        bigLoading: true,
         payload: request
     }
 }
@@ -60,6 +63,7 @@ export function emailVerification(id){
     return {
         type: EMAIL_VERIFICATION,
         originAPI: true,
+        bigLoading: true,
         payload: request
     }
 }
@@ -71,6 +75,8 @@ export function fbAuth({accessToken}){
     return {
         type: SIGNIN,
         originAPI: true,
+        bigLoading: true,
         payload: request
     }
 }
+

@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import Page from "../components/page.jsx";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Radium from "radium";
 import RaisedButton from 'material-ui/RaisedButton';
 import SigninForm from "../components/signinForm.jsx";
@@ -98,8 +97,7 @@ class Landing extends Component{
         if(this.props.signupMsg)
             signupMsg = this.signupSight(this.props.signupMsg);
         return (
-            <MuiThemeProvider>  
-                    <div>
+            <div>
                             <ReCAPTCHA
                                 ref={(el) => { captchaRef = el; }}                            size="invisible"
                                 sitekey={RECAPTCHA_KEY}
@@ -113,8 +111,7 @@ class Landing extends Component{
                                     {signupMsg}
                                     <Details fbAuth={this.props.fbAuth}/>
                                 </div>
-                    </div>
-            </MuiThemeProvider>  
+            </div>
         );
     }
 }

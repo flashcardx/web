@@ -42,7 +42,7 @@ class SigninForm extends Component{
                 type="password"
                 placeholder="password"
             />
-            <RaisedButton type="submit" style={style.marginLeft} backgroundColor="#5cb85c" label="Sign in" />
+            <RaisedButton disabled={this.props.bigLoading} type="submit" style={style.marginLeft} backgroundColor="#5cb85c" label="Sign in" />
         </form>
        );
     }
@@ -61,7 +61,11 @@ SigninForm.PropTypes = {
     className: PropTypes.string
 }
 
-export default reduxForm({validate, form:"SigninForm"})(connect(null, {SigninAction})(Radium(SigninForm)));
+function mapStateToProps(state){
+    return {bigLoading: state.bigLoading};
+}
+
+export default reduxForm({validate, form:"SigninForm"})(connect(mapStateToProps, {SigninAction})(Radium(SigninForm)));
 
 
 

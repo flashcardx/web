@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import Navbar from "./navbar.jsx";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import PropTypes from 'prop-types';
  
 class Page extends Component{
@@ -11,15 +10,13 @@ class Page extends Component{
     }
 
     render(){
-        return (
-                <MuiThemeProvider>            
+        return (     
             <div>
                 <Navbar active={this.state.name}/>
                 <div className="container">
                      {this.props.children}
                 </div>
-            </div>
-            </MuiThemeProvider>
+            </div>   
         );
     }
 }

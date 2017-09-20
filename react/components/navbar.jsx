@@ -50,25 +50,18 @@ class Navbar extends Component{
             </div>
             <div className="col-9">
                 <Tabs style={style.colorBase} value={this.state.active}>
-                        <Tab style={style.colorBase} value="discover" label="Discover" data-route="/discover" onActive={this.handleActive}>
-                        </Tab>
-                        <Tab style={style.colorBase} value="feed" label="Feed" data-route="/feed" onActive={this.handleActive}>
-                        </Tab>
-                        <Tab style={style.colorBase} value="my collection" data-route="/" label="My collection"
-                        onActive={this.handleActive}>
-                        </Tab>
-                        <Tab style={style.colorBase} value="classes"
-                        label="Classes"
-                        data-route="/classes"
-                        onActive={this.handleActive}
-                        >
-                        </Tab>
-                        <Tab style={style.colorBase} value="practice" label="Practice"
-                        data-route="/practice"
-                        onActive={this.handleActive}
-                        >
-                        </Tab>
-                    </Tabs>
+                            <Tab style={style.colorBase} value="discover" label="Discover" data-route="/discover" onActive={this.handleActive}/>
+                            <Tab style={style.colorBase} value="feed" label="Feed" data-route="/feed" onActive={this.handleActive}/>
+                            <Tab style={style.colorBase} value="my collection" data-route="/" label="My collection"
+                                onActive={this.handleActive}/>
+                            <Tab style={style.colorBase} value="classes"
+                                label="classes"
+                                data-route="/classes"
+                                onActive={this.handleActive}/>
+                            <Tab style={style.colorBase} value="practice" label="Practice"
+                                data-route="/practice"
+                                onActive={this.handleActive}/>
+                </Tabs>
             </div>
                 <div className="col-2">
                     <div className="row">

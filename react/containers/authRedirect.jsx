@@ -1,7 +1,7 @@
 import React, {Component} from "react";
-import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
-import {reSignin, emailVerification} from "../actions/auth";
+import {withRouter} from "react-router-dom";
+import {reSignin, emailVerification, verifySession} from "../actions/auth";
 
 export function requireAuth(ComposedComponent, route){
     class Authenticate extends Component{
@@ -15,7 +15,7 @@ export function requireAuth(ComposedComponent, route){
             }
         }
 
-        componentWillUpdate(nextProps){
+        componentWillReceiveProps(nextProps){
             if(!nextProps.isAuthenticated)
                 return this.props.history.push(route);
         }
@@ -40,7 +40,7 @@ export function redirectIfAuth(ComposedComponent, route){
                 return this.props.history.push(route);
         }
 
-        componentWillUpdate(nextProps){
+        componentWillReceiveProps(nextProps){
             if(nextProps.isAuthenticated)
                 return this.props.history.push(route);
         }
@@ -71,5 +71,5 @@ export function validateEmail(ComposedComponent, route){
         }
     }
 
-    return connect(null, {emailVerification})(withRouter(Authenticate));
+    return connect(null, {emailVerification, verifySession})(withRouter(Authenticate));
 }

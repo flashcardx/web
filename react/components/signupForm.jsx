@@ -17,7 +17,6 @@ class SignupForm extends Component{
 
     constructor(props){
         super(props);
-        this.state = {className: props.className};
         this.captchaExecute = props.captchaExecute.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
@@ -31,7 +30,7 @@ class SignupForm extends Component{
     render(){
         const {handleSubmit} = this.props;
         return (
-            <form onSubmit={handleSubmit(this.onSubmit)} className={this.state.className} style={style.borderForm}>
+            <form onSubmit={handleSubmit(this.onSubmit)} className={this.props.className} style={style.borderForm}>
                                     <div className="form-group">
                                         <div className="col-sm-12">
                                             <TextField
@@ -72,7 +71,7 @@ class SignupForm extends Component{
                                     </div>
                                     <div className="form-group">
                                     <div className="col-sm-offset-2 col-sm-12">
-                                        <RaisedButton type="submit" backgroundColor="#5cb85c" label="Sign up!" />
+                                        <RaisedButton disabled={this.props.bigLoading} type="submit" backgroundColor="#5cb85c" label="Sign up!" />
                                     </div>
                                 </div>
                         </form>
@@ -97,4 +96,8 @@ SignupForm.PropTypes = {
     className: PropTypes.string
 }
 
-export default reduxForm({validate, form:"SignupForm"})(connect(null, {SignupAction})(Radium(SignupForm)));
+function mapStateToProps(state){
+    return {signupMsg: state.signupMsg, bigLoading: state.bigLoading};
+}
+
+export default reduxForm({validate, form:"SignupForm"})(connect(mapStateToProps, {SignupAction})(Radium(SignupForm)));

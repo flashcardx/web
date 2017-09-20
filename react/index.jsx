@@ -16,12 +16,16 @@ import {requireAuth, redirectIfAuth, validateEmail} from "./containers/authRedir
 import Alert from "./components/alert.jsx";
 import promiseMDW from "./middlewares/promise";
 import errorHandlerMDW from "./middlewares/errorHandler.js";
+import showLoadingMDW from "./middlewares/showLoading.js";
+import hideLoadingMDW from "./middlewares/hideLoading.js";
 import parseApiMDW from "./middlewares/parseApiResponse.js";
 import AlertsDisplay from "./containers/alertsDisplay.jsx";
 import reduxThunk from 'redux-thunk';
 import ReactTooltip from 'react-tooltip';
+import Loading from "./containers/loading.jsx";
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-const createStoreWithMiddleware = applyMiddleware(promiseMDW, reduxThunk, parseApiMDW, errorHandlerMDW)(createStore);
+const createStoreWithMiddleware = applyMiddleware(showLoadingMDW, promiseMDW, reduxThunk, parseApiMDW, hideLoadingMDW, errorHandlerMDW)(createStore);
 class App extends Component{
     constructor(props){
         super(props);
@@ -48,11 +52,14 @@ class App extends Component{
 
 ReactDOM.render(
         <Provider store={createStoreWithMiddleware(reducers)}>
-            <div>
-                <AlertsDisplay/>
-                <ReactTooltip delayShow={500}/>
-                <App/>
-            </div>
+                 <MuiThemeProvider>    
+                    <div>
+                        <AlertsDisplay/>
+                        <ReactTooltip delayShow={500}/>
+                        <Loading/>
+                        <App/>
+                    </div>
+                </MuiThemeProvider>
         </Provider>
     ,
     document.getElementById('react'));
