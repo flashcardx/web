@@ -72,5 +72,7 @@ module.exports = {
     apiGetCommentReactionDetail: api.getCommentReactionDetail,
     apiGetComments: api.getComments,
     recaptchaSiteKey: keys.reCaptcha.siteKey,
-    apiSearchGif: api.searchGif
+    apiSearchGif: api.searchGif,
+    apiGetUserDecks: api.getUserDecks,
+    cloudfrontUrl: keys.cloudfrontUrl
 };

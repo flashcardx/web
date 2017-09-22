@@ -5,8 +5,8 @@ import axios from "axios";
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import {hideNotifs, appendNotifications} from "../actions/notifications";
-import Date from "../components/date.jsx";
-import Modal from "../components/modal.jsx";
+import Date from "../components/util/date.jsx";
+import Modal from "../components/util/modal.jsx";
 import ReactTooltip from 'react-tooltip';
 import CircularProgress from 'material-ui/CircularProgress';
 

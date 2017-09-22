@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import Radium from "radium";
-import Alert from "../components/alert.jsx";
+import Alert from "../components/util/alert.jsx";
 import {flushAlertsAction} from "../actions/alerts";
 
 class AlertsDisplay extends Component{

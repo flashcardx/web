@@ -13,7 +13,7 @@ import Signout from "./pages/signout.jsx";
 import Landing from "./pages/landing.jsx";
 import reducers from "./reducers";
 import {requireAuth, redirectIfAuth, validateEmail} from "./containers/authRedirect.jsx";
-import Alert from "./components/alert.jsx";
+import Alert from "./components/util/alert.jsx";
 import promiseMDW from "./middlewares/promise";
 import errorHandlerMDW from "./middlewares/errorHandler.js";
 import showLoadingMDW from "./middlewares/showLoading.js";

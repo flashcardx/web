@@ -4,7 +4,8 @@
 			},
 	"reCaptcha":{
 					"siteKey": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-			}
+			},
+	"cloudfrontUrl":"https://d2pkpj1gudc0wt.cloudfront.net/"
 	},
 "pi" : {
 		"fbAuth":{
@@ -12,7 +13,8 @@
 			},
 		"reCaptcha":{
 					"siteKey": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-			}
+			},
+	"cloudfrontUrl":"https://d2pkpj1gudc0wt.cloudfront.net/"
 	},
 "production":{
 		"fbAuth":{
@@ -20,6 +22,7 @@
 		},
 		"reCaptcha":{
 					"siteKey": "6LcrqSwUAAAAAPby-Rm9KnQVI_DulbhGzQmWcOGo"
-			}
+			},
+	"cloudfrontUrl":"https://d32suzxs6u0rur.cloudfront.net/"
 	}
 }

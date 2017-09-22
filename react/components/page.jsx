@@ -21,7 +21,7 @@ class Page extends Component{
     }
 }
 
-Page.PropTypes = {
+Page.propTypes = {
     name: PropTypes.string.isRequired
 }
 

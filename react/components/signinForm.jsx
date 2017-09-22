@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {reduxForm } from 'redux-form';
-import TextField from "./textField.jsx";
+import TextField from "./util/textField.jsx";
 import RaisedButton from 'material-ui/RaisedButton';
 import Radium from "radium";
 import {connect} from "react-redux";
@@ -57,7 +57,7 @@ function validate({email, password}){
     return errors;
 }
 
-SigninForm.PropTypes = {
+SigninForm.propTypes = {
     className: PropTypes.string
 }
 

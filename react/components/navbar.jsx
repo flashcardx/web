@@ -139,7 +139,7 @@ const Options = connect(null, {signout})(props=>{
     );
 })
 
-Navbar.PropTypes = {
+Navbar.propTypes = {
     active: PropTypes.string.isRequired
 }
 
