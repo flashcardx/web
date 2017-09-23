@@ -37,6 +37,7 @@ class SignupForm extends Component{
                                                 name="email"
                                                 type="email"
                                                 placeholder="Your email"
+                                                fieldType="input"
                                             />
                                         </div>
                                     </div>
@@ -46,6 +47,7 @@ class SignupForm extends Component{
                                                 name="name"
                                                 type="text"
                                                 placeholder="Your awesome name"
+                                                fieldType="input"
                                             />
                                         </div>
                                     </div>
@@ -56,6 +58,7 @@ class SignupForm extends Component{
                                                 name="password"
                                                 type="password"
                                                 placeholder="What will be your Password?"
+                                                fieldType="input"
                                             />
                                         </div>
                                     </div>
@@ -66,6 +69,7 @@ class SignupForm extends Component{
                                                 name="password2"
                                                 type="password"
                                                 placeholder="Confirm password"
+                                                fieldType="input"
                                             />
                                         </div>
                                     </div>

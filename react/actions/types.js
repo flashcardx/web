@@ -16,3 +16,4 @@ export const USER_INFO = "USER_INFO";
 export const SHOW_BIGLOADING = "SHOW_LOADING";
 export const HIDE_BIGLOADING = "HIDE_LOADING";
 export const FETCH_USER_DECKS = "FETCH_USER_DECKS";
+export const CREATE_USER_DECK = "CREATE_USER_DECK";

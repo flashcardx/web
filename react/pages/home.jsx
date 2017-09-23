@@ -2,7 +2,8 @@ import React, {Component} from "react";
 import Page from "../components/page.jsx";
 import Radium from "radium";
 import {connect} from "react-redux";
-import {getUserInfo, fetchUserDecks} from "../actions/user";
+import {getUserInfo} from "../actions/user";
+import {fetchUserDecks} from "../actions/deck.js";
 import RaisedButton from 'material-ui/RaisedButton';
 import CreateDeck from "../components/createDeck.jsx";
 import DeckGallery from "../components/deckGallery.jsx";
@@ -65,7 +66,7 @@ class Home extends Component{
                              Path: {this.renderPath()}
                         </div>
                         <div className="col-lg-3 col-sm-6">
-                            <CreateDeck/>
+                            <CreateDeck path={this.state.path}/>
                         </div>
                     </div>
                     <div className="row">

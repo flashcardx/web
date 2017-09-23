@@ -74,5 +74,6 @@ module.exports = {
     recaptchaSiteKey: keys.reCaptcha.siteKey,
     apiSearchGif: api.searchGif,
     apiGetUserDecks: api.getUserDecks,
-    cloudfrontUrl: keys.cloudfrontUrl
+    cloudfrontUrl: keys.cloudfrontUrl,
+    apiCreateUserDeck: api.createUserDeck
 };

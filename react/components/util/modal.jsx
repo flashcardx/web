@@ -9,7 +9,7 @@ class Modal extends Component{
 
     constructor(props){
         super(props);
-        this.state = {open:props.open, closeLabel:props.closeLabel, title:props.title};
+        this.state = {opened:props.open, closeLabel:props.closeLabel, title:props.title};
         this.onClose = props.onClose;
         this.handleClose = this.handleClose.bind(this);
     }
@@ -21,11 +21,12 @@ class Modal extends Component{
     }
 
     componentWillReceiveProps(nextProps){
-        this.setState({open:nextProps.open, closeLabel:nextProps.closeLabel});
+        this.setState({opened:nextProps.open, closeLabel:nextProps.closeLabel});
     }
 
      handleClose(){
-        this.onClose();
+        if(this.onClose)
+            this.onClose();
         this.setState({opened: false});
     };
 
@@ -42,8 +43,8 @@ class Modal extends Component{
             <Dialog
                     title={this.state.title}
                     actions={actions}
-                    modal={this.state.modal}
-                    open={this.state.open}
+                    modal={this.props.modal}
+                    open={this.state.opened}
                     onRequestClose={this.handleClose}
                     autoScrollBodyContent={true}>
                     <ReactTooltip delayShow={500}/>
@@ -56,10 +57,10 @@ class Modal extends Component{
 
 Modal.propTypes = {
     closeLabel: PropTypes.string,
-    title:PropTypes.string,
+    title:PropTypes.node,
     open: PropTypes.bool.isRequired,
     onClose: PropTypes.func,
-    children: PropTypes.array
+    modal: PropTypes.bool
 }
 
 

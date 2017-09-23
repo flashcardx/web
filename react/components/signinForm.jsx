@@ -29,18 +29,20 @@ class SigninForm extends Component{
     }
 
     render(){
-        const {handleSubmit} = this.props;
+       const {handleSubmit} = this.props;
        return ( <form onSubmit={handleSubmit(this.onSubmit)} className={this.state.className}>
             <TextField
                 name="email"
                 type="text"
                 placeholder="Email"
+                fieldType="input"
             />
             <TextField
                 style={style.marginLeft}
                 name="password"
                 type="password"
                 placeholder="password"
+                fieldType="input"
             />
             <RaisedButton disabled={this.props.bigLoading} type="submit" style={style.marginLeft} backgroundColor="#5cb85c" label="Sign in" />
         </form>

@@ -10,7 +10,7 @@
             "getUserCards": "http://localhost:3000/Mycards",
             "validateToken": "http://localhost:3000/validateToken",
             "deleteCard": "http://localhost:3000/card",
-            "searchImage": "http://localhost:3000/searchBing",
+            "searchImage": "http://localhost:3000/searchBing/",
             "postCard": "http://localhost:3000/card",
             "discoverCards": "http://localhost:3000/discoverCards",
             "duplicateCard": "http://localhost:3000/duplicateCard",
@@ -66,7 +66,8 @@
             "getCommentReactionDetail": "http://localhost:3000/class/commentReactionDetail/",
             "getComments": "http://localhost:3000/class/comments/",
             "searchGif": "http://localhost:3000/searchGif/",
-            "getUserDecks": "http://localhost:3000/deckschildren/u"
+            "getUserDecks": "http://localhost:3000/deckschildren/u",
+            "createUserDeck":"http://localhost:3000/deck/u"
             },
         "pi":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -79,7 +80,7 @@
             "getUserCards": "http://localhost:3000/Mycards",
             "validateToken": "http://localhost:3000/validateToken",
             "deleteCard": "http://localhost:3000/card",
-            "searchImage": "http://localhost:3000/searchBing",
+            "searchImage": "http://localhost:3000/searchBing/",
             "postCard": "http://localhost:3000/card",
             "discoverCards": "http://localhost:3000/discoverCards",
             "duplicateCard": "http://localhost:3000/duplicateCard",
@@ -135,7 +136,8 @@
             "getCommentReactionDetail": "http://localhost:3000/class/commentReactionDetail/",
             "getComments": "http://localhost:3000/class/comments/",
             "searchGif": "http://localhost:3000/searchGif/",
-            "getUserDecks": "http://localhost:3000/deckschildren/u"
+            "getUserDecks": "http://localhost:3000/deckschildren/u",
+            "createUserDeck":"http://localhost:3000/deck/u"
             },
         "production":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -148,7 +150,7 @@
             "getUserCards": "http://localhost:3000/Mycards",
             "validateToken": "http://localhost:3000/validateToken",
             "deleteCard": "http://localhost:3000/card",
-            "searchImage": "http://localhost:3000/searchBing",
+            "searchImage": "http://localhost:3000/searchBing/",
             "postCard": "http://localhost:3000/card",
             "discoverCards": "http://localhost:3000/discoverCards",
             "duplicateCard": "http://localhost:3000/duplicateCard",
@@ -204,6 +206,7 @@
             "getCommentReactionDetail": "http://localhost:3000/class/commentReactionDetail/",
             "getComments": "http://localhost:3000/class/comments/",
             "searchGif": "http://localhost:3000/searchGif/",
-            "getUserDecks": "http://localhost:3000/deckschildren/u"
+            "getUserDecks": "http://localhost:3000/deckschildren/u",
+            "createUserDeck":"http://localhost:3000/deck/u"
         }
 }
