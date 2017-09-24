@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import Radium from "radium";
+import axios from "axios";
+import config from "../../config";
 import Modal from "./util/modal.jsx";
 import TextField from "./util/textField.jsx";
 import RaisedButton from 'material-ui/RaisedButton';
@@ -8,46 +10,18 @@ import {reduxForm } from 'redux-form';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {createUserDeck} from "../actions/deck.js";
-import {successAlert} from "../actions/alerts.js";
+import {successAlert, infoAlert, showLoading, hideLoading} from "../actions/alerts.js";
 import {reset} from 'redux-form';
 import AddImage from "./addImage.jsx";
+const CLOUDFRONT_URL = config.cloudfrontUrl;
 
 const FORM_NAME = "userdeckForm";
+const IMAGE_PROXY_URL = config.apiImageProxy;
 
 const style ={
 }
 
-class CreateDeck extends Component{
-
-    constructor(props){
-        super(props);
-        var parentId = null;
-        var lastDeck = props.path.pop();
-        if(lastDeck)
-            parentId = lastDeck.id;
-        this.state = {openModal:false, parentId: parentId};
-        this.openModal = this.openModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-    }
-
-    openModal(){
-        this.setState({openModal:true});
-    }
-
-     closeModal(){
-        this.setState({openModal:false});
-    }
-
-    onSubmit({name, description, lang}){
-        this.props.createUserDeck(name, description, lang, this.state.parentId,()=>{
-            this.closeModal();
-            this.props.successAlert("Deck created succesfully !");
-            this.props.dispatch(reset(FORM_NAME));  //reset form
-        });
-    }
-
-    langOptions(){
+function langOptions(){
         return [{value:"", label:"Choose a language for the deck"},
                 {label: "English", value:"en"},
                 {label: "Español", value:"es"},
@@ -77,6 +51,69 @@ class CreateDeck extends Component{
                 {label: "简体中文", value:"zh"}];
     }
 
+class CreateDeck extends Component{
+
+    constructor(props){
+        super(props);
+        var parentId = null;
+        var lastDeck = props.path.pop();
+        if(lastDeck)
+            parentId = lastDeck.id;
+        this.state = {openModal:false, parentId: parentId, imgs: []};
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+        this.renderForm = this.renderForm.bind(this);
+        this.onImgPick = this.onImgPick.bind(this);
+    }
+
+    openModal(){
+        this.setState({openModal:true});
+    }
+
+     closeModal(){
+        this.setState({openModal:false});
+    }
+
+    onSubmit({name, description, lang}){
+        this.props.createUserDeck(name, description, lang, this.state.parentId,()=>{
+            this.closeModal();
+            this.props.successAlert("Deck created succesfully !");
+            this.props.dispatch(reset(FORM_NAME));  //reset form
+        });
+    }
+
+    onImgPick(img){
+        console.log("img: ", img);
+        this.props.showLoading();
+        axios.post(IMAGE_PROXY_URL, img, {headers:{'x-access-token': localStorage.getItem("jwt")}})
+        .then(r=>{
+            this.props.hideLoading();
+            if(r.data.success == false){
+                this.props.infoAlert("This image can not be downloaded, please try with another one");
+                return console.error(r.data.msg);
+            }
+            const url = CLOUDFRONT_URL + r.data.hash;
+            const img2 = {url:url,
+                          width: img.width,
+                          height: img.height,
+                          x:0,
+                          y:0};
+            this.setState({imgs: [img2]});
+        })
+        .catch(err=>{
+            console.error(err);
+        });
+    }
+
+    onImgCrop(){
+
+    }
+
+    onImgDelete(){
+
+    }
+
     renderForm(){
         const {handleSubmit} = this.props;
         return (
@@ -104,7 +141,7 @@ class CreateDeck extends Component{
                                     </div>
                                       <div className="form-group">
                                         <div className="col-sm-12">
-                                            <AddImage titleModal="Add cover for deck" label="Add cover image"/>
+                                            <AddImage imgs={this.state.imgs} max={1} disabled={this.props.bigLoading} callback={this.onImgPick} titleModal="Add cover for deck" label="Add cover image"/>
                                             <TextField
                                                 name="img"
                                                 fieldType="input"
@@ -118,14 +155,14 @@ class CreateDeck extends Component{
                                                 name="lang"
                                                 placeholder="Description, What kind of things will your deck hold?"
                                                 fieldType="select"
-                                                options={this.langOptions()}
+                                                options={langOptions()}
                                             />
                                         </div>
                                     </div>
         
                                     <div className="form-group">
                                         <div className="col-sm-offset-2 col-sm-12">
-                                            <RaisedButton disabled={this.props.bigLoading} type="submit" backgroundColor="#5cb85c" label="Create" />
+                                            <RaisedButton labelColor="#ffffff" disabled={this.props.bigLoading} type="submit" backgroundColor="#5cb85c" label="Create" />
                                         </div>
                                     </div>
                         </form>
@@ -163,7 +200,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ createUserDeck, successAlert}, dispatch);
+  return bindActionCreators({ createUserDeck, successAlert, infoAlert, showLoading, hideLoading}, dispatch);
 }
 
 CreateDeck.PropTypes = {

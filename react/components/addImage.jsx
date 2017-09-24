@@ -18,6 +18,29 @@ const style = {
     },
     marginTop:{
         marginTop: "20px"
+    },
+    img:{
+        maxWidth: "150px"
+    },
+    imgWrap:{
+        position: "relative",
+        maxWidth: "150px",
+        display: "inline-block",
+        ":hover":{
+            
+        }
+    },
+    imgBtns:{
+        position: "absolute",
+        bottom: "5px",
+        right: "5px",
+        opacity: 2
+    },
+    imgBtn:{
+        margin:"5px",
+        fontSize: "x-large",
+        color: "red",
+        cursor: "pointer"
     }
 }
 
@@ -62,6 +85,10 @@ class AddImage extends Component{
         this.onChange = this.onChange.bind(this);
         this.searchImg = this.searchImg.bind(this);
         this.searchGif = this.searchGif.bind(this);
+        this.onImgPick = this.onImgPick.bind(this);
+        this.renderPicker = this.renderPicker.bind(this);
+        this.renderImgs = this.renderImgs.bind(this);
+        this.renderImg = this.renderImg.bind(this);
     }
 
     openModal(){
@@ -114,7 +141,12 @@ class AddImage extends Component{
         })
     }
 
-    renderBody(){
+    onImgPick(img){
+        this.closeModal();
+        this.props.callback(img);
+    }
+
+    renderPicker(){
         return (
             <div className="container">
                 <div className="row">
@@ -141,7 +173,7 @@ class AddImage extends Component{
                 <div style={style.marginTop} className="row">
                     <div className="col mx-auto">
                         <div className="text-center">
-                            <ImgPicker imgs={this.state.imgs} isLoading={this.state.isLoading}/>
+                            <ImgPicker callback={this.onImgPick} imgs={this.state.imgs} isLoading={this.state.isLoading}/>
                         </div>
                     </div>
                 </div>
@@ -149,13 +181,49 @@ class AddImage extends Component{
         );
     }
 
+    renderImg(img){
+        console.log("img: " , img);
+        return (
+            <div style={style.imgWrap} key={img.url}>
+                <img style={style.img} src={img.url} />
+                {Radium.getState(this.state, img.url, ':hover') && (
+                        <span style={style.imgBtns}>
+                            <i style={style.imgBtn} className="fa fa-trash" aria-hidden="true"></i>
+                            <i style={style.imgBtn} className="fa fa-crop" aria-hidden="true"></i>
+                        </span>
+                )}
+            </div>
+        );
+    }
+
+    renderImgs(){
+        return (
+            <div>
+                {this.props.imgs.map(this.renderImg)}
+            </div>
+        );
+    }
+
+    renderButton(){
+        return <RaisedButton onClick={this.openModal} labelColor="#ffffff"  disabled={this.props.disabled} backgroundColor="#f4424b" label={this.props.label} />
+    }
+
+    renderBottom(){
+        var body = [];
+        if(this.props.max - this.props.imgs.length > 0 ){
+            body.push(<div key={1}>{this.renderButton()}</div>);
+        }
+        body.push(<div key={2}>{this.renderImgs()}</div>);
+        return body;
+    }
+
     render(){
         return (
             <div>
                 <Modal onClose={this.closeModal} modal={false} open={this.state.openModal} closeLabel="Cancel" title={this.renderTitle()}>
-                    {this.renderBody()}
+                    {this.renderPicker()}
                 </Modal>
-                    <RaisedButton onClick={this.openModal} labelColor="#ffffff"  disabled={this.props.bigLoading} backgroundColor="#f4424b" label={this.props.label} />
+                    {this.renderBottom()}
             </div>
         );
     }

@@ -52,7 +52,7 @@ class DeckGallery extends Component{
     renderDeck(deck){
         var img;
         if(deck.thumbnail)
-            img = CLOUDFRONT_URL + deck.thumbnail;
+            img = CLOUDFRONT_URL + deck.thumbnail.hash;
         else
             img= "/assets/img/default.jpg";
         return (

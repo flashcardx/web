@@ -75,5 +75,6 @@ module.exports = {
     apiSearchGif: api.searchGif,
     apiGetUserDecks: api.getUserDecks,
     cloudfrontUrl: keys.cloudfrontUrl,
-    apiCreateUserDeck: api.createUserDeck
+    apiCreateUserDeck: api.createUserDeck,
+    apiImageProxy: api.imageProxy
 };

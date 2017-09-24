@@ -3,18 +3,30 @@ import Radium from "radium";
 import CircularProgress from 'material-ui/CircularProgress';
 import Bricks from 'bricks.js';
 
+const style = {
+    img:{
+        maxWidth: "150px",
+        cursor: "pointer"
+    }
+}
+
 class ImgPicker extends Component{
     constructor(props){
         super(props);
         this.renderImg = this.renderImg.bind(this);
+        this.pickImg = this.pickImg.bind(this);
+    }
+
+    pickImg(img){
+        this.props.callback(img);
     }
 
     renderImg(img){
-        return <img key={img.preview} src={img.preview}/>
+        return <img onClick={()=>this.pickImg(img.real)}key={img.preview} style={style.img} src={img.preview}/>
+            
     }
 
     componentDidUpdate(){
-        console.log("component update");
         const sizes = [
                         { columns: 2, gutter: 10 },
                         { mq: '768px', columns: 3, gutter: 25 },
@@ -28,7 +40,6 @@ class ImgPicker extends Component{
     }
 
     componentDidMount(){
-        console.log("did mount");
         const sizes = [
                         { columns: 2, gutter: 10 },
                         { mq: '768px', columns: 3, gutter: 25 },
