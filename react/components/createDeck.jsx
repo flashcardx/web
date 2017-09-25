@@ -13,13 +13,8 @@ import {createUserDeck} from "../actions/deck.js";
 import {successAlert, infoAlert, showLoading, hideLoading} from "../actions/alerts.js";
 import {reset} from 'redux-form';
 import AddImage from "./addImage.jsx";
-const CLOUDFRONT_URL = config.cloudfrontUrl;
 
 const FORM_NAME = "userdeckForm";
-const IMAGE_PROXY_URL = config.apiImageProxy;
-
-const style ={
-}
 
 function langOptions(){
         return [{value:"", label:"Choose a language for the deck"},
@@ -59,66 +54,15 @@ class CreateDeck extends Component{
         var lastDeck = props.path.pop();
         if(lastDeck)
             parentId = lastDeck.id;
-        this.state = {openModal:false, parentId: parentId, imgs: []};
-        this.openModal = this.openModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+        this.state = {parentId: parentId};
         this.renderForm = this.renderForm.bind(this);
-        this.onImgPick = this.onImgPick.bind(this);
-    }
-
-    openModal(){
-        this.setState({openModal:true});
-    }
-
-     closeModal(){
-        this.setState({openModal:false});
-    }
-
-    onSubmit({name, description, lang}){
-        this.props.createUserDeck(name, description, lang, this.state.parentId,()=>{
-            this.closeModal();
-            this.props.successAlert("Deck created succesfully !");
-            this.props.dispatch(reset(FORM_NAME));  //reset form
-        });
-    }
-
-    onImgPick(img){
-        console.log("img: ", img);
-        this.props.showLoading();
-        axios.post(IMAGE_PROXY_URL, img, {headers:{'x-access-token': localStorage.getItem("jwt")}})
-        .then(r=>{
-            this.props.hideLoading();
-            if(r.data.success == false){
-                this.props.infoAlert("This image can not be downloaded, please try with another one");
-                return console.error(r.data.msg);
-            }
-            const url = CLOUDFRONT_URL + r.data.hash;
-            const img2 = {url:url,
-                          width: img.width,
-                          height: img.height,
-                          x:0,
-                          y:0};
-            this.setState({imgs: [img2]});
-        })
-        .catch(err=>{
-            console.error(err);
-        });
-    }
-
-    onImgCrop(){
-
-    }
-
-    onImgDelete(){
-
     }
 
     renderForm(){
         const {handleSubmit} = this.props;
         return (
             <div>
-                <form onSubmit={handleSubmit(this.onSubmit)} >
+                <form onSubmit={handleSubmit(this.props.onSubmit)} >
                                     <div className="form-group">
                                         <div className="col-sm-12">
                                             <TextField
@@ -141,7 +85,7 @@ class CreateDeck extends Component{
                                     </div>
                                       <div className="form-group">
                                         <div className="col-sm-12">
-                                            <AddImage imgs={this.state.imgs} max={1} disabled={this.props.bigLoading} callback={this.onImgPick} titleModal="Add cover for deck" label="Add cover image"/>
+                                            <AddImage imgs={this.props.imgs} max={1} disabled={this.props.bigLoading} callback={this.props.onImgPick} titleModal="Add cover for deck" label="Add cover image"/>
                                             <TextField
                                                 name="img"
                                                 fieldType="input"
@@ -173,38 +117,22 @@ class CreateDeck extends Component{
     render(){
         return (
             <div>
-                <Modal onClose={this.closeModal} modal={false} open={this.state.openModal} closeLabel="Cancel" title="Create new deck">
+                <Modal onClose={this.props.closeModal} modal={false} open={this.props.modalIsOpen} closeLabel="Cancel" title="Create new deck">
                     {this.renderForm()}
                 </Modal>
-                <RaisedButton onClick={this.openModal} labelColor="#ffffff"  disabled={this.props.bigLoading} backgroundColor="#f4424b" label="Create deck" />
+                <RaisedButton onClick={this.props.openModal} labelColor="#ffffff"  disabled={this.props.bigLoading} backgroundColor="#f4424b" label="Create deck" />
             </div>
         );
     }
-}
-
-function validate({name, description, lang, img}){
-    var errors = {};
-    if(!img)
-        errors.img = "Please add an mage for your deck";
-    if(!name || name.length < 4)
-        errors.name = "Deck name must be at least 4 characters long!";
-    if(!description || description.length < 5)
-        errors.description = "Deck description must be at least 5 characters long!";
-    if(!lang)
-        errors.lang = "You must select a language for your deck!";
-    return errors;
 }
 
 function mapStateToProps(state){
     return {bigLoading: state.bigLoading};
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ createUserDeck, successAlert, infoAlert, showLoading, hideLoading}, dispatch);
-}
 
 CreateDeck.PropTypes = {
     path: PropTypes.array.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({validate, form:FORM_NAME, initialValues: { lang: "" }})(Radium(CreateDeck)));
+export default connect(mapStateToProps)(Radium(CreateDeck));

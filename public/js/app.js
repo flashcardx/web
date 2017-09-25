@@ -59224,10 +59224,6 @@ var _discover = __webpack_require__(983);
 
 var _discover2 = _interopRequireDefault(_discover);
 
-var _classes = __webpack_require__(984);
-
-var _classes2 = _interopRequireDefault(_classes);
-
 var _practice = __webpack_require__(985);
 
 var _practice2 = _interopRequireDefault(_practice);
@@ -59274,9 +59270,9 @@ var _parseApiResponse = __webpack_require__(1112);
 
 var _parseApiResponse2 = _interopRequireDefault(_parseApiResponse);
 
-var _alertsDisplay = __webpack_require__(1113);
+var _alertContainer = __webpack_require__(1122);
 
-var _alertsDisplay2 = _interopRequireDefault(_alertsDisplay);
+var _alertContainer2 = _interopRequireDefault(_alertContainer);
 
 var _reduxThunk = __webpack_require__(1114);
 
@@ -59324,7 +59320,6 @@ var App = function (_Component) {
                     null,
                     _react2.default.createElement(_reactRouterDom.Route, { path: "/discover", component: (0, _authRedirect.requireAuth)(_discover2.default, "/landing") }),
                     _react2.default.createElement(_reactRouterDom.Route, { path: "/feed", component: (0, _authRedirect.requireAuth)(_feed2.default, "/landing") }),
-                    _react2.default.createElement(_reactRouterDom.Route, { path: "/classes", component: (0, _authRedirect.requireAuth)(_classes2.default, "/landing") }),
                     _react2.default.createElement(_reactRouterDom.Route, { path: "/practice", component: (0, _authRedirect.requireAuth)(_practice2.default, "/landing") }),
                     _react2.default.createElement(_reactRouterDom.Route, { path: "/settings", component: (0, _authRedirect.requireAuth)(_settings2.default, "/landing") }),
                     _react2.default.createElement(_reactRouterDom.Route, { path: "/email-verification/:id", component: (0, _authRedirect.validateEmail)(_landing2.default, "/landing") }),
@@ -59349,7 +59344,7 @@ _reactDom2.default.render(_react2.default.createElement(
         _react2.default.createElement(
             "div",
             null,
-            _react2.default.createElement(_alertsDisplay2.default, null),
+            _react2.default.createElement(_alertContainer2.default, null),
             _react2.default.createElement(_reactTooltip2.default, { delayShow: 500 }),
             _react2.default.createElement(_loading2.default, null),
             _react2.default.createElement(App, null)
@@ -75439,9 +75434,9 @@ var _RaisedButton = __webpack_require__(62);
 
 var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
-var _createDeck = __webpack_require__(791);
+var _createUserDeckContainer = __webpack_require__(1121);
 
-var _createDeck2 = _interopRequireDefault(_createDeck);
+var _createUserDeckContainer2 = _interopRequireDefault(_createUserDeckContainer);
 
 var _deckGallery = __webpack_require__(958);
 
@@ -75555,7 +75550,7 @@ var Home = function (_Component) {
                         _react2.default.createElement(
                             "div",
                             { className: "col-lg-3 col-sm-6" },
-                            _react2.default.createElement(_createDeck2.default, { path: this.state.path })
+                            _react2.default.createElement(_createUserDeckContainer2.default, { path: this.state.path })
                         )
                     ),
                     _react2.default.createElement(
@@ -75618,7 +75613,7 @@ var _moreVert = __webpack_require__(738);
 
 var _moreVert2 = _interopRequireDefault(_moreVert);
 
-var _notificationBadge = __webpack_require__(739);
+var _notificationBadge = __webpack_require__(1120);
 
 var _notificationBadge2 = _interopRequireDefault(_notificationBadge);
 
@@ -84788,153 +84783,7 @@ NavigationMoreVert.muiName = 'SvgIcon';
 exports.default = NavigationMoreVert;
 
 /***/ }),
-/* 739 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = __webpack_require__(17);
-
-var _radium = __webpack_require__(24);
-
-var _radium2 = _interopRequireDefault(_radium);
-
-var _axios = __webpack_require__(49);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _Badge = __webpack_require__(758);
-
-var _Badge2 = _interopRequireDefault(_Badge);
-
-var _FlatButton = __webpack_require__(117);
-
-var _FlatButton2 = _interopRequireDefault(_FlatButton);
-
-var _notifications = __webpack_require__(762);
-
-var _notifications2 = _interopRequireDefault(_notifications);
-
-var _IconButton = __webpack_require__(91);
-
-var _IconButton2 = _interopRequireDefault(_IconButton);
-
-var _notifications3 = __webpack_require__(309);
-
-var _notificationModal = __webpack_require__(765);
-
-var _notificationModal2 = _interopRequireDefault(_notificationModal);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var style = {
-    badge: {
-        fontSize: "10px",
-        width: "18px",
-        height: "18px",
-        top: 0,
-        right: 0,
-        padding: "0px"
-    },
-    notifications: {
-        margin: "0px",
-        padding: "0px"
-    },
-    noscroll: {
-        overflowY: "hidden"
-    }
-};
-
-var NotificationBadge = function (_Component) {
-    _inherits(NotificationBadge, _Component);
-
-    function NotificationBadge(props) {
-        _classCallCheck(this, NotificationBadge);
-
-        var _this = _possibleConstructorReturn(this, (NotificationBadge.__proto__ || Object.getPrototypeOf(NotificationBadge)).call(this, props));
-
-        _this.state = { open: false };
-        _this.openModal = _this.openModal.bind(_this);
-        return _this;
-    }
-
-    _createClass(NotificationBadge, [{
-        key: "openModal",
-        value: function openModal() {
-            this.props.showNotifs();
-        }
-    }, {
-        key: "componentDidMount",
-        value: function componentDidMount() {
-            this.props.fetchCount();
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            if (this.props.count) return _react2.default.createElement(
-                "div",
-                null,
-                _react2.default.createElement(_notificationModal2.default, null),
-                _react2.default.createElement(
-                    "div",
-                    { style: style.notifications },
-                    _react2.default.createElement(
-                        _Badge2.default,
-                        {
-                            style: style.notifications,
-                            badgeStyle: style.badge,
-                            badgeContent: this.props.count,
-                            secondary: true
-                        },
-                        _react2.default.createElement(
-                            _IconButton2.default,
-                            { style: style.notifications, onClick: this.openModal, "data-tip": "Notifications" },
-                            _react2.default.createElement(_notifications2.default, { style: style.notifications })
-                        )
-                    )
-                )
-            );else return _react2.default.createElement(
-                "div",
-                null,
-                _react2.default.createElement(_notificationModal2.default, null),
-                _react2.default.createElement(
-                    _IconButton2.default,
-                    { style: style.notifications, onClick: this.openModal, "data-tip": "Notifications" },
-                    _react2.default.createElement(_notifications2.default, { style: style.notifications })
-                )
-            );
-        }
-    }]);
-
-    return NotificationBadge;
-}(_react.Component);
-
-function mapStateToProps(state) {
-    return { count: state.notificationCount };
-}
-
-var radiumComponent = (0, _radium2.default)(NotificationBadge);
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps, { fetchCount: _notifications3.fetchCount, showNotifs: _notifications3.showNotifs })(radiumComponent);
-
-/***/ }),
+/* 739 */,
 /* 740 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -91751,12 +91600,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var CLOUDFRONT_URL = _config2.default.cloudfrontUrl;
-
 var FORM_NAME = "userdeckForm";
-var IMAGE_PROXY_URL = _config2.default.apiImageProxy;
-
-var style = {};
 
 function langOptions() {
     return [{ value: "", label: "Choose a language for the deck" }, { label: "English", value: "en" }, { label: "Español", value: "es" }, { label: "Čeština", value: "cs" }, { label: "Dansk", value: "da" }, { label: "Deutsch", value: "de" }, { label: "Français", value: "fr" }, { label: "Indonesia", value: "id" }, { label: "Italiano", value: "it" }, { label: "Magyar", value: "hu" }, { label: "Nederlands", value: "nl" }, { label: "Norsk", value: "no" }, { label: "Polski", value: "pl" }, { label: "Português", value: "pt" }, { label: "Română", value: "ro" }, { label: "Slovenčina", value: "sk" }, { label: "Suomi", value: "fi" }, { label: "Svenska", value: "sv" }, { label: "Türkçe", value: "tr" }, { label: "Việt", value: "vi" }, { label: "ไทย", value: "th" }, { label: "Български", value: "bq" }, { label: "Русский", value: "ru" }, { label: "Ελληνική", value: "el" }, { label: "한국어", value: "ko" }, { label: "日本語", value: "ja" }, { label: "简体中文", value: "zh" }];
@@ -91773,71 +91617,12 @@ var CreateDeck = function (_Component) {
         var parentId = null;
         var lastDeck = props.path.pop();
         if (lastDeck) parentId = lastDeck.id;
-        _this.state = { openModal: false, parentId: parentId, imgs: [] };
-        _this.openModal = _this.openModal.bind(_this);
-        _this.closeModal = _this.closeModal.bind(_this);
-        _this.onSubmit = _this.onSubmit.bind(_this);
+        _this.state = { parentId: parentId };
         _this.renderForm = _this.renderForm.bind(_this);
-        _this.onImgPick = _this.onImgPick.bind(_this);
         return _this;
     }
 
     _createClass(CreateDeck, [{
-        key: 'openModal',
-        value: function openModal() {
-            this.setState({ openModal: true });
-        }
-    }, {
-        key: 'closeModal',
-        value: function closeModal() {
-            this.setState({ openModal: false });
-        }
-    }, {
-        key: 'onSubmit',
-        value: function onSubmit(_ref) {
-            var _this2 = this;
-
-            var name = _ref.name,
-                description = _ref.description,
-                lang = _ref.lang;
-
-            this.props.createUserDeck(name, description, lang, this.state.parentId, function () {
-                _this2.closeModal();
-                _this2.props.successAlert("Deck created succesfully !");
-                _this2.props.dispatch((0, _reduxForm.reset)(FORM_NAME)); //reset form
-            });
-        }
-    }, {
-        key: 'onImgPick',
-        value: function onImgPick(img) {
-            var _this3 = this;
-
-            console.log("img: ", img);
-            this.props.showLoading();
-            _axios2.default.post(IMAGE_PROXY_URL, img, { headers: { 'x-access-token': localStorage.getItem("jwt") } }).then(function (r) {
-                _this3.props.hideLoading();
-                if (r.data.success == false) {
-                    _this3.props.infoAlert("This image can not be downloaded, please try with another one");
-                    return console.error(r.data.msg);
-                }
-                var url = CLOUDFRONT_URL + r.data.hash;
-                var img2 = { url: url,
-                    width: img.width,
-                    height: img.height,
-                    x: 0,
-                    y: 0 };
-                _this3.setState({ imgs: [img2] });
-            }).catch(function (err) {
-                console.error(err);
-            });
-        }
-    }, {
-        key: 'onImgCrop',
-        value: function onImgCrop() {}
-    }, {
-        key: 'onImgDelete',
-        value: function onImgDelete() {}
-    }, {
         key: 'renderForm',
         value: function renderForm() {
             var handleSubmit = this.props.handleSubmit;
@@ -91847,7 +91632,7 @@ var CreateDeck = function (_Component) {
                 null,
                 _react2.default.createElement(
                     'form',
-                    { onSubmit: handleSubmit(this.onSubmit) },
+                    { onSubmit: handleSubmit(this.props.onSubmit) },
                     _react2.default.createElement(
                         'div',
                         { className: 'form-group' },
@@ -91882,7 +91667,7 @@ var CreateDeck = function (_Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'col-sm-12' },
-                            _react2.default.createElement(_addImage2.default, { imgs: this.state.imgs, max: 1, disabled: this.props.bigLoading, callback: this.onImgPick, titleModal: 'Add cover for deck', label: 'Add cover image' }),
+                            _react2.default.createElement(_addImage2.default, { imgs: this.props.imgs, max: 1, disabled: this.props.bigLoading, callback: this.props.onImgPick, titleModal: 'Add cover for deck', label: 'Add cover image' }),
                             _react2.default.createElement(_textField2.default, {
                                 name: 'img',
                                 fieldType: 'input',
@@ -91924,10 +91709,10 @@ var CreateDeck = function (_Component) {
                 null,
                 _react2.default.createElement(
                     _modal2.default,
-                    { onClose: this.closeModal, modal: false, open: this.state.openModal, closeLabel: 'Cancel', title: 'Create new deck' },
+                    { onClose: this.props.closeModal, modal: false, open: this.props.modalIsOpen, closeLabel: 'Cancel', title: 'Create new deck' },
                     this.renderForm()
                 ),
-                _react2.default.createElement(_RaisedButton2.default, { onClick: this.openModal, labelColor: '#ffffff', disabled: this.props.bigLoading, backgroundColor: '#f4424b', label: 'Create deck' })
+                _react2.default.createElement(_RaisedButton2.default, { onClick: this.props.openModal, labelColor: '#ffffff', disabled: this.props.bigLoading, backgroundColor: '#f4424b', label: 'Create deck' })
             );
         }
     }]);
@@ -91935,33 +91720,15 @@ var CreateDeck = function (_Component) {
     return CreateDeck;
 }(_react.Component);
 
-function validate(_ref2) {
-    var name = _ref2.name,
-        description = _ref2.description,
-        lang = _ref2.lang,
-        img = _ref2.img;
-
-    var errors = {};
-    if (!img) errors.img = "Please add an mage for your deck";
-    if (!name || name.length < 4) errors.name = "Deck name must be at least 4 characters long!";
-    if (!description || description.length < 5) errors.description = "Deck description must be at least 5 characters long!";
-    if (!lang) errors.lang = "You must select a language for your deck!";
-    return errors;
-}
-
 function mapStateToProps(state) {
     return { bigLoading: state.bigLoading };
-}
-
-function mapDispatchToProps(dispatch) {
-    return (0, _redux.bindActionCreators)({ createUserDeck: _deck.createUserDeck, successAlert: _alerts.successAlert, infoAlert: _alerts.infoAlert, showLoading: _alerts.showLoading, hideLoading: _alerts.hideLoading }, dispatch);
 }
 
 CreateDeck.PropTypes = {
     path: _propTypes2.default.array.isRequired
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)((0, _reduxForm.reduxForm)({ validate: validate, form: FORM_NAME, initialValues: { lang: "" } })((0, _radium2.default)(CreateDeck)));
+exports.default = (0, _reactRedux.connect)(mapStateToProps)((0, _radium2.default)(CreateDeck));
 
 /***/ }),
 /* 792 */
@@ -104108,37 +103875,7 @@ function Discover() {
 exports.default = Discover;
 
 /***/ }),
-/* 984 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _page = __webpack_require__(58);
-
-var _page2 = _interopRequireDefault(_page);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function Classes() {
-    return _react2.default.createElement(
-        _page2.default,
-        { name: "classes" },
-        "Classes"
-    );
-}
-
-exports.default = Classes;
-
-/***/ }),
+/* 984 */,
 /* 985 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -109798,11 +109535,11 @@ var _RaisedButton = __webpack_require__(62);
 
 var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 
-var _signinForm = __webpack_require__(1029);
+var _signinForm = __webpack_require__(1119);
 
 var _signinForm2 = _interopRequireDefault(_signinForm);
 
-var _signupForm = __webpack_require__(1030);
+var _signupForm = __webpack_require__(1118);
 
 var _signupForm2 = _interopRequireDefault(_signupForm);
 
@@ -110142,315 +109879,8 @@ function mapStateToProps(_ref2) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, { resendEmailSignup: _auth.resendEmailSignup, fbAuth: _auth.fbAuth })((0, _radium2.default)(Landing));
 
 /***/ }),
-/* 1029 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(2);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _reduxForm = __webpack_require__(75);
-
-var _textField = __webpack_require__(118);
-
-var _textField2 = _interopRequireDefault(_textField);
-
-var _RaisedButton = __webpack_require__(62);
-
-var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
-
-var _radium = __webpack_require__(24);
-
-var _radium2 = _interopRequireDefault(_radium);
-
-var _reactRedux = __webpack_require__(17);
-
-var _auth = __webpack_require__(74);
-
-var _reactRouterDom = __webpack_require__(82);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var style = {
-    marginLeft: {
-        marginLeft: "5px"
-    }
-};
-
-var SigninForm = function (_Component) {
-    _inherits(SigninForm, _Component);
-
-    function SigninForm(props) {
-        _classCallCheck(this, SigninForm);
-
-        var _this = _possibleConstructorReturn(this, (SigninForm.__proto__ || Object.getPrototypeOf(SigninForm)).call(this, props));
-
-        _this.state = { className: props.className };
-        _this.captchaExecute = props.captchaExecute.bind(_this);
-        _this.onSubmit = _this.onSubmit.bind(_this);
-        return _this;
-    }
-
-    _createClass(SigninForm, [{
-        key: 'onSubmit',
-        value: function onSubmit(values) {
-            var _this2 = this;
-
-            this.captchaExecute(function (key) {
-                _this2.props.SigninAction(values, key);
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var handleSubmit = this.props.handleSubmit;
-
-            return _react2.default.createElement(
-                'form',
-                { onSubmit: handleSubmit(this.onSubmit), className: this.state.className },
-                _react2.default.createElement(_textField2.default, {
-                    name: 'email',
-                    type: 'text',
-                    placeholder: 'Email',
-                    fieldType: 'input'
-                }),
-                _react2.default.createElement(_textField2.default, {
-                    style: style.marginLeft,
-                    name: 'password',
-                    type: 'password',
-                    placeholder: 'password',
-                    fieldType: 'input'
-                }),
-                _react2.default.createElement(_RaisedButton2.default, { disabled: this.props.bigLoading, type: 'submit', style: style.marginLeft, backgroundColor: '#5cb85c', label: 'Sign in' })
-            );
-        }
-    }]);
-
-    return SigninForm;
-}(_react.Component);
-
-function validate(_ref) {
-    var email = _ref.email,
-        password = _ref.password;
-
-    var errors = {};
-    if (!email) errors.email = "Insert an email";
-    if (!password) errors.password = "Insert a password";
-    return errors;
-}
-
-SigninForm.propTypes = {
-    className: _propTypes2.default.string
-};
-
-function mapStateToProps(state) {
-    return { bigLoading: state.bigLoading };
-}
-
-exports.default = (0, _reduxForm.reduxForm)({ validate: validate, form: "SigninForm" })((0, _reactRedux.connect)(mapStateToProps, { SigninAction: _auth.signin })((0, _radium2.default)(SigninForm)));
-
-/***/ }),
-/* 1030 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(2);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _reduxForm = __webpack_require__(75);
-
-var _textField = __webpack_require__(118);
-
-var _textField2 = _interopRequireDefault(_textField);
-
-var _RaisedButton = __webpack_require__(62);
-
-var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
-
-var _radium = __webpack_require__(24);
-
-var _radium2 = _interopRequireDefault(_radium);
-
-var _reactRedux = __webpack_require__(17);
-
-var _auth = __webpack_require__(74);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var style = {
-    borderForm: {
-        border: "1px solid gray",
-        paddingTop: "8px"
-    }
-};
-
-var SignupForm = function (_Component) {
-    _inherits(SignupForm, _Component);
-
-    function SignupForm(props) {
-        _classCallCheck(this, SignupForm);
-
-        var _this = _possibleConstructorReturn(this, (SignupForm.__proto__ || Object.getPrototypeOf(SignupForm)).call(this, props));
-
-        _this.captchaExecute = props.captchaExecute.bind(_this);
-        _this.onSubmit = _this.onSubmit.bind(_this);
-        return _this;
-    }
-
-    _createClass(SignupForm, [{
-        key: 'onSubmit',
-        value: function onSubmit(values) {
-            var _this2 = this;
-
-            this.captchaExecute(function (key) {
-                _this2.props.SignupAction(values, key);
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var handleSubmit = this.props.handleSubmit;
-
-            return _react2.default.createElement(
-                'form',
-                { onSubmit: handleSubmit(this.onSubmit), className: this.props.className, style: style.borderForm },
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'col-sm-12' },
-                        _react2.default.createElement(_textField2.default, {
-                            name: 'email',
-                            type: 'email',
-                            placeholder: 'Your email',
-                            fieldType: 'input'
-                        })
-                    )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'col-sm-12' },
-                        _react2.default.createElement(_textField2.default, {
-                            name: 'name',
-                            type: 'text',
-                            placeholder: 'Your awesome name',
-                            fieldType: 'input'
-                        })
-                    )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'col-sm-12' },
-                        _react2.default.createElement(_textField2.default, {
-                            style: style.marginLeft,
-                            name: 'password',
-                            type: 'password',
-                            placeholder: 'What will be your Password?',
-                            fieldType: 'input'
-                        })
-                    )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'col-sm-12' },
-                        _react2.default.createElement(_textField2.default, {
-                            style: style.marginLeft,
-                            name: 'password2',
-                            type: 'password',
-                            placeholder: 'Confirm password',
-                            fieldType: 'input'
-                        })
-                    )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'col-sm-offset-2 col-sm-12' },
-                        _react2.default.createElement(_RaisedButton2.default, { disabled: this.props.bigLoading, type: 'submit', backgroundColor: '#5cb85c', label: 'Sign up!' })
-                    )
-                )
-            );
-        }
-    }]);
-
-    return SignupForm;
-}(_react.Component);
-
-function validate(_ref) {
-    var email = _ref.email,
-        name = _ref.name,
-        password = _ref.password,
-        password2 = _ref.password2;
-
-    var errors = {};
-    if (!email) errors.email = "Please enter an email, it is in good hands";
-    if (!name || name.length < 4) errors.name = "mmm... Your name must at least 4 characters";
-    if (!password || password.length < 4) errors.password = "Be careful! You need a password with at least 4 characters long";
-    if (password !== password2) errors.password2 = "Oops! Password and confirmation password must be the same ;)";
-    return errors;
-}
-
-SignupForm.propTypes = {
-    className: _propTypes2.default.string
-};
-
-function mapStateToProps(state) {
-    return { signupMsg: state.signupMsg, bigLoading: state.bigLoading };
-}
-
-exports.default = (0, _reduxForm.reduxForm)({ validate: validate, form: "SignupForm" })((0, _reactRedux.connect)(mapStateToProps, { SignupAction: _auth.signup })((0, _radium2.default)(SignupForm)));
-
-/***/ }),
+/* 1029 */,
+/* 1030 */,
 /* 1031 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -115787,71 +115217,7 @@ var _lodash2 = _interopRequireDefault(_lodash);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 1113 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = __webpack_require__(17);
-
-var _radium = __webpack_require__(24);
-
-var _radium2 = _interopRequireDefault(_radium);
-
-var _alert = __webpack_require__(466);
-
-var _alert2 = _interopRequireDefault(_alert);
-
-var _alerts = __webpack_require__(95);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var AlertsDisplay = function (_Component) {
-    _inherits(AlertsDisplay, _Component);
-
-    function AlertsDisplay() {
-        _classCallCheck(this, AlertsDisplay);
-
-        return _possibleConstructorReturn(this, (AlertsDisplay.__proto__ || Object.getPrototypeOf(AlertsDisplay)).apply(this, arguments));
-    }
-
-    _createClass(AlertsDisplay, [{
-        key: "render",
-        value: function render() {
-            var alert = this.props.alert;
-
-            if (!alert) return null;
-            return _react2.default.createElement(_alert2.default, { msg: alert.msg, type: alert.type });
-        }
-    }]);
-
-    return AlertsDisplay;
-}(_react.Component);
-
-function mapStateToProps(state) {
-    return { alert: state.alert };
-}
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps)(AlertsDisplay);
-
-/***/ }),
+/* 1113 */,
 /* 1114 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -116201,6 +115567,689 @@ LinearProgress.propTypes = undefined !== "production" ? {
   value: _propTypes2.default.number
 } : {};
 exports.default = LinearProgress;
+
+/***/ }),
+/* 1118 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reduxForm = __webpack_require__(75);
+
+var _textField = __webpack_require__(118);
+
+var _textField2 = _interopRequireDefault(_textField);
+
+var _RaisedButton = __webpack_require__(62);
+
+var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+var _radium = __webpack_require__(24);
+
+var _radium2 = _interopRequireDefault(_radium);
+
+var _reactRedux = __webpack_require__(17);
+
+var _auth = __webpack_require__(74);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var style = {
+    borderForm: {
+        border: "1px solid gray",
+        paddingTop: "8px"
+    }
+};
+
+var SignupForm = function (_Component) {
+    _inherits(SignupForm, _Component);
+
+    function SignupForm(props) {
+        _classCallCheck(this, SignupForm);
+
+        var _this = _possibleConstructorReturn(this, (SignupForm.__proto__ || Object.getPrototypeOf(SignupForm)).call(this, props));
+
+        _this.captchaExecute = props.captchaExecute.bind(_this);
+        _this.onSubmit = _this.onSubmit.bind(_this);
+        return _this;
+    }
+
+    _createClass(SignupForm, [{
+        key: 'onSubmit',
+        value: function onSubmit(values) {
+            var _this2 = this;
+
+            this.captchaExecute(function (key) {
+                _this2.props.SignupAction(values, key);
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var handleSubmit = this.props.handleSubmit;
+
+            return _react2.default.createElement(
+                'form',
+                { onSubmit: handleSubmit(this.onSubmit), className: this.props.className, style: style.borderForm },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-sm-12' },
+                        _react2.default.createElement(_textField2.default, {
+                            name: 'email',
+                            type: 'email',
+                            placeholder: 'Your email',
+                            fieldType: 'input'
+                        })
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-sm-12' },
+                        _react2.default.createElement(_textField2.default, {
+                            name: 'name',
+                            type: 'text',
+                            placeholder: 'Your awesome name',
+                            fieldType: 'input'
+                        })
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-sm-12' },
+                        _react2.default.createElement(_textField2.default, {
+                            style: style.marginLeft,
+                            name: 'password',
+                            type: 'password',
+                            placeholder: 'What will be your Password?',
+                            fieldType: 'input'
+                        })
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-sm-12' },
+                        _react2.default.createElement(_textField2.default, {
+                            style: style.marginLeft,
+                            name: 'password2',
+                            type: 'password',
+                            placeholder: 'Confirm password',
+                            fieldType: 'input'
+                        })
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-sm-offset-2 col-sm-12' },
+                        _react2.default.createElement(_RaisedButton2.default, { disabled: this.props.bigLoading, type: 'submit', backgroundColor: '#5cb85c', label: 'Sign up!' })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return SignupForm;
+}(_react.Component);
+
+function validate(_ref) {
+    var email = _ref.email,
+        name = _ref.name,
+        password = _ref.password,
+        password2 = _ref.password2;
+
+    var errors = {};
+    if (!email) errors.email = "Please enter an email, it is in good hands";
+    if (!name || name.length < 4) errors.name = "mmm... Your name must at least 4 characters";
+    if (!password || password.length < 4) errors.password = "Be careful! You need a password with at least 4 characters long";
+    if (password !== password2) errors.password2 = "Oops! Password and confirmation password must be the same ;)";
+    return errors;
+}
+
+SignupForm.propTypes = {
+    className: _propTypes2.default.string
+};
+
+function mapStateToProps(state) {
+    return { signupMsg: state.signupMsg, bigLoading: state.bigLoading };
+}
+
+exports.default = (0, _reduxForm.reduxForm)({ validate: validate, form: "SignupForm" })((0, _reactRedux.connect)(mapStateToProps, { SignupAction: _auth.signup })((0, _radium2.default)(SignupForm)));
+
+/***/ }),
+/* 1119 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reduxForm = __webpack_require__(75);
+
+var _textField = __webpack_require__(118);
+
+var _textField2 = _interopRequireDefault(_textField);
+
+var _RaisedButton = __webpack_require__(62);
+
+var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+var _radium = __webpack_require__(24);
+
+var _radium2 = _interopRequireDefault(_radium);
+
+var _reactRedux = __webpack_require__(17);
+
+var _auth = __webpack_require__(74);
+
+var _reactRouterDom = __webpack_require__(82);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var style = {
+    marginLeft: {
+        marginLeft: "5px"
+    }
+};
+
+var SigninForm = function (_Component) {
+    _inherits(SigninForm, _Component);
+
+    function SigninForm(props) {
+        _classCallCheck(this, SigninForm);
+
+        var _this = _possibleConstructorReturn(this, (SigninForm.__proto__ || Object.getPrototypeOf(SigninForm)).call(this, props));
+
+        _this.state = { className: props.className };
+        _this.captchaExecute = props.captchaExecute.bind(_this);
+        _this.onSubmit = _this.onSubmit.bind(_this);
+        return _this;
+    }
+
+    _createClass(SigninForm, [{
+        key: 'onSubmit',
+        value: function onSubmit(values) {
+            var _this2 = this;
+
+            this.captchaExecute(function (key) {
+                _this2.props.SigninAction(values, key);
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var handleSubmit = this.props.handleSubmit;
+
+            return _react2.default.createElement(
+                'form',
+                { onSubmit: handleSubmit(this.onSubmit), className: this.state.className },
+                _react2.default.createElement(_textField2.default, {
+                    name: 'email',
+                    type: 'text',
+                    placeholder: 'Email',
+                    fieldType: 'input'
+                }),
+                _react2.default.createElement(_textField2.default, {
+                    style: style.marginLeft,
+                    name: 'password',
+                    type: 'password',
+                    placeholder: 'password',
+                    fieldType: 'input'
+                }),
+                _react2.default.createElement(_RaisedButton2.default, { disabled: this.props.bigLoading, type: 'submit', style: style.marginLeft, backgroundColor: '#5cb85c', label: 'Sign in' })
+            );
+        }
+    }]);
+
+    return SigninForm;
+}(_react.Component);
+
+function validate(_ref) {
+    var email = _ref.email,
+        password = _ref.password;
+
+    var errors = {};
+    if (!email) errors.email = "Insert an email";
+    if (!password) errors.password = "Insert a password";
+    return errors;
+}
+
+SigninForm.propTypes = {
+    className: _propTypes2.default.string
+};
+
+function mapStateToProps(state) {
+    return { bigLoading: state.bigLoading };
+}
+
+exports.default = (0, _reduxForm.reduxForm)({ validate: validate, form: "SigninForm" })((0, _reactRedux.connect)(mapStateToProps, { SigninAction: _auth.signin })((0, _radium2.default)(SigninForm)));
+
+/***/ }),
+/* 1120 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(17);
+
+var _radium = __webpack_require__(24);
+
+var _radium2 = _interopRequireDefault(_radium);
+
+var _axios = __webpack_require__(49);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _Badge = __webpack_require__(758);
+
+var _Badge2 = _interopRequireDefault(_Badge);
+
+var _FlatButton = __webpack_require__(117);
+
+var _FlatButton2 = _interopRequireDefault(_FlatButton);
+
+var _notifications = __webpack_require__(762);
+
+var _notifications2 = _interopRequireDefault(_notifications);
+
+var _IconButton = __webpack_require__(91);
+
+var _IconButton2 = _interopRequireDefault(_IconButton);
+
+var _notifications3 = __webpack_require__(309);
+
+var _notificationModal = __webpack_require__(765);
+
+var _notificationModal2 = _interopRequireDefault(_notificationModal);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var style = {
+    badge: {
+        fontSize: "10px",
+        width: "18px",
+        height: "18px",
+        top: 0,
+        right: 0,
+        padding: "0px"
+    },
+    notifications: {
+        margin: "0px",
+        padding: "0px"
+    },
+    noscroll: {
+        overflowY: "hidden"
+    }
+};
+
+var NotificationBadge = function (_Component) {
+    _inherits(NotificationBadge, _Component);
+
+    function NotificationBadge(props) {
+        _classCallCheck(this, NotificationBadge);
+
+        var _this = _possibleConstructorReturn(this, (NotificationBadge.__proto__ || Object.getPrototypeOf(NotificationBadge)).call(this, props));
+
+        _this.state = { open: false };
+        _this.openModal = _this.openModal.bind(_this);
+        return _this;
+    }
+
+    _createClass(NotificationBadge, [{
+        key: "openModal",
+        value: function openModal() {
+            this.props.showNotifs();
+        }
+    }, {
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            this.props.fetchCount();
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            if (this.props.count) return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(_notificationModal2.default, null),
+                _react2.default.createElement(
+                    "div",
+                    { style: style.notifications },
+                    _react2.default.createElement(
+                        _Badge2.default,
+                        {
+                            style: style.notifications,
+                            badgeStyle: style.badge,
+                            badgeContent: this.props.count,
+                            secondary: true
+                        },
+                        _react2.default.createElement(
+                            _IconButton2.default,
+                            { style: style.notifications, onClick: this.openModal, "data-tip": "Notifications" },
+                            _react2.default.createElement(_notifications2.default, { style: style.notifications })
+                        )
+                    )
+                )
+            );else return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(_notificationModal2.default, null),
+                _react2.default.createElement(
+                    _IconButton2.default,
+                    { style: style.notifications, onClick: this.openModal, "data-tip": "Notifications" },
+                    _react2.default.createElement(_notifications2.default, { style: style.notifications })
+                )
+            );
+        }
+    }]);
+
+    return NotificationBadge;
+}(_react.Component);
+
+function mapStateToProps(state) {
+    return { count: state.notificationCount };
+}
+
+var radiumComponent = (0, _radium2.default)(NotificationBadge);
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { fetchCount: _notifications3.fetchCount, showNotifs: _notifications3.showNotifs })(radiumComponent);
+
+/***/ }),
+/* 1121 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _redux = __webpack_require__(68);
+
+var _radium = __webpack_require__(24);
+
+var _radium2 = _interopRequireDefault(_radium);
+
+var _axios = __webpack_require__(49);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _config = __webpack_require__(50);
+
+var _config2 = _interopRequireDefault(_config);
+
+var _reduxForm = __webpack_require__(75);
+
+var _reactRedux = __webpack_require__(17);
+
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _deck = __webpack_require__(428);
+
+var _alerts = __webpack_require__(95);
+
+var _createDeck = __webpack_require__(791);
+
+var _createDeck2 = _interopRequireDefault(_createDeck);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CLOUDFRONT_URL = _config2.default.cloudfrontUrl;
+var FORM_NAME = "userdeckForm";
+var IMAGE_PROXY_URL = _config2.default.apiImageProxy;
+
+var CreateUserDeckContainer = function (_Component) {
+    _inherits(CreateUserDeckContainer, _Component);
+
+    function CreateUserDeckContainer(props) {
+        _classCallCheck(this, CreateUserDeckContainer);
+
+        var _this = _possibleConstructorReturn(this, (CreateUserDeckContainer.__proto__ || Object.getPrototypeOf(CreateUserDeckContainer)).call(this, props));
+
+        _this.state = { modalIsOpen: false, imgs: [] };
+        _this.onSubmit = _this.onSubmit.bind(_this);
+        _this.closeModal = _this.closeModal.bind(_this);
+        _this.openModal = _this.openModal.bind(_this);
+        _this.onImgPick = _this.onImgPick.bind(_this);
+        return _this;
+    }
+
+    _createClass(CreateUserDeckContainer, [{
+        key: 'closeModal',
+        value: function closeModal() {
+            this.setState({ modalIsOpen: false });
+        }
+    }, {
+        key: 'openModal',
+        value: function openModal() {
+            this.setState({ modalIsOpen: true });
+        }
+    }, {
+        key: 'onSubmit',
+        value: function onSubmit(_ref) {
+            var _this2 = this;
+
+            var name = _ref.name,
+                description = _ref.description,
+                lang = _ref.lang;
+
+            this.props.createUserDeck(name, description, lang, this.state.parentId, function () {
+                _this2.closeModal();
+                _this2.props.successAlert("Deck created succesfully !");
+                _this2.props.dispatch((0, _reduxForm.reset)(FORM_NAME)); //reset form
+            });
+        }
+    }, {
+        key: 'onImgPick',
+        value: function onImgPick(img) {
+            var _this3 = this;
+
+            console.log("img: ", img);
+            this.props.showLoading();
+            _axios2.default.post(IMAGE_PROXY_URL, img, { headers: { 'x-access-token': localStorage.getItem("jwt") } }).then(function (r) {
+                _this3.props.hideLoading();
+                if (r.data.success == false) {
+                    _this3.props.infoAlert("This image can not be downloaded, please try with another one");
+                    return console.error(r.data.msg);
+                }
+                var url = CLOUDFRONT_URL + r.data.hash;
+                var img2 = { url: url,
+                    width: img.width,
+                    height: img.height,
+                    x: 0,
+                    y: 0 };
+                _this3.setState({ imgs: [img2] });
+            }).catch(function (err) {
+                console.error(err);
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(_createDeck2.default, _extends({ imgs: this.state.imgs,
+                modalIsOpen: this.state.modalIsOpen,
+                closeModal: this.closeModal,
+                openModal: this.openModal,
+                onSubmit: this.onSubmit,
+                onImgPick: this.onImgPick
+            }, this.props));
+        }
+    }]);
+
+    return CreateUserDeckContainer;
+}(_react.Component);
+
+function validate(_ref2) {
+    var name = _ref2.name,
+        description = _ref2.description,
+        lang = _ref2.lang,
+        img = _ref2.img;
+
+    var errors = {};
+    if (!img) errors.img = "Please add an mage for your deck";
+    if (!name || name.length < 4) errors.name = "Deck name must be at least 4 characters long!";
+    if (!description || description.length < 5) errors.description = "Deck description must be at least 5 characters long!";
+    if (!lang) errors.lang = "You must select a language for your deck!";
+    return errors;
+}
+
+function mapDispatchToProps(dispatch) {
+    return (0, _redux.bindActionCreators)({ createUserDeck: _deck.createUserDeck, successAlert: _alerts.successAlert, infoAlert: _alerts.infoAlert, showLoading: _alerts.showLoading, hideLoading: _alerts.hideLoading }, dispatch);
+}
+
+exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)((0, _reduxForm.reduxForm)({ validate: validate, form: FORM_NAME, initialValues: { lang: "" } })(CreateUserDeckContainer));
+
+/***/ }),
+/* 1122 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(17);
+
+var _radium = __webpack_require__(24);
+
+var _radium2 = _interopRequireDefault(_radium);
+
+var _alert = __webpack_require__(466);
+
+var _alert2 = _interopRequireDefault(_alert);
+
+var _alerts = __webpack_require__(95);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AlertContainer = function (_Component) {
+    _inherits(AlertContainer, _Component);
+
+    function AlertContainer() {
+        _classCallCheck(this, AlertContainer);
+
+        return _possibleConstructorReturn(this, (AlertContainer.__proto__ || Object.getPrototypeOf(AlertContainer)).apply(this, arguments));
+    }
+
+    _createClass(AlertContainer, [{
+        key: "render",
+        value: function render() {
+            var alert = this.props.alert;
+
+            if (!alert) return null;
+            return _react2.default.createElement(_alert2.default, { msg: alert.msg, type: alert.type });
+        }
+    }]);
+
+    return AlertContainer;
+}(_react.Component);
+
+function mapStateToProps(state) {
+    return { alert: state.alert };
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(AlertContainer);
 
 /***/ })
 /******/ ]);

@@ -7,7 +7,7 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import NotificationBadge from "../containers/notificationBadge";
+import NotificationBadge from "../containers/notificationBadge.jsx";
 import {signout} from "../actions/auth";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";

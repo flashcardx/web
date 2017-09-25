@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {getUserInfo} from "../actions/user";
 import {fetchUserDecks} from "../actions/deck.js";
 import RaisedButton from 'material-ui/RaisedButton';
-import CreateDeck from "../components/createDeck.jsx";
+import CreateUserDeckContainer from "../containers/createUserDeckContainer.jsx";
 import DeckGallery from "../components/deckGallery.jsx";
 import _ from "lodash";
 
@@ -66,7 +66,7 @@ class Home extends Component{
                              Path: {this.renderPath()}
                         </div>
                         <div className="col-lg-3 col-sm-6">
-                            <CreateDeck path={this.state.path}/>
+                            <CreateUserDeckContainer path={this.state.path}/>
                         </div>
                     </div>
                     <div className="row">

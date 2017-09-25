@@ -6,7 +6,6 @@ import { BrowserRouter, Switch, Route,Redirect } from 'react-router-dom';
 import Home from "./pages/home.jsx";
 import Feed from "./pages/feed.jsx";
 import Discover from "./pages/discover.jsx";
-import Classes from "./pages/classes.jsx";
 import Practice from "./pages/practice.jsx";
 import Settings from "./pages/settings.jsx";
 import Signout from "./pages/signout.jsx";
@@ -19,7 +18,7 @@ import errorHandlerMDW from "./middlewares/errorHandler.js";
 import showLoadingMDW from "./middlewares/showLoading.js";
 import hideLoadingMDW from "./middlewares/hideLoading.js";
 import parseApiMDW from "./middlewares/parseApiResponse.js";
-import AlertsDisplay from "./containers/alertsDisplay.jsx";
+import AlertContainer from "./containers/alertContainer.jsx";
 import reduxThunk from 'redux-thunk';
 import ReactTooltip from 'react-tooltip';
 import Loading from "./containers/loading.jsx";
@@ -36,7 +35,6 @@ class App extends Component{
                     <Switch>
                         <Route path="/discover" component={requireAuth(Discover, "/landing")}/>
                         <Route path="/feed" component={requireAuth(Feed, "/landing")}/>
-                        <Route path="/classes" component={requireAuth(Classes, "/landing")}/>
                         <Route path="/practice" component={requireAuth(Practice, "/landing")}/>
                         <Route path="/settings" component={requireAuth(Settings, "/landing")}/>
                         <Route path="/email-verification/:id" component={validateEmail(Landing, "/landing")}/>
@@ -54,7 +52,7 @@ ReactDOM.render(
         <Provider store={createStoreWithMiddleware(reducers)}>
                  <MuiThemeProvider>    
                     <div>
-                        <AlertsDisplay/>
+                        <AlertContainer/>
                         <ReactTooltip delayShow={500}/>
                         <Loading/>
                         <App/>
