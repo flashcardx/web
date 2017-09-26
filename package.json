@@ -35,6 +35,7 @@
     "react-alert": "^2.3.0",
     "react-async-script": "^0.9.1",
     "react-bidirectional-infinite-scroll": "^1.2.0",
+    "react-crop": "^4.0.2",
     "react-cropper": "^1.0.0",
     "react-dom": "^15.6.1",
     "react-facebook-login": "^3.6.2",

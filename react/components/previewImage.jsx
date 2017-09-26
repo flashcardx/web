@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import Radium from "radium";
 import Modal from "./util/modal.jsx";
-import {Cropper} from 'react-image-cropper'
 
 const style = {
     imgWrap:{
@@ -28,11 +27,16 @@ const style = {
     }
 }
 
+
 class PreviewImage extends Component{
 
     constructor(props){
         super(props);
-        this.onCrop = this.onCrop.bind(this);    
+        this.onCrop = this.onCrop.bind(this);
+        this.state = {
+            image: null,
+            previewImage: null
+        };
     }
 
     onCrop(){
@@ -47,7 +51,9 @@ class PreviewImage extends Component{
         return (
             <div>
                 <Modal autoScroll={false} style={{overflow:"visible"}} closeLabel="Cancel" modal={false} title="Crop image" open={true}>
-                    <Cropper src={img.url} ref="cropper"/>
+                    <div style={{height:"100%"}}>
+                        <Cropper crop={crop} style={{height:"100%"}} src={img.url} ref="cropper"/>
+                    </div>
                 </Modal>
                 <div style={style.imgWrap} key={img.url}>
                     <img style={style.img} src={img.url}/>
