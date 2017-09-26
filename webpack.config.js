@@ -22,13 +22,18 @@ let config = {
         rules: [{
             test: /\.jsx?$/,
             exclude: /node_modules/,
-            use: [{
+            use: [
+                {
                 loader: 'babel-loader',
                 options: {
                     presets: ["es2015", "react", "stage-0"]
                 }
             }]
-        }]
+        },
+            {
+                    test: /\.css$/,
+                    use: [ 'style-loader', 'css-loader']
+            }]
     },
     resolve: {
         modules: [

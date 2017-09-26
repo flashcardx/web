@@ -46,7 +46,7 @@ class Modal extends Component{
                     modal={this.props.modal}
                     open={this.state.opened}
                     onRequestClose={this.handleClose}
-                    autoScrollBodyContent={true}>
+                    autoScrollBodyContent={this.props.autoScroll}>
                     <ReactTooltip delayShow={500}/>
                     {this.props.children}
             </Dialog>
@@ -57,7 +57,7 @@ class Modal extends Component{
 
 Modal.propTypes = {
     closeLabel: PropTypes.string,
-    title:PropTypes.node,
+    title: PropTypes.node,
     open: PropTypes.bool.isRequired,
     onClose: PropTypes.func,
     modal: PropTypes.bool

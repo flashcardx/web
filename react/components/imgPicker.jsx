@@ -18,12 +18,11 @@ class ImgPicker extends Component{
     }
 
     pickImg(img){
-        this.props.callback(img);
+        this.props.onImgPick(img);
     }
 
     renderImg(img){
-        return <img onClick={()=>this.pickImg(img.real)}key={img.preview} style={style.img} src={img.preview}/>
-            
+        return <img onClick={()=>this.pickImg(img.real)}key={img.preview} style={style.img} src={img.preview}/>     
     }
 
     componentDidUpdate(){
@@ -57,7 +56,7 @@ class ImgPicker extends Component{
             return  <CircularProgress size={80} thickness={7} />;
         return (
             <div id="gallery">
-              {this.props.imgs.map(img=>this.renderImg(img))}
+                {this.props.searchImgs.map(img=>this.renderImg(img))}
             </div>
         );
     }

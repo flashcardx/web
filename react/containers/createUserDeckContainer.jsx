@@ -19,11 +19,17 @@ class CreateUserDeckContainer extends Component{
 
     constructor(props){
         super(props);
-        this.state = {modalIsOpen:false, imgs: []};
+        this.state = {modalIsOpen:false, pickedImgs: []};
         this.onSubmit = this.onSubmit.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.openModal = this.openModal.bind(this);
         this.onImgPick = this.onImgPick.bind(this);
+        this.onImgDelete = this.onImgDelete.bind(this);
+    }
+
+    onImgDelete(){
+        console.log("delete");
+        this.setState({pickedImgs:[]});
     }
 
     closeModal(){
@@ -34,16 +40,16 @@ class CreateUserDeckContainer extends Component{
         this.setState({modalIsOpen:true});
     }
 
-    onSubmit({name, description, lang}){
-        this.props.createUserDeck(name, description, lang, this.state.parentId,()=>{
+    onSubmit({name, description, lang, img}){
+        console.log("img: ", img);
+        this.props.createUserDeck(name, description, lang, img, this.state.parentId,()=>{
             this.closeModal();
             this.props.successAlert("Deck created succesfully !");
             this.props.dispatch(reset(FORM_NAME));  //reset form
         });
     }
 
-    onImgPick(img){
-        console.log("img: ", img);
+    onImgPick(img, callback){
         this.props.showLoading();
         axios.post(IMAGE_PROXY_URL, img, {headers:{'x-access-token': localStorage.getItem("jwt")}})
         .then(r=>{
@@ -54,11 +60,13 @@ class CreateUserDeckContainer extends Component{
             }
             const url = CLOUDFRONT_URL + r.data.hash;
             const img2 = {url:url,
+                          hash: r.data.hash,
                           width: img.width,
                           height: img.height,
                           x:0,
                           y:0};
-            this.setState({imgs: [img2]});
+            callback(img2);
+            this.setState({pickedImgs: [img2]});
         })
         .catch(err=>{
             console.error(err);
@@ -67,12 +75,15 @@ class CreateUserDeckContainer extends Component{
 
     render(){
         return (
-            <CreateDeck imgs={this.state.imgs}
+            <CreateDeck onImgDelete={this.onImgDelete}
+                        pickedImgs={this.state.pickedImgs}
                         modalIsOpen = {this.state.modalIsOpen}
                         closeModal={this.closeModal}
                         openModal={this.openModal}
                         onSubmit={this.onSubmit}
                         onImgPick={this.onImgPick}
+                        maxPickedImgs={1}
+                        formName={FORM_NAME}
                         {...this.props}
                         />
         );

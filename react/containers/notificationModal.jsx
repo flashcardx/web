@@ -70,7 +70,7 @@ class NotificationModal extends Component{
         if(this.state.countLastAdded>=12)
             btn = <FlatButton onClick={this.loadMore}label="Show more" primary={true} />;
         return (
-                <Modal title="Notifications" onClose={this.handleClose} closeLabel="Close" open={this.props.open}>
+                <Modal autoScroll={true} title="Notifications" onClose={this.handleClose} closeLabel="Close" open={this.props.open}>
                             <ul style={style.noScroll} className="list-group activity-feed">
                                 {content} 
                             </ul>

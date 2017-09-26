@@ -58,7 +58,7 @@ class DeckGallery extends Component{
         return (
              <Card style={style.deck} className="col-lg-3 col-md-4 col-sm-12" key={deck._id}>
                     <CardMedia>
-                    <img src={img} alt="no img" />
+                    <img src={img}/>
                     </CardMedia>
                     <CardTitle titleStyle={{wordBreak: "break-all"}} title={deck.name} subtitle={this.renderLang(deck.lang)}/>
                     <CardText>

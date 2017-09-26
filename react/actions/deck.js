@@ -18,10 +18,11 @@ export function fetchUserDecks(parentId=undefined, skip=0, path={}){
             path: path}
 }
 
-export function createUserDeck(name, description, lang, parentId, callback){
+export function createUserDeck(name, description, lang, img, parentId, callback){
     const data = {name,
                   description,
-                  lang};
+                  lang,
+                  thumbnail: img};
     const request = axios.post(CREATE_USER_DECK_URL, data,{
                         headers: {'x-access-token': localStorage.getItem("jwt")}
                         });

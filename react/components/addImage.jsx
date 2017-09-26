@@ -9,6 +9,7 @@ import {reduxForm } from 'redux-form';
 import PropTypes from "prop-types";
 import axios from "axios";
 import ImgPicker from "./imgPicker.jsx";
+import PreviewImage from "./previewImage.jsx";
 const SEARCH_IMG_URL = config.apiSearchImage;
 const SEARCH_GIF_URL = config.apiSearchGif;
 
@@ -18,29 +19,6 @@ const style = {
     },
     marginTop:{
         marginTop: "20px"
-    },
-    img:{
-        maxWidth: "150px"
-    },
-    imgWrap:{
-        position: "relative",
-        maxWidth: "150px",
-        display: "inline-block",
-        ":hover":{
-            
-        }
-    },
-    imgBtns:{
-        position: "absolute",
-        bottom: "5px",
-        right: "5px",
-        opacity: 2
-    },
-    imgBtn:{
-        margin:"5px",
-        fontSize: "x-large",
-        color: "red",
-        cursor: "pointer"
     }
 }
 
@@ -78,7 +56,7 @@ class AddImage extends Component{
     
     constructor(props){
         super(props);
-        this.state = {imgs:[], openModal: false, searchQuery:"", isLoading:false};
+        this.state = {searchImgs:[], openModal: false, searchQuery:"", isLoading:false};
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.renderTitle = this.renderTitle.bind(this);
@@ -87,8 +65,8 @@ class AddImage extends Component{
         this.searchGif = this.searchGif.bind(this);
         this.onImgPick = this.onImgPick.bind(this);
         this.renderPicker = this.renderPicker.bind(this);
-        this.renderImgs = this.renderImgs.bind(this);
-        this.renderImg = this.renderImg.bind(this);
+        this.renderPickedImgs = this.renderPickedImgs.bind(this);
+        this.renderPickedImg = this.renderPickedImg.bind(this);
     }
 
     openModal(){
@@ -98,6 +76,7 @@ class AddImage extends Component{
     closeModal(){
         this.setState({openModal: false});
     }
+
     renderTitle(){
         return (
             <div className="row">
@@ -121,7 +100,7 @@ class AddImage extends Component{
         axios.get(url,
                 {headers:{'x-access-token': localStorage.getItem("jwt")}})
         .then(r=>{
-            this.setState({isLoading: false, imgs:parseImgs(r.data.msg.value)});
+            this.setState({isLoading: false, searchImgs:parseImgs(r.data.msg.value)});
         })
         .catch(err=>{
             console.error(err);
@@ -134,7 +113,7 @@ class AddImage extends Component{
         axios.get(url,
                 {headers:{'x-access-token': localStorage.getItem("jwt")}})
         .then(r=>{
-            this.setState({isLoading: false, imgs: parseGifs(r.data.msg.results)});
+            this.setState({isLoading: false, searchImgs: parseGifs(r.data.msg.results)});
         })
         .catch(err=>{
             console.error(err);
@@ -142,8 +121,9 @@ class AddImage extends Component{
     }
 
     onImgPick(img){
+        console.log("add image img:", img);
         this.closeModal();
-        this.props.callback(img);
+        this.props.onImgPick(img);
     }
 
     renderPicker(){
@@ -173,7 +153,9 @@ class AddImage extends Component{
                 <div style={style.marginTop} className="row">
                     <div className="col mx-auto">
                         <div className="text-center">
-                            <ImgPicker callback={this.onImgPick} imgs={this.state.imgs} isLoading={this.state.isLoading}/>
+                            <ImgPicker  onImgPick={this.onImgPick}
+                                        searchImgs={this.state.searchImgs}
+                                        isLoading={this.state.isLoading}/>
                         </div>
                     </div>
                 </div>
@@ -181,25 +163,18 @@ class AddImage extends Component{
         );
     }
 
-    renderImg(img){
-        console.log("img: " , img);
+    renderPickedImg(img){
         return (
-            <div style={style.imgWrap} key={img.url}>
-                <img style={style.img} src={img.url} />
-                {Radium.getState(this.state, img.url, ':hover') && (
-                        <span style={style.imgBtns}>
-                            <i style={style.imgBtn} className="fa fa-trash" aria-hidden="true"></i>
-                            <i style={style.imgBtn} className="fa fa-crop" aria-hidden="true"></i>
-                        </span>
-                )}
-            </div>
+            <PreviewImage   onDelete={this.props.onDelete}
+                            key={img.url}
+                            img={img}/>
         );
     }
 
-    renderImgs(){
+    renderPickedImgs(){
         return (
             <div>
-                {this.props.imgs.map(this.renderImg)}
+                {this.props.pickedImgs.map(this.renderPickedImg)}
             </div>
         );
     }
@@ -210,17 +185,17 @@ class AddImage extends Component{
 
     renderBottom(){
         var body = [];
-        if(this.props.max - this.props.imgs.length > 0 ){
+        if(this.props.maxPickedImgs - this.props.pickedImgs.length > 0 ){
             body.push(<div key={1}>{this.renderButton()}</div>);
         }
-        body.push(<div key={2}>{this.renderImgs()}</div>);
+        body.push(<div key={2}>{this.renderPickedImgs()}</div>);
         return body;
     }
 
     render(){
         return (
             <div>
-                <Modal onClose={this.closeModal} modal={false} open={this.state.openModal} closeLabel="Cancel" title={this.renderTitle()}>
+                <Modal autoScroll={true} onClose={this.closeModal} modal={false} open={this.state.openModal} closeLabel="Cancel" title={this.renderTitle()}>
                     {this.renderPicker()}
                 </Modal>
                     {this.renderBottom()}

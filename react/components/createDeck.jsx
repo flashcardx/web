@@ -6,7 +6,7 @@ import config from "../../config";
 import Modal from "./util/modal.jsx";
 import TextField from "./util/textField.jsx";
 import RaisedButton from 'material-ui/RaisedButton';
-import {reduxForm } from 'redux-form';
+import {reduxForm, change} from 'redux-form';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {createUserDeck} from "../actions/deck.js";
@@ -56,6 +56,20 @@ class CreateDeck extends Component{
             parentId = lastDeck.id;
         this.state = {parentId: parentId};
         this.renderForm = this.renderForm.bind(this);
+        this.onImgPick = this.onImgPick.bind(this);
+        this.onImgDelete = this.onImgDelete.bind(this);
+    }
+
+    onImgPick(img){
+        console.log("img picked: ", img);
+        this.props.onImgPick(img, img=>{
+            this.props.dispatch(change( this.props.formName, "img", img));
+        });
+    }
+
+    onImgDelete(){
+            this.props.dispatch(change( this.props.formName, "img", null));
+            this.props.onImgDelete();
     }
 
     renderForm(){
@@ -85,7 +99,13 @@ class CreateDeck extends Component{
                                     </div>
                                       <div className="form-group">
                                         <div className="col-sm-12">
-                                            <AddImage imgs={this.props.imgs} max={1} disabled={this.props.bigLoading} callback={this.props.onImgPick} titleModal="Add cover for deck" label="Add cover image"/>
+                                            <AddImage onDelete={this.onImgDelete}
+                                                      pickedImgs={this.props.pickedImgs}
+                                                      maxPickedImgs={this.props.maxPickedImgs}
+                                                      disabled={this.props.bigLoading}
+                                                      onImgPick={this.onImgPick}
+                                                      titleModal="Add cover for deck"
+                                                      label="Add cover image"/>
                                             <TextField
                                                 name="img"
                                                 fieldType="input"
@@ -117,10 +137,10 @@ class CreateDeck extends Component{
     render(){
         return (
             <div>
-                <Modal onClose={this.props.closeModal} modal={false} open={this.props.modalIsOpen} closeLabel="Cancel" title="Create new deck">
+                <Modal autoScroll={true} onClose={this.props.closeModal} modal={false} open={this.props.modalIsOpen} closeLabel="Cancel" title="Create new deck">
                     {this.renderForm()}
                 </Modal>
-                <RaisedButton onClick={this.props.openModal} labelColor="#ffffff"  disabled={this.props.bigLoading} backgroundColor="#f4424b" label="Create deck" />
+                <RaisedButton onClick={this.props.openModal} labelColor="#ffffff" disabled={this.props.bigLoading} backgroundColor="#f4424b" label="Create deck" />
             </div>
         );
     }
