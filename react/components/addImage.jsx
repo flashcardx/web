@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import ImgPicker from "./imgPicker.jsx";
 import PreviewImage from "./previewImage.jsx";
+import Cropper from "./util/cropper.jsx";
 const SEARCH_IMG_URL = config.apiSearchImage;
 const SEARCH_GIF_URL = config.apiSearchGif;
 
@@ -56,7 +57,7 @@ class AddImage extends Component{
     
     constructor(props){
         super(props);
-        this.state = {searchImgs:[], openModal: false, searchQuery:"", isLoading:false};
+        this.state = {searchImgs:[], openModal: false, searchQuery:"", isLoading:false, cropModal:false, cropSrc: null};
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.renderTitle = this.renderTitle.bind(this);
@@ -67,6 +68,8 @@ class AddImage extends Component{
         this.renderPicker = this.renderPicker.bind(this);
         this.renderPickedImgs = this.renderPickedImgs.bind(this);
         this.renderPickedImg = this.renderPickedImg.bind(this);
+        this.cropImg = this.cropImg.bind(this);
+        this.closeCropModal = this.closeCropModal.bind(this);
     }
 
     openModal(){
@@ -166,6 +169,7 @@ class AddImage extends Component{
     renderPickedImg(img){
         return (
             <PreviewImage   onDelete={this.props.onDelete}
+                            cropImg={this.cropImg}
                             key={img.url}
                             img={img}/>
         );
@@ -192,9 +196,27 @@ class AddImage extends Component{
         return body;
     }
 
+    cropImg(src){
+        this.setState({ cropModal:true, cropSrc: src});
+    }
+
+    closeCropModal(){
+        this.setState({cropModal: false});
+    }
+
     render(){
         return (
             <div>
+                <Modal confirmLabel="Crop it!"
+                       autoScroll={true}
+                       onClose={this.closeCropModal}
+                       style={style.modal}
+                       closeLabel="Cancel"
+                       modal={false}
+                       title="Crop image"
+                       open={this.state.cropModal}>
+                     <Cropper style={{height:"100%"}} src={this.state.cropSrc} />
+                </Modal>
                 <Modal autoScroll={true} onClose={this.closeModal} modal={false} open={this.state.openModal} closeLabel="Cancel" title={this.renderTitle()}>
                     {this.renderPicker()}
                 </Modal>

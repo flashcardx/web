@@ -31,13 +31,20 @@ class Modal extends Component{
     };
 
     render(){
-         const actions = [
+         var actions = [
       <FlatButton
         label={this.state.closeLabel}
-        primary={true}
         onClick={this.handleClose}
       />
     ];
+
+        if(this.props.confirmLabel){
+            actions.unshift(      <FlatButton
+                                label={this.props.confirmLabel}
+                                primary={true}
+                                />
+                        );
+        }
 
         return (
             <Dialog
