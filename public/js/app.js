@@ -30538,6 +30538,7 @@ var Modal = function (_Component) {
         _this.state = { opened: props.open, closeLabel: props.closeLabel, title: props.title };
         _this.onClose = props.onClose;
         _this.handleClose = _this.handleClose.bind(_this);
+        _this.handleConfirm = _this.handleConfirm.bind(_this);
         return _this;
     }
 
@@ -30560,6 +30561,12 @@ var Modal = function (_Component) {
             this.setState({ opened: false });
         }
     }, {
+        key: 'handleConfirm',
+        value: function handleConfirm() {
+            this.props.handleConfirm();
+            this.handleClose();
+        }
+    }, {
         key: 'render',
         value: function render() {
             var actions = [_react2.default.createElement(_FlatButton2.default, {
@@ -30570,7 +30577,8 @@ var Modal = function (_Component) {
             if (this.props.confirmLabel) {
                 actions.unshift(_react2.default.createElement(_FlatButton2.default, {
                     label: this.props.confirmLabel,
-                    primary: true
+                    primary: true,
+                    onClick: this.handleConfirm
                 }));
             }
 
@@ -91466,6 +91474,7 @@ var CreateUserDeckContainer = function (_Component) {
         _this.openModal = _this.openModal.bind(_this);
         _this.onImgPick = _this.onImgPick.bind(_this);
         _this.onImgDelete = _this.onImgDelete.bind(_this);
+        _this.onCrop = _this.onCrop.bind(_this);
         return _this;
     }
 
@@ -91528,9 +91537,31 @@ var CreateUserDeckContainer = function (_Component) {
             });
         }
     }, {
+        key: 'onCrop',
+        value: function onCrop(img, callback) {
+            console.log("oncrop: ", img);
+            var pickedImgs = this.state.pickedImgs;
+            console.log("pickedImgs before: ", pickedImgs);
+            var i = 0;
+            while (i < pickedImgs.length) {
+                if (pickedImgs[i].url == img.src) {
+                    pickedImgs[i].x = img.x;
+                    pickedImgs[i].y = img.y;
+                    pickedImgs[i].width = img.width;
+                    pickedImgs[i].height = img.height;
+                    break;
+                }
+                i++;
+            }
+            this.setState({ pickedImgs: pickedImgs });
+            callback(pickedImgs[i]);
+            console.log("pickedImgs after: ", this.state.pickedImgs);
+        }
+    }, {
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_createDeck2.default, _extends({ onImgDelete: this.onImgDelete,
+            return _react2.default.createElement(_createDeck2.default, _extends({ onCrop: this.onCrop,
+                onImgDelete: this.onImgDelete,
                 pickedImgs: this.state.pickedImgs,
                 modalIsOpen: this.state.modalIsOpen,
                 closeModal: this.closeModal,
@@ -99658,6 +99689,7 @@ var CreateDeck = function (_Component) {
         _this.renderForm = _this.renderForm.bind(_this);
         _this.onImgPick = _this.onImgPick.bind(_this);
         _this.onImgDelete = _this.onImgDelete.bind(_this);
+        _this.onCrop = _this.onCrop.bind(_this);
         return _this;
     }
 
@@ -99669,6 +99701,15 @@ var CreateDeck = function (_Component) {
             console.log("img picked: ", img);
             this.props.onImgPick(img, function (img) {
                 _this2.props.dispatch((0, _reduxForm.change)(_this2.props.formName, "img", img));
+            });
+        }
+    }, {
+        key: 'onCrop',
+        value: function onCrop(r) {
+            var _this3 = this;
+
+            this.props.onCrop(r, function (img) {
+                _this3.props.dispatch((0, _reduxForm.change)(_this3.props.formName, "img", img));
             });
         }
     }, {
@@ -99722,7 +99763,8 @@ var CreateDeck = function (_Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'col-sm-12' },
-                            _react2.default.createElement(_addImage2.default, { onDelete: this.onImgDelete,
+                            _react2.default.createElement(_addImage2.default, { onCrop: this.onCrop,
+                                onDelete: this.onImgDelete,
                                 pickedImgs: this.props.pickedImgs,
                                 maxPickedImgs: this.props.maxPickedImgs,
                                 disabled: this.props.bigLoading,
@@ -99910,7 +99952,7 @@ var AddImage = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (AddImage.__proto__ || Object.getPrototypeOf(AddImage)).call(this, props));
 
-        _this.state = { searchImgs: [], openModal: false, searchQuery: "", isLoading: false, cropModal: false, cropSrc: null };
+        _this.state = { searchImgs: [], openModal: false, searchQuery: "", isLoading: false, cropModal: false, imgBeingCropped: null };
         _this.openModal = _this.openModal.bind(_this);
         _this.closeModal = _this.closeModal.bind(_this);
         _this.renderTitle = _this.renderTitle.bind(_this);
@@ -99921,8 +99963,8 @@ var AddImage = function (_Component) {
         _this.renderPicker = _this.renderPicker.bind(_this);
         _this.renderPickedImgs = _this.renderPickedImgs.bind(_this);
         _this.renderPickedImg = _this.renderPickedImg.bind(_this);
-        _this.cropImg = _this.cropImg.bind(_this);
-        _this.closeCropModal = _this.closeCropModal.bind(_this);
+        _this.openCropper = _this.openCropper.bind(_this);
+        _this.closeCropper = _this.closeCropper.bind(_this);
         return _this;
     }
 
@@ -100046,9 +100088,20 @@ var AddImage = function (_Component) {
         key: "renderPickedImg",
         value: function renderPickedImg(img) {
             return _react2.default.createElement(_previewImage2.default, { onDelete: this.props.onDelete,
-                cropImg: this.cropImg,
+                cropImg: this.openCropper,
+                onReload: this.openModal,
                 key: img.url,
                 img: img });
+        }
+    }, {
+        key: "openCropper",
+        value: function openCropper(img) {
+            this.setState({ cropModal: true, imgBeingCropped: img });
+        }
+    }, {
+        key: "closeCropper",
+        value: function closeCropper() {
+            this.setState({ cropModal: false });
         }
     }, {
         key: "renderPickedImgs",
@@ -100083,33 +100136,15 @@ var AddImage = function (_Component) {
             return body;
         }
     }, {
-        key: "cropImg",
-        value: function cropImg(src) {
-            this.setState({ cropModal: true, cropSrc: src });
-        }
-    }, {
-        key: "closeCropModal",
-        value: function closeCropModal() {
-            this.setState({ cropModal: false });
-        }
-    }, {
         key: "render",
         value: function render() {
             return _react2.default.createElement(
                 "div",
                 null,
-                _react2.default.createElement(
-                    _modal2.default,
-                    { confirmLabel: "Crop it!",
-                        autoScroll: true,
-                        onClose: this.closeCropModal,
-                        style: style.modal,
-                        closeLabel: "Cancel",
-                        modal: false,
-                        title: "Crop image",
-                        open: this.state.cropModal },
-                    _react2.default.createElement(_cropper2.default, { style: { height: "100%" }, src: this.state.cropSrc })
-                ),
+                _react2.default.createElement(_cropper2.default, { onCrop: this.props.onCrop,
+                    onClose: this.closeCropper,
+                    open: this.state.cropModal,
+                    img: this.state.imgBeingCropped }),
                 _react2.default.createElement(
                     _modal2.default,
                     { autoScroll: true, onClose: this.closeModal, modal: false, open: this.state.openModal, closeLabel: "Cancel", title: this.renderTitle() },
@@ -100547,6 +100582,10 @@ var _modal = __webpack_require__(118);
 
 var _modal2 = _interopRequireDefault(_modal);
 
+var _croppedImage = __webpack_require__(1117);
+
+var _croppedImage2 = _interopRequireDefault(_croppedImage);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -100609,8 +100648,8 @@ var PreviewImage = function (_Component) {
         }
     }, {
         key: "cropImg",
-        value: function cropImg(imgUrl) {
-            this.props.cropImg(imgUrl);
+        value: function cropImg(img) {
+            this.props.cropImg(img);
         }
     }, {
         key: "render",
@@ -100625,13 +100664,13 @@ var PreviewImage = function (_Component) {
                 _react2.default.createElement(
                     "div",
                     { style: style.imgWrap, key: img.url },
-                    _react2.default.createElement("img", { style: style.img, src: img.url }),
+                    _react2.default.createElement(_croppedImage2.default, { x: img.x, y: img.y, width: img.width, height: img.height, style: style.img, src: img.url }),
                     _radium2.default.getState(this.state, img.url, ':hover') && _react2.default.createElement(
                         "span",
                         { style: style.imgBtns },
-                        _react2.default.createElement("i", { style: style.imgBtn, className: "fa fa-repeat", "aria-hidden": "true" }),
+                        _react2.default.createElement("i", { onClick: this.props.onReload, style: style.imgBtn, className: "fa fa-repeat", "aria-hidden": "true" }),
                         _react2.default.createElement("i", { onClick: function onClick() {
-                                return _this2.cropImg(img.url);
+                                return _this2.cropImg(img);
                             }, style: style.imgBtn, className: "fa fa-crop", "aria-hidden": "true" }),
                         _react2.default.createElement("i", { onClick: this.props.onDelete, style: style.imgBtn, className: "fa fa-trash", "aria-hidden": "true" })
                     )
@@ -100670,6 +100709,10 @@ var _reactCropper = __webpack_require__(965);
 
 var _reactCropper2 = _interopRequireDefault(_reactCropper);
 
+var _modal = __webpack_require__(118);
+
+var _modal2 = _interopRequireDefault(_modal);
+
 __webpack_require__(967);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -100686,58 +100729,93 @@ var MyCropper = function (_Component) {
     function MyCropper(props) {
         _classCallCheck(this, MyCropper);
 
-        return _possibleConstructorReturn(this, (MyCropper.__proto__ || Object.getPrototypeOf(MyCropper)).call(this));
+        var _this = _possibleConstructorReturn(this, (MyCropper.__proto__ || Object.getPrototypeOf(MyCropper)).call(this));
+
+        _this.crop = _this.crop.bind(_this);
+        return _this;
     }
 
     _createClass(MyCropper, [{
-        key: 'onCrop',
-        value: function onCrop() {
-            console.log("on crop");
-            //console.log(this.refs.cropper.getCroppedCanvas().toDataURL());
-        }
-    }, {
         key: 'renderDesktop',
         value: function renderDesktop() {
+            var _this2 = this;
+
+            var img = this.props.img;
+
+            console.log("render desktop: ", img);
             return _react2.default.createElement(
                 'div',
-                { style: { width: "auto", maxHeight: "400px" } },
+                null,
                 _react2.default.createElement(_reactCropper2.default, {
-                    ref: 'cropper',
-                    src: this.props.src,
-                    style: { height: 400, width: '100%' }
+                    ref: function ref(cropper) {
+                        _this2.cropper = cropper;
+                    },
+                    src: img.url,
+                    style: { height: img.height, width: img.width }
                     // Cropper.js options
                     , aspectRatio: 1,
-                    guides: false,
-                    crop: this.onCrop.bind(this) })
+                    guides: false })
             );
         }
     }, {
         key: 'renderMobile',
         value: function renderMobile() {
+            var _this3 = this;
+
+            var img = this.props.img;
+
             return _react2.default.createElement(
                 'div',
                 { style: { width: "auto", height: "300px" } },
                 _react2.default.createElement(_reactCropper2.default, {
-                    ref: 'cropper',
-                    src: this.props.src,
+                    ref: function ref(cropper) {
+                        _this3.cropper = cropper;
+                    },
+                    src: img.url,
                     style: { height: 300, width: '100%' }
                     // Cropper.js options
                     , aspectRatio: 1,
-                    guides: false,
-                    crop: this.onCrop.bind(this) })
+                    guides: false })
             );
+        }
+    }, {
+        key: 'crop',
+        value: function crop() {
+            var data = this.cropper.getCropBoxData();
+            var img = this.props.img;
+
+            var r = {
+                x: data.left,
+                y: data.top,
+                width: data.width,
+                height: data.height,
+                src: img.url
+            };
+            this.props.onCrop(r);
+            this.props.onClose();
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
+            var _this4 = this;
 
             return _react2.default.createElement(
-                _reactResponsive2.default,
-                { minWidth: 670 },
-                function (matches) {
-                    if (matches) return _this2.renderDesktop();else return _this2.renderMobile();
-                }
+                _modal2.default,
+                { confirmLabel: 'Crop it!',
+                    handleConfirm: this.crop,
+                    autoScroll: true,
+                    onClose: this.props.onClose,
+                    closeLabel: 'Cancel',
+                    modal: false,
+                    title: 'Crop image',
+                    open: this.props.open },
+                _react2.default.createElement(
+                    _reactResponsive2.default,
+                    { minWidth: 670 },
+                    function (matches) {
+                        if (matches) return _this4.renderDesktop();else return _this4.renderMobile();
+                    }
+                )
             );
         }
     }]);
@@ -119924,7 +120002,7 @@ var style = {
     position: "fixed",
     top: 0,
     width: "100%",
-    zIndex: 100
+    zIndex: 3000
 };
 
 var LoadingWrapper = function (_Component) {
@@ -120210,6 +120288,43 @@ LinearProgress.propTypes = undefined !== "production" ? {
   value: _propTypes2.default.number
 } : {};
 exports.default = LinearProgress;
+
+/***/ }),
+/* 1117 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _radium = __webpack_require__(23);
+
+var _radium2 = _interopRequireDefault(_radium);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = (0, _radium2.default)(function (_ref) {
+    var src = _ref.src,
+        height = _ref.height,
+        width = _ref.width,
+        x = _ref.x,
+        y = _ref.y,
+        style = _ref.style;
+
+
+    return _react2.default.createElement(
+        "div",
+        null,
+        _react2.default.createElement("img", { style: style, src: src })
+    );
+});
 
 /***/ })
 /******/ ]);

@@ -58,6 +58,7 @@ class CreateDeck extends Component{
         this.renderForm = this.renderForm.bind(this);
         this.onImgPick = this.onImgPick.bind(this);
         this.onImgDelete = this.onImgDelete.bind(this);
+        this.onCrop = this.onCrop.bind(this);
     }
 
     onImgPick(img){
@@ -65,6 +66,12 @@ class CreateDeck extends Component{
         this.props.onImgPick(img, img=>{
             this.props.dispatch(change( this.props.formName, "img", img));
         });
+    }
+
+    onCrop(r){
+            this.props.onCrop(r, img=>{
+                this.props.dispatch(change( this.props.formName, "img", img));
+            });
     }
 
     onImgDelete(){
@@ -99,7 +106,8 @@ class CreateDeck extends Component{
                                     </div>
                                       <div className="form-group">
                                         <div className="col-sm-12">
-                                            <AddImage onDelete={this.onImgDelete}
+                                            <AddImage onCrop={this.onCrop}
+                                                      onDelete={this.onImgDelete}
                                                       pickedImgs={this.props.pickedImgs}
                                                       maxPickedImgs={this.props.maxPickedImgs}
                                                       disabled={this.props.bigLoading}

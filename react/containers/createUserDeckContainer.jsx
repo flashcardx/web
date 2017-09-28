@@ -25,6 +25,7 @@ class CreateUserDeckContainer extends Component{
         this.openModal = this.openModal.bind(this);
         this.onImgPick = this.onImgPick.bind(this);
         this.onImgDelete = this.onImgDelete.bind(this);
+        this.onCrop = this.onCrop.bind(this);
     }
 
     onImgDelete(){
@@ -73,9 +74,30 @@ class CreateUserDeckContainer extends Component{
         });
     }
 
+    onCrop(img, callback){
+        console.log("oncrop: ", img);
+        var pickedImgs = this.state.pickedImgs;
+        console.log("pickedImgs before: ", pickedImgs);
+        var i=0;
+        while(i < pickedImgs.length){
+            if(pickedImgs[i].url == img.src){
+                pickedImgs[i].x = img.x;
+                pickedImgs[i].y = img.y;
+                pickedImgs[i].width = img.width;
+                pickedImgs[i].height = img.height;
+                break;
+            }
+            i++;
+        }
+        this.setState({pickedImgs: pickedImgs});
+        callback(pickedImgs[i]);
+        console.log("pickedImgs after: ", this.state.pickedImgs);
+    }
+
     render(){
         return (
-            <CreateDeck onImgDelete={this.onImgDelete}
+            <CreateDeck onCrop={this.onCrop}
+                        onImgDelete={this.onImgDelete}
                         pickedImgs={this.state.pickedImgs}
                         modalIsOpen = {this.state.modalIsOpen}
                         closeModal={this.closeModal}

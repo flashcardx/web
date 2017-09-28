@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import Radium from "radium";
 import Modal from "./util/modal.jsx";
-
+import CroppedImage from "./util/croppedImage.jsx";
 
 const style = {
     imgWrap:{
@@ -51,8 +51,8 @@ class PreviewImage extends Component{
         // console.log(this.refs.cropper.getCroppedCanvas().toDataURL());
     }
 
-    cropImg(imgUrl){
-        this.props.cropImg(imgUrl);
+    cropImg(img){
+        this.props.cropImg(img);
     }
 
     render(){
@@ -60,11 +60,11 @@ class PreviewImage extends Component{
         return (
             <div>
                 <div style={style.imgWrap} key={img.url}>
-                    <img style={style.img} src={img.url}/>
+                    <CroppedImage x={img.x} y={img.y} width={img.width} height={img.height} style={style.img} src={img.url}/>
                     {Radium.getState(this.state, img.url, ':hover') && (
                             <span style={style.imgBtns}>
-                                <i style={style.imgBtn} className="fa fa-repeat" aria-hidden="true"></i>
-                                <i onClick={()=>this.cropImg(img.url)} style={style.imgBtn} className="fa fa-crop" aria-hidden="true"></i>
+                                <i onClick={this.props.onReload} style={style.imgBtn} className="fa fa-repeat" aria-hidden="true"></i>
+                                <i onClick={()=>this.cropImg(img)} style={style.imgBtn} className="fa fa-crop" aria-hidden="true"></i>
                                 <i onClick={this.props.onDelete} style={style.imgBtn} className="fa fa-trash" aria-hidden="true"></i>
                             </span>
                     )}

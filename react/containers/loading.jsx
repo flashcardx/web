@@ -6,7 +6,7 @@ const style = {
     position: "fixed",
     top: 0,
     width:"100%",
-    zIndex: 100
+    zIndex: 3000
 };
 
 class LoadingWrapper extends Component{

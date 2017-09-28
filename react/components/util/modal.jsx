@@ -12,6 +12,7 @@ class Modal extends Component{
         this.state = {opened:props.open, closeLabel:props.closeLabel, title:props.title};
         this.onClose = props.onClose;
         this.handleClose = this.handleClose.bind(this);
+        this.handleConfirm = this.handleConfirm.bind(this);
     }
 
     componentDidUpdate(){
@@ -30,6 +31,11 @@ class Modal extends Component{
         this.setState({opened: false});
     };
 
+     handleConfirm(){
+        this.props.handleConfirm();
+        this.handleClose();
+    };
+
     render(){
          var actions = [
       <FlatButton
@@ -42,6 +48,7 @@ class Modal extends Component{
             actions.unshift(      <FlatButton
                                 label={this.props.confirmLabel}
                                 primary={true}
+                                onClick={this.handleConfirm}
                                 />
                         );
         }
