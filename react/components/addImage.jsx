@@ -212,7 +212,7 @@ class AddImage extends Component{
                 <Cropper onCrop={this.props.onCrop} 
                          onClose={this.closeCropper}
                          open={this.state.cropModal}
-                         img={this.state.imgBeingCropped} />
+                         img={this.state.imgBeingCropped}/>
                 <Modal autoScroll={true} onClose={this.closeModal} modal={false} open={this.state.openModal} closeLabel="Cancel" title={this.renderTitle()}>
                     {this.renderPicker()}
                 </Modal>

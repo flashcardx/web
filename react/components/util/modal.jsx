@@ -3,7 +3,16 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import ReactTooltip from 'react-tooltip';
 import PropTypes from 'prop-types';
- 
+import Radium from "radium";
+
+const style = {
+    dialogStyles:{
+         position: 'absolute',
+         left: '50%',
+         top: '50%',
+         transform: 'translate(-50%, -50%)'
+    }
+}
 
 class Modal extends Component{
 
@@ -16,6 +25,12 @@ class Modal extends Component{
     }
 
     componentDidUpdate(){
+        setTimeout(function() {
+            ReactTooltip.rebuild();
+        }, 1000);
+    }
+
+    componentDidMount(){
         setTimeout(function() {
             ReactTooltip.rebuild();
         }, 1000);
@@ -54,16 +69,17 @@ class Modal extends Component{
         }
 
         return (
-            <Dialog
-                    title={this.state.title}
-                    actions={actions}
-                    modal={this.props.modal}
-                    open={this.state.opened}
-                    onRequestClose={this.handleClose}
-                    autoScrollBodyContent={this.props.autoScroll}>
-                    <ReactTooltip delayShow={500}/>
-                    {this.props.children}
-            </Dialog>
+                <Dialog
+                        contentStyle={ style.dialogStyles }
+                        title={this.state.title}
+                        actions={actions}
+                        modal={this.props.modal}
+                        open={this.state.opened}
+                        onRequestClose={this.handleClose}
+                        autoScrollBodyContent={this.props.autoScroll}>
+                        <ReactTooltip delayShow={500}/>
+                            {this.props.children}
+                </Dialog>
         );
     }
 
@@ -78,4 +94,4 @@ Modal.propTypes = {
 }
 
 
-export default Modal;
+export default Radium(Modal);
