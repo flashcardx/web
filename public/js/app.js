@@ -100735,11 +100735,10 @@ exports.default = (0, _radium2.default)(function (_ref) {
         style = _ref.style;
 
 
-    console.log("x: " + x + ", y: " + y);
     var styleWrapperImg = {
         position: "relative",
-        width: "200px",
-        height: "200px",
+        width: "100px",
+        height: "100px",
         overflow: "hidden"
     };
 
@@ -100748,22 +100747,12 @@ exports.default = (0, _radium2.default)(function (_ref) {
         left: "50%",
         top: "50%",
         height: "auto",
-        width: "auto",
+        width: "100%",
         WebkitTransform: "translate(-50%,-50%)",
         MsTransform: "translate(-50%,-50%)",
         transform: "translate(-50%,-50%)"
     };
-    styleWrapperImg.width = width;
-    styleWrapperImg.height = height;
-    styleImg.width = width;
-    styleImg.height = height;
-    styleImg.left = x;
-    styleImg.top = y;
-    var rotate = "translate(-" + x + "px," + "-" + y + "px)";
-    console.log("rotate: ", rotate);
-    styleImg.WebkitTransform = rotate;
-    styleImg.MsTransform = rotate;
-    styleImg.transform = rotate;
+
     return _react2.default.createElement(
         "div",
         { style: styleWrapperImg },
@@ -100923,6 +100912,10 @@ var _reactBidirectionalInfiniteScroll = __webpack_require__(988);
 
 var _reactBidirectionalInfiniteScroll2 = _interopRequireDefault(_reactBidirectionalInfiniteScroll);
 
+var _croppedImage = __webpack_require__(964);
+
+var _croppedImage2 = _interopRequireDefault(_croppedImage);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -100934,8 +100927,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var CLOUDFRONT_URL = _config2.default.cloudfrontUrl;
-
 var DECKS_PER_PAGE = 14;
+
 var style = {
     deck: {
         padding: "0px",
@@ -100986,7 +100979,7 @@ var DeckGallery = function (_Component) {
                 _react2.default.createElement(
                     _Card.CardMedia,
                     null,
-                    _react2.default.createElement('img', { src: img })
+                    _react2.default.createElement(_croppedImage2.default, { src: img })
                 ),
                 _react2.default.createElement(_Card.CardTitle, { titleStyle: { wordBreak: "break-all" }, title: deck.name, subtitle: this.renderLang(deck.lang) }),
                 _react2.default.createElement(

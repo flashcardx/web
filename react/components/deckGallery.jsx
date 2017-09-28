@@ -7,9 +7,11 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import FlatButton from 'material-ui/FlatButton';
 import Truncate from "./util/truncate.jsx";
 import config from "../../config";
-const CLOUDFRONT_URL = config.cloudfrontUrl;
 import InfiniteScroll from 'react-bidirectional-infinite-scroll';
+import CroppedImage from "../components/util/croppedImage.jsx";
+const CLOUDFRONT_URL = config.cloudfrontUrl;
 const DECKS_PER_PAGE = 14;
+
 const style = {
     deck:{
         padding: "0px",
@@ -58,7 +60,7 @@ class DeckGallery extends Component{
         return (
              <Card style={style.deck} className="col-lg-3 col-md-4 col-sm-12" key={deck._id}>
                     <CardMedia>
-                    <img src={img}/>
+                    <CroppedImage src={img}/>
                     </CardMedia>
                     <CardTitle titleStyle={{wordBreak: "break-all"}} title={deck.name} subtitle={this.renderLang(deck.lang)}/>
                     <CardText>
