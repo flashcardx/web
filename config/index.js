@@ -76,5 +76,6 @@ module.exports = {
     apiGetUserDecks: api.getUserDecks,
     cloudfrontUrl: keys.cloudfrontUrl,
     apiCreateUserDeck: api.createUserDeck,
-    apiImageProxy: api.imageProxy
+    apiImageProxy: api.imageProxy,
+    apiDeleteUserDeck: api.deleteUserDeck
 };

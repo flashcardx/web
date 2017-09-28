@@ -68,7 +68,8 @@
             "searchGif": "http://localhost:3000/searchGif/",
             "getUserDecks": "http://localhost:3000/deckschildren/u",
             "createUserDeck":"http://localhost:3000/deck/u",
-            "imageProxy": "http://localhost:3000/imageProxy"
+            "imageProxy": "http://localhost:3000/imageProxy",
+            "deleteUserDeck": "http://localhost:3000/deck/u/"
             },
         "pi":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -139,7 +140,8 @@
             "searchGif": "http://localhost:3000/searchGif/",
             "getUserDecks": "http://localhost:3000/deckschildren/u",
             "createUserDeck":"http://localhost:3000/deck/u",
-            "imageProxy": "http://localhost:3000/imageProxy"
+            "imageProxy": "http://localhost:3000/imageProxy",
+            "deleteUserDeck": "http://localhost:3000/deck/u/"
             },
         "production":{
             "getInitialCards": "http://localhost:3000/allCards",
@@ -210,6 +212,7 @@
             "searchGif": "http://localhost:3000/searchGif/",
             "getUserDecks": "http://localhost:3000/deckschildren/u",
             "createUserDeck":"http://localhost:3000/deck/u",
-            "imageProxy": "http://localhost:3000/imageProxy"
+            "imageProxy": "http://localhost:3000/imageProxy",
+            "deleteUserDeck": "http://localhost:3000/deck/u/"
         }
 }

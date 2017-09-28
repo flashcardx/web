@@ -3,7 +3,8 @@ import Page from "../components/page.jsx";
 import Radium from "radium";
 import {connect} from "react-redux";
 import {getUserInfo} from "../actions/user";
-import {fetchUserDecks} from "../actions/deck.js";
+import {successAlert} from "../actions/alerts";
+import {fetchUserDecks, deleteUserDeck} from "../actions/deck.js";
 import RaisedButton from 'material-ui/RaisedButton';
 import CreateUserDeckContainer from "../containers/createUserDeckContainer.jsx";
 import DeckGallery from "../components/deckGallery.jsx";
@@ -27,7 +28,8 @@ class Home extends Component{
         this.state = {parentId:null, path:[]};
         this.fetchDecks = this.fetchDecks.bind(this);
         this.renderPath = this.renderPath.bind(this);
-   //     this.goTo = this.goTo.bind(this);
+        this.goTo = this.goTo.bind(this);
+        this.onDelete = this.onDelete.bind(this);
     }
 
     componentWillMount(){
@@ -56,6 +58,13 @@ class Home extends Component{
         );
     }
 
+    onDelete(deckId){
+        this.props.deleteUserDeck(deckId, this.state.path, ()=>{
+            this.props.successAlert("Deck deleted succesfully !");
+            this.forceUpdate();
+        });
+    }
+
     render(){
         return (
             <Page name="my collection">
@@ -70,7 +79,9 @@ class Home extends Component{
                         </div>
                     </div>
                     <div className="row">
-                            <DeckGallery path={this.state.path} fetch={this.fetchDecks} decks={this.props.decks}/>
+                        <div className="col">
+                            <DeckGallery onDelete={this.onDelete} path={this.state.path} fetch={this.fetchDecks} decks={this.props.decks}/>
+                        </div>
                     </div>
                 </div>
             </Page>
@@ -82,4 +93,4 @@ function mapStateToProps(state){
     return {decks: state.userDecks};
 }
 
-export default connect(mapStateToProps, {getUserInfo, fetchUserDecks})(Radium(Home));
+export default connect(mapStateToProps, {getUserInfo, fetchUserDecks, deleteUserDeck, successAlert})(Radium(Home));

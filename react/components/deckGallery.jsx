@@ -3,12 +3,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Radium from "radium";
 import _ from "lodash";
 import PropTypes from 'prop-types';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import Truncate from "./util/truncate.jsx";
 import config from "../../config";
 import InfiniteScroll from 'react-bidirectional-infinite-scroll';
 import CroppedImage from "../components/util/croppedImage.jsx";
+import Deck from "../components/deck.jsx";
 const CLOUDFRONT_URL = config.cloudfrontUrl;
 const DECKS_PER_PAGE = 14;
 
@@ -42,39 +40,15 @@ class DeckGallery extends Component{
         this.props.fetch(this.state.skip);
     }
 
-    renderLang(code){
-        switch (code) {
-            case "en": return "English";
-            case "es": return "Español";
-            default:
-                return "not available";
-        }
-    }
-
     renderDeck(deck){
-        var img;
         if(deck.thumbnail)
-            img = CLOUDFRONT_URL + deck.thumbnail.hash;
+            deck.thumbnail.src = CLOUDFRONT_URL + deck.thumbnail.hash;
         else
-            img= "/assets/img/default.jpg";
+            deck.thumbnail.src = "/assets/img/default.jpg";
         return (
-             <Card style={style.deck} className="col-lg-3 col-md-4 col-sm-12" key={deck._id}>
-                    <CardMedia>
-                    <CroppedImage src={img}/>
-                    </CardMedia>
-                    <CardTitle titleStyle={{wordBreak: "break-all"}} title={deck.name} subtitle={this.renderLang(deck.lang)}/>
-                    <CardText>
-                        <Truncate>
-                            <span style={style.wordBreak}>
-                                {deck.description}
-                            </span>
-                        </Truncate>
-                    </CardText>
-                     <CardActions>
-                        <FlatButton label="Delete"/>
-                        <FlatButton label="Duplicate"/>
-                     </CardActions>
-            </Card>
+            <span key={deck._id}>
+                <Deck onDelete={this.props.onDelete}deck={deck}/>
+            </span>
         );
     }
 

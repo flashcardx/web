@@ -60,7 +60,7 @@ class PreviewImage extends Component{
         return (
             <div>
                 <div style={style.imgWrap} key={img.url}>
-                    <CroppedImage x={img.x} y={img.y} width={img.width} height={img.height} style={style.img} src={img.url}/>
+                    <CroppedImage width="200px" height="200px" src={img.url}/>
                     {Radium.getState(this.state, img.url, ':hover') && (
                             <span style={style.imgBtns}>
                                 <i onClick={this.props.onReload} style={style.imgBtn} className="fa fa-repeat" aria-hidden="true"></i>

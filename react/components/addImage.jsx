@@ -70,6 +70,7 @@ class AddImage extends Component{
         this.renderPickedImg = this.renderPickedImg.bind(this);
         this.openCropper = this.openCropper.bind(this);
         this.closeCropper = this.closeCropper.bind(this);
+        this.uploadImg = this.uploadImg.bind(this);
     }
 
     openModal(){
@@ -80,11 +81,15 @@ class AddImage extends Component{
         this.setState({openModal: false});
     }
 
+    uploadImg(){
+        console.log("upload img");
+    }
+
     renderTitle(){
         return (
             <div className="row">
                     <div className="col-4">
-                        <RaisedButton labelColor="#ffffff"  disabled={this.props.bigLoading} backgroundColor="#4286f4" label="Upload" />
+                        <RaisedButton onClick={this.uploadImg}labelColor="#ffffff"  disabled={this.props.bigLoading} backgroundColor="#4286f4" label="Upload" />
                     </div>
                     <div className="col-8">
                         {this.props.titleModal}

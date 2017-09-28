@@ -2,12 +2,12 @@ import React from "react";
 import Radium from "radium";
 
 
-export default Radium(function({src, height, width, x, y, style}){
+export default Radium(function({src, height, width}){
 
-    var styleWrapperImg = {
+   var styleWrapperImg = {
         position: "relative",
-        width: "100px",
-        height: "100px",
+        width: width,
+        height: height,
         overflow: "hidden"
     };
 
@@ -27,5 +27,4 @@ export default Radium(function({src, height, width, x, y, style}){
             <img style={styleImg} src={src}/>
         </div>
     );
-
 });

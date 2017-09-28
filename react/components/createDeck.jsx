@@ -64,13 +64,13 @@ class CreateDeck extends Component{
     onImgPick(img){
         console.log("img picked: ", img);
         this.props.onImgPick(img, img=>{
-            this.props.dispatch(change( this.props.formName, "img", img));
+            this.props.dispatch(change(this.props.formName, "img", img));
         });
     }
 
     onCrop(r){
             this.props.onCrop(r, img=>{
-                this.props.dispatch(change( this.props.formName, "img", img));
+                this.props.dispatch(change(this.props.formName, "img", img));
             });
     }
 

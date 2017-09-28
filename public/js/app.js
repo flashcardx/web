@@ -6465,6 +6465,7 @@ var HIDE_NOTIFS = exports.HIDE_NOTIFS = "HIDE_NOTIFS";
 var GET_NOTIFICATIONS = exports.GET_NOTIFICATIONS = "GET_NOTIFICATIONS";
 var APPEND_NOTIFICATIONS = exports.APPEND_NOTIFICATIONS = "APPEND_NOTIFICATIONS";
 var USER_INFO = exports.USER_INFO = "USER_INFO";
+var DELETE_USER_DECK = exports.DELETE_USER_DECK = "DELETE_USER_DECK";
 var SHOW_BIGLOADING = exports.SHOW_BIGLOADING = "SHOW_LOADING";
 var HIDE_BIGLOADING = exports.HIDE_BIGLOADING = "HIDE_LOADING";
 var FETCH_USER_DECKS = exports.FETCH_USER_DECKS = "FETCH_USER_DECKS";
@@ -7210,7 +7211,8 @@ module.exports = {
     apiGetUserDecks: api.getUserDecks,
     cloudfrontUrl: keys.cloudfrontUrl,
     apiCreateUserDeck: api.createUserDeck,
-    apiImageProxy: api.imageProxy
+    apiImageProxy: api.imageProxy,
+    apiDeleteUserDeck: api.deleteUserDeck
 };
 
 /***/ }),
@@ -35006,10 +35008,11 @@ module.exports = ReactTooltip;
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+        value: true
 });
 exports.fetchUserDecks = fetchUserDecks;
 exports.createUserDeck = createUserDeck;
+exports.deleteUserDeck = deleteUserDeck;
 
 var _axios = __webpack_require__(41);
 
@@ -35025,38 +35028,53 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var FETCH_USER_DECKS_URL = _config2.default.apiGetUserDecks;
 var CREATE_USER_DECK_URL = _config2.default.apiCreateUserDeck;
+var DELETE_USER_DECK_URL = _config2.default.apiDeleteUserDeck;
 
 function fetchUserDecks() {
-    var parentId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
-    var skip = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    var path = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+        var parentId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
+        var skip = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+        var path = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
-    var url = FETCH_USER_DECKS_URL + "?skip=" + skip;
-    if (parentId) url += "&parentId=" + parentId;
-    var request = _axios2.default.get(url, { headers: { 'x-access-token': localStorage.getItem("jwt") } });
-    return { type: _types.FETCH_USER_DECKS,
-        originAPI: true,
-        bigLoading: true,
-        payload: request,
-        path: path };
+        var url = FETCH_USER_DECKS_URL + "?skip=" + skip;
+        if (parentId) url += "&parentId=" + parentId;
+        var request = _axios2.default.get(url, { headers: { 'x-access-token': localStorage.getItem("jwt") } });
+        return { type: _types.FETCH_USER_DECKS,
+                originAPI: true,
+                bigLoading: true,
+                payload: request,
+                path: path };
 }
 
 function createUserDeck(name, description, lang, img, parentId, callback) {
-    var data = { name: name,
-        description: description,
-        lang: lang,
-        thumbnail: img };
-    var request = _axios2.default.post(CREATE_USER_DECK_URL, data, {
-        headers: { 'x-access-token': localStorage.getItem("jwt") }
-    });
-    request.then(function () {
-        callback();
-    });
-    return { type: _types.CREATE_USER_DECK,
-        originAPI: true,
-        bigLoading: true,
-        payload: request
-    };
+        var data = { name: name,
+                description: description,
+                lang: lang,
+                thumbnail: img };
+        var request = _axios2.default.post(CREATE_USER_DECK_URL, data, {
+                headers: { 'x-access-token': localStorage.getItem("jwt") }
+        });
+        request.then(function () {
+                callback();
+        });
+        return { type: _types.CREATE_USER_DECK,
+                originAPI: true,
+                bigLoading: true,
+                payload: request
+        };
+}
+
+function deleteUserDeck(deckId, path, callback) {
+        var url = DELETE_USER_DECK_URL + deckId;
+        var request = _axios2.default.delete(url, { headers: { 'x-access-token': localStorage.getItem("jwt") } });
+        request.then(function () {
+                callback();
+        });
+        return { type: _types.DELETE_USER_DECK,
+                deckId: deckId,
+                path: path,
+                originAPI: true,
+                bigLoading: true,
+                payload: request };
 }
 
 /***/ }),
@@ -76910,6 +76928,8 @@ var _reactRedux = __webpack_require__(18);
 
 var _user = __webpack_require__(792);
 
+var _alerts = __webpack_require__(75);
+
 var _deck = __webpack_require__(183);
 
 var _RaisedButton = __webpack_require__(61);
@@ -76957,7 +76977,8 @@ var Home = function (_Component) {
         _this.state = { parentId: null, path: [] };
         _this.fetchDecks = _this.fetchDecks.bind(_this);
         _this.renderPath = _this.renderPath.bind(_this);
-        //     this.goTo = this.goTo.bind(this);
+        _this.goTo = _this.goTo.bind(_this);
+        _this.onDelete = _this.onDelete.bind(_this);
         return _this;
     }
 
@@ -77007,6 +77028,16 @@ var Home = function (_Component) {
             );
         }
     }, {
+        key: "onDelete",
+        value: function onDelete(deckId) {
+            var _this3 = this;
+
+            this.props.deleteUserDeck(deckId, this.state.path, function () {
+                _this3.props.successAlert("Deck deleted succesfully !");
+                _this3.forceUpdate();
+            });
+        }
+    }, {
         key: "render",
         value: function render() {
             return _react2.default.createElement(
@@ -77038,7 +77069,11 @@ var Home = function (_Component) {
                     _react2.default.createElement(
                         "div",
                         { className: "row" },
-                        _react2.default.createElement(_deckGallery2.default, { path: this.state.path, fetch: this.fetchDecks, decks: this.props.decks })
+                        _react2.default.createElement(
+                            "div",
+                            { className: "col" },
+                            _react2.default.createElement(_deckGallery2.default, { onDelete: this.onDelete, path: this.state.path, fetch: this.fetchDecks, decks: this.props.decks })
+                        )
                     )
                 )
             );
@@ -77052,7 +77087,7 @@ function mapStateToProps(state) {
     return { decks: state.userDecks };
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, { getUserInfo: _user.getUserInfo, fetchUserDecks: _deck.fetchUserDecks })((0, _radium2.default)(Home));
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { getUserInfo: _user.getUserInfo, fetchUserDecks: _deck.fetchUserDecks, deleteUserDeck: _deck.deleteUserDeck, successAlert: _alerts.successAlert })((0, _radium2.default)(Home));
 
 /***/ }),
 /* 618 */
@@ -87960,7 +87995,7 @@ exports.default = SocialNotifications;
 /* 767 */
 /***/ (function(module, exports) {
 
-module.exports = {"development":{"getInitialCards":"http://localhost:3000/allCards","getImg":"http://localhost:3000/image","signup":"http://localhost:3000/signup","getLangs":"http://localhost:3000/langs","emailVerification":"http://localhost:3000/email-verification","resendEmailVerification":"http://localhost:3000/resend-email-verification","login":"http://localhost:3000/login","getUserCards":"http://localhost:3000/Mycards","validateToken":"http://localhost:3000/validateToken","deleteCard":"http://localhost:3000/card","searchImage":"http://localhost:3000/searchBing/","postCard":"http://localhost:3000/card","discoverCards":"http://localhost:3000/discoverCards","duplicateCard":"http://localhost:3000/duplicateCard","userPreferences":"http://localhost:3000/userPreferences","toggleAutocomplete":"http://localhost:3000/toggleAutocomplete","examples":"http://localhost:3000/examples","define":"http://localhost:3000/define","updateCard":"http://localhost:3000/updateCard","getCategories":"http://localhost:3000/categories","getUserPlan":"http://localhost:3000/userPlan","getUserLang":"http://localhost:3000/userLang","updateUserLang":"http://localhost:3000/updateUserLang","fbAuth":"http://localhost:3000/fbAuth","getPracticeCards":"http://localhost:3000/practiceCards","rankCard":"http://localhost:3000/rankCard","suggest":"http://localhost:3000/suggest","getUserInfo":"http://localhost:3000/getUserInfo","getActivity":"http://localhost:3000/activity","getActivityCount":"http://localhost:3000/activityCount","getClasses":"http://localhost:3000/classes","getClassesShort":"http://localhost:3000/classesShort","searchClass":"http://localhost:3000/searchClass","recommendClasses":"http://localhost:3000/recommendClasses","joinClass":"http://localhost:3000/joinClass","newClass":"http://localhost:3000/class","addUserToClass":"http://localhost:3000/addUserToClass","deleteUserFromClass":"http://localhost:3000/userFromClass","getClassStats":"http://localhost:3000/classStats","getIntegrants":"http://localhost:3000/classIntegrants","deleteClass":"http://localhost:3000/class","leaveClass":"http://localhost:3000/leaveClass","removeUserFromClass":"http://localhost:3000/userFromClass","duplicateCard2Class":"http://localhost:3000/duplicateCard2Class","getClassCategories":"http://localhost:3000/classCategories","getClassCards":"http://localhost:3000/classCards","updateCardClass":"http://localhost:3000/updateCardClass","deleteClassCard":"http://localhost:3000/classCard","duplicateCardClassUser":"http://localhost:3000/duplicateCardClassUser","getFeed":"http://localhost:3000/feed","uploadClassProfileImage":"http://localhost:3000/uploadClassProfileImage","deleteClassProfileImage":"http://localhost:3000/deleteClassProfileImage","changeUserImg":"http://localhost:3000/changeUserImg","deleteUserProfileImage":"http://localhost:3000/userProfileImage","classConnectPost":"http://localhost:3000/classConnect/post/","getClassThumbnail":"http://localhost:3000/classProfileImage/","getClassPosts":"http://localhost:3000/class/posts/","classCommentPost":"http://localhost:3000/class/commentPost/","classPostReaction":"http://localhost:3000/class/postReaction/","classCommentReaction":"http://localhost:3000/class/commentReaction/","getPostReactions":"http://localhost:3000/class/postReactions/","getCommentReactions":"http://localhost:3000/class/commentReactions/","getPostReactionDetail":"http://localhost:3000/class/postReactionDetail/","getCommentReactionDetail":"http://localhost:3000/class/commentReactionDetail/","getComments":"http://localhost:3000/class/comments/","searchGif":"http://localhost:3000/searchGif/","getUserDecks":"http://localhost:3000/deckschildren/u","createUserDeck":"http://localhost:3000/deck/u","imageProxy":"http://localhost:3000/imageProxy"},"pi":{"getInitialCards":"http://localhost:3000/allCards","getImg":"http://localhost:3000/image","signup":"http://localhost:3000/signup","getLangs":"http://localhost:3000/langs","emailVerification":"http://localhost:3000/email-verification","resendEmailVerification":"http://localhost:3000/resend-email-verification","login":"http://localhost:3000/login","getUserCards":"http://localhost:3000/Mycards","validateToken":"http://localhost:3000/validateToken","deleteCard":"http://localhost:3000/card","searchImage":"http://localhost:3000/searchBing/","postCard":"http://localhost:3000/card","discoverCards":"http://localhost:3000/discoverCards","duplicateCard":"http://localhost:3000/duplicateCard","userPreferences":"http://localhost:3000/userPreferences","toggleAutocomplete":"http://localhost:3000/toggleAutocomplete","examples":"http://localhost:3000/examples","define":"http://localhost:3000/define","updateCard":"http://localhost:3000/updateCard","getCategories":"http://localhost:3000/categories","getUserPlan":"http://localhost:3000/userPlan","getUserLang":"http://localhost:3000/userLang","updateUserLang":"http://localhost:3000/updateUserLang","fbAuth":"http://localhost:3000/fbAuth","getPracticeCards":"http://localhost:3000/practiceCards","rankCard":"http://localhost:3000/rankCard","suggest":"http://localhost:3000/suggest","getUserInfo":"http://localhost:3000/getUserInfo","getActivity":"http://localhost:3000/activity","getActivityCount":"http://localhost:3000/activityCount","getClasses":"http://localhost:3000/classes","getClassesShort":"http://localhost:3000/classesShort","searchClass":"http://localhost:3000/searchClass","recommendClasses":"http://localhost:3000/recommendClasses","joinClass":"http://localhost:3000/joinClass","newClass":"http://localhost:3000/class","addUserToClass":"http://localhost:3000/addUserToClass","deleteUserFromClass":"http://localhost:3000/userFromClass","getClassStats":"http://localhost:3000/classStats","getIntegrants":"http://localhost:3000/classIntegrants","deleteClass":"http://localhost:3000/class","leaveClass":"http://localhost:3000/leaveClass","removeUserFromClass":"http://localhost:3000/userFromClass","duplicateCard2Class":"http://localhost:3000/duplicateCard2Class","getClassCategories":"http://localhost:3000/classCategories","getClassCards":"http://localhost:3000/classCards","updateCardClass":"http://localhost:3000/updateCardClass","deleteClassCard":"http://localhost:3000/classCard","duplicateCardClassUser":"http://localhost:3000/duplicateCardClassUser","getFeed":"http://localhost:3000/feed","uploadClassProfileImage":"http://localhost:3000/uploadClassProfileImage","deleteClassProfileImage":"http://localhost:3000/deleteClassProfileImage","changeUserImg":"http://localhost:3000/changeUserImg","deleteUserProfileImage":"http://localhost:3000/userProfileImage","classConnectPost":"http://localhost:3000/classConnect/post/","getClassThumbnail":"http://localhost:3000/classProfileImage/","getClassPosts":"http://localhost:3000/class/posts/","classCommentPost":"http://localhost:3000/class/commentPost/","classPostReaction":"http://localhost:3000/class/postReaction/","classCommentReaction":"http://localhost:3000/class/commentReaction/","getPostReactions":"http://localhost:3000/class/postReactions/","getCommentReactions":"http://localhost:3000/class/commentReactions/","getPostReactionDetail":"http://localhost:3000/class/postReactionDetail/","getCommentReactionDetail":"http://localhost:3000/class/commentReactionDetail/","getComments":"http://localhost:3000/class/comments/","searchGif":"http://localhost:3000/searchGif/","getUserDecks":"http://localhost:3000/deckschildren/u","createUserDeck":"http://localhost:3000/deck/u","imageProxy":"http://localhost:3000/imageProxy"},"production":{"getInitialCards":"http://localhost:3000/allCards","getImg":"http://localhost:3000/image","signup":"http://localhost:3000/signup","getLangs":"http://localhost:3000/langs","emailVerification":"http://localhost:3000/email-verification","resendEmailVerification":"http://localhost:3000/resend-email-verification","login":"http://localhost:3000/login","getUserCards":"http://localhost:3000/Mycards","validateToken":"http://localhost:3000/validateToken","deleteCard":"http://localhost:3000/card","searchImage":"http://localhost:3000/searchBing/","postCard":"http://localhost:3000/card","discoverCards":"http://localhost:3000/discoverCards","duplicateCard":"http://localhost:3000/duplicateCard","userPreferences":"http://localhost:3000/userPreferences","toggleAutocomplete":"http://localhost:3000/toggleAutocomplete","examples":"http://localhost:3000/examples","define":"http://localhost:3000/define","updateCard":"http://localhost:3000/updateCard","getCategories":"http://localhost:3000/categories","getUserPlan":"http://localhost:3000/userPlan","getUserLang":"http://localhost:3000/userLang","updateUserLang":"http://localhost:3000/updateUserLang","fbAuth":"http://localhost:3000/fbAuth","getPracticeCards":"http://localhost:3000/practiceCards","rankCard":"http://localhost:3000/rankCard","suggest":"http://localhost:3000/suggest","getUserInfo":"http://localhost:3000/getUserInfo","getActivity":"http://localhost:3000/activity","getActivityCount":"http://localhost:3000/activityCount","getClasses":"http://localhost:3000/classes","getClassesShort":"http://localhost:3000/classesShort","searchClass":"http://localhost:3000/searchClass","recommendClasses":"http://localhost:3000/recommendClasses","joinClass":"http://localhost:3000/joinClass","newClass":"http://localhost:3000/class","addUserToClass":"http://localhost:3000/addUserToClass","deleteUserFromClass":"http://localhost:3000/userFromClass","getClassStats":"http://localhost:3000/classStats","getIntegrants":"http://localhost:3000/classIntegrants","deleteClass":"http://localhost:3000/class","leaveClass":"http://localhost:3000/leaveClass","removeUserFromClass":"http://localhost:3000/userFromClass","duplicateCard2Class":"http://localhost:3000/duplicateCard2Class","getClassCategories":"http://localhost:3000/classCategories","getClassCards":"http://localhost:3000/classCards","updateCardClass":"http://localhost:3000/updateCardClass","deleteClassCard":"http://localhost:3000/classCard","duplicateCardClassUser":"http://localhost:3000/duplicateCardClassUser","getFeed":"http://localhost:3000/feed","uploadClassProfileImage":"http://localhost:3000/uploadClassProfileImage","deleteClassProfileImage":"http://localhost:3000/deleteClassProfileImage","changeUserImg":"http://localhost:3000/changeUserImg","deleteUserProfileImage":"http://localhost:3000/userProfileImage","classConnectPost":"http://localhost:3000/classConnect/post/","getClassThumbnail":"http://localhost:3000/classProfileImage/","getClassPosts":"http://localhost:3000/class/posts/","classCommentPost":"http://localhost:3000/class/commentPost/","classPostReaction":"http://localhost:3000/class/postReaction/","classCommentReaction":"http://localhost:3000/class/commentReaction/","getPostReactions":"http://localhost:3000/class/postReactions/","getCommentReactions":"http://localhost:3000/class/commentReactions/","getPostReactionDetail":"http://localhost:3000/class/postReactionDetail/","getCommentReactionDetail":"http://localhost:3000/class/commentReactionDetail/","getComments":"http://localhost:3000/class/comments/","searchGif":"http://localhost:3000/searchGif/","getUserDecks":"http://localhost:3000/deckschildren/u","createUserDeck":"http://localhost:3000/deck/u","imageProxy":"http://localhost:3000/imageProxy"}}
+module.exports = {"development":{"getInitialCards":"http://localhost:3000/allCards","getImg":"http://localhost:3000/image","signup":"http://localhost:3000/signup","getLangs":"http://localhost:3000/langs","emailVerification":"http://localhost:3000/email-verification","resendEmailVerification":"http://localhost:3000/resend-email-verification","login":"http://localhost:3000/login","getUserCards":"http://localhost:3000/Mycards","validateToken":"http://localhost:3000/validateToken","deleteCard":"http://localhost:3000/card","searchImage":"http://localhost:3000/searchBing/","postCard":"http://localhost:3000/card","discoverCards":"http://localhost:3000/discoverCards","duplicateCard":"http://localhost:3000/duplicateCard","userPreferences":"http://localhost:3000/userPreferences","toggleAutocomplete":"http://localhost:3000/toggleAutocomplete","examples":"http://localhost:3000/examples","define":"http://localhost:3000/define","updateCard":"http://localhost:3000/updateCard","getCategories":"http://localhost:3000/categories","getUserPlan":"http://localhost:3000/userPlan","getUserLang":"http://localhost:3000/userLang","updateUserLang":"http://localhost:3000/updateUserLang","fbAuth":"http://localhost:3000/fbAuth","getPracticeCards":"http://localhost:3000/practiceCards","rankCard":"http://localhost:3000/rankCard","suggest":"http://localhost:3000/suggest","getUserInfo":"http://localhost:3000/getUserInfo","getActivity":"http://localhost:3000/activity","getActivityCount":"http://localhost:3000/activityCount","getClasses":"http://localhost:3000/classes","getClassesShort":"http://localhost:3000/classesShort","searchClass":"http://localhost:3000/searchClass","recommendClasses":"http://localhost:3000/recommendClasses","joinClass":"http://localhost:3000/joinClass","newClass":"http://localhost:3000/class","addUserToClass":"http://localhost:3000/addUserToClass","deleteUserFromClass":"http://localhost:3000/userFromClass","getClassStats":"http://localhost:3000/classStats","getIntegrants":"http://localhost:3000/classIntegrants","deleteClass":"http://localhost:3000/class","leaveClass":"http://localhost:3000/leaveClass","removeUserFromClass":"http://localhost:3000/userFromClass","duplicateCard2Class":"http://localhost:3000/duplicateCard2Class","getClassCategories":"http://localhost:3000/classCategories","getClassCards":"http://localhost:3000/classCards","updateCardClass":"http://localhost:3000/updateCardClass","deleteClassCard":"http://localhost:3000/classCard","duplicateCardClassUser":"http://localhost:3000/duplicateCardClassUser","getFeed":"http://localhost:3000/feed","uploadClassProfileImage":"http://localhost:3000/uploadClassProfileImage","deleteClassProfileImage":"http://localhost:3000/deleteClassProfileImage","changeUserImg":"http://localhost:3000/changeUserImg","deleteUserProfileImage":"http://localhost:3000/userProfileImage","classConnectPost":"http://localhost:3000/classConnect/post/","getClassThumbnail":"http://localhost:3000/classProfileImage/","getClassPosts":"http://localhost:3000/class/posts/","classCommentPost":"http://localhost:3000/class/commentPost/","classPostReaction":"http://localhost:3000/class/postReaction/","classCommentReaction":"http://localhost:3000/class/commentReaction/","getPostReactions":"http://localhost:3000/class/postReactions/","getCommentReactions":"http://localhost:3000/class/commentReactions/","getPostReactionDetail":"http://localhost:3000/class/postReactionDetail/","getCommentReactionDetail":"http://localhost:3000/class/commentReactionDetail/","getComments":"http://localhost:3000/class/comments/","searchGif":"http://localhost:3000/searchGif/","getUserDecks":"http://localhost:3000/deckschildren/u","createUserDeck":"http://localhost:3000/deck/u","imageProxy":"http://localhost:3000/imageProxy","deleteUserDeck":"http://localhost:3000/deck/u/"},"pi":{"getInitialCards":"http://localhost:3000/allCards","getImg":"http://localhost:3000/image","signup":"http://localhost:3000/signup","getLangs":"http://localhost:3000/langs","emailVerification":"http://localhost:3000/email-verification","resendEmailVerification":"http://localhost:3000/resend-email-verification","login":"http://localhost:3000/login","getUserCards":"http://localhost:3000/Mycards","validateToken":"http://localhost:3000/validateToken","deleteCard":"http://localhost:3000/card","searchImage":"http://localhost:3000/searchBing/","postCard":"http://localhost:3000/card","discoverCards":"http://localhost:3000/discoverCards","duplicateCard":"http://localhost:3000/duplicateCard","userPreferences":"http://localhost:3000/userPreferences","toggleAutocomplete":"http://localhost:3000/toggleAutocomplete","examples":"http://localhost:3000/examples","define":"http://localhost:3000/define","updateCard":"http://localhost:3000/updateCard","getCategories":"http://localhost:3000/categories","getUserPlan":"http://localhost:3000/userPlan","getUserLang":"http://localhost:3000/userLang","updateUserLang":"http://localhost:3000/updateUserLang","fbAuth":"http://localhost:3000/fbAuth","getPracticeCards":"http://localhost:3000/practiceCards","rankCard":"http://localhost:3000/rankCard","suggest":"http://localhost:3000/suggest","getUserInfo":"http://localhost:3000/getUserInfo","getActivity":"http://localhost:3000/activity","getActivityCount":"http://localhost:3000/activityCount","getClasses":"http://localhost:3000/classes","getClassesShort":"http://localhost:3000/classesShort","searchClass":"http://localhost:3000/searchClass","recommendClasses":"http://localhost:3000/recommendClasses","joinClass":"http://localhost:3000/joinClass","newClass":"http://localhost:3000/class","addUserToClass":"http://localhost:3000/addUserToClass","deleteUserFromClass":"http://localhost:3000/userFromClass","getClassStats":"http://localhost:3000/classStats","getIntegrants":"http://localhost:3000/classIntegrants","deleteClass":"http://localhost:3000/class","leaveClass":"http://localhost:3000/leaveClass","removeUserFromClass":"http://localhost:3000/userFromClass","duplicateCard2Class":"http://localhost:3000/duplicateCard2Class","getClassCategories":"http://localhost:3000/classCategories","getClassCards":"http://localhost:3000/classCards","updateCardClass":"http://localhost:3000/updateCardClass","deleteClassCard":"http://localhost:3000/classCard","duplicateCardClassUser":"http://localhost:3000/duplicateCardClassUser","getFeed":"http://localhost:3000/feed","uploadClassProfileImage":"http://localhost:3000/uploadClassProfileImage","deleteClassProfileImage":"http://localhost:3000/deleteClassProfileImage","changeUserImg":"http://localhost:3000/changeUserImg","deleteUserProfileImage":"http://localhost:3000/userProfileImage","classConnectPost":"http://localhost:3000/classConnect/post/","getClassThumbnail":"http://localhost:3000/classProfileImage/","getClassPosts":"http://localhost:3000/class/posts/","classCommentPost":"http://localhost:3000/class/commentPost/","classPostReaction":"http://localhost:3000/class/postReaction/","classCommentReaction":"http://localhost:3000/class/commentReaction/","getPostReactions":"http://localhost:3000/class/postReactions/","getCommentReactions":"http://localhost:3000/class/commentReactions/","getPostReactionDetail":"http://localhost:3000/class/postReactionDetail/","getCommentReactionDetail":"http://localhost:3000/class/commentReactionDetail/","getComments":"http://localhost:3000/class/comments/","searchGif":"http://localhost:3000/searchGif/","getUserDecks":"http://localhost:3000/deckschildren/u","createUserDeck":"http://localhost:3000/deck/u","imageProxy":"http://localhost:3000/imageProxy","deleteUserDeck":"http://localhost:3000/deck/u/"},"production":{"getInitialCards":"http://localhost:3000/allCards","getImg":"http://localhost:3000/image","signup":"http://localhost:3000/signup","getLangs":"http://localhost:3000/langs","emailVerification":"http://localhost:3000/email-verification","resendEmailVerification":"http://localhost:3000/resend-email-verification","login":"http://localhost:3000/login","getUserCards":"http://localhost:3000/Mycards","validateToken":"http://localhost:3000/validateToken","deleteCard":"http://localhost:3000/card","searchImage":"http://localhost:3000/searchBing/","postCard":"http://localhost:3000/card","discoverCards":"http://localhost:3000/discoverCards","duplicateCard":"http://localhost:3000/duplicateCard","userPreferences":"http://localhost:3000/userPreferences","toggleAutocomplete":"http://localhost:3000/toggleAutocomplete","examples":"http://localhost:3000/examples","define":"http://localhost:3000/define","updateCard":"http://localhost:3000/updateCard","getCategories":"http://localhost:3000/categories","getUserPlan":"http://localhost:3000/userPlan","getUserLang":"http://localhost:3000/userLang","updateUserLang":"http://localhost:3000/updateUserLang","fbAuth":"http://localhost:3000/fbAuth","getPracticeCards":"http://localhost:3000/practiceCards","rankCard":"http://localhost:3000/rankCard","suggest":"http://localhost:3000/suggest","getUserInfo":"http://localhost:3000/getUserInfo","getActivity":"http://localhost:3000/activity","getActivityCount":"http://localhost:3000/activityCount","getClasses":"http://localhost:3000/classes","getClassesShort":"http://localhost:3000/classesShort","searchClass":"http://localhost:3000/searchClass","recommendClasses":"http://localhost:3000/recommendClasses","joinClass":"http://localhost:3000/joinClass","newClass":"http://localhost:3000/class","addUserToClass":"http://localhost:3000/addUserToClass","deleteUserFromClass":"http://localhost:3000/userFromClass","getClassStats":"http://localhost:3000/classStats","getIntegrants":"http://localhost:3000/classIntegrants","deleteClass":"http://localhost:3000/class","leaveClass":"http://localhost:3000/leaveClass","removeUserFromClass":"http://localhost:3000/userFromClass","duplicateCard2Class":"http://localhost:3000/duplicateCard2Class","getClassCategories":"http://localhost:3000/classCategories","getClassCards":"http://localhost:3000/classCards","updateCardClass":"http://localhost:3000/updateCardClass","deleteClassCard":"http://localhost:3000/classCard","duplicateCardClassUser":"http://localhost:3000/duplicateCardClassUser","getFeed":"http://localhost:3000/feed","uploadClassProfileImage":"http://localhost:3000/uploadClassProfileImage","deleteClassProfileImage":"http://localhost:3000/deleteClassProfileImage","changeUserImg":"http://localhost:3000/changeUserImg","deleteUserProfileImage":"http://localhost:3000/userProfileImage","classConnectPost":"http://localhost:3000/classConnect/post/","getClassThumbnail":"http://localhost:3000/classProfileImage/","getClassPosts":"http://localhost:3000/class/posts/","classCommentPost":"http://localhost:3000/class/commentPost/","classPostReaction":"http://localhost:3000/class/postReaction/","classCommentReaction":"http://localhost:3000/class/commentReaction/","getPostReactions":"http://localhost:3000/class/postReactions/","getCommentReactions":"http://localhost:3000/class/commentReactions/","getPostReactionDetail":"http://localhost:3000/class/postReactionDetail/","getCommentReactionDetail":"http://localhost:3000/class/commentReactionDetail/","getComments":"http://localhost:3000/class/comments/","searchGif":"http://localhost:3000/searchGif/","getUserDecks":"http://localhost:3000/deckschildren/u","createUserDeck":"http://localhost:3000/deck/u","imageProxy":"http://localhost:3000/imageProxy","deleteUserDeck":"http://localhost:3000/deck/u/"}}
 
 /***/ }),
 /* 768 */
@@ -91502,7 +91537,6 @@ var CreateUserDeckContainer = function (_Component) {
     _createClass(CreateUserDeckContainer, [{
         key: 'onImgDelete',
         value: function onImgDelete() {
-            console.log("delete");
             this.setState({ pickedImgs: [] });
         }
     }, {
@@ -91525,11 +91559,11 @@ var CreateUserDeckContainer = function (_Component) {
                 lang = _ref.lang,
                 img = _ref.img;
 
-            console.log("img: ", img);
             this.props.createUserDeck(name, description, lang, img, this.state.parentId, function () {
                 _this2.closeModal();
                 _this2.props.successAlert("Deck created succesfully !");
                 _this2.props.dispatch((0, _reduxForm.reset)(FORM_NAME)); //reset form
+                _this2.onImgDelete();
             });
         }
     }, {
@@ -91560,9 +91594,7 @@ var CreateUserDeckContainer = function (_Component) {
     }, {
         key: 'onCrop',
         value: function onCrop(img, callback) {
-            console.log("oncrop: ", img);
             var pickedImgs = this.state.pickedImgs;
-            console.log("pickedImgs before: ", pickedImgs);
             var i = 0;
             while (i < pickedImgs.length) {
                 if (pickedImgs[i].url == img.src) {
@@ -99986,6 +100018,7 @@ var AddImage = function (_Component) {
         _this.renderPickedImg = _this.renderPickedImg.bind(_this);
         _this.openCropper = _this.openCropper.bind(_this);
         _this.closeCropper = _this.closeCropper.bind(_this);
+        _this.uploadImg = _this.uploadImg.bind(_this);
         return _this;
     }
 
@@ -100000,6 +100033,11 @@ var AddImage = function (_Component) {
             this.setState({ openModal: false });
         }
     }, {
+        key: "uploadImg",
+        value: function uploadImg() {
+            console.log("upload img");
+        }
+    }, {
         key: "renderTitle",
         value: function renderTitle() {
             return _react2.default.createElement(
@@ -100008,7 +100046,7 @@ var AddImage = function (_Component) {
                 _react2.default.createElement(
                     "div",
                     { className: "col-4" },
-                    _react2.default.createElement(_RaisedButton2.default, { labelColor: "#ffffff", disabled: this.props.bigLoading, backgroundColor: "#4286f4", label: "Upload" })
+                    _react2.default.createElement(_RaisedButton2.default, { onClick: this.uploadImg, labelColor: "#ffffff", disabled: this.props.bigLoading, backgroundColor: "#4286f4", label: "Upload" })
                 ),
                 _react2.default.createElement(
                     "div",
@@ -100685,7 +100723,7 @@ var PreviewImage = function (_Component) {
                 _react2.default.createElement(
                     "div",
                     { style: style.imgWrap, key: img.url },
-                    _react2.default.createElement(_croppedImage2.default, { x: img.x, y: img.y, width: img.width, height: img.height, style: style.img, src: img.url }),
+                    _react2.default.createElement(_croppedImage2.default, { width: "200px", height: "200px", src: img.url }),
                     _radium2.default.getState(this.state, img.url, ':hover') && _react2.default.createElement(
                         "span",
                         { style: style.imgBtns },
@@ -100729,16 +100767,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = (0, _radium2.default)(function (_ref) {
     var src = _ref.src,
         height = _ref.height,
-        width = _ref.width,
-        x = _ref.x,
-        y = _ref.y,
-        style = _ref.style;
+        width = _ref.width;
 
 
     var styleWrapperImg = {
         position: "relative",
-        width: "100px",
-        height: "100px",
+        width: width,
+        height: height,
         overflow: "hidden"
     };
 
@@ -100894,16 +100929,6 @@ var _propTypes = __webpack_require__(2);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Card = __webpack_require__(967);
-
-var _FlatButton = __webpack_require__(118);
-
-var _FlatButton2 = _interopRequireDefault(_FlatButton);
-
-var _truncate = __webpack_require__(978);
-
-var _truncate2 = _interopRequireDefault(_truncate);
-
 var _config = __webpack_require__(42);
 
 var _config2 = _interopRequireDefault(_config);
@@ -100915,6 +100940,10 @@ var _reactBidirectionalInfiniteScroll2 = _interopRequireDefault(_reactBidirectio
 var _croppedImage = __webpack_require__(964);
 
 var _croppedImage2 = _interopRequireDefault(_croppedImage);
+
+var _deck = __webpack_require__(1118);
+
+var _deck2 = _interopRequireDefault(_deck);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -100957,50 +100986,13 @@ var DeckGallery = function (_Component) {
             this.props.fetch(this.state.skip);
         }
     }, {
-        key: 'renderLang',
-        value: function renderLang(code) {
-            switch (code) {
-                case "en":
-                    return "English";
-                case "es":
-                    return "Español";
-                default:
-                    return "not available";
-            }
-        }
-    }, {
         key: 'renderDeck',
         value: function renderDeck(deck) {
-            var img;
-            if (deck.thumbnail) img = CLOUDFRONT_URL + deck.thumbnail.hash;else img = "/assets/img/default.jpg";
+            if (deck.thumbnail) deck.thumbnail.src = CLOUDFRONT_URL + deck.thumbnail.hash;else deck.thumbnail.src = "/assets/img/default.jpg";
             return _react2.default.createElement(
-                _Card.Card,
-                { style: style.deck, className: 'col-lg-3 col-md-4 col-sm-12', key: deck._id },
-                _react2.default.createElement(
-                    _Card.CardMedia,
-                    null,
-                    _react2.default.createElement(_croppedImage2.default, { src: img })
-                ),
-                _react2.default.createElement(_Card.CardTitle, { titleStyle: { wordBreak: "break-all" }, title: deck.name, subtitle: this.renderLang(deck.lang) }),
-                _react2.default.createElement(
-                    _Card.CardText,
-                    null,
-                    _react2.default.createElement(
-                        _truncate2.default,
-                        null,
-                        _react2.default.createElement(
-                            'span',
-                            { style: style.wordBreak },
-                            deck.description
-                        )
-                    )
-                ),
-                _react2.default.createElement(
-                    _Card.CardActions,
-                    null,
-                    _react2.default.createElement(_FlatButton2.default, { label: 'Delete' }),
-                    _react2.default.createElement(_FlatButton2.default, { label: 'Duplicate' })
-                )
+                'span',
+                { key: deck._id },
+                _react2.default.createElement(_deck2.default, { onDelete: this.props.onDelete, deck: deck })
             );
         }
     }, {
@@ -111593,14 +111585,29 @@ function userDecksReducer() {
             var newState = _lodash2.default.cloneDeep(state);
             return newState;
         case _types.CREATE_USER_DECK:
-            console.log("payload: ", action.payload);
             var newDeck = action.payload.deck;
             var o = {};
             o[newDeck._id] = newDeck;
             return _extends({}, state, o);
+        case _types.DELETE_USER_DECK:
+            console.log("deckid: ", action.deckId);
+            console.log("path: ", action.path);
+            return deleteDeck(state, action.deckId, action.path);
 
     }
     return state;
+}
+
+function deleteDeck(state, deckId, path) {
+    var r = _extends({}, state);
+    console.log("r: ", r);
+    /*
+    path.forEach(deck=>{
+     })
+    */
+    delete r[deckId];
+    console.log("r: ", r);
+    return r;
 }
 
 /***/ }),
@@ -118930,6 +118937,142 @@ module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
+
+/***/ }),
+/* 1118 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _wordBreak;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _radium = __webpack_require__(20);
+
+var _radium2 = _interopRequireDefault(_radium);
+
+var _Card = __webpack_require__(967);
+
+var _IconButton = __webpack_require__(92);
+
+var _IconButton2 = _interopRequireDefault(_IconButton);
+
+var _FontIcon = __webpack_require__(734);
+
+var _FontIcon2 = _interopRequireDefault(_FontIcon);
+
+var _croppedImage = __webpack_require__(964);
+
+var _croppedImage2 = _interopRequireDefault(_croppedImage);
+
+var _truncate = __webpack_require__(978);
+
+var _truncate2 = _interopRequireDefault(_truncate);
+
+var _language = __webpack_require__(1119);
+
+var _language2 = _interopRequireDefault(_language);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var style = {
+    deck: {
+        padding: "0px",
+        margin: "6px",
+        display: "inline-block",
+        minWidth: "180px"
+    },
+    wordBreak: (_wordBreak = {
+        whiteSpace: "-webkit-pre-wrap" }, _defineProperty(_wordBreak, "whiteSpace", "-pre-wrap"), _defineProperty(_wordBreak, "whiteSpace", "-o-pre-wrap"), _defineProperty(_wordBreak, "whiteSpace", "pre-wrap"), _defineProperty(_wordBreak, "wordWrap", "break-word"), _defineProperty(_wordBreak, "wordBreak", "break-all"), _defineProperty(_wordBreak, "whiteSpace", "normal"), _wordBreak)
+};
+
+exports.default = (0, _radium2.default)(function (props) {
+
+    return _react2.default.createElement(
+        _Card.Card,
+        { style: style.deck, className: "col-lg-3 col-md-4 col-sm-12" },
+        _react2.default.createElement(
+            _Card.CardMedia,
+            null,
+            _react2.default.createElement(_croppedImage2.default, { width: "auto", height: "200px", src: props.deck.thumbnail.src })
+        ),
+        _react2.default.createElement(_Card.CardTitle, { titleStyle: { wordBreak: "break-all" }, title: props.deck.name, subtitle: "holis" }),
+        _react2.default.createElement(
+            _Card.CardText,
+            null,
+            _react2.default.createElement(
+                _truncate2.default,
+                null,
+                _react2.default.createElement(
+                    "span",
+                    { style: style.wordBreak },
+                    props.deck.description
+                )
+            )
+        ),
+        _react2.default.createElement(
+            _Card.CardActions,
+            null,
+            _react2.default.createElement(
+                _IconButton2.default,
+                { onClick: function onClick() {
+                        return props.onDelete(props.deck._id);
+                    }, iconStyle: { color: "red" }, "data-tip": "Delete", iconClassName: "material-icons" },
+                "clear"
+            ),
+            _react2.default.createElement(
+                _IconButton2.default,
+                { iconStyle: { color: "#FF664C" }, "data-tip": "Edit", iconClassName: "material-icons" },
+                "create"
+            )
+        )
+    );
+});
+
+/***/ }),
+/* 1119 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function (_ref) {
+    var code = _ref.code;
+
+    var lang = renderLang(code);
+    return lang;
+};
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function renderLang(code) {
+    switch (code) {
+        case "en":
+            return "English";
+        case "es":
+            return "Español";
+        default:
+            return "not available";
+    }
+}
 
 /***/ })
 /******/ ]);

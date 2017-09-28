@@ -29,7 +29,6 @@ class CreateUserDeckContainer extends Component{
     }
 
     onImgDelete(){
-        console.log("delete");
         this.setState({pickedImgs:[]});
     }
 
@@ -42,11 +41,11 @@ class CreateUserDeckContainer extends Component{
     }
 
     onSubmit({name, description, lang, img}){
-        console.log("img: ", img);
         this.props.createUserDeck(name, description, lang, img, this.state.parentId,()=>{
             this.closeModal();
             this.props.successAlert("Deck created succesfully !");
             this.props.dispatch(reset(FORM_NAME));  //reset form
+            this.onImgDelete();
         });
     }
 
@@ -75,9 +74,7 @@ class CreateUserDeckContainer extends Component{
     }
 
     onCrop(img, callback){
-        console.log("oncrop: ", img);
         var pickedImgs = this.state.pickedImgs;
-        console.log("pickedImgs before: ", pickedImgs);
         var i=0;
         while(i < pickedImgs.length){
             if(pickedImgs[i].url == img.src){
