@@ -35781,6 +35781,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -35791,10 +35793,10 @@ var _radium2 = _interopRequireDefault(_radium);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = (0, _radium2.default)(function (_ref) {
-    var src = _ref.src,
-        height = _ref.height,
-        width = _ref.width;
+exports.default = (0, _radium2.default)(function (props) {
+    var src = props.src,
+        height = props.height,
+        width = props.width;
 
 
     var styleWrapperImg = {
@@ -35818,7 +35820,7 @@ exports.default = (0, _radium2.default)(function (_ref) {
     return _react2.default.createElement(
         "div",
         { style: styleWrapperImg },
-        _react2.default.createElement("img", { style: styleImg, src: src })
+        _react2.default.createElement("img", _extends({}, props, { style: [styleImg, props.style], src: src }))
     );
 });
 
@@ -99861,7 +99863,6 @@ var CreateDeck = function (_Component) {
         value: function onImgDelete() {
             this.props.dispatch((0, _reduxForm.change)(this.props.formName, "img", null));
             this.props.onImgDelete();
-            this.forceUpdate();
         }
     }, {
         key: 'renderForm',
@@ -105594,6 +105595,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _wordBreak;
 
 var _react = __webpack_require__(0);
@@ -105626,7 +105629,15 @@ var _language = __webpack_require__(999);
 
 var _language2 = _interopRequireDefault(_language);
 
+var _reactRouterDom = __webpack_require__(84);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -105638,51 +105649,98 @@ var style = {
         minWidth: "180px"
     },
     wordBreak: (_wordBreak = {
-        whiteSpace: "-webkit-pre-wrap" }, _defineProperty(_wordBreak, "whiteSpace", "-pre-wrap"), _defineProperty(_wordBreak, "whiteSpace", "-o-pre-wrap"), _defineProperty(_wordBreak, "whiteSpace", "pre-wrap"), _defineProperty(_wordBreak, "wordWrap", "break-word"), _defineProperty(_wordBreak, "wordBreak", "break-all"), _defineProperty(_wordBreak, "whiteSpace", "normal"), _wordBreak)
+        whiteSpace: "-webkit-pre-wrap" }, _defineProperty(_wordBreak, "whiteSpace", "-pre-wrap"), _defineProperty(_wordBreak, "whiteSpace", "-o-pre-wrap"), _defineProperty(_wordBreak, "whiteSpace", "pre-wrap"), _defineProperty(_wordBreak, "wordWrap", "break-word"), _defineProperty(_wordBreak, "wordBreak", "break-all"), _defineProperty(_wordBreak, "whiteSpace", "normal"), _wordBreak),
+    a: {
+        cursor: "pointer",
+        color: "#4286f4",
+        ":hover": {
+            textDecoration: "underline"
+        }
+    }
 };
 
-exports.default = (0, _radium2.default)(function (props) {
+var Deck = function (_Component) {
+    _inherits(Deck, _Component);
 
-    return _react2.default.createElement(
-        _Card.Card,
-        { style: style.deck, className: "col-lg-3 col-md-4 col-sm-12" },
-        _react2.default.createElement(
-            _Card.CardMedia,
-            null,
-            _react2.default.createElement(_croppedImage2.default, { width: "auto", height: "200px", src: props.deck.thumbnail.src })
-        ),
-        _react2.default.createElement(_Card.CardTitle, { titleStyle: { wordBreak: "break-all" }, title: props.deck.name, subtitle: (0, _language2.default)(props.deck.lang) }),
-        _react2.default.createElement(
-            _Card.CardText,
-            null,
-            _react2.default.createElement(
-                _truncate2.default,
-                null,
+    function Deck(props) {
+        _classCallCheck(this, Deck);
+
+        var _this = _possibleConstructorReturn(this, (Deck.__proto__ || Object.getPrototypeOf(Deck)).call(this, props));
+
+        _this.openDeck = _this.openDeck.bind(_this);
+        return _this;
+    }
+
+    _createClass(Deck, [{
+        key: "openDeck",
+        value: function openDeck(id, name) {
+            console.log("open deck: ", id);
+            this.props.goToDeck(id, name);
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            var deck = this.props.deck;
+
+            return _react2.default.createElement(
+                _Card.Card,
+                { style: style.deck, className: "col-lg-3 col-md-4 col-sm-12" },
                 _react2.default.createElement(
-                    "span",
-                    { style: style.wordBreak },
-                    props.deck.description
+                    _Card.CardMedia,
+                    null,
+                    _react2.default.createElement(_croppedImage2.default, { style: { cursor: "pointer" },
+                        onClick: function onClick() {
+                            return _this2.openDeck(deck._id, deck.name);
+                        },
+                        width: "auto", height: "200px",
+                        src: deck.thumbnail.src })
+                ),
+                _react2.default.createElement(_Card.CardTitle, { titleStyle: { wordBreak: "break-all" }, title: _react2.default.createElement(
+                        "a",
+                        { style: style.a, onClick: function onClick() {
+                                return _this2.openDeck(deck._id);
+                            } },
+                        deck.name
+                    ), subtitle: (0, _language2.default)(deck.lang) }),
+                _react2.default.createElement(
+                    _Card.CardText,
+                    null,
+                    _react2.default.createElement(
+                        _truncate2.default,
+                        null,
+                        _react2.default.createElement(
+                            "span",
+                            { style: style.wordBreak },
+                            deck.description
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    _Card.CardActions,
+                    null,
+                    _react2.default.createElement(
+                        _IconButton2.default,
+                        { onClick: function onClick() {
+                                return _this2.props.onDelete(deck._id);
+                            }, iconStyle: { color: "red" }, "data-tip": "Delete", iconClassName: "material-icons" },
+                        "clear"
+                    ),
+                    _react2.default.createElement(
+                        _IconButton2.default,
+                        { iconStyle: { color: "#FF664C" }, "data-tip": "Edit", iconClassName: "material-icons" },
+                        "create"
+                    )
                 )
-            )
-        ),
-        _react2.default.createElement(
-            _Card.CardActions,
-            null,
-            _react2.default.createElement(
-                _IconButton2.default,
-                { onClick: function onClick() {
-                        return props.onDelete(props.deck._id);
-                    }, iconStyle: { color: "red" }, "data-tip": "Delete", iconClassName: "material-icons" },
-                "clear"
-            ),
-            _react2.default.createElement(
-                _IconButton2.default,
-                { iconStyle: { color: "#FF664C" }, "data-tip": "Edit", iconClassName: "material-icons" },
-                "create"
-            )
-        )
-    );
-});
+            );
+        }
+    }]);
+
+    return Deck;
+}(_react.Component);
+
+exports.default = (0, _radium2.default)(Deck);
 
 /***/ }),
 /* 978 */
