@@ -5,7 +5,7 @@ import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
 import CroppedImage from "./util/croppedImage.jsx";
 import Truncate from "./util/truncate.jsx";
-import Language from "./util/language.jsx";
+import language from "./util/language.js";
 
 const style = {
     deck: {
@@ -25,7 +25,6 @@ const style = {
     }
 }
 
-
 export default Radium(props => {
 
     return (
@@ -33,7 +32,7 @@ export default Radium(props => {
             <CardMedia>
                 <CroppedImage width="auto" height="200px" src={props.deck.thumbnail.src} />
             </CardMedia>
-            <CardTitle titleStyle={{ wordBreak: "break-all" }} title={props.deck.name} subtitle="holis" />
+            <CardTitle titleStyle={{ wordBreak: "break-all" }} title={props.deck.name} subtitle={language(props.deck.lang)} />
             <CardText>
                 <Truncate>
                     <span style={style.wordBreak}>

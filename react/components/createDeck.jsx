@@ -57,6 +57,7 @@ class CreateDeck extends Component{
         this.state = {parentId: parentId};
         this.renderForm = this.renderForm.bind(this);
         this.onImgPick = this.onImgPick.bind(this);
+        this.onImgUpload = this.onImgUpload.bind(this);
         this.onImgDelete = this.onImgDelete.bind(this);
         this.onCrop = this.onCrop.bind(this);
     }
@@ -64,6 +65,12 @@ class CreateDeck extends Component{
     onImgPick(img){
         console.log("img picked: ", img);
         this.props.onImgPick(img, img=>{
+            this.props.dispatch(change(this.props.formName, "img", img));
+        });
+    }
+
+    onImgUpload(img){
+        this.props.onImgUpload(img, img=>{
             this.props.dispatch(change(this.props.formName, "img", img));
         });
     }
@@ -112,6 +119,7 @@ class CreateDeck extends Component{
                                                       maxPickedImgs={this.props.maxPickedImgs}
                                                       disabled={this.props.bigLoading}
                                                       onImgPick={this.onImgPick}
+                                                      onImgUpload={this.onImgUpload}
                                                       titleModal="Add cover for deck"
                                                       label="Add cover image"/>
                                             <TextField

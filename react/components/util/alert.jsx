@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import AlertContainer from 'react-alert'
 import PropTypes from 'prop-types';
  
-const TIME = 7000
+const TIME = 9000
 
  const alertOptions = {
     offset: 14,

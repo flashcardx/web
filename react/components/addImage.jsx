@@ -1,11 +1,14 @@
 import React, {Component} from "react";
+import _ from "lodash";
 import Radium from "radium";
 import {connect} from "react-redux";
 import config from "../../config";
 import Modal from "./util/modal.jsx";
 import TextField from "./util/textField.jsx";
 import RaisedButton from 'material-ui/RaisedButton';
+import {infoAlert} from "../actions/alerts.js";
 import {reduxForm } from 'redux-form';
+import Dropzone from 'react-dropzone';
 import PropTypes from "prop-types";
 import axios from "axios";
 import ImgPicker from "./imgPicker.jsx";
@@ -70,7 +73,6 @@ class AddImage extends Component{
         this.renderPickedImg = this.renderPickedImg.bind(this);
         this.openCropper = this.openCropper.bind(this);
         this.closeCropper = this.closeCropper.bind(this);
-        this.uploadImg = this.uploadImg.bind(this);
     }
 
     openModal(){
@@ -81,15 +83,15 @@ class AddImage extends Component{
         this.setState({openModal: false});
     }
 
-    uploadImg(){
-        console.log("upload img");
-    }
-
     renderTitle(){
         return (
             <div className="row">
                     <div className="col-4">
-                        <RaisedButton onClick={this.uploadImg}labelColor="#ffffff"  disabled={this.props.bigLoading} backgroundColor="#4286f4" label="Upload" />
+                        <RaisedButton  onClick={() => { this.dropzoneRef.open() }}
+                                       labelColor="#ffffff"
+                                       disabled={this.props.bigLoading}
+                                       backgroundColor="#4286f4"
+                                       label="Upload" />
                     </div>
                     <div className="col-8">
                         {this.props.titleModal}
@@ -129,44 +131,74 @@ class AddImage extends Component{
     }
 
     onImgPick(img){
-        console.log("add image img:", img);
         this.closeModal();
         this.props.onImgPick(img);
     }
 
+    onDrop(files, rejectedFiles) {
+        if(!_.isEmpty(rejectedFiles)){
+            return this.props.infoAlert("Can not upload file, remenber you can only upload images with size up to 3mb!");
+        }
+        this.closeModal();
+        const file = files[0];
+        const image = new Image()
+        image.onload = () => {
+            let reader = new FileReader();
+            reader.readAsDataURL(file)
+            reader.onload = () => {
+                const img = {
+                    data: files[0],
+                    width: image.width,
+                    height: image.height
+                }
+                this.props.onImgUpload(img);
+            }
+        }
+        image.src = file.preview
+    }
+
+
     renderPicker(){
         return (
             <div className="container">
-                <div className="row">
-                    <div className="col">
-                            <input onChange={this.onChange} 
-                            placeholder="Search"
-                            value={this.state.searchQuery}
-                            type="text"/>
-                    </div>
-                    <div className="col">
-                        <RaisedButton onClick={this.searchImg}
-                                      style={style.marginRight}
-                                      labelColor="#ffffff"
-                                      disabled={this.props.bigLoading}
-                                      backgroundColor="#4286f4"
-                                      label="Search Img"/>                    
-                        <RaisedButton onClick={this.searchGif}
-                                      labelColor="#ffffff"
-                                      disabled={this.props.bigLoading}
-                                      backgroundColor="#4286f4"
-                                      label="Search Gif"/>                    
-                    </div>
-                </div> 
-                <div style={style.marginTop} className="row">
-                    <div className="col mx-auto">
-                        <div className="text-center">
-                            <ImgPicker  onImgPick={this.onImgPick}
-                                        searchImgs={this.state.searchImgs}
-                                        isLoading={this.state.isLoading}/>
+                <Dropzone style={{borderStyle:"none"}}
+                          disableClick={true}
+                          multiple={false}
+                          ref={node=>{this.dropzoneRef=node;}}
+                          maxSize={3000000}
+                          accept="image/*"
+                          onDrop={this.onDrop.bind(this)}>
+                    <div className="row">
+                        <div className="col">
+                                <input onChange={this.onChange} 
+                                placeholder="Search"
+                                value={this.state.searchQuery}
+                                type="text"/>
+                        </div>
+                        <div className="col">
+                            <RaisedButton onClick={this.searchImg}
+                                        style={style.marginRight}
+                                        labelColor="#ffffff"
+                                        disabled={this.props.bigLoading}
+                                        backgroundColor="#4286f4"
+                                        label="Search Img"/>                    
+                            <RaisedButton onClick={this.searchGif}
+                                        labelColor="#ffffff"
+                                        disabled={this.props.bigLoading}
+                                        backgroundColor="#4286f4"
+                                        label="Search Gif"/>                    
+                        </div>
+                    </div> 
+                    <div style={style.marginTop} className="row">
+                        <div className="col mx-auto">
+                            <div className="text-center">
+                                <ImgPicker  onImgPick={this.onImgPick}
+                                            searchImgs={this.state.searchImgs}
+                                            isLoading={this.state.isLoading}/>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </Dropzone>
             </div>
         );
     }
@@ -214,18 +246,18 @@ class AddImage extends Component{
     render(){
         return (
             <div>
-                <Cropper onCrop={this.props.onCrop} 
-                         onClose={this.closeCropper}
-                         open={this.state.cropModal}
-                         img={this.state.imgBeingCropped}/>
-                <Modal autoScroll={true} onClose={this.closeModal} modal={false} open={this.state.openModal} closeLabel="Cancel" title={this.renderTitle()}>
-                    {this.renderPicker()}
-                </Modal>
-                    {this.renderBottom()}
+                    <Cropper onCrop={this.props.onCrop} 
+                            onClose={this.closeCropper}
+                            open={this.state.cropModal}
+                            img={this.state.imgBeingCropped}/>
+                    <Modal autoScroll={true} onClose={this.closeModal} modal={false} open={this.state.openModal} closeLabel="Cancel" title={this.renderTitle()}>
+                        {this.renderPicker()}
+                    </Modal>
+                        {this.renderBottom()}
             </div>
         );
     }
 
 }
 
-export default Radium(AddImage);
+export default connect(null, {infoAlert})(Radium(AddImage));

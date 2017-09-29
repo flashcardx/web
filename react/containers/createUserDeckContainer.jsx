@@ -24,6 +24,7 @@ class CreateUserDeckContainer extends Component{
         this.closeModal = this.closeModal.bind(this);
         this.openModal = this.openModal.bind(this);
         this.onImgPick = this.onImgPick.bind(this);
+        this.onImgUpload = this.onImgUpload.bind(this);
         this.onImgDelete = this.onImgDelete.bind(this);
         this.onCrop = this.onCrop.bind(this);
     }
@@ -73,6 +74,32 @@ class CreateUserDeckContainer extends Component{
         });
     }
 
+    onImgUpload(img, callback){
+        this.props.showLoading();
+        var form = new FormData();
+        form.append("data", img.data);
+        axios.post(IMAGE_PROXY_URL, form, {headers:{'x-access-token': localStorage.getItem("jwt")}})
+        .then(r=>{
+            this.props.hideLoading();
+            if(r.data.success == false){
+                this.props.infoAlert("This image can not be uploaded, please try with another one");
+                return console.error(r.data.msg);
+            }
+            const url = CLOUDFRONT_URL + r.data.hash;
+            const img2 = {url:url,
+                          hash: r.data.hash,
+                          width: img.width,
+                          height: img.height,
+                          x:0,
+                          y:0};
+            callback(img2);
+            this.setState({pickedImgs: [img2]});
+        })
+        .catch(err=>{
+            console.error(err);
+        });
+    }
+
     onCrop(img, callback){
         var pickedImgs = this.state.pickedImgs;
         var i=0;
@@ -93,7 +120,8 @@ class CreateUserDeckContainer extends Component{
 
     render(){
         return (
-            <CreateDeck onCrop={this.onCrop}
+            <CreateDeck onImgUpload={this.onImgUpload}
+                        onCrop={this.onCrop}
                         onImgDelete={this.onImgDelete}
                         pickedImgs={this.state.pickedImgs}
                         modalIsOpen = {this.state.modalIsOpen}
