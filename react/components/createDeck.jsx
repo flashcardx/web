@@ -84,6 +84,7 @@ class CreateDeck extends Component{
     onImgDelete(){
             this.props.dispatch(change( this.props.formName, "img", null));
             this.props.onImgDelete();
+            this.forceUpdate();
     }
 
     renderForm(){
