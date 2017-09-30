@@ -35,27 +35,17 @@ const style = {
 
 class Deck extends Component{
 
-    constructor(props){
-        super(props);
-        this.openDeck = this.openDeck.bind(this);
-    }
-
-    openDeck(id, name){
-        console.log("open deck: ", id);
-        this.props.goToDeck(id, name);
-    }
-
     render(){
         const {deck} = this.props;
         return (
             <Card style={style.deck} className="col-lg-3 col-md-4 col-sm-12">
                 <CardMedia>
                     <CroppedImage style={{cursor:"pointer"}}
-                                  onClick={()=>this.openDeck(deck._id, deck.name)}
+                                  onClick={()=>this.props.pushDeck(deck._id, deck.name)}
                                   width="auto" height="200px"
                                   src={deck.thumbnail.src} />
                 </CardMedia>
-                <CardTitle titleStyle={{ wordBreak: "break-all" }} title={<a style={style.a} onClick={()=>this.openDeck(deck._id)}>{deck.name}</a>} subtitle={language(deck.lang)} />
+                <CardTitle titleStyle={{ wordBreak: "break-all" }} title={<a style={style.a} onClick={()=>this.props.pushDeck(deck._id, deck.name)}>{deck.name}</a>} subtitle={language(deck.lang)} />
                 <CardText>
                     <Truncate>
                         <span style={style.wordBreak}>

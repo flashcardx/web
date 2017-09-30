@@ -28,8 +28,9 @@ class Home extends Component{
         this.state = {parentId:null, path:[]};
         this.fetchDecks = this.fetchDecks.bind(this);
         this.renderPath = this.renderPath.bind(this);
-        this.goTo = this.goTo.bind(this);
+        this.goToIndex = this.goToIndex.bind(this);
         this.onDelete = this.onDelete.bind(this);
+        this.pushDeck = this.pushDeck.bind(this);
     }
 
     componentWillMount(){
@@ -40,21 +41,29 @@ class Home extends Component{
         this.props.fetchUserDecks(this.state.parentId, skip, this.state.path);
     }
 
-    goTo(pathLastIndex){
+    goToIndex(pathLastIndex){
+        console.log("goto index", this.state.path);
         var limitToDrop = this.state.path.length - pathLastIndex;
         var newPath = _.dropRight(this.state.path, limitToDrop);
         this.setState({path: newPath});
     }
 
+    pushDeck(id, name){
+        var newDeck = {id, name};
+        console.log("new state: ", [...this.state.path, newDeck]);
+        this.setState({path: [...this.state.path, newDeck]});
+    }
+
     renderPath(){
-        var path = <span onClick={()=>this.goTo(0)} style={style.path}>Root</span>;
-        this.state.path.forEach((p, i)=>{
-            if(i != 0)
-                path += "/";
-            ṕath += <span onClick={()=>this.goTo(i+1)} style={style.path}>p.name</span>
-        });
+        console.log("path: ", this.state.path);
         return (
-            <span>{path}</span>
+            <div>
+                <span onClick={()=>this.goToIndex(0)} style={style.path}>Root</span>
+                {this.state.path.map((p, i)=>{
+                    <span key={(i+1)} onClick={()=>this.goToIndex(i+1)} style={style.path}>{p.name}</span>
+                    })
+                }
+            </div>
         );
     }
 
@@ -66,6 +75,7 @@ class Home extends Component{
     }
 
     render(){
+         console.log("path: ", this.state.path);
         return (
             <Page name="my collection">
                 <div className="container">
@@ -80,7 +90,7 @@ class Home extends Component{
                     </div>
                     <div className="row">
                         <div className="col">
-                            <DeckGallery onDelete={this.onDelete} path={this.state.path} fetch={this.fetchDecks} decks={this.props.decks}/>
+                            <DeckGallery pushDeck={this.pushDeck} onDelete={this.onDelete} path={this.state.path} fetch={this.fetchDecks} decks={this.props.decks}/>
                         </div>
                     </div>
                 </div>

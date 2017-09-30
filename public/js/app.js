@@ -77244,6 +77244,8 @@ var _lodash2 = _interopRequireDefault(_lodash);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -77271,8 +77273,9 @@ var Home = function (_Component) {
         _this.state = { parentId: null, path: [] };
         _this.fetchDecks = _this.fetchDecks.bind(_this);
         _this.renderPath = _this.renderPath.bind(_this);
-        _this.goTo = _this.goTo.bind(_this);
+        _this.goToIndex = _this.goToIndex.bind(_this);
         _this.onDelete = _this.onDelete.bind(_this);
+        _this.pushDeck = _this.pushDeck.bind(_this);
         return _this;
     }
 
@@ -77287,38 +77290,45 @@ var Home = function (_Component) {
             this.props.fetchUserDecks(this.state.parentId, skip, this.state.path);
         }
     }, {
-        key: "goTo",
-        value: function goTo(pathLastIndex) {
+        key: "goToIndex",
+        value: function goToIndex(pathLastIndex) {
+            console.log("goto index", this.state.path);
             var limitToDrop = this.state.path.length - pathLastIndex;
             var newPath = _lodash2.default.dropRight(this.state.path, limitToDrop);
             this.setState({ path: newPath });
+        }
+    }, {
+        key: "pushDeck",
+        value: function pushDeck(id, name) {
+            var newDeck = { id: id, name: name };
+            console.log("new state: ", [].concat(_toConsumableArray(this.state.path), [newDeck]));
+            this.setState({ path: [].concat(_toConsumableArray(this.state.path), [newDeck]) });
         }
     }, {
         key: "renderPath",
         value: function renderPath() {
             var _this2 = this;
 
-            var path = _react2.default.createElement(
-                "span",
-                { onClick: function onClick() {
-                        return _this2.goTo(0);
-                    }, style: style.path },
-                "Root"
-            );
-            this.state.path.forEach(function (p, i) {
-                if (i != 0) path += "/";
-                ṕath += _react2.default.createElement(
+            console.log("path: ", this.state.path);
+            return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
                     "span",
                     { onClick: function onClick() {
-                            return _this2.goTo(i + 1);
+                            return _this2.goToIndex(0);
                         }, style: style.path },
-                    "p.name"
-                );
-            });
-            return _react2.default.createElement(
-                "span",
-                null,
-                path
+                    "Root"
+                ),
+                this.state.path.map(function (p, i) {
+                    _react2.default.createElement(
+                        "span",
+                        { key: i + 1, onClick: function onClick() {
+                                return _this2.goToIndex(i + 1);
+                            }, style: style.path },
+                        p.name
+                    );
+                })
             );
         }
     }, {
@@ -77334,6 +77344,7 @@ var Home = function (_Component) {
     }, {
         key: "render",
         value: function render() {
+            console.log("path: ", this.state.path);
             return _react2.default.createElement(
                 _page2.default,
                 { name: "my collection" },
@@ -77366,7 +77377,7 @@ var Home = function (_Component) {
                         _react2.default.createElement(
                             "div",
                             { className: "col" },
-                            _react2.default.createElement(_deckGallery2.default, { onDelete: this.onDelete, path: this.state.path, fetch: this.fetchDecks, decks: this.props.decks })
+                            _react2.default.createElement(_deckGallery2.default, { pushDeck: this.pushDeck, onDelete: this.onDelete, path: this.state.path, fetch: this.fetchDecks, decks: this.props.decks })
                         )
                     )
                 )
@@ -105417,7 +105428,7 @@ var DeckGallery = function (_Component) {
             return _react2.default.createElement(
                 'span',
                 { key: deck._id },
-                _react2.default.createElement(_deck2.default, { onDelete: this.props.onDelete, deck: deck })
+                _react2.default.createElement(_deck2.default, { pushDeck: this.props.pushDeck, onDelete: this.props.onDelete, deck: deck })
             );
         }
     }, {
@@ -105810,22 +105821,13 @@ var style = {
 var Deck = function (_Component) {
     _inherits(Deck, _Component);
 
-    function Deck(props) {
+    function Deck() {
         _classCallCheck(this, Deck);
 
-        var _this = _possibleConstructorReturn(this, (Deck.__proto__ || Object.getPrototypeOf(Deck)).call(this, props));
-
-        _this.openDeck = _this.openDeck.bind(_this);
-        return _this;
+        return _possibleConstructorReturn(this, (Deck.__proto__ || Object.getPrototypeOf(Deck)).apply(this, arguments));
     }
 
     _createClass(Deck, [{
-        key: "openDeck",
-        value: function openDeck(id, name) {
-            console.log("open deck: ", id);
-            this.props.goToDeck(id, name);
-        }
-    }, {
         key: "render",
         value: function render() {
             var _this2 = this;
@@ -105840,7 +105842,7 @@ var Deck = function (_Component) {
                     null,
                     _react2.default.createElement(_croppedImage2.default, { style: { cursor: "pointer" },
                         onClick: function onClick() {
-                            return _this2.openDeck(deck._id, deck.name);
+                            return _this2.props.pushDeck(deck._id, deck.name);
                         },
                         width: "auto", height: "200px",
                         src: deck.thumbnail.src })
@@ -105848,7 +105850,7 @@ var Deck = function (_Component) {
                 _react2.default.createElement(_Card.CardTitle, { titleStyle: { wordBreak: "break-all" }, title: _react2.default.createElement(
                         "a",
                         { style: style.a, onClick: function onClick() {
-                                return _this2.openDeck(deck._id);
+                                return _this2.props.pushDeck(deck._id, deck.name);
                             } },
                         deck.name
                     ), subtitle: (0, _language2.default)(deck.lang) }),

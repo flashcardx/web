@@ -47,7 +47,7 @@ class DeckGallery extends Component{
             deck.thumbnail.src = "/assets/img/default.jpg";
         return (
             <span key={deck._id}>
-                <Deck onDelete={this.props.onDelete}deck={deck}/>
+                <Deck pushDeck={this.props.pushDeck} onDelete={this.props.onDelete}deck={deck}/>
             </span>
         );
     }
