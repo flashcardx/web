@@ -2,6 +2,7 @@ const appRoot = require('app-root-path');
 const helmet = require("helmet");
 const session = require('client-sessions');
 const randomstring = require("randomstring");
+const cors = require("cors");
 var express = require('express');
 var cookieParser = require('cookie-parser');
 

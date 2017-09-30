@@ -78,7 +78,8 @@ class CreateUserDeckContainer extends Component{
         this.props.showLoading();
         var form = new FormData();
         form.append("data", img.data);
-        axios.post(IMAGE_PROXY_URL, form, {headers:{'x-access-token': localStorage.getItem("jwt")}})
+        axios.post(IMAGE_PROXY_URL, form, {headers:
+                                {'x-access-token': localStorage.getItem("jwt")}})
         .then(r=>{
             this.props.hideLoading();
             if(r.data.success == false){
