@@ -61076,14 +61076,6 @@ var _home = __webpack_require__(615);
 
 var _home2 = _interopRequireDefault(_home);
 
-var _feed = __webpack_require__(995);
-
-var _feed2 = _interopRequireDefault(_feed);
-
-var _discover = __webpack_require__(996);
-
-var _discover2 = _interopRequireDefault(_discover);
-
 var _practice = __webpack_require__(997);
 
 var _practice2 = _interopRequireDefault(_practice);
@@ -61178,8 +61170,6 @@ var App = function (_Component) {
                 _react2.default.createElement(
                     _reactRouterDom.Switch,
                     null,
-                    _react2.default.createElement(_reactRouterDom.Route, { path: "/discover", component: (0, _authRedirect.requireAuth)(_discover2.default, "/landing") }),
-                    _react2.default.createElement(_reactRouterDom.Route, { path: "/feed", component: (0, _authRedirect.requireAuth)(_feed2.default, "/landing") }),
                     _react2.default.createElement(_reactRouterDom.Route, { path: "/practice", component: (0, _authRedirect.requireAuth)(_practice2.default, "/landing") }),
                     _react2.default.createElement(_reactRouterDom.Route, { path: "/settings", component: (0, _authRedirect.requireAuth)(_settings2.default, "/landing") }),
                     _react2.default.createElement(_reactRouterDom.Route, { path: "/email-verification/:id", component: (0, _authRedirect.validateEmail)(_landing2.default, "/landing") }),
@@ -77244,8 +77234,6 @@ var _lodash2 = _interopRequireDefault(_lodash);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -77267,6 +77255,8 @@ var Home = function (_Component) {
 
     function Home(props) {
         _classCallCheck(this, Home);
+
+        console.log("home constructor");
 
         var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
 
@@ -77300,16 +77290,22 @@ var Home = function (_Component) {
     }, {
         key: "pushDeck",
         value: function pushDeck(id, name) {
-            var newDeck = { id: id, name: name };
-            console.log("new state: ", [].concat(_toConsumableArray(this.state.path), [newDeck]));
-            this.setState({ path: [].concat(_toConsumableArray(this.state.path), [newDeck]) });
+            this.setState(function (prevState, props) {
+                var newDeck = [{ id: id, name: name }];
+                console.log("new path: ", prevState.path.concat(newDeck));
+                return { path: prevState.path.concat(newDeck) };
+            });
+        }
+    }, {
+        key: "componentWillUpdate",
+        value: function componentWillUpdate(nextProps, nextState) {
+            console.log("nextstate: ", nextState);
         }
     }, {
         key: "renderPath",
         value: function renderPath() {
             var _this2 = this;
 
-            console.log("path: ", this.state.path);
             return _react2.default.createElement(
                 "div",
                 null,
@@ -77344,7 +77340,7 @@ var Home = function (_Component) {
     }, {
         key: "render",
         value: function render() {
-            console.log("path: ", this.state.path);
+            console.log("path at render: ", this.state.path);
             return _react2.default.createElement(
                 _page2.default,
                 { name: "my collection" },
@@ -77520,8 +77516,6 @@ var Navbar = function (_Component) {
                     _react2.default.createElement(
                         _Tabs.Tabs,
                         { style: style.colorBase, value: this.state.active },
-                        _react2.default.createElement(_Tabs.Tab, { style: style.colorBase, value: "discover", label: "Discover", "data-route": "/discover", onActive: this.handleActive }),
-                        _react2.default.createElement(_Tabs.Tab, { style: style.colorBase, value: "feed", label: "Feed", "data-route": "/feed", onActive: this.handleActive }),
                         _react2.default.createElement(_Tabs.Tab, { style: style.colorBase, value: "my collection", "data-route": "/", label: "My collection",
                             onActive: this.handleActive }),
                         _react2.default.createElement(_Tabs.Tab, { style: style.colorBase, value: "practice", label: "Practice",
@@ -77563,17 +77557,6 @@ var Navbar = function (_Component) {
                     targetOrigin: { horizontal: 'right', vertical: 'top' },
                     anchorOrigin: { horizontal: 'right', vertical: 'top' }
                 },
-                _react2.default.createElement(
-                    _reactRouterDom.Link,
-                    { to: "/discover" },
-                    "  ",
-                    _react2.default.createElement(_MenuItem2.default, { primaryText: "DISCOVER" })
-                ),
-                _react2.default.createElement(
-                    _reactRouterDom.Link,
-                    { to: "/feed" },
-                    _react2.default.createElement(_MenuItem2.default, { primaryText: "FEED" })
-                ),
                 _react2.default.createElement(
                     _reactRouterDom.Link,
                     { to: "/" },
@@ -108888,68 +108871,8 @@ exports.default = function (code) {
 };
 
 /***/ }),
-/* 995 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _page = __webpack_require__(72);
-
-var _page2 = _interopRequireDefault(_page);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function Feed() {
-    return _react2.default.createElement(
-        _page2.default,
-        { name: "feed" },
-        "feed"
-    );
-}
-
-exports.default = Feed;
-
-/***/ }),
-/* 996 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _page = __webpack_require__(72);
-
-var _page2 = _interopRequireDefault(_page);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function Discover() {
-    return _react2.default.createElement(
-        _page2.default,
-        { name: "discover" },
-        "discover"
-    );
-}
-
-exports.default = Discover;
-
-/***/ }),
+/* 995 */,
+/* 996 */,
 /* 997 */
 /***/ (function(module, exports, __webpack_require__) {
 

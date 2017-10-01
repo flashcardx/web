@@ -4,8 +4,6 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { BrowserRouter, Switch, Route,Redirect } from 'react-router-dom';
 import Home from "./pages/home.jsx";
-import Feed from "./pages/feed.jsx";
-import Discover from "./pages/discover.jsx";
 import Practice from "./pages/practice.jsx";
 import Settings from "./pages/settings.jsx";
 import Signout from "./pages/signout.jsx";
@@ -33,8 +31,6 @@ class App extends Component{
     render(){
        return ( <BrowserRouter>
                     <Switch>
-                        <Route path="/discover" component={requireAuth(Discover, "/landing")}/>
-                        <Route path="/feed" component={requireAuth(Feed, "/landing")}/>
                         <Route path="/practice" component={requireAuth(Practice, "/landing")}/>
                         <Route path="/settings" component={requireAuth(Settings, "/landing")}/>
                         <Route path="/email-verification/:id" component={validateEmail(Landing, "/landing")}/>

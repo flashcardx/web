@@ -51,8 +51,6 @@ class Navbar extends Component{
             </div>
             <div className="col-9">
                 <Tabs style={style.colorBase} value={this.state.active}>
-                            <Tab style={style.colorBase} value="discover" label="Discover" data-route="/discover" onActive={this.handleActive}/>
-                            <Tab style={style.colorBase} value="feed" label="Feed" data-route="/feed" onActive={this.handleActive}/>
                             <Tab style={style.colorBase} value="my collection" data-route="/" label="My collection"
                                 onActive={this.handleActive}/>
                             <Tab style={style.colorBase} value="practice" label="Practice"
@@ -82,8 +80,6 @@ class Navbar extends Component{
                 targetOrigin={{horizontal: 'right', vertical: 'top'}}
                 anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             >
-                <Link to="/discover">  <MenuItem primaryText="DISCOVER" /></Link>
-                <Link to="/feed"><MenuItem primaryText="FEED" /></Link>
                 <Link to="/"><MenuItem primaryText="MY COLLECTION" /></Link>
                 <Link to="/practice"><MenuItem primaryText="PRACTICE" /></Link>
                 <Link to="/settings"><MenuItem primaryText="SETTINGS" /></Link>

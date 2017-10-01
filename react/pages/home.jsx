@@ -24,6 +24,7 @@ const style = {
 class Home extends Component{
 
     constructor(props){
+        console.log("home constructor");
         super(props);
         this.state = {parentId:null, path:[]};
         this.fetchDecks = this.fetchDecks.bind(this);
@@ -49,13 +50,19 @@ class Home extends Component{
     }
 
     pushDeck(id, name){
-        var newDeck = {id, name};
-        console.log("new state: ", [...this.state.path, newDeck]);
-        this.setState({path: [...this.state.path, newDeck]});
+        this.setState((prevState, props)=>{
+            var newDeck = [{id: id, name: name}];
+            console.log("new path: ", prevState.path.concat(newDeck));
+            return {path: prevState.path.concat(newDeck)};
+        });
+
+    }
+
+    componentWillUpdate(nextProps, nextState){
+        console.log("nextstate: ",  nextState);
     }
 
     renderPath(){
-        console.log("path: ", this.state.path);
         return (
             <div>
                 <span onClick={()=>this.goToIndex(0)} style={style.path}>Root</span>
@@ -75,7 +82,7 @@ class Home extends Component{
     }
 
     render(){
-         console.log("path: ", this.state.path);
+         console.log("path at render: ", this.state.path);
         return (
             <Page name="my collection">
                 <div className="container">
