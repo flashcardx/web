@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import DeckGallery from "../components/deckGallery.jsx";
 import {fetchUserDecks} from "../actions/deck.js";
 
-class Container extends Component{
+class DeckGalleryUserContainer extends Component{
 
     constructor(props){
         super(props);
@@ -21,4 +21,4 @@ class Container extends Component{
     }
 }
 
-export default connect(null, {fetchUserDecks})(Container);
+export default connect(null, {fetchUserDecks})(DeckGalleryUserContainer);
