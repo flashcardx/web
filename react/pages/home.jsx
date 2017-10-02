@@ -35,10 +35,12 @@ class Home extends Component{
     }
 
     componentWillMount(){
+        console.log("will mount");
         this.props.getUserInfo();
     }
 
     fetchDecks(skip){
+        console.log("fetch decks");
         this.props.fetchUserDecks(this.state.parentId, skip, this.state.path);
     }
 
@@ -50,16 +52,31 @@ class Home extends Component{
     }
 
     pushDeck(id, name){
-        this.setState((prevState, props)=>{
-            var newDeck = [{id: id, name: name}];
-            console.log("new path: ", prevState.path.concat(newDeck));
-            return {path: prevState.path.concat(newDeck)};
-        });
-
+        this.setState({path: ["3"] });
     }
 
-    componentWillUpdate(nextProps, nextState){
-        console.log("nextstate: ",  nextState);
+    render(){
+        console.log("path at render: ", this.state.path);
+        return (
+            <Page name="my collection">
+                <div className="container">
+                    <div style={style.row1} className="row">
+                        <div className="col-lg-9  col-sm-6">
+                            <h2>Your decks</h2>
+                             Path: this.renderPath()
+                        </div>
+                        <div className="col-lg-3 col-sm-6">
+                            <CreateUserDeckContainer path={this.state.path}/>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col">
+                            <DeckGallery pushDeck={this.pushDeck} onDelete={this.onDelete} path={this.state.path} fetch={this.fetchDecks} decks={this.props.decks}/>
+                        </div>
+                    </div>
+                </div>
+            </Page>
+        );
     }
 
     renderPath(){
@@ -75,35 +92,13 @@ class Home extends Component{
     }
 
     onDelete(deckId){
+        console.log("on delete");
         this.props.deleteUserDeck(deckId, this.state.path, ()=>{
             this.props.successAlert("Deck deleted succesfully !");
             this.forceUpdate();
         });
     }
 
-    render(){
-         console.log("path at render: ", this.state.path);
-        return (
-            <Page name="my collection">
-                <div className="container">
-                    <div style={style.row1} className="row">
-                        <div className="col-lg-9  col-sm-6">
-                            <h2>Your decks</h2>
-                             Path: {this.renderPath()}
-                        </div>
-                        <div className="col-lg-3 col-sm-6">
-                            <CreateUserDeckContainer path={this.state.path}/>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col">
-                            <DeckGallery pushDeck={this.pushDeck} onDelete={this.onDelete} path={this.state.path} fetch={this.fetchDecks} decks={this.props.decks}/>
-                        </div>
-                    </div>
-                </div>
-            </Page>
-        );
-    }
 }
 
 function mapStateToProps(state){
