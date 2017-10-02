@@ -4,10 +4,10 @@ import Radium from "radium";
 import {connect} from "react-redux";
 import {getUserInfo} from "../actions/user";
 import {successAlert} from "../actions/alerts";
-import {fetchUserDecks, deleteUserDeck} from "../actions/deck.js";
+import {deleteUserDeck} from "../actions/deck.js";
 import RaisedButton from 'material-ui/RaisedButton';
 import CreateUserDeckContainer from "../containers/createUserDeckContainer.jsx";
-import DeckGallery from "../components/deckGallery.jsx";
+import DeckGalleryUserContainer from "../containers/deckGalleryUserContainer.jsx";
 import _ from "lodash";
 
 const style = {
@@ -27,32 +27,18 @@ class Home extends Component{
         console.log("home constructor");
         super(props);
         this.state = {parentId:null, path:[]};
-        this.fetchDecks = this.fetchDecks.bind(this);
-        this.renderPath = this.renderPath.bind(this);
-        this.goToIndex = this.goToIndex.bind(this);
-        this.onDelete = this.onDelete.bind(this);
         this.pushDeck = this.pushDeck.bind(this);
-    }
+        this.goToIndex = this.goToIndex.bind(this);
+        this.renderPath = this.renderPath.bind(this);
+     }
 
-    componentWillMount(){
-        console.log("will mount");
-        this.props.getUserInfo();
-    }
-
-    fetchDecks(skip){
-        console.log("fetch decks");
-        this.props.fetchUserDecks(this.state.parentId, skip, this.state.path);
-    }
-
-    goToIndex(pathLastIndex){
-        console.log("goto index", this.state.path);
-        var limitToDrop = this.state.path.length - pathLastIndex;
-        var newPath = _.dropRight(this.state.path, limitToDrop);
-        this.setState({path: newPath});
+    componentDidMount(){
+        this.pushDeck("a", "testing");
     }
 
     pushDeck(id, name){
-        this.setState({path: ["3"] });
+        var newDeck = {id, name};
+        this.setState({ path: this.state.path.concat([newDeck]) });
     }
 
     render(){
@@ -63,7 +49,7 @@ class Home extends Component{
                     <div style={style.row1} className="row">
                         <div className="col-lg-9  col-sm-6">
                             <h2>Your decks</h2>
-                             Path: this.renderPath()
+                             Path: {this.renderPath()}
                         </div>
                         <div className="col-lg-3 col-sm-6">
                             <CreateUserDeckContainer path={this.state.path}/>
@@ -71,7 +57,11 @@ class Home extends Component{
                     </div>
                     <div className="row">
                         <div className="col">
-                            <DeckGallery pushDeck={this.pushDeck} onDelete={this.onDelete} path={this.state.path} fetch={this.fetchDecks} decks={this.props.decks}/>
+                            <DeckGalleryUserContainer parentId={this.state.parentId}
+                                         pushDeck={this.pushDeck}
+                                         onDelete={()=>{}}
+                                         path={this.state.path}
+                                         decks={this.props.decks}/> 
                         </div>
                     </div>
                 </div>
@@ -79,25 +69,26 @@ class Home extends Component{
         );
     }
 
+    goToIndex(pathLastIndex){
+        console.log("goto: ", pathLastIndex);
+        console.log("goto index", this.state.path);
+        var limitToDrop = this.state.path.length - pathLastIndex;
+        var newPath = _.dropRight(this.state.path, limitToDrop);
+        this.setState({path: newPath});
+    }
+
     renderPath(){
         return (
-            <div>
+            <span>
                 <span onClick={()=>this.goToIndex(0)} style={style.path}>Root</span>
                 {this.state.path.map((p, i)=>{
-                    <span key={(i+1)} onClick={()=>this.goToIndex(i+1)} style={style.path}>{p.name}</span>
+                    return <span key={(i+1)}> / <span onClick={()=>this.goToIndex(i+1)} style={style.path}>{p.name}</span></span>
                     })
                 }
-            </div>
+            </span>
         );
     }
 
-    onDelete(deckId){
-        console.log("on delete");
-        this.props.deleteUserDeck(deckId, this.state.path, ()=>{
-            this.props.successAlert("Deck deleted succesfully !");
-            this.forceUpdate();
-        });
-    }
 
 }
 
@@ -105,4 +96,4 @@ function mapStateToProps(state){
     return {decks: state.userDecks};
 }
 
-export default connect(mapStateToProps, {getUserInfo, fetchUserDecks, deleteUserDeck, successAlert})(Radium(Home));
+export default connect(mapStateToProps, {getUserInfo, deleteUserDeck, successAlert})(Radium(Home));

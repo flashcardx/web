@@ -77290,9 +77290,9 @@ var _createUserDeckContainer = __webpack_require__(792);
 
 var _createUserDeckContainer2 = _interopRequireDefault(_createUserDeckContainer);
 
-var _deckGallery = __webpack_require__(970);
+var _deckGalleryUserContainer = __webpack_require__(1129);
 
-var _deckGallery2 = _interopRequireDefault(_deckGallery);
+var _deckGalleryUserContainer2 = _interopRequireDefault(_deckGalleryUserContainer);
 
 var _lodash = __webpack_require__(43);
 
@@ -77327,38 +77327,22 @@ var Home = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
 
         _this.state = { parentId: null, path: [] };
-        _this.fetchDecks = _this.fetchDecks.bind(_this);
-        _this.renderPath = _this.renderPath.bind(_this);
-        _this.goToIndex = _this.goToIndex.bind(_this);
-        _this.onDelete = _this.onDelete.bind(_this);
         _this.pushDeck = _this.pushDeck.bind(_this);
+        _this.goToIndex = _this.goToIndex.bind(_this);
+        _this.renderPath = _this.renderPath.bind(_this);
         return _this;
     }
 
     _createClass(Home, [{
-        key: "componentWillMount",
-        value: function componentWillMount() {
-            console.log("will mount");
-            this.props.getUserInfo();
-        }
-    }, {
-        key: "fetchDecks",
-        value: function fetchDecks(skip) {
-            console.log("fetch decks");
-            this.props.fetchUserDecks(this.state.parentId, skip, this.state.path);
-        }
-    }, {
-        key: "goToIndex",
-        value: function goToIndex(pathLastIndex) {
-            console.log("goto index", this.state.path);
-            var limitToDrop = this.state.path.length - pathLastIndex;
-            var newPath = _lodash2.default.dropRight(this.state.path, limitToDrop);
-            this.setState({ path: newPath });
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            this.pushDeck("a", "testing");
         }
     }, {
         key: "pushDeck",
         value: function pushDeck(id, name) {
-            this.setState({ path: ["3"] });
+            var newDeck = { id: id, name: name };
+            this.setState({ path: this.state.path.concat([newDeck]) });
         }
     }, {
         key: "render",
@@ -77381,7 +77365,8 @@ var Home = function (_Component) {
                                 null,
                                 "Your decks"
                             ),
-                            "Path: this.renderPath()"
+                            "Path: ",
+                            this.renderPath()
                         ),
                         _react2.default.createElement(
                             "div",
@@ -77395,11 +77380,24 @@ var Home = function (_Component) {
                         _react2.default.createElement(
                             "div",
                             { className: "col" },
-                            _react2.default.createElement(_deckGallery2.default, { pushDeck: this.pushDeck, onDelete: this.onDelete, path: this.state.path, fetch: this.fetchDecks, decks: this.props.decks })
+                            _react2.default.createElement(_deckGalleryUserContainer2.default, { parentId: this.state.parentId,
+                                pushDeck: this.pushDeck,
+                                onDelete: function onDelete() {},
+                                path: this.state.path,
+                                decks: this.props.decks })
                         )
                     )
                 )
             );
+        }
+    }, {
+        key: "goToIndex",
+        value: function goToIndex(pathLastIndex) {
+            console.log("goto: ", pathLastIndex);
+            console.log("goto index", this.state.path);
+            var limitToDrop = this.state.path.length - pathLastIndex;
+            var newPath = _lodash2.default.dropRight(this.state.path, limitToDrop);
+            this.setState({ path: newPath });
         }
     }, {
         key: "renderPath",
@@ -77407,7 +77405,7 @@ var Home = function (_Component) {
             var _this2 = this;
 
             return _react2.default.createElement(
-                "div",
+                "span",
                 null,
                 _react2.default.createElement(
                     "span",
@@ -77417,26 +77415,20 @@ var Home = function (_Component) {
                     "Root"
                 ),
                 this.state.path.map(function (p, i) {
-                    _react2.default.createElement(
+                    return _react2.default.createElement(
                         "span",
-                        { key: i + 1, onClick: function onClick() {
-                                return _this2.goToIndex(i + 1);
-                            }, style: style.path },
-                        p.name
+                        { key: i + 1 },
+                        " / ",
+                        _react2.default.createElement(
+                            "span",
+                            { onClick: function onClick() {
+                                    return _this2.goToIndex(i + 1);
+                                }, style: style.path },
+                            p.name
+                        )
                     );
                 })
             );
-        }
-    }, {
-        key: "onDelete",
-        value: function onDelete(deckId) {
-            var _this3 = this;
-
-            console.log("on delete");
-            this.props.deleteUserDeck(deckId, this.state.path, function () {
-                _this3.props.successAlert("Deck deleted succesfully !");
-                _this3.forceUpdate();
-            });
         }
     }]);
 
@@ -77447,7 +77439,7 @@ function mapStateToProps(state) {
     return { decks: state.userDecks };
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, { getUserInfo: _user.getUserInfo, fetchUserDecks: _deck.fetchUserDecks, deleteUserDeck: _deck.deleteUserDeck, successAlert: _alerts.successAlert })((0, _radium2.default)(Home));
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { getUserInfo: _user.getUserInfo, deleteUserDeck: _deck.deleteUserDeck, successAlert: _alerts.successAlert })((0, _radium2.default)(Home));
 
 /***/ }),
 /* 617 */
@@ -121007,6 +120999,68 @@ LinearProgress.propTypes = undefined !== "production" ? {
   value: _propTypes2.default.number
 } : {};
 exports.default = LinearProgress;
+
+/***/ }),
+/* 1129 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(17);
+
+var _deckGallery = __webpack_require__(970);
+
+var _deckGallery2 = _interopRequireDefault(_deckGallery);
+
+var _deck = __webpack_require__(185);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Container = function (_Component) {
+    _inherits(Container, _Component);
+
+    function Container(props) {
+        _classCallCheck(this, Container);
+
+        var _this = _possibleConstructorReturn(this, (Container.__proto__ || Object.getPrototypeOf(Container)).call(this, props));
+
+        _this.fetchDecks = _this.fetchDecks.bind(_this);
+        return _this;
+    }
+
+    _createClass(Container, [{
+        key: "fetchDecks",
+        value: function fetchDecks(skip) {
+            this.props.fetchUserDecks(this.props.parentId, skip, this.props.path);
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement(_deckGallery2.default, { pushDeck: this.props.pushDeck, onDelete: function onDelete() {}, path: this.props.path, fetch: this.fetchDecks, decks: this.props.decks });
+        }
+    }]);
+
+    return Container;
+}(_react.Component);
+
+exports.default = (0, _reactRedux.connect)(null, { fetchUserDecks: _deck.fetchUserDecks })(Container);
 
 /***/ })
 /******/ ]);
