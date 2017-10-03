@@ -26,16 +26,11 @@ class Home extends Component{
     constructor(props){
         console.log("home constructor");
         super(props);
-        this.state = {parentId:null, path:[]};
+        this.state = {parentId:null, path:[3]};
         this.pushDeck = this.pushDeck.bind(this);
         this.goToIndex = this.goToIndex.bind(this);
         this.renderPath = this.renderPath.bind(this);
      }
-
-    componentDidMount(){
-        return;
-        this.pushDeck("a", "testing");
-    }
 
     pushDeck(id, name){
         console.log("pushing deck...");
@@ -71,31 +66,23 @@ class Home extends Component{
         );
     }
 
-    goToIndex(that, this2, pathLastIndex){
-        console.log(this===this2);
-        console.log(this === that);
-        console.log("goto: ", pathLastIndex);
-        console.log("path at gotoindex: "+ JSON.stringify(that.state.path));
-        return;
-        var limitToDrop = that.state.path.length - pathLastIndex;
-        var newPath = _.dropRight(that.state.path, limitToDrop);
-        that.setState({path: newPath});
+    componentWillUpdate(){
+        console.log("will update");
     }
+
+    goToIndex(){
+        console.log("path at gotoindex: "+ JSON.stringify(this.state.path));
+    }
+
 
     renderPath(){
-        const that = this;
-        console.log("path at renderpath: "+ JSON.stringify(that.state.path));   
-        return (
-            <span>
-                <span onClick={()=>that.goToIndex(that,this, 0)} style={style.path}>Root</span>
-                {this.state.path.map((p, i)=>{
-                    return <span key={(i+1)}> / <span onClick={()=>that.goToIndex(that, this, i+1)} style={style.path}>{p.name}</span></span>
-                    })
-                }
-            </span>
-        );
+        console.log("path at renderpath: "+ JSON.stringify(this.state.path));   
+        var that = this;
+        setTimeout(()=>{
+            that.goToIndex();
+        }, 0);
+        this.goToIndex();
     }
-
 
 }
 

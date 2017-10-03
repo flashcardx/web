@@ -70,7 +70,6 @@
     "css-loader": "^0.28.7",
     "express": "^4.15.4",
     "nodemon": "^1.11.0",
-    "webpack": "^3.5.5",
-    "webpack-dev-server": "^2.7.1"
+    "webpack": "^3.5.5"
   }
 }
