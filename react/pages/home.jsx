@@ -66,22 +66,23 @@ class Home extends Component{
         );
     }
 
-    componentWillUpdate(){
-        console.log("will update");
+    componentWillUpdate(nextProps, nextState){
+        console.log("will update, nextprops:", nextProps);
+        console.log("will update, nextstate:", nextState);
     }
 
-    goToIndex(){
-        console.log("path at gotoindex: "+ JSON.stringify(this.state.path));
+    goToIndex(that){
+        console.log("path at gotoindex: "+ JSON.stringify(that.state.path));
     }
 
 
     renderPath(){
-        console.log("path at renderpath: "+ JSON.stringify(this.state.path));   
         var that = this;
+        console.log("path at renderpath: "+ JSON.stringify(that.state.path));   
         setTimeout(()=>{
-            that.goToIndex();
+            that.goToIndex(that);
         }, 0);
-        this.goToIndex();
+        that.goToIndex(that);
     }
 
 }

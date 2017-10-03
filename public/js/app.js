@@ -77388,23 +77388,24 @@ var Home = function (_Component) {
         }
     }, {
         key: "componentWillUpdate",
-        value: function componentWillUpdate() {
-            console.log("will update");
+        value: function componentWillUpdate(nextProps, nextState) {
+            console.log("will update, nextprops:", nextProps);
+            console.log("will update, nextstate:", nextState);
         }
     }, {
         key: "goToIndex",
-        value: function goToIndex() {
-            console.log("path at gotoindex: " + JSON.stringify(this.state.path));
+        value: function goToIndex(that) {
+            console.log("path at gotoindex: " + JSON.stringify(that.state.path));
         }
     }, {
         key: "renderPath",
         value: function renderPath() {
-            console.log("path at renderpath: " + JSON.stringify(this.state.path));
             var that = this;
+            console.log("path at renderpath: " + JSON.stringify(that.state.path));
             setTimeout(function () {
-                that.goToIndex();
+                that.goToIndex(that);
             }, 0);
-            this.goToIndex();
+            that.goToIndex(that);
         }
     }]);
 
