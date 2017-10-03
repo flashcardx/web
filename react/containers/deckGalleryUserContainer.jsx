@@ -16,7 +16,12 @@ class DeckGalleryUserContainer extends Component{
 
     render(){
         return (
-                <DeckGallery pushDeck={this.props.pushDeck} onDelete={()=>{}} path={this.props.path} fetch={this.fetchDecks} decks={this.props.decks}/> 
+                <DeckGallery setParentId={this.props.setParentId}
+                             pushDeck={this.props.pushDeck}
+                             onDelete={()=>{}}
+                             path={this.props.path}
+                             fetch={this.fetchDecks}
+                             decks={this.props.decks}/> 
         );
     }
 }

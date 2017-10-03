@@ -29,11 +29,16 @@ class Home extends Component{
         this.pushDeck = this.pushDeck.bind(this);
         this.goToIndex = this.goToIndex.bind(this);
         this.renderPath = this.renderPath.bind(this);
+        this.setParentId = this.setParentId.bind(this);
     }
 
     pushDeck(id, name){
         var newDeck = {id, name};
         this.setState({ path: this.state.path.concat([newDeck]) });
+    }
+
+    setParentId(newParentId){
+        this.setState({parentId:newParentId});
     }
 
     render(){
@@ -46,12 +51,14 @@ class Home extends Component{
                              Path: {this.renderPath()}
                         </div>
                         <div className="col-lg-3 col-sm-6">
-                            <CreateUserDeckContainer path={this.state.path.slice()}/>
+                            <CreateUserDeckContainer parentId={this.state.parentId} path={this.state.path.slice()}/>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col">
-                            <DeckGalleryUserContainer parentId={this.state.parentId}
+                            <DeckGalleryUserContainer
+                                         setParentId={this.setParentId}
+                                         parentId={this.state.parentId}
                                          pushDeck={this.pushDeck}
                                          onDelete={()=>{}}
                                          path={this.state.path.slice()}

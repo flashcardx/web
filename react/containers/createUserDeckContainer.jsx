@@ -42,7 +42,8 @@ class CreateUserDeckContainer extends Component{
     }
 
     onSubmit({name, description, lang, img}){
-        this.props.createUserDeck(name, description, lang, img, this.state.parentId,()=>{
+        console.log("parentId: ", this.props.parentId);
+        this.props.createUserDeck(name, description, lang, img, this.props.parentId,()=>{
             this.closeModal();
             this.props.successAlert("Deck created succesfully !");
             this.props.dispatch(reset(FORM_NAME));  //reset form

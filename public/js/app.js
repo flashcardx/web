@@ -77042,6 +77042,7 @@ var Home = function (_Component) {
         _this.pushDeck = _this.pushDeck.bind(_this);
         _this.goToIndex = _this.goToIndex.bind(_this);
         _this.renderPath = _this.renderPath.bind(_this);
+        _this.setParentId = _this.setParentId.bind(_this);
         return _this;
     }
 
@@ -77050,6 +77051,11 @@ var Home = function (_Component) {
         value: function pushDeck(id, name) {
             var newDeck = { id: id, name: name };
             this.setState({ path: this.state.path.concat([newDeck]) });
+        }
+    }, {
+        key: "setParentId",
+        value: function setParentId(newParentId) {
+            this.setState({ parentId: newParentId });
         }
     }, {
         key: "render",
@@ -77077,7 +77083,7 @@ var Home = function (_Component) {
                         _react2.default.createElement(
                             "div",
                             { className: "col-lg-3 col-sm-6" },
-                            _react2.default.createElement(_createUserDeckContainer2.default, { path: this.state.path.slice() })
+                            _react2.default.createElement(_createUserDeckContainer2.default, { parentId: this.state.parentId, path: this.state.path.slice() })
                         )
                     ),
                     _react2.default.createElement(
@@ -77086,7 +77092,9 @@ var Home = function (_Component) {
                         _react2.default.createElement(
                             "div",
                             { className: "col" },
-                            _react2.default.createElement(_deckGalleryUserContainer2.default, { parentId: this.state.parentId,
+                            _react2.default.createElement(_deckGalleryUserContainer2.default, {
+                                setParentId: this.setParentId,
+                                parentId: this.state.parentId,
                                 pushDeck: this.pushDeck,
                                 onDelete: function onDelete() {},
                                 path: this.state.path.slice(),
@@ -91583,7 +91591,8 @@ var CreateUserDeckContainer = function (_Component) {
                 lang = _ref.lang,
                 img = _ref.img;
 
-            this.props.createUserDeck(name, description, lang, img, this.state.parentId, function () {
+            console.log("parentId: ", this.props.parentId);
+            this.props.createUserDeck(name, description, lang, img, this.props.parentId, function () {
                 _this2.closeModal();
                 _this2.props.successAlert("Deck created succesfully !");
                 _this2.props.dispatch((0, _reduxForm.reset)(FORM_NAME)); //reset form
@@ -105193,7 +105202,12 @@ var DeckGalleryUserContainer = function (_Component) {
     }, {
         key: "render",
         value: function render() {
-            return _react2.default.createElement(_deckGallery2.default, { pushDeck: this.props.pushDeck, onDelete: function onDelete() {}, path: this.props.path, fetch: this.fetchDecks, decks: this.props.decks });
+            return _react2.default.createElement(_deckGallery2.default, { setParentId: this.props.setParentId,
+                pushDeck: this.props.pushDeck,
+                onDelete: function onDelete() {},
+                path: this.props.path,
+                fetch: this.fetchDecks,
+                decks: this.props.decks });
         }
     }]);
 
@@ -105296,7 +105310,8 @@ var DeckGallery = function (_Component) {
     }, {
         key: 'renderDeck',
         value: function renderDeck(deck) {
-            if (deck.thumbnail) deck.thumbnail.src = CLOUDFRONT_URL + deck.thumbnail.hash;else deck.thumbnail.src = "/assets/img/default.jpg";
+            console.log("deck: ", deck);
+            if (deck.thumbnail) deck.thumbnail.src = CLOUDFRONT_URL + deck.thumbnail.hash;else deck.thumbnail = { src: "/assets/img/default.jpg" };
             return _react2.default.createElement(
                 'span',
                 { key: deck._id },
@@ -105306,10 +105321,16 @@ var DeckGallery = function (_Component) {
     }, {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(nextProps) {
-            //the function could be called even when props didnt change, so we need to check before doing somehing crazy
+            //the function could be called even when props didnt change, so we need to check before doing somehing nasty
             if (!_lodash2.default.isEqual(this.props, nextProps)) {
                 this.setState({ isFetching: false });
+                this.props.fetch(this.state.skip);
             }
+            var path = nextProps.path;
+
+            var parentId = null;
+            if (path.length != 0) parentId = path[path.length - 1];
+            this.props.setParentId(parentId);
         }
     }, {
         key: 'increasePage',
@@ -105328,27 +105349,23 @@ var DeckGallery = function (_Component) {
         value: function renderDecks(decks, path) {
             var _this3 = this;
 
-            var parentId;
+            var decksArray = [];
             if (path.length != 0) {
-                parentId = path.pop().id;
-            }
-            if (!parentId) {
-                var decksArray = [];
-                _lodash2.default.forEachRight(decks, function (d) {
-                    decksArray.push(_this3.renderDeck(d));
+                console.log("path: ", path);
+                path.forEach(function (p) {
+                    decks = decks[p.id].decks;
                 });
-                return _react2.default.createElement(
-                    _reactBidirectionalInfiniteScroll2.default,
-                    { onReachRight: function onReachRight() {
-                            return _this3.increasePage();
-                        }, horizontal: true },
-                    decksArray
-                );
             }
+            console.log("decks: ", decks);
+            _lodash2.default.forEachRight(decks, function (d) {
+                decksArray.push(_this3.renderDeck(d));
+            });
             return _react2.default.createElement(
-                'p',
-                null,
-                'Holis'
+                _reactBidirectionalInfiniteScroll2.default,
+                { onReachRight: function onReachRight() {
+                        return _this3.increasePage();
+                    }, horizontal: true },
+                decksArray
             );
         }
     }, {

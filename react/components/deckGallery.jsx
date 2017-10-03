@@ -41,10 +41,11 @@ class DeckGallery extends Component{
     }
 
     renderDeck(deck){
+        console.log("deck: ", deck);
         if(deck.thumbnail)
             deck.thumbnail.src = CLOUDFRONT_URL + deck.thumbnail.hash;
         else
-            deck.thumbnail.src = "/assets/img/default.jpg";
+            deck.thumbnail = {src:"/assets/img/default.jpg"};
         return (
             <span key={deck._id}>
                 <Deck pushDeck={this.props.pushDeck} onDelete={this.props.onDelete}deck={deck}/>
@@ -54,10 +55,16 @@ class DeckGallery extends Component{
 
 
     componentWillReceiveProps(nextProps){
-        //the function could be called even when props didnt change, so we need to check before doing somehing crazy
+        //the function could be called even when props didnt change, so we need to check before doing somehing nasty
         if(!_.isEqual(this.props,nextProps)){
             this.setState({isFetching: false});
+            this.props.fetch(this.state.skip);
         }
+        const {path} = nextProps;
+        var parentId = null;
+        if(path.length != 0)
+            parentId = path[path.length-1];
+        this.props.setParentId(parentId);
     }
 
 
@@ -71,22 +78,22 @@ class DeckGallery extends Component{
     }
 
     renderDecks(decks, path){
-        var parentId;
+        var decksArray = [];
         if(path.length != 0){
-            parentId = path.pop().id;
+            console.log("path: ", path);
+            path.forEach(p=>{
+                decks = decks[p.id].decks;            
+            });
         }
-        if(!parentId){
-            var decksArray = [];
-            _.forEachRight(decks, d=>{
+        console.log("decks: ", decks);
+        _.forEachRight(decks, d=>{
                  decksArray.push(this.renderDeck(d));
-            })
-            return (
-                <InfiniteScroll onReachRight={()=>this.increasePage()} horizontal>
-        	            {decksArray} 
-                </InfiniteScroll>
-            );
-        }
-        return <p>Holis</p>
+        })
+        return (
+            <InfiniteScroll onReachRight={()=>this.increasePage()} horizontal>
+        	        {decksArray} 
+            </InfiniteScroll>
+        );
     }
 
     render(){
