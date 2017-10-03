@@ -24,22 +24,19 @@ const style = {
 class Home extends Component{
 
     constructor(props){
-        console.log("home constructor");
         super(props);
-        this.state = {parentId:null, path:[3]};
+        this.state = {parentId:null, path:[]};
         this.pushDeck = this.pushDeck.bind(this);
         this.goToIndex = this.goToIndex.bind(this);
         this.renderPath = this.renderPath.bind(this);
-     }
+    }
 
     pushDeck(id, name){
-        console.log("pushing deck...");
         var newDeck = {id, name};
         this.setState({ path: this.state.path.concat([newDeck]) });
     }
 
     render(){
-        console.log("path at render: "+ JSON.stringify(this.state.path));
         return (
             <Page name="my collection">
                 <div className="container">
@@ -49,7 +46,7 @@ class Home extends Component{
                              Path: {this.renderPath()}
                         </div>
                         <div className="col-lg-3 col-sm-6">
-                            <CreateUserDeckContainer path={this.state.path}/>
+                            <CreateUserDeckContainer path={this.state.path.slice()}/>
                         </div>
                     </div>
                     <div className="row">
@@ -57,7 +54,7 @@ class Home extends Component{
                             <DeckGalleryUserContainer parentId={this.state.parentId}
                                          pushDeck={this.pushDeck}
                                          onDelete={()=>{}}
-                                         path={this.state.path}
+                                         path={this.state.path.slice()}
                                          decks={this.props.decks}/> 
                         </div>
                     </div>
@@ -66,24 +63,24 @@ class Home extends Component{
         );
     }
 
-    componentWillUpdate(nextProps, nextState){
-        console.log("will update, nextprops:", nextProps);
-        console.log("will update, nextstate:", nextState);
+    goToIndex(pathLastIndex){
+        var limitToDrop = this.state.path.length - pathLastIndex;
+        var newPath = _.dropRight(this.state.path, limitToDrop);
+        this.setState({path: newPath});
     }
-
-    goToIndex(that){
-        console.log("path at gotoindex: "+ JSON.stringify(that.state.path));
-    }
-
 
     renderPath(){
-        var that = this;
-        console.log("path at renderpath: "+ JSON.stringify(that.state.path));   
-        setTimeout(()=>{
-            that.goToIndex(that);
-        }, 0);
-        that.goToIndex(that);
+        return (
+            <span>
+                <span onClick={()=>this.goToIndex(0)} style={style.path}>Root</span>
+                {this.state.path.map((p, i)=>{
+                    return <span key={(i+1)}> / <span onClick={()=>this.goToIndex(i+1)} style={style.path}>{p.name}</span></span>
+                    })
+                }
+            </span>
+        );
     }
+
 
 }
 
