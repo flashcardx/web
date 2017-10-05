@@ -63,11 +63,11 @@ class ImgPicker extends Component{
     render(){
         if(this.props.isLoading)
             return  <CircularProgress size={80} thickness={7} />;
-        if(this.state.wasRendered && _.isEmpty(this.props.searchImgs))
+        if(this.state.wasRendered && _.isEmpty(this.props.searchImages))
             return <p>OMG!, WE COULDN'T FIND IMAGES FOR THAT TERM, TRY WITH SOMETHING DIFFERENT!</p>
         return (
             <div id="gallery">
-                {this.props.searchImgs.map(img=>this.renderImg(img))}
+                {this.props.searchImages.map(img=>this.renderImg(img))}
             </div>
         );
     }
