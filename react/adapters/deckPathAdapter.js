@@ -1,6 +1,6 @@
 import React from "react";
 export default {
-    getLastIdFromPath: path=>{
+        getLastIdFromPath: path=>{
         if(path.length == 0)
             return null;
         return path[path.length - 1].id;    

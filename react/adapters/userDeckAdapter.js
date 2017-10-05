@@ -29,8 +29,6 @@ import React from "react";
 
 export default {
         insertDecks: (state, decks, parentId)=>{
-        console.log("insert decks: ", decks);
-        console.log("parentid: ", parentId);
         var newState = {...state};
         if(!parentId){
             if(!newState.children)
@@ -42,6 +40,7 @@ export default {
         }
         decks.forEach(deck=>{
                 newState[deck._id] = deck;
+                newState[deck._id].children = [];
                 if(!parentId)
                     newState.children.push(deck._id);
                 else{
@@ -56,23 +55,20 @@ export default {
     // deck is not deleted fron children array, the component should
     // re fetch the parent decks before diplaying them
     var newState = {...state};
-    newState[deckId] = undefined;
+    delete newState[deckId];
     return newState;
     },
     getDecks:(state, parentId)=>{
         var decks = [];
-        if(!parentId){
-            state.children.forEach(deckId=>{
-                decks.push(state[deckId]);
-            });
-        }
-        else{
-            console.log("decks inside: ", state[parentId]);
-            console.log("children: ", state[parentId].children);
-            state[parentId].children.forEach(deckId=>{
-                decks.push(state[deckId]);
-            });
-        }
+        var deckIds;
+        if(!parentId)
+            deckIds = state.children;
+        else
+            deckIds = state[parentId].children;
+        deckIds.forEach(deckId=>{
+                if(state[deckId])//if deck was deleted will be undefined
+                    decks.push(state[deckId]);
+        });
         return decks;
     },
     getCards: (state, parentId)=>{

@@ -33,7 +33,7 @@ class DeckGallery extends Component{
 
     constructor(props){
         super(props);
-        this.state = {skip:0, isFetching: false};
+        this.state = {skip:0, isFetching: false, wasRendered: false};
         this.renderDecks = this.renderDecks.bind(this);
         this.renderDeck = this.renderDeck.bind(this);
         this.increasePage = this.increasePage.bind(this);
@@ -43,13 +43,25 @@ class DeckGallery extends Component{
        this.props.fetch(this.state.skip);
     }
 
+    componentDidMount(){
+        this.setState({wasRendered: true});
+    }
+
+    shouldComponentUpdate(nextProps, nextState){
+        if(nextState.wasRendered != this.state.wasRendered)
+            return false;
+        return true;
+    }
+
     renderDeck(deck){
+        if(!deck)
+            return null;
         if(deck.thumbnail)
             deck.thumbnail.src = CLOUDFRONT_URL + deck.thumbnail.hash;
         else
             deck.thumbnail = {src:"/assets/img/default.jpg"};
         return (
-            <Deck key={deck._id} pushDeck={this.props.pushDeck} onDelete={this.props.onDelete} deck={deck}/>
+            <Deck key={deck._id} pushToPath={this.props.pushToPath} onDelete={this.props.onDelete} deck={deck}/>
         );
     }
 
@@ -70,8 +82,10 @@ class DeckGallery extends Component{
     renderDecks(decks, path){
         const parentId = deckPathAdapter.getLastIdFromPath(path);
         const decksArray = userDeckAdapter.getDecks(decks, parentId);
-        var renderedDecks = [];
         console.log("decksArray: ", decksArray);
+        if(this.state.wasRendered && _.isEmpty(decksArray))
+            return <p>You don't have decks in this location :(</p>
+        var renderedDecks = [];
         decksArray.forEach(deck=>{
             renderedDecks.push(this.renderDeck(deck));
         });
@@ -83,8 +97,8 @@ class DeckGallery extends Component{
     }
 
     render(){
-        if(_.isEmpty(this.props.decks))
-            return <p>You don't have decks :(</p>
+        if(!this.state.wasRendered && _.isEmpty(this.props.decks))
+            return <p>Loading...</p>
         return (            
             <div style={{overflow:"hidden"}}>
                 {this.renderDecks(this.props.decks, this.props.path)}

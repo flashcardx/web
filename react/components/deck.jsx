@@ -41,11 +41,11 @@ class Deck extends Component{
             <Card style={style.deck} className="col-lg-3 col-md-4 col-sm-12">
                 <CardMedia>
                     <CroppedImage style={{cursor:"pointer"}}
-                                  onClick={()=>this.props.pushDeck(deck._id, deck.name)}
+                                  onClick={()=>this.props.pushToPath(deck._id, deck.name)}
                                   width="auto" height="200px"
                                   src={deck.thumbnail.src} />
                 </CardMedia>
-                <CardTitle titleStyle={{ wordBreak: "break-all" }} title={<a style={style.a} onClick={()=>this.props.pushDeck(deck._id, deck.name)}>{deck.name}</a>} subtitle={language(deck.lang)} />
+                <CardTitle titleStyle={{ wordBreak: "break-all" }} title={<a style={style.a} onClick={()=>this.props.pushToPath(deck._id, deck.name)}>{deck.name}</a>} subtitle={language(deck.lang)} />
                 <CardText>
                     <Truncate>
                         <span style={style.wordBreak}>

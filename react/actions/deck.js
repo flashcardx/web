@@ -1,11 +1,14 @@
 import axios from "axios";
 import config from "../../config";
-import {FETCH_USER_DECKS, CREATE_USER_DECK, DELETE_USER_DECK} from "./types";
+import {FETCH_USER_DECKS,
+        CREATE_USER_DECK,
+        DELETE_USER_DECK,
+        PUSH_TO_USER_DECK_PATH,
+        DROP_FROM_USER_DECK_PATH} from "./types";
 const FETCH_USER_DECKS_URL = config.apiGetUserDecks;
 const CREATE_USER_DECK_URL = config.apiCreateUserDeck;
 const DELETE_USER_DECK_URL = config.apiDeleteUserDeck;
 import deckPathAdapter from "../adapters/deckPathAdapter.js";
-
 
 export function fetchUserDecks(skip=0, path=[]){
     const parentId = deckPathAdapter.getLastIdFromPath(path);
@@ -14,7 +17,6 @@ export function fetchUserDecks(skip=0, path=[]){
         url += "&parentId="+parentId;
     const request = axios.get(url,
                     {headers: {'x-access-token': localStorage.getItem("jwt")}});
-   console.log("fetchuserdecks");
    return {type: FETCH_USER_DECKS,
             originAPI: true,
             bigLoading: true,
@@ -55,4 +57,22 @@ export function deleteUserDeck(deckId, callback){
             originAPI: true,
             bigLoading: true,
             payload:request};
+}
+
+export function pushToPath(deckId, deckName){
+        const newPath = {
+                        id: deckId,
+                        name: deckName
+                        }
+        return {
+                type: PUSH_TO_USER_DECK_PATH,
+                newPath
+        }
+}
+
+export function dropFromPath(pathLastIndex){
+        return {
+                type: DROP_FROM_USER_DECK_PATH,
+                pathLastIndex
+        }
 }

@@ -6488,6 +6488,8 @@ var SHOW_BIGLOADING = exports.SHOW_BIGLOADING = "SHOW_LOADING";
 var HIDE_BIGLOADING = exports.HIDE_BIGLOADING = "HIDE_LOADING";
 var FETCH_USER_DECKS = exports.FETCH_USER_DECKS = "FETCH_USER_DECKS";
 var CREATE_USER_DECK = exports.CREATE_USER_DECK = "CREATE_USER_DECK";
+var PUSH_TO_USER_DECK_PATH = exports.PUSH_TO_USER_DECK_PATH = "PUSH_TO_USER_DECK_PATH";
+var DROP_FROM_USER_DECK_PATH = exports.DROP_FROM_USER_DECK_PATH = "DROP_FROM_USER_DECK_PATH";
 
 /***/ }),
 /* 33 */
@@ -30685,6 +30687,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.fetchUserDecks = fetchUserDecks;
 exports.createUserDeck = createUserDeck;
 exports.deleteUserDeck = deleteUserDeck;
+exports.pushToPath = pushToPath;
+exports.dropFromPath = dropFromPath;
 
 var _axios = __webpack_require__(42);
 
@@ -30713,7 +30717,6 @@ function fetchUserDecks() {
         var url = FETCH_USER_DECKS_URL + "?skip=" + skip;
         if (parentId) url += "&parentId=" + parentId;
         var request = _axios2.default.get(url, { headers: { 'x-access-token': localStorage.getItem("jwt") } });
-        console.log("fetchuserdecks");
         return { type: _types.FETCH_USER_DECKS,
                 originAPI: true,
                 bigLoading: true,
@@ -30753,6 +30756,24 @@ function deleteUserDeck(deckId, callback) {
                 originAPI: true,
                 bigLoading: true,
                 payload: request };
+}
+
+function pushToPath(deckId, deckName) {
+        var newPath = {
+                id: deckId,
+                name: deckName
+        };
+        return {
+                type: _types.PUSH_TO_USER_DECK_PATH,
+                newPath: newPath
+        };
+}
+
+function dropFromPath(pathLastIndex) {
+        return {
+                type: _types.DROP_FROM_USER_DECK_PATH,
+                pathLastIndex: pathLastIndex
+        };
 }
 
 /***/ }),
@@ -36398,8 +36419,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
     insertDecks: function insertDecks(state, decks, parentId) {
-        console.log("insert decks: ", decks);
-        console.log("parentid: ", parentId);
         var newState = _extends({}, state);
         if (!parentId) {
             if (!newState.children) newState.children = [];
@@ -36408,6 +36427,7 @@ exports.default = {
         }
         decks.forEach(function (deck) {
             newState[deck._id] = deck;
+            newState[deck._id].children = [];
             if (!parentId) newState.children.push(deck._id);else {
                 console.log("pushing children: ", deck._id);
                 if (newState[parentId].children.indexOf(deck._id) == -1) newState[parentId].children.push(deck._id);
@@ -36419,22 +36439,17 @@ exports.default = {
         // deck is not deleted fron children array, the component should
         // re fetch the parent decks before diplaying them
         var newState = _extends({}, state);
-        newState[deckId] = undefined;
+        delete newState[deckId];
         return newState;
     },
     getDecks: function getDecks(state, parentId) {
         var decks = [];
-        if (!parentId) {
-            state.children.forEach(function (deckId) {
+        var deckIds;
+        if (!parentId) deckIds = state.children;else deckIds = state[parentId].children;
+        deckIds.forEach(function (deckId) {
+            if (state[deckId]) //if deck was deleted will be undefined
                 decks.push(state[deckId]);
-            });
-        } else {
-            console.log("decks inside: ", state[parentId]);
-            console.log("children: ", state[parentId].children);
-            state[parentId].children.forEach(function (deckId) {
-                decks.push(state[deckId]);
-            });
-        }
+        });
         return decks;
     },
     getCards: function getCards(state, parentId) {
@@ -77461,43 +77476,39 @@ var Home = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
 
-        _this.state = { path: [], isLocked: false };
-        _this.pushDeck = _this.pushDeck.bind(_this);
+        _this.pushToPath = _this.pushToPath.bind(_this);
         _this.goToIndex = _this.goToIndex.bind(_this);
         _this.renderPath = _this.renderPath.bind(_this);
+        _this.onDelete = _this.onDelete.bind(_this);
         return _this;
     }
 
     _createClass(Home, [{
-        key: "pushDeck",
-        value: function pushDeck(id, name) {
-            var _this2 = this;
-
-            console.log(1);
-            var newDeck = { id: id, name: name };
-            this.setState({ path: _deckPathAdapter2.default.cloneAndPushOne(this.state.path, newDeck),
-                isLocked: true }, function () {
-                console.log("fetching use decks...");
-                _this2.props.fetchUserDecks(0, _this2.state.path);
-            });
+        key: "pushToPath",
+        value: function pushToPath(deckId, deckName) {
+            this.props.pushToPath(deckId, deckName);
         }
     }, {
         key: "componentWillReceiveProps",
-        value: function componentWillReceiveProps() {
-            console.log("component will receive props");
-            this.setState({ isLocked: false });
+        value: function componentWillReceiveProps(nextProps) {
+            if (!_lodash2.default.isEqual(nextProps.path, this.props.path)) {
+                this.props.fetchUserDecks(0, nextProps.path);
+            }
         }
     }, {
-        key: "shouldComponentUpdate",
-        value: function shouldComponentUpdate(nextProps, nextState) {
-            console.log("should component update isLocked: ", nextState.isLocked);
-            return !nextState.isLocked;
+        key: "onDelete",
+        value: function onDelete(deckId) {
+            var _this2 = this;
+
+            this.props.deleteUserDeck(deckId, function () {
+                _this2.props.successAlert("Deck deleted succesfully !");
+                _this2.forceUpdate();
+            });
         }
     }, {
         key: "render",
         value: function render() {
-            console.log("render");
-            var parentId = _deckPathAdapter2.default.getLastIdFromPath(this.state.path);
+            var parentId = _deckPathAdapter2.default.getLastIdFromPath(this.props.path);
             return _react2.default.createElement(
                 _page2.default,
                 { name: "my collection" },
@@ -77531,9 +77542,9 @@ var Home = function (_Component) {
                             "div",
                             { className: "col" },
                             _react2.default.createElement(_deckGalleryUserContainer2.default, {
-                                pushDeck: this.pushDeck,
-                                onDelete: function onDelete() {},
-                                path: this.state.path.slice(),
+                                pushToPath: this.pushToPath,
+                                onDelete: this.onDelete,
+                                path: this.props.path.slice(),
                                 decks: this.props.decks })
                         )
                     )
@@ -77543,9 +77554,7 @@ var Home = function (_Component) {
     }, {
         key: "goToIndex",
         value: function goToIndex(pathLastIndex) {
-            var limitToDrop = this.state.path.length - pathLastIndex;
-            var newPath = _deckPathAdapter2.default.cloneAndDropFromRight(this.state.path, limitToDrop);
-            this.setState({ path: newPath });
+            this.props.dropFromPath(pathLastIndex);
         }
     }, {
         key: "renderPath",
@@ -77562,7 +77571,7 @@ var Home = function (_Component) {
                         }, style: style.path },
                     "Root"
                 ),
-                this.state.path.map(function (p, i) {
+                this.props.path.map(function (p, i) {
                     return _react2.default.createElement(
                         "span",
                         { key: i + 1 },
@@ -77584,10 +77593,10 @@ var Home = function (_Component) {
 }(_react.Component);
 
 function mapStateToProps(state) {
-    return { decks: state.userDecks };
+    return { decks: state.userDecks, path: state.userDecksPath };
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, { getUserInfo: _user.getUserInfo, deleteUserDeck: _deck.deleteUserDeck, successAlert: _alerts.successAlert, fetchUserDecks: _deck.fetchUserDecks })((0, _radium2.default)(Home));
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { getUserInfo: _user.getUserInfo, deleteUserDeck: _deck.deleteUserDeck, successAlert: _alerts.successAlert, fetchUserDecks: _deck.fetchUserDecks, pushToPath: _deck.pushToPath, dropFromPath: _deck.dropFromPath })((0, _radium2.default)(Home));
 
 /***/ }),
 /* 619 */
@@ -100565,6 +100574,7 @@ var AddImage = function (_Component) {
         value: function renderPicker() {
             var _this6 = this;
 
+            var btnsDisabled = _lodash2.default.isEmpty(this.state.searchQuery) || this.state.isLoading;
             return _react2.default.createElement(
                 "div",
                 { className: "container" },
@@ -100596,12 +100606,12 @@ var AddImage = function (_Component) {
                             _react2.default.createElement(_RaisedButton2.default, { onClick: this.searchImg,
                                 style: style.marginRight,
                                 labelColor: "#ffffff",
-                                disabled: this.props.bigLoading,
+                                disabled: btnsDisabled,
                                 backgroundColor: "#4286f4",
                                 label: "Search Img" }),
                             _react2.default.createElement(_RaisedButton2.default, { onClick: this.searchGif,
                                 labelColor: "#ffffff",
-                                disabled: this.props.bigLoading,
+                                disabled: btnsDisabled,
                                 backgroundColor: "#4286f4",
                                 label: "Search Gif" })
                         )
@@ -101750,6 +101760,10 @@ var _bricks = __webpack_require__(962);
 
 var _bricks2 = _interopRequireDefault(_bricks);
 
+var _lodash = __webpack_require__(39);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -101773,6 +101787,7 @@ var ImgPicker = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (ImgPicker.__proto__ || Object.getPrototypeOf(ImgPicker)).call(this, props));
 
+        _this.state = { wasRendered: false };
         _this.renderImg = _this.renderImg.bind(_this);
         _this.pickImg = _this.pickImg.bind(_this);
         return _this;
@@ -101811,6 +101826,13 @@ var ImgPicker = function (_Component) {
                 packed: 'packed',
                 sizes: sizes
             });
+            this.setState({ wasRendered: true });
+        }
+    }, {
+        key: "shouldComponentUpdate",
+        value: function shouldComponentUpdate(nextProps, nextState) {
+            if (_lodash2.default.isEqual(this.props, nextProps)) return false;
+            return true;
         }
     }, {
         key: "render",
@@ -101818,6 +101840,11 @@ var ImgPicker = function (_Component) {
             var _this3 = this;
 
             if (this.props.isLoading) return _react2.default.createElement(_CircularProgress2.default, { size: 80, thickness: 7 });
+            if (this.state.wasRendered && _lodash2.default.isEmpty(this.props.searchImgs)) return _react2.default.createElement(
+                "p",
+                null,
+                "OMG!, WE COULDN'T FIND IMAGES FOR THAT TERM, TRY WITH SOMETHING DIFFERENT!"
+            );
             return _react2.default.createElement(
                 "div",
                 { id: "gallery" },
@@ -105562,8 +105589,8 @@ var DeckGalleryUserContainer = function (_Component) {
     }, {
         key: "render",
         value: function render() {
-            return _react2.default.createElement(_deckGallery2.default, { pushDeck: this.props.pushDeck,
-                onDelete: function onDelete() {},
+            return _react2.default.createElement(_deckGallery2.default, { pushToPath: this.props.pushToPath,
+                onDelete: this.props.onDelete,
                 path: this.props.path,
                 fetch: this.fetchDecks,
                 decks: this.props.decks });
@@ -105665,7 +105692,7 @@ var DeckGallery = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (DeckGallery.__proto__ || Object.getPrototypeOf(DeckGallery)).call(this, props));
 
-        _this.state = { skip: 0, isFetching: false };
+        _this.state = { skip: 0, isFetching: false, wasRendered: false };
         _this.renderDecks = _this.renderDecks.bind(_this);
         _this.renderDeck = _this.renderDeck.bind(_this);
         _this.increasePage = _this.increasePage.bind(_this);
@@ -105678,10 +105705,22 @@ var DeckGallery = function (_Component) {
             this.props.fetch(this.state.skip);
         }
     }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.setState({ wasRendered: true });
+        }
+    }, {
+        key: 'shouldComponentUpdate',
+        value: function shouldComponentUpdate(nextProps, nextState) {
+            if (nextState.wasRendered != this.state.wasRendered) return false;
+            return true;
+        }
+    }, {
         key: 'renderDeck',
         value: function renderDeck(deck) {
+            if (!deck) return null;
             if (deck.thumbnail) deck.thumbnail.src = CLOUDFRONT_URL + deck.thumbnail.hash;else deck.thumbnail = { src: "/assets/img/default.jpg" };
-            return _react2.default.createElement(_deck2.default, { key: deck._id, pushDeck: this.props.pushDeck, onDelete: this.props.onDelete, deck: deck });
+            return _react2.default.createElement(_deck2.default, { key: deck._id, pushToPath: this.props.pushToPath, onDelete: this.props.onDelete, deck: deck });
         }
     }, {
         key: 'componentWillReceiveProps',
@@ -105706,8 +105745,13 @@ var DeckGallery = function (_Component) {
 
             var parentId = _deckPathAdapter2.default.getLastIdFromPath(path);
             var decksArray = _userDeckAdapter2.default.getDecks(decks, parentId);
-            var renderedDecks = [];
             console.log("decksArray: ", decksArray);
+            if (this.state.wasRendered && _lodash2.default.isEmpty(decksArray)) return _react2.default.createElement(
+                'p',
+                null,
+                'You don\'t have decks in this location :('
+            );
+            var renderedDecks = [];
             decksArray.forEach(function (deck) {
                 renderedDecks.push(_this3.renderDeck(deck));
             });
@@ -105722,10 +105766,10 @@ var DeckGallery = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            if (_lodash2.default.isEmpty(this.props.decks)) return _react2.default.createElement(
+            if (!this.state.wasRendered && _lodash2.default.isEmpty(this.props.decks)) return _react2.default.createElement(
                 'p',
                 null,
-                'You don\'t have decks :('
+                'Loading...'
             );
             return _react2.default.createElement(
                 'div',
@@ -106082,7 +106126,7 @@ var Deck = function (_Component) {
                     null,
                     _react2.default.createElement(_croppedImage2.default, { style: { cursor: "pointer" },
                         onClick: function onClick() {
-                            return _this2.props.pushDeck(deck._id, deck.name);
+                            return _this2.props.pushToPath(deck._id, deck.name);
                         },
                         width: "auto", height: "200px",
                         src: deck.thumbnail.src })
@@ -106090,7 +106134,7 @@ var Deck = function (_Component) {
                 _react2.default.createElement(_Card.CardTitle, { titleStyle: { wordBreak: "break-all" }, title: _react2.default.createElement(
                         "a",
                         { style: style.a, onClick: function onClick() {
-                                return _this2.props.pushDeck(deck._id, deck.name);
+                                return _this2.props.pushToPath(deck._id, deck.name);
                             } },
                         deck.name
                     ), subtitle: (0, _language2.default)(deck.lang) }),
@@ -116486,7 +116530,8 @@ var rootReducer = (0, _redux.combineReducers)({
   notifs: _reducer_notifications.getNotifsReducer,
   user: _reducer_user.getUserInfoReducer,
   bigLoading: _reducer_alerts.loadingReducer,
-  userDecks: _reducer_deck.userDecksReducer
+  userDecks: _reducer_deck.userDecksReducer,
+  userDecksPath: _reducer_deck.userDecksPathReducer
 });
 
 exports.default = rootReducer;
@@ -116697,9 +116742,10 @@ function getUserInfoReducer() {
 
 
 Object.defineProperty(exports, "__esModule", {
-                        value: true
+    value: true
 });
 exports.userDecksReducer = userDecksReducer;
+exports.userDecksPathReducer = userDecksPathReducer;
 
 var _types = __webpack_require__(32);
 
@@ -116718,25 +116764,40 @@ var _deckPathAdapter2 = _interopRequireDefault(_deckPathAdapter);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function userDecksReducer() {
-                        var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-                        var action = arguments[1];
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var action = arguments[1];
 
-                        switch (action.type) {
-                                                case _types.FETCH_USER_DECKS:
-                                                                        var newDecks = action.payload.msg;
-                                                                        console.log("deck reducer, path: ", action.path);
-                                                                        var parentId = _deckPathAdapter2.default.getLastIdFromPath(action.path);
-                                                                        return _userDeckAdapter2.default.insertDecks(state, newDecks, parentId);
-                                                case _types.CREATE_USER_DECK:
-                                                                        console.log("create deck got", action.payload.msg);
-                                                                        var newDeck = action.payload.deck;
-                                                                        return _userDeckAdapter2.default.insertDecks(state, [newDeck], action.parentId);
-                                                case _types.DELETE_USER_DECK:
-                                                                        console.log("deckid: ", action.deckId);
-                                                                        return _userDeckAdapter2.default.deleteDeck(state, action.deckId);
+    switch (action.type) {
+        case _types.FETCH_USER_DECKS:
+            var newDecks = action.payload.msg;
+            console.log("deck reducer, path: ", action.path);
+            var parentId = _deckPathAdapter2.default.getLastIdFromPath(action.path);
+            return _userDeckAdapter2.default.insertDecks(state, newDecks, parentId);
+        case _types.CREATE_USER_DECK:
+            console.log("create deck got", action.payload.msg);
+            var newDeck = action.payload.deck;
+            return _userDeckAdapter2.default.insertDecks(state, [newDeck], action.parentId);
+        case _types.DELETE_USER_DECK:
+            console.log("deleted deckid: ", action.deckId);
+            return _userDeckAdapter2.default.deleteDeck(state, action.deckId);
 
-                        }
-                        return state;
+    }
+    return state;
+}
+
+function userDecksPathReducer() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    var action = arguments[1];
+
+    switch (action.type) {
+        case _types.PUSH_TO_USER_DECK_PATH:
+            console.log("push to path: ", action.newPath);
+            return _deckPathAdapter2.default.cloneAndPushOne(state, action.newPath);
+        case _types.DROP_FROM_USER_DECK_PATH:
+            var limitToDrop = state.length - action.pathLastIndex;
+            return _deckPathAdapter2.default.cloneAndDropFromRight(state, limitToDrop);
+    }
+    return state;
 }
 
 /***/ }),

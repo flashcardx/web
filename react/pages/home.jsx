@@ -4,7 +4,7 @@ import Radium from "radium";
 import {connect} from "react-redux";
 import {getUserInfo} from "../actions/user";
 import {successAlert} from "../actions/alerts";
-import {deleteUserDeck, fetchUserDecks} from "../actions/deck.js";
+import {deleteUserDeck, fetchUserDecks, pushToPath, dropFromPath} from "../actions/deck.js";
 import RaisedButton from 'material-ui/RaisedButton';
 import CreateUserDeckContainer from "../containers/createUserDeckContainer.jsx";
 import DeckGalleryUserContainer from "../containers/deckGalleryUserContainer.jsx";
@@ -26,35 +26,31 @@ class Home extends Component{
 
     constructor(props){
         super(props);
-        this.state = {path:[], isLocked:false};
-        this.pushDeck = this.pushDeck.bind(this);
+        this.pushToPath = this.pushToPath.bind(this);
         this.goToIndex = this.goToIndex.bind(this);
         this.renderPath = this.renderPath.bind(this);
+        this.onDelete = this.onDelete.bind(this);
     }
 
-    pushDeck(id, name){
-        console.log(1);
-        var newDeck = {id, name};
-        this.setState({ path: deckPathAdapter.cloneAndPushOne(this.state.path, newDeck),
-                    isLocked:true}, ()=>{
-                    console.log("fetching use decks...");
-                    this.props.fetchUserDecks(0, this.state.path);
+    pushToPath(deckId, deckName){
+        this.props.pushToPath(deckId, deckName);
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(!_.isEqual(nextProps.path, this.props.path)){
+            this.props.fetchUserDecks(0, nextProps.path);
+        }
+    }
+
+    onDelete(deckId){
+        this.props.deleteUserDeck(deckId, ()=>{
+            this.props.successAlert("Deck deleted succesfully !");
+            this.forceUpdate();
         });
     }
 
-    componentWillReceiveProps(){
-        console.log("component will receive props");
-        this.setState({isLocked: false});
-    }
-
-    shouldComponentUpdate(nextProps, nextState){
-        console.log("should component update isLocked: ", nextState.isLocked);
-        return !nextState.isLocked;
-    }
-
     render(){
-        console.log("render");
-        const parentId = deckPathAdapter.getLastIdFromPath(this.state.path);
+        const parentId = deckPathAdapter.getLastIdFromPath(this.props.path);
         return (
             <Page name="my collection">
                 <div className="container">
@@ -70,9 +66,9 @@ class Home extends Component{
                     <div className="row">
                         <div className="col">
                             <DeckGalleryUserContainer
-                                         pushDeck={this.pushDeck}
-                                         onDelete={()=>{}}
-                                         path={this.state.path.slice()}
+                                         pushToPath={this.pushToPath}
+                                         onDelete={this.onDelete}
+                                         path={this.props.path.slice()}
                                          decks={this.props.decks}/> 
                         </div>
                     </div>
@@ -82,16 +78,14 @@ class Home extends Component{
     }
 
     goToIndex(pathLastIndex){
-        var limitToDrop = this.state.path.length - pathLastIndex;
-        var newPath = deckPathAdapter.cloneAndDropFromRight(this.state.path, limitToDrop);
-        this.setState({path: newPath});
+        this.props.dropFromPath(pathLastIndex);
     }
 
     renderPath(){
         return (
             <span>
                 <span onClick={()=>this.goToIndex(0)} style={style.path}>Root</span>
-                {this.state.path.map((p, i)=>{
+                {this.props.path.map((p, i)=>{
                     return <span key={(i+1)}> / <span onClick={()=>this.goToIndex(i+1)} style={style.path}>{p.name}</span></span>
                     })
                 }
@@ -103,7 +97,7 @@ class Home extends Component{
 }
 
 function mapStateToProps(state){
-    return {decks: state.userDecks};
+    return {decks: state.userDecks, path: state.userDecksPath};
 }
 
-export default connect(mapStateToProps, {getUserInfo, deleteUserDeck, successAlert, fetchUserDecks})(Radium(Home));
+export default connect(mapStateToProps, {getUserInfo, deleteUserDeck, successAlert, fetchUserDecks, pushToPath, dropFromPath})(Radium(Home));

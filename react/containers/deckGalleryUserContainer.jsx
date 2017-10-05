@@ -17,8 +17,8 @@ class DeckGalleryUserContainer extends Component{
 
     render(){
         return (
-                <DeckGallery pushDeck={this.props.pushDeck}
-                             onDelete={()=>{}}
+                <DeckGallery pushToPath={this.props.pushToPath}
+                             onDelete={this.props.onDelete}
                              path={this.props.path}
                              fetch={this.fetchDecks}
                              decks={this.props.decks}/> 
