@@ -159,6 +159,7 @@ class AddImage extends Component{
 
 
     renderPicker(){
+        const btnsDisabled = (_.isEmpty(this.state.searchQuery) || this.state.isLoading);
         return (
             <div className="container">
                 <Dropzone style={{borderStyle:"none"}}
@@ -179,12 +180,12 @@ class AddImage extends Component{
                             <RaisedButton onClick={this.searchImg}
                                         style={style.marginRight}
                                         labelColor="#ffffff"
-                                        disabled={this.props.bigLoading}
+                                        disabled={btnsDisabled}
                                         backgroundColor="#4286f4"
                                         label="Search Img"/>                    
                             <RaisedButton onClick={this.searchGif}
                                         labelColor="#ffffff"
-                                        disabled={this.props.bigLoading}
+                                        disabled={btnsDisabled}
                                         backgroundColor="#4286f4"
                                         label="Search Gif"/>                    
                         </div>

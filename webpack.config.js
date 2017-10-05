@@ -3,6 +3,8 @@ let path = require('path');
 
 let BUILD_DIR = path.resolve(__dirname, './public/js');
 let APP_DIR = path.resolve(__dirname, '.');
+//detects if circular dependency:
+let CircularDependencyPlugin = require('circular-dependency-plugin')
 
 let config = {
     entry: APP_DIR + "/react/index.jsx",
@@ -15,7 +17,13 @@ let config = {
       'process.env':{
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
       }
-    })
+    }),
+        new CircularDependencyPlugin({
+        // exclude detection of files based on a RegExp
+        exclude: /a\.js|node_modules/,
+        // add errors to webpack instead of warnings
+        failOnError: true
+        })
     ],
     devtool: 'source-map',
     module: {

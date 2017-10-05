@@ -50,11 +50,6 @@ class CreateDeck extends Component{
 
     constructor(props){
         super(props);
-        var parentId = null;
-        var lastDeck = props.path.pop();
-        if(lastDeck)
-            parentId = lastDeck.id;
-        this.state = {parentId: parentId};
         this.renderForm = this.renderForm.bind(this);
         this.onImgPick = this.onImgPick.bind(this);
         this.onImgUpload = this.onImgUpload.bind(this);
@@ -63,7 +58,6 @@ class CreateDeck extends Component{
     }
 
     onImgPick(img){
-        console.log("img picked: ", img);
         this.props.onImgPick(img, img=>{
             this.props.dispatch(change(this.props.formName, "img", img));
         });

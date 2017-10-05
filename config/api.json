@@ -66,7 +66,7 @@
             "getCommentReactionDetail": "http://localhost:3000/class/commentReactionDetail/",
             "getComments": "http://localhost:3000/class/comments/",
             "searchGif": "http://localhost:3000/searchGif/",
-            "getUserDecks": "http://localhost:3000/deckschildren/u",
+            "getUserDecks": "http://localhost:3000/decks/u",
             "createUserDeck":"http://localhost:3000/deck/u",
             "imageProxy": "http://localhost:3000/imageProxy",
             "deleteUserDeck": "http://localhost:3000/deck/u/"
@@ -138,7 +138,7 @@
             "getCommentReactionDetail": "http://pi.flashcardx.co/class/commentReactionDetail/",
             "getComments": "http://pi.flashcardx.co/class/comments/",
             "searchGif": "http://pi.flashcardx.co/searchGif/",
-            "getUserDecks": "http://pi.flashcardx.co/deckschildren/u",
+            "getUserDecks": "http://pi.flashcardx.co/decks/u",
             "createUserDeck":"http://pi.flashcardx.co/deck/u",
             "imageProxy": "http://pi.flashcardx.co/imageProxy",
             "deleteUserDeck": "http://pi.flashcardx.co/deck/u/"
@@ -210,7 +210,7 @@
             "getCommentReactionDetail": "http://localhost:3000/class/commentReactionDetail/",
             "getComments": "http://localhost:3000/class/comments/",
             "searchGif": "http://localhost:3000/searchGif/",
-            "getUserDecks": "http://localhost:3000/deckschildren/u",
+            "getUserDecks": "http://localhost:3000/decks/u",
             "createUserDeck":"http://localhost:3000/deck/u",
             "imageProxy": "http://localhost:3000/imageProxy",
             "deleteUserDeck": "http://localhost:3000/deck/u/"
