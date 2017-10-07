@@ -11,14 +11,13 @@ class DeckGalleryUserContainer extends Component{
     }
 
     fetchDecks(skip){
-        this.props.fetchUserDecks(this.props.parentId, skip, this.props.path);
+        this.props.fetchUserDecks(skip, this.props.path);
     }
 
     render(){
         return (
-                <DeckGallery setParentId={this.props.setParentId}
-                             pushDeck={this.props.pushDeck}
-                             onDelete={()=>{}}
+                <DeckGallery pushToPath={this.props.pushToPath}
+                             onDelete={this.props.onDelete}
                              path={this.props.path}
                              fetch={this.fetchDecks}
                              decks={this.props.decks}/> 

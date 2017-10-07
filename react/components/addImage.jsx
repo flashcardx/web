@@ -10,12 +10,10 @@ import {infoAlert} from "../actions/alerts.js";
 import {reduxForm } from 'redux-form';
 import Dropzone from 'react-dropzone';
 import PropTypes from "prop-types";
-import axios from "axios";
 import ImgPicker from "./imgPicker.jsx";
 import PreviewImage from "./previewImage.jsx";
 import Cropper from "./util/cropper.jsx";
-const SEARCH_IMG_URL = config.apiSearchImage;
-const SEARCH_GIF_URL = config.apiSearchGif;
+import {searchImg, searchGif, resetSearchImages} from "../actions/image";
 
 const style = {
     marginRight:{
@@ -26,41 +24,11 @@ const style = {
     }
 }
 
-function parseImgs(data){
-    var r = [];
-    data.forEach(img=>{
-        r.push({
-                preview: img.thumbnailUrl,
-                real: {
-                    url: img.contentUrl,
-                    height: img.height,
-                    width: img.width
-                    }
-                });
-    });
-    return r;
-}
-
-function parseGifs(data){
-    var r = [];
-    data.forEach(img=>{
-        r.push({
-                preview: img.media[0].tinygif.url,
-                real: {
-                    url: img.media[0].mediumgif.url,
-                    height: img.media[0].mediumgif.dims[1],
-                    width: img.media[0].mediumgif.dims[0]
-                    }
-            });
-    });
-    return r;
-}
-
 class AddImage extends Component{
     
     constructor(props){
         super(props);
-        this.state = {searchImgs:[], openModal: false, searchQuery:"", isLoading:false, cropModal:false, imgBeingCropped: null};
+        this.state = {openModal: false, searchQuery:"", isLoading:false, cropModal:false, imgBeingCropped: null};
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.renderTitle = this.renderTitle.bind(this);
@@ -73,6 +41,10 @@ class AddImage extends Component{
         this.renderPickedImg = this.renderPickedImg.bind(this);
         this.openCropper = this.openCropper.bind(this);
         this.closeCropper = this.closeCropper.bind(this);
+    }
+
+    componentWillMount(){
+        this.props.resetSearchImages();
     }
 
     openModal(){
@@ -105,33 +77,22 @@ class AddImage extends Component{
     }
 
     searchImg(){
-        const url = SEARCH_IMG_URL + this.state.searchQuery;
         this.setState({isLoading: true});     
-        axios.get(url,
-                {headers:{'x-access-token': localStorage.getItem("jwt")}})
-        .then(r=>{
-            this.setState({isLoading: false, searchImgs:parseImgs(r.data.msg.value)});
-        })
-        .catch(err=>{
-            console.error(err);
-        })
+        this.props.searchImg(this.state.searchQuery);
+    }
+    
+    searchGif(){
+        this.setState({isLoading: true});     
+        this.props.searchGif(this.state.searchQuery);
     }
 
-    searchGif(){
-        const url = SEARCH_GIF_URL + this.state.searchQuery;
-        this.setState({isLoading: true});     
-        axios.get(url,
-                {headers:{'x-access-token': localStorage.getItem("jwt")}})
-        .then(r=>{
-            this.setState({isLoading: false, searchImgs: parseGifs(r.data.msg.results)});
-        })
-        .catch(err=>{
-            console.error(err);
-        })
+    componentWillReceiveProps(nextProps){
+        this.setState({isLoading: false});
     }
 
     onImgPick(img){
         this.closeModal();
+        console.log("on img pick: ", img);
         this.props.onImgPick(img);
     }
 
@@ -157,8 +118,8 @@ class AddImage extends Component{
         image.src = file.preview
     }
 
-
     renderPicker(){
+        const btnsDisabled = (_.isEmpty(this.state.searchQuery) || this.state.isLoading);
         return (
             <div className="container">
                 <Dropzone style={{borderStyle:"none"}}
@@ -179,12 +140,12 @@ class AddImage extends Component{
                             <RaisedButton onClick={this.searchImg}
                                         style={style.marginRight}
                                         labelColor="#ffffff"
-                                        disabled={this.props.bigLoading}
+                                        disabled={btnsDisabled}
                                         backgroundColor="#4286f4"
                                         label="Search Img"/>                    
                             <RaisedButton onClick={this.searchGif}
                                         labelColor="#ffffff"
-                                        disabled={this.props.bigLoading}
+                                        disabled={btnsDisabled}
                                         backgroundColor="#4286f4"
                                         label="Search Gif"/>                    
                         </div>
@@ -193,7 +154,7 @@ class AddImage extends Component{
                         <div className="col mx-auto">
                             <div className="text-center">
                                 <ImgPicker  onImgPick={this.onImgPick}
-                                            searchImgs={this.state.searchImgs}
+                                            searchImages={this.props.searchImages}
                                             isLoading={this.state.isLoading}/>
                             </div>
                         </div>
@@ -260,4 +221,10 @@ class AddImage extends Component{
 
 }
 
-export default connect(null, {infoAlert})(Radium(AddImage));
+function mapStateToProps(state){
+    return {
+        searchImages: state.searchImages
+    }
+}
+
+export default connect(mapStateToProps, {infoAlert, searchImg, searchGif, resetSearchImages})(Radium(AddImage));

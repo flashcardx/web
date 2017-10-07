@@ -3,7 +3,8 @@ import {countReducer, showNotifsReducer, getNotifsReducer} from "./reducer_notif
 import {authReducer, signupReducer} from "./reducer_auth";
 import {alertsReducer, loadingReducer} from "./reducer_alerts";
 import {getUserInfoReducer} from "./reducer_user";
-import {userDecksReducer} from "./reducer_deck.js"
+import {userDecksReducer, userDecksPathReducer} from "./reducer_deck.js"
+import {searchImagesReducer, imageProxyReducer} from "./reducer_img";
 import {reducer as formReducer} from "redux-form";
 
 const rootReducer = combineReducers({
@@ -16,7 +17,10 @@ const rootReducer = combineReducers({
   notifs: getNotifsReducer,
   user:  getUserInfoReducer,
   bigLoading: loadingReducer,
-  userDecks: userDecksReducer
+  userDecks: userDecksReducer,
+  userDecksPath: userDecksPathReducer,
+  searchImages: searchImagesReducer,
+  imageReady: imageProxyReducer 
 });
 
 export default rootReducer;
