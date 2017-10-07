@@ -4,7 +4,7 @@ import {authReducer, signupReducer} from "./reducer_auth";
 import {alertsReducer, loadingReducer} from "./reducer_alerts";
 import {getUserInfoReducer} from "./reducer_user";
 import {userDecksReducer, userDecksPathReducer} from "./reducer_deck.js"
-import {searchImagesReducer} from "./reducer_img";
+import {searchImagesReducer, imageProxyReducer} from "./reducer_img";
 import {reducer as formReducer} from "redux-form";
 
 const rootReducer = combineReducers({
@@ -19,7 +19,8 @@ const rootReducer = combineReducers({
   bigLoading: loadingReducer,
   userDecks: userDecksReducer,
   userDecksPath: userDecksPathReducer,
-  searchImages: searchImagesReducer
+  searchImages: searchImagesReducer,
+  imageReady: imageProxyReducer 
 });
 
 export default rootReducer;

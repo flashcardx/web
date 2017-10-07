@@ -10,7 +10,6 @@ import {infoAlert} from "../actions/alerts.js";
 import {reduxForm } from 'redux-form';
 import Dropzone from 'react-dropzone';
 import PropTypes from "prop-types";
-import axios from "axios";
 import ImgPicker from "./imgPicker.jsx";
 import PreviewImage from "./previewImage.jsx";
 import Cropper from "./util/cropper.jsx";
@@ -93,6 +92,7 @@ class AddImage extends Component{
 
     onImgPick(img){
         this.closeModal();
+        console.log("on img pick: ", img);
         this.props.onImgPick(img);
     }
 

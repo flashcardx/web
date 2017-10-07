@@ -82,7 +82,6 @@ class DeckGallery extends Component{
     renderDecks(decks, path){
         const parentId = deckPathAdapter.getLastIdFromPath(path);
         const decksArray = userDeckAdapter.getDecks(decks, parentId);
-        console.log("decksArray: ", decksArray);
         if(this.state.wasRendered && _.isEmpty(decksArray))
             return <p>You don't have decks in this location :(</p>
         var renderedDecks = [];
@@ -90,9 +89,9 @@ class DeckGallery extends Component{
             renderedDecks.push(this.renderDeck(deck));
         });
         return (
-            <InfiniteScroll onReachRight={()=>this.increasePage()} horizontal>
-        	        {renderedDecks} 
-            </InfiniteScroll>
+                <InfiniteScroll onReachRight={()=>this.increasePage()} horizontal>
+                     {renderedDecks} 
+                </InfiniteScroll>
         );
     }
 

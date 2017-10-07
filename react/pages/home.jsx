@@ -57,7 +57,7 @@ class Home extends Component{
                     <div style={style.row1} className="row">
                         <div className="col-lg-9  col-sm-6">
                             <h2>Your decks</h2>
-                             Path: {this.renderPath()}
+                             {this.renderPath()}
                         </div>
                         <div className="col-lg-3 col-sm-6">
                             <CreateUserDeckContainer parentId={parentId}/>

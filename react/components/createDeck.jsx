@@ -13,6 +13,7 @@ import {createUserDeck} from "../actions/deck.js";
 import {successAlert, infoAlert, showLoading, hideLoading} from "../actions/alerts.js";
 import {reset} from 'redux-form';
 import AddImage from "./addImage.jsx";
+import _ from "lodash";
 
 const FORM_NAME = "userdeckForm";
 
@@ -51,37 +52,38 @@ class CreateDeck extends Component{
     constructor(props){
         super(props);
         this.renderForm = this.renderForm.bind(this);
-        this.onImgPick = this.onImgPick.bind(this);
-        this.onImgUpload = this.onImgUpload.bind(this);
         this.onImgDelete = this.onImgDelete.bind(this);
         this.onCrop = this.onCrop.bind(this);
+        this.loadImageOnForm = this.loadImageOnForm.bind(this);
     }
 
-    onImgPick(img){
-        this.props.onImgPick(img, img=>{
-            this.props.dispatch(change(this.props.formName, "img", img));
-        });
-    }
-
-    onImgUpload(img){
-        this.props.onImgUpload(img, img=>{
-            this.props.dispatch(change(this.props.formName, "img", img));
-        });
-    }
-
-    onCrop(r){
+     onCrop(r){
             this.props.onCrop(r, img=>{
                 this.props.dispatch(change(this.props.formName, "img", img));
             });
     }
 
+
+    componentWillReceiveProps(nextProps){
+            console.log("will receive props: ", nextProps.pickedImg);
+            if(!_.isEqual(nextProps.pickedImg, this.props.pickedImg)){
+                    console.log("load image on form");
+                    this.loadImageOnForm(nextProps.pickedImg);
+            }
+    }
+
+    loadImageOnForm(img){
+                this.props.dispatch(change(this.props.formName, "img", img));
+    }
+
     onImgDelete(){
-            this.props.dispatch(change( this.props.formName, "img", null));
+            this.props.dispatch(change(this.props.formName, "img", null));
             this.props.onImgDelete();
     }
 
     renderForm(){
         const {handleSubmit} = this.props;
+        const imgs = (this.props.pickedImg)? [this.props.pickedImg]: [];
         return (
             <div>
                 <form onSubmit={handleSubmit(this.props.onSubmit)} >
@@ -109,11 +111,11 @@ class CreateDeck extends Component{
                                         <div className="col-sm-12">
                                             <AddImage onCrop={this.onCrop}
                                                       onDelete={this.onImgDelete}
-                                                      pickedImgs={this.props.pickedImgs}
-                                                      maxPickedImgs={this.props.maxPickedImgs}
+                                                      pickedImgs={imgs}
+                                                      maxPickedImgs={1}
                                                       disabled={this.props.bigLoading}
-                                                      onImgPick={this.onImgPick}
-                                                      onImgUpload={this.onImgUpload}
+                                                      onImgPick={this.props.onImgPick}
+                                                      onImgUpload={this.props.onImgUpload}
                                                       titleModal="Add cover for deck"
                                                       label="Add cover image"/>
                                             <TextField
@@ -159,7 +161,6 @@ class CreateDeck extends Component{
 function mapStateToProps(state){
     return {bigLoading: state.bigLoading};
 }
-
 
 CreateDeck.PropTypes = {
     path: PropTypes.array.isRequired

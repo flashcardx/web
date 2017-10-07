@@ -41,13 +41,12 @@ export default {
         decks.forEach(deck=>{
                 newState[deck._id] = deck;
                 newState[deck._id].children = [];
-                if(!parentId)
-                    newState.children.push(deck._id);
-                else{
-                    console.log("pushing children: ", deck._id);
-                    if(newState[parentId].children.indexOf(deck._id) == -1)
-                        newState[parentId].children.push(deck._id);
+                if(!parentId){
+                    if(newState.children.indexOf(deck._id) == -1)
+                        newState.children.push(deck._id);
                 }
+                else if(newState[parentId].children.indexOf(deck._id) == -1)
+                        newState[parentId].children.push(deck._id); 
             });
         return newState;
     },
@@ -73,7 +72,6 @@ export default {
     },
     getCards: (state, parentId)=>{
         if(!parentId){
-            console.error("you must send a parentId");
             return null;
         }
     }
