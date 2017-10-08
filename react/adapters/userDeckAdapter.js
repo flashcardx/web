@@ -25,8 +25,6 @@ import React from "react";
     }
 */
 
-
-
 export default {
         insertDecks: (state, decks, parentId)=>{
         var newState = {...state};
@@ -49,6 +47,15 @@ export default {
                         newState[parentId].children.push(deck._id); 
             });
         return newState;
+    },
+    insertNewDeck: (state, deck, parentId)=>{
+        var newState = {};
+        if(!parentId)
+            state.children.unshift(deck._id);
+        else 
+            state[parentId].children.unshift(deck._id);
+        newState[deck._id] = deck;
+        return {...newState, ...state};
     },
     deleteDeck:(state, deckId)=>{
     // deck is not deleted fron children array, the component should

@@ -32,6 +32,10 @@ class Home extends Component{
         this.onDelete = this.onDelete.bind(this);
     }
 
+    componentDidMount(){
+        this.props.getUserInfo();
+    }
+
     pushToPath(deckId, deckName){
         this.props.pushToPath(deckId, deckName);
     }
@@ -86,7 +90,7 @@ class Home extends Component{
             <span>
                 <span onClick={()=>this.goToIndex(0)} style={style.path}>Root</span>
                 {this.props.path.map((p, i)=>{
-                    return <span key={(i+1)}> / <span onClick={()=>this.goToIndex(i+1)} style={style.path}>{p.name}</span></span>
+                    return <span key={(i+1)}> > <span onClick={()=>this.goToIndex(i+1)} style={style.path}>{p.name}</span></span>
                     })
                 }
             </span>

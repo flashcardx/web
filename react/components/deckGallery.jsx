@@ -85,6 +85,7 @@ class DeckGallery extends Component{
         if(this.state.wasRendered && _.isEmpty(decksArray))
             return <p>You don't have decks in this location :(</p>
         var renderedDecks = [];
+        console.log("decksArray: ", decksArray);
         decksArray.forEach(deck=>{
             renderedDecks.push(this.renderDeck(deck));
         });

@@ -65,15 +65,15 @@ class CreateDeck extends Component{
 
 
     componentWillReceiveProps(nextProps){
-            console.log("will receive props: ", nextProps.pickedImg);
             if(!_.isEqual(nextProps.pickedImg, this.props.pickedImg)){
-                    console.log("load image on form");
-                    this.loadImageOnForm(nextProps.pickedImg);
+                console.log("load image on form: ", nextProps.pickedImg);
+                this.loadImageOnForm(nextProps.pickedImg);
             }
     }
 
     loadImageOnForm(img){
-                this.props.dispatch(change(this.props.formName, "img", img));
+            console.log("load img on form: ", img);
+            this.props.dispatch(change(this.props.formName, "img", img));
     }
 
     onImgDelete(){

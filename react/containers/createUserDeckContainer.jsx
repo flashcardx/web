@@ -7,19 +7,19 @@ import {reduxForm } from 'redux-form';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {createUserDeck} from "../actions/deck.js";
-import {successAlert} from "../actions/alerts.js";
-import {proxyImgFromUrl, proxyImgFromData} from "../actions/image";
+import {successAlert, infoAlert, showLoading, hideLoading} from "../actions/alerts.js";
 import {reset} from 'redux-form';
 import CreateDeck from "../components/createDeck.jsx";
-import _ from "lodash";
+const CLOUDFRONT_URL = config.cloudfrontUrl;
 const FORM_NAME = "userdeckForm";
+const IMAGE_PROXY_URL = config.apiImageProxy;
 
 
 class CreateUserDeckContainer extends Component{
 
     constructor(props){
         super(props);
-        this.state = {modalIsOpen:false, pickedImg: null};
+        this.state = {modalIsOpen:false, pickedImgs: []};
         this.onSubmit = this.onSubmit.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.openModal = this.openModal.bind(this);
@@ -42,6 +42,7 @@ class CreateUserDeckContainer extends Component{
     }
 
     onSubmit({name, description, lang, img}){
+        console.log("parentId: ", this.props.parentId);
         this.props.createUserDeck(name, description, lang, img, this.props.parentId,()=>{
             this.closeModal();
             this.props.successAlert("Deck created succesfully !");
@@ -50,48 +51,87 @@ class CreateUserDeckContainer extends Component{
         });
     }
 
-    componentWillReceiveProps(nextProps){
-        if(!_.isEqual(this.props.imageReady, nextProps.imageReady)){
-            console.log("img");
-            this.setState({pickedImg: nextProps.imageReady});
-        }
+    onImgPick(img, callback){
+        this.props.showLoading();
+        axios.post(IMAGE_PROXY_URL, img, {headers:{'x-access-token': localStorage.getItem("jwt")}})
+        .then(r=>{
+            this.props.hideLoading();
+            if(r.data.success == false){
+                this.props.infoAlert("This image can not be downloaded, please try with another one");
+                return console.error(r.data.msg);
+            }
+            const url = CLOUDFRONT_URL + r.data.hash;
+            const img2 = {url:url,
+                          hash: r.data.hash,
+                          width: img.width,
+                          height: img.height,
+                          x:0,
+                          y:0};
+            callback(img2);
+            this.setState({pickedImgs: [img2]});
+        })
+        .catch(err=>{
+            console.error(err);
+        });
     }
 
-    onImgPick(img){
-        this.props.proxyImgFromUrl(img);
-    }
-
-    onImgUpload(img){
+    onImgUpload(img, callback){
+        this.props.showLoading();
         var form = new FormData();
         form.append("data", img.data);
-        this.props.proxyImgFromData(form, img);
+        axios.post(IMAGE_PROXY_URL, form, {headers:
+                                {'x-access-token': localStorage.getItem("jwt")}})
+        .then(r=>{
+            this.props.hideLoading();
+            if(r.data.success == false){
+                this.props.infoAlert("This image can not be uploaded, please try with another one");
+                return console.error(r.data.msg);
+            }
+            const url = CLOUDFRONT_URL + r.data.hash;
+            const img2 = {url:url,
+                          hash: r.data.hash,
+                          width: img.width,
+                          height: img.height,
+                          x:0,
+                          y:0};
+            callback(img2);
+            this.setState({pickedImgs: [img2]});
+        })
+        .catch(err=>{
+            console.error(err);
+        });
     }
 
     onCrop(img, callback){
-        var pickedImg = this.state.pickedImg;
+        var pickedImgs = this.state.pickedImgs;
         var i=0;
-        if(pickedImg.url == img.src){
-                pickedImg.x = img.x;
-                pickedImg.y = img.y;
-                pickedImg.width = img.width;
-                pickedImg.height = img.height;
+        while(i < pickedImgs.length){
+            if(pickedImgs[i].url == img.src){
+                pickedImgs[i].x = img.x;
+                pickedImgs[i].y = img.y;
+                pickedImgs[i].width = img.width;
+                pickedImgs[i].height = img.height;
+                break;
+            }
+            i++;
         }
-        this.setState({pickedImg: pickedImg});
-        callback(pickedImg);
-        console.log("pickedImg after: ", this.state.pickedImg);
+        this.setState({pickedImgs: pickedImgs});
+        callback(pickedImgs[i]);
+        console.log("pickedImgs after: ", this.state.pickedImgs);
     }
 
     render(){
         return (
-            <CreateDeck onCrop={this.onCrop}
+            <CreateDeck onImgUpload={this.onImgUpload}
+                        onCrop={this.onCrop}
                         onImgDelete={this.onImgDelete}
-                        pickedImg={this.state.pickedImg}
+                        pickedImgs={this.state.pickedImgs}
                         modalIsOpen = {this.state.modalIsOpen}
                         closeModal={this.closeModal}
                         openModal={this.openModal}
                         onSubmit={this.onSubmit}
                         onImgPick={this.onImgPick}
-                        onImgUpload={this.onImgUpload}
+                        maxPickedImgs={1}
                         formName={FORM_NAME}
                         {...this.props}
                         />
@@ -115,14 +155,8 @@ function validate({name, description, lang, img}){
 
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ createUserDeck, successAlert, proxyImgFromUrl, proxyImgFromData}, dispatch);
-}
-
-function mapStateToProps(state){
-    return {
-        imageReady: state.imageReady
-    }
+  return bindActionCreators({ createUserDeck, successAlert, infoAlert, showLoading, hideLoading}, dispatch);
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({validate, form:FORM_NAME, initialValues: { lang: "" }})(CreateUserDeckContainer));
+export default connect(null, mapDispatchToProps)(reduxForm({validate, form:FORM_NAME, initialValues: { lang: "" }})(CreateUserDeckContainer));

@@ -71,6 +71,7 @@ class Signout extends Component{
 }
 
 function mapStateToProps(state){
+    console.log("user props: ", state);
     if(!state.user)
         return {username:"Anonymus"}
     var name = getFirstName(state.user.name);

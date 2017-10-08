@@ -9,7 +9,7 @@ export function userDecksReducer(state={}, action){
                                 const parentId = deckPathAdapter.getLastIdFromPath(action.path); 
                                 return userDeckAdapter.insertDecks(state, newDecks, parentId);
         case CREATE_USER_DECK:  const newDeck = action.payload.deck;
-                                return userDeckAdapter.insertDecks(state, [newDeck], action.parentId);
+                                return userDeckAdapter.insertNewDeck(state, newDeck, action.parentId);
         case DELETE_USER_DECK:  return userDeckAdapter.deleteDeck(state, action.deckId);
                                
     }
