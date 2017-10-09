@@ -15,8 +15,6 @@ import {reset} from 'redux-form';
 import AddImage from "./addImage.jsx";
 import _ from "lodash";
 
-const FORM_NAME = "userdeckForm";
-
 function langOptions(){
         return [{value:"", label:"Choose a language for the deck"},
                 {label: "English", value:"en"},

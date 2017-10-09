@@ -32,7 +32,7 @@ class TextInput extends Component{
   var type = this.state.type;
   var component;
   switch (fieldType) {
-    case "input": component = <input {...field.input} type={type} placeholder={field.placeholder} className="form-control"/>
+    case "input": component = <input {...field.input} value={this.props.value} onChange={this.props.onChange} type={type} placeholder={field.placeholder} className="form-control"/>
                   break;
     case "select": component = (<select {...field.input} className="form-control">
                                 {this.state.options.map(this.renderOption)}
@@ -56,6 +56,7 @@ class TextInput extends Component{
   render(){
         var props = this.state;
         let wrapperClass = 'form-group';
+        console.log("render text field value: ", this.props.value);
         return (
           <div style={props.style} className={wrapperClass}>
             {props.label && <label htmlFor={props.name}>{props.label}</label>}
