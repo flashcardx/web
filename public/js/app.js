@@ -105883,9 +105883,21 @@ var _addImage = __webpack_require__(462);
 
 var _addImage2 = _interopRequireDefault(_addImage);
 
+var _addDrawing = __webpack_require__(1134);
+
+var _addDrawing2 = _interopRequireDefault(_addDrawing);
+
+var _addAudio = __webpack_require__(1135);
+
+var _addAudio2 = _interopRequireDefault(_addAudio);
+
 var _lodash = __webpack_require__(24);
 
 var _lodash2 = _interopRequireDefault(_lodash);
+
+var _Toggle = __webpack_require__(1131);
+
+var _Toggle2 = _interopRequireDefault(_Toggle);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -105896,6 +105908,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var FORM_NAME = "usercardForm";
+
+
+var style = {
+    toggle: {
+        marginBottom: 16
+    }
+};
 
 var CreateCard = function (_Component) {
     _inherits(CreateCard, _Component);
@@ -105979,12 +105998,42 @@ var CreateCard = function (_Component) {
             );
         }
     }, {
+        key: 'renderTextArea',
+        value: function renderTextArea(_ref2) {
+            var input = _ref2.input,
+                placeholder = _ref2.placeholder,
+                type = _ref2.type,
+                name = _ref2.name,
+                value = _ref2.value,
+                onChange = _ref2.onChange,
+                className = _ref2.className,
+                _ref2$meta = _ref2.meta,
+                touched = _ref2$meta.touched,
+                error = _ref2$meta.error,
+                warning = _ref2$meta.warning;
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement('textarea', _extends({}, input, { className: className, name: name, value: value, onChange: onChange, placeholder: placeholder, type: type })),
+                touched && (error && _react2.default.createElement(
+                    'span',
+                    null,
+                    error
+                ) || warning && _react2.default.createElement(
+                    'span',
+                    null,
+                    warning
+                ))
+            );
+        }
+    }, {
         key: 'onSubmit',
-        value: function onSubmit(_ref2) {
-            var name = _ref2.name,
-                description = _ref2.description,
-                lang = _ref2.lang,
-                imgs = _ref2.imgs;
+        value: function onSubmit(_ref3) {
+            var name = _ref3.name,
+                description = _ref3.description,
+                lang = _ref3.lang,
+                imgs = _ref3.imgs;
 
             this.closeModal();
             this.props.successAlert("Card created succesfully !");
@@ -105996,65 +106045,96 @@ var CreateCard = function (_Component) {
 
             return _react2.default.createElement(
                 'div',
-                null,
+                { className: 'container' },
                 _react2.default.createElement(
-                    'form',
-                    { onSubmit: handleSubmit(this.onSubmit) },
+                    'div',
+                    { className: 'row' },
                     _react2.default.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        'form',
+                        { className: 'col', onSubmit: handleSubmit(this.onSubmit) },
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-sm-12' },
-                            _react2.default.createElement(_reduxForm.Field, {
-                                component: this.renderField,
-                                onChange: this.onChangeName,
-                                name: 'name',
-                                type: 'text',
-                                placeholder: 'Cards\'s name'
-                            })
+                            { className: 'form-group' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-sm-12' },
+                                _react2.default.createElement(_reduxForm.Field, {
+                                    component: this.renderField,
+                                    onChange: this.onChangeName,
+                                    name: 'name',
+                                    type: 'text',
+                                    className: 'form-control',
+                                    placeholder: 'Cards\'s name'
+                                })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-sm-12' },
+                                _react2.default.createElement(_reduxForm.Field, {
+                                    className: 'form-control',
+                                    component: this.renderTextArea,
+                                    name: 'description',
+                                    type: 'text',
+                                    placeholder: 'Description, anything that helps you remember the concept'
+                                })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'row form-group' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-4 col-sm-4' },
+                                _react2.default.createElement(_addImage2.default, { searchQuery: this.state.searchQuery,
+                                    onCrop: this.onCrop,
+                                    onDelete: this.onImgDelete,
+                                    pickedImgs: this.props.pickedImages,
+                                    maxPickedImgs: 3,
+                                    disabled: this.props.bigLoading,
+                                    onImgPick: this.props.onImgPick,
+                                    onImgUpload: this.props.onImgUpload,
+                                    titleModal: 'Add image for card',
+                                    label: 'Add image' })
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-4 col-sm-4' },
+                                _react2.default.createElement(_addDrawing2.default, { label: 'Add drawing' })
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-4 col-sm-4' },
+                                _react2.default.createElement(_addAudio2.default, { label: 'Add audio' })
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'col-sm-offset-2 col-sm-12' },
+                                _react2.default.createElement(_RaisedButton2.default, { labelColor: '#ffffff', disabled: this.props.bigLoading, type: 'submit', backgroundColor: '#5cb85c', label: 'Create' })
+                            )
                         )
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'row' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col' },
+                        'Autocomplete:',
+                        _react2.default.createElement(_Toggle2.default, null)
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'form-group' },
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'col-sm-12' },
-                            _react2.default.createElement(_reduxForm.Field, {
-                                component: this.renderField,
-                                name: 'description',
-                                type: 'text',
-                                placeholder: 'Description, anything that helps you remember the concept'
-                            })
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'form-group' },
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'col-sm-12' },
-                            _react2.default.createElement(_addImage2.default, { searchQuery: this.state.searchQuery,
-                                onCrop: this.onCrop,
-                                onDelete: this.onImgDelete,
-                                pickedImgs: this.props.pickedImages,
-                                maxPickedImgs: 3,
-                                disabled: this.props.bigLoading,
-                                onImgPick: this.props.onImgPick,
-                                onImgUpload: this.props.onImgUpload,
-                                titleModal: 'Add image for card',
-                                label: 'Add image' })
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'form-group' },
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'col-sm-offset-2 col-sm-12' },
-                            _react2.default.createElement(_RaisedButton2.default, { labelColor: '#ffffff', disabled: this.props.bigLoading, type: 'submit', backgroundColor: '#5cb85c', label: 'Create' })
-                        )
+                        { className: 'col' },
+                        _react2.default.createElement(_RaisedButton2.default, { labelColor: '#ffffff', disabled: this.props.bigLoading, type: 'submit', backgroundColor: '#4286f4', label: 'Open translator' })
                     )
                 )
             );
@@ -106086,11 +106166,11 @@ CreateCard.PropTypes = {
     parentId: _propTypes2.default.string.isRequired
 };
 
-function validate(_ref3) {
-    var name = _ref3.name,
-        description = _ref3.description,
-        lang = _ref3.lang,
-        imgs = _ref3.imgs;
+function validate(_ref4) {
+    var name = _ref4.name,
+        description = _ref4.description,
+        lang = _ref4.lang,
+        imgs = _ref4.imgs;
 
     var errors = {};
     console.log("ERRORS EVERYWHERE");
@@ -121236,6 +121316,1046 @@ LinearProgress.propTypes = undefined !== "production" ? {
   value: _propTypes2.default.number
 } : {};
 exports.default = LinearProgress;
+
+/***/ }),
+/* 1131 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _Toggle = __webpack_require__(1132);
+
+var _Toggle2 = _interopRequireDefault(_Toggle);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _Toggle2.default;
+
+/***/ }),
+/* 1132 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends2 = __webpack_require__(12);
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _objectWithoutProperties2 = __webpack_require__(11);
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+var _getPrototypeOf = __webpack_require__(8);
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = __webpack_require__(3);
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = __webpack_require__(6);
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = __webpack_require__(4);
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = __webpack_require__(5);
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _simpleAssign = __webpack_require__(10);
+
+var _simpleAssign2 = _interopRequireDefault(_simpleAssign);
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _transitions = __webpack_require__(23);
+
+var _transitions2 = _interopRequireDefault(_transitions);
+
+var _Paper = __webpack_require__(74);
+
+var _Paper2 = _interopRequireDefault(_Paper);
+
+var _EnhancedSwitch = __webpack_require__(1133);
+
+var _EnhancedSwitch2 = _interopRequireDefault(_EnhancedSwitch);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function getStyles(props, context, state) {
+  var disabled = props.disabled,
+      elementStyle = props.elementStyle,
+      trackSwitchedStyle = props.trackSwitchedStyle,
+      thumbSwitchedStyle = props.thumbSwitchedStyle,
+      trackStyle = props.trackStyle,
+      thumbStyle = props.thumbStyle,
+      iconStyle = props.iconStyle,
+      rippleStyle = props.rippleStyle,
+      labelStyle = props.labelStyle;
+  var _context$muiTheme = context.muiTheme,
+      baseTheme = _context$muiTheme.baseTheme,
+      toggle = _context$muiTheme.toggle;
+
+
+  var toggleSize = 20;
+  var toggleTrackWidth = 36;
+  var styles = {
+    icon: {
+      width: 36,
+      padding: '4px 0px 6px 2px'
+    },
+    ripple: {
+      top: -10,
+      left: -10,
+      color: state.switched ? toggle.thumbOnColor : baseTheme.palette.textColor
+    },
+    toggleElement: {
+      width: toggleTrackWidth
+    },
+    track: {
+      transition: _transitions2.default.easeOut(),
+      width: '100%',
+      height: 14,
+      borderRadius: 30,
+      backgroundColor: toggle.trackOffColor
+    },
+    thumb: {
+      transition: _transitions2.default.easeOut(),
+      position: 'absolute',
+      top: 1,
+      left: 0,
+      width: toggleSize,
+      height: toggleSize,
+      lineHeight: '24px',
+      borderRadius: '50%',
+      backgroundColor: toggle.thumbOffColor
+    },
+    trackWhenSwitched: {
+      backgroundColor: toggle.trackOnColor
+    },
+    thumbWhenSwitched: {
+      backgroundColor: toggle.thumbOnColor,
+      left: '100%'
+    },
+    trackWhenDisabled: {
+      backgroundColor: toggle.trackDisabledColor
+    },
+    thumbWhenDisabled: {
+      backgroundColor: toggle.thumbDisabledColor
+    },
+    label: {
+      color: disabled ? toggle.labelDisabledColor : toggle.labelColor,
+      width: 'calc(100% - ' + (toggleTrackWidth + 10) + 'px)'
+    }
+  };
+
+  (0, _simpleAssign2.default)(styles.track, trackStyle, state.switched && styles.trackWhenSwitched, state.switched && trackSwitchedStyle, disabled && styles.trackWhenDisabled);
+
+  (0, _simpleAssign2.default)(styles.thumb, thumbStyle, state.switched && styles.thumbWhenSwitched, state.switched && thumbSwitchedStyle, disabled && styles.thumbWhenDisabled);
+
+  if (state.switched) {
+    styles.thumb.marginLeft = 0 - styles.thumb.width;
+  }
+
+  (0, _simpleAssign2.default)(styles.icon, iconStyle);
+
+  (0, _simpleAssign2.default)(styles.ripple, rippleStyle);
+
+  (0, _simpleAssign2.default)(styles.label, labelStyle);
+
+  (0, _simpleAssign2.default)(styles.toggleElement, elementStyle);
+
+  return styles;
+}
+
+var Toggle = function (_Component) {
+  (0, _inherits3.default)(Toggle, _Component);
+
+  function Toggle() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    (0, _classCallCheck3.default)(this, Toggle);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Toggle.__proto__ || (0, _getPrototypeOf2.default)(Toggle)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      switched: false
+    }, _this.handleStateChange = function (newSwitched) {
+      _this.setState({
+        switched: newSwitched
+      });
+    }, _this.handleToggle = function (event, isInputChecked) {
+      if (_this.props.onToggle) {
+        _this.props.onToggle(event, isInputChecked);
+      }
+    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
+  }
+
+  (0, _createClass3.default)(Toggle, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      var _props = this.props,
+          toggled = _props.toggled,
+          defaultToggled = _props.defaultToggled,
+          valueLink = _props.valueLink;
+
+
+      if (toggled || defaultToggled || valueLink && valueLink.value) {
+        this.setState({
+          switched: true
+        });
+      }
+    }
+  }, {
+    key: 'isToggled',
+    value: function isToggled() {
+      return this.refs.enhancedSwitch.isSwitched();
+    }
+  }, {
+    key: 'setToggled',
+    value: function setToggled(newToggledValue) {
+      this.refs.enhancedSwitch.setSwitched(newToggledValue);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props2 = this.props,
+          defaultToggled = _props2.defaultToggled,
+          elementStyle = _props2.elementStyle,
+          onToggle = _props2.onToggle,
+          trackSwitchedStyle = _props2.trackSwitchedStyle,
+          thumbSwitchedStyle = _props2.thumbSwitchedStyle,
+          toggled = _props2.toggled,
+          other = (0, _objectWithoutProperties3.default)(_props2, ['defaultToggled', 'elementStyle', 'onToggle', 'trackSwitchedStyle', 'thumbSwitchedStyle', 'toggled']);
+      var prepareStyles = this.context.muiTheme.prepareStyles;
+
+      var styles = getStyles(this.props, this.context, this.state);
+
+      var toggleElement = _react2.default.createElement(
+        'div',
+        { style: prepareStyles((0, _simpleAssign2.default)({}, styles.toggleElement)) },
+        _react2.default.createElement('div', { style: prepareStyles((0, _simpleAssign2.default)({}, styles.track)) }),
+        _react2.default.createElement(_Paper2.default, { style: styles.thumb, circle: true, zDepth: 1 })
+      );
+
+      var enhancedSwitchProps = {
+        ref: 'enhancedSwitch',
+        inputType: 'checkbox',
+        switchElement: toggleElement,
+        rippleStyle: styles.ripple,
+        rippleColor: styles.ripple.color,
+        iconStyle: styles.icon,
+        trackStyle: styles.track,
+        thumbStyle: styles.thumb,
+        labelStyle: styles.label,
+        switched: this.state.switched,
+        onSwitch: this.handleToggle,
+        onParentShouldUpdate: this.handleStateChange,
+        labelPosition: this.props.labelPosition
+      };
+
+      if (this.props.hasOwnProperty('toggled')) {
+        enhancedSwitchProps.checked = toggled;
+      } else if (this.props.hasOwnProperty('defaultToggled')) {
+        enhancedSwitchProps.defaultChecked = defaultToggled;
+      }
+
+      return _react2.default.createElement(_EnhancedSwitch2.default, (0, _extends3.default)({}, other, enhancedSwitchProps));
+    }
+  }]);
+  return Toggle;
+}(_react.Component);
+
+Toggle.defaultProps = {
+  defaultToggled: false,
+  disabled: false,
+  labelPosition: 'left'
+};
+Toggle.contextTypes = {
+  muiTheme: _propTypes2.default.object.isRequired
+};
+Toggle.propTypes = undefined !== "production" ? {
+  /**
+   * Determines whether the Toggle is initially turned on.
+   * **Warning:** This cannot be used in conjunction with `toggled`.
+   * Decide between using a controlled or uncontrolled input element and remove one of these props.
+   * More info: https://fb.me/react-controlled-components
+   */
+  defaultToggled: _propTypes2.default.bool,
+  /**
+   * Will disable the toggle if true.
+   */
+  disabled: _propTypes2.default.bool,
+  /**
+   * Overrides the inline-styles of the Toggle element.
+   */
+  elementStyle: _propTypes2.default.object,
+  /**
+   * Overrides the inline-styles of the Icon element.
+   */
+  iconStyle: _propTypes2.default.object,
+  /**
+   * Overrides the inline-styles of the input element.
+   */
+  inputStyle: _propTypes2.default.object,
+  /**
+   * Label for toggle.
+   */
+  label: _propTypes2.default.node,
+  /**
+   * Where the label will be placed next to the toggle.
+   */
+  labelPosition: _propTypes2.default.oneOf(['left', 'right']),
+  /**
+   * Overrides the inline-styles of the Toggle element label.
+   */
+  labelStyle: _propTypes2.default.object,
+  /**
+   * Callback function that is fired when the toggle switch is toggled.
+   *
+   * @param {object} event Change event targeting the toggle.
+   * @param {bool} isInputChecked The new value of the toggle.
+   */
+  onToggle: _propTypes2.default.func,
+  /**
+   * Override style of ripple.
+   */
+  rippleStyle: _propTypes2.default.object,
+  /**
+   * Override the inline-styles of the root element.
+   */
+  style: _propTypes2.default.object,
+  /**
+   * Override style for thumb.
+   */
+  thumbStyle: _propTypes2.default.object,
+  /**
+  * Override the inline styles for thumb when the toggle switch is toggled on.
+  */
+  thumbSwitchedStyle: _propTypes2.default.object,
+  /**
+   * Toggled if set to true.
+   */
+  toggled: _propTypes2.default.bool,
+  /**
+   * Override style for track.
+   */
+  trackStyle: _propTypes2.default.object,
+  /**
+  * Override the inline styles for track when the toggle switch is toggled on.
+  */
+  trackSwitchedStyle: _propTypes2.default.object,
+  /**
+   * ValueLink prop for when using controlled toggle.
+   */
+  valueLink: _propTypes2.default.object
+} : {};
+exports.default = Toggle;
+
+/***/ }),
+/* 1133 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends2 = __webpack_require__(12);
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _objectWithoutProperties2 = __webpack_require__(11);
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+var _getPrototypeOf = __webpack_require__(8);
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = __webpack_require__(3);
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = __webpack_require__(6);
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = __webpack_require__(4);
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = __webpack_require__(5);
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _simpleAssign = __webpack_require__(10);
+
+var _simpleAssign2 = _interopRequireDefault(_simpleAssign);
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reactEventListener = __webpack_require__(300);
+
+var _reactEventListener2 = _interopRequireDefault(_reactEventListener);
+
+var _keycode = __webpack_require__(179);
+
+var _keycode2 = _interopRequireDefault(_keycode);
+
+var _transitions = __webpack_require__(23);
+
+var _transitions2 = _interopRequireDefault(_transitions);
+
+var _FocusRipple = __webpack_require__(705);
+
+var _FocusRipple2 = _interopRequireDefault(_FocusRipple);
+
+var _TouchRipple = __webpack_require__(710);
+
+var _TouchRipple2 = _interopRequireDefault(_TouchRipple);
+
+var _Paper = __webpack_require__(74);
+
+var _Paper2 = _interopRequireDefault(_Paper);
+
+var _warning = __webpack_require__(17);
+
+var _warning2 = _interopRequireDefault(_warning);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function getStyles(props, context) {
+  var baseTheme = context.muiTheme.baseTheme;
+
+
+  return {
+    root: {
+      cursor: props.disabled ? 'not-allowed' : 'pointer',
+      position: 'relative',
+      overflow: 'visible',
+      display: 'table',
+      height: 'auto',
+      width: '100%'
+    },
+    input: {
+      position: 'absolute',
+      cursor: 'inherit',
+      pointerEvents: 'all',
+      opacity: 0,
+      width: '100%',
+      height: '100%',
+      zIndex: 2,
+      left: 0,
+      boxSizing: 'border-box',
+      padding: 0,
+      margin: 0
+    },
+    controls: {
+      display: 'flex',
+      width: '100%',
+      height: '100%'
+    },
+    label: {
+      float: 'left',
+      position: 'relative',
+      display: 'block',
+      width: 'calc(100% - 60px)',
+      lineHeight: '24px',
+      color: baseTheme.palette.textColor,
+      fontFamily: baseTheme.fontFamily
+    },
+    wrap: {
+      transition: _transitions2.default.easeOut(),
+      float: 'left',
+      position: 'relative',
+      display: 'block',
+      flexShrink: 0,
+      width: 60 - baseTheme.spacing.desktopGutterLess,
+      marginRight: props.labelPosition === 'right' ? baseTheme.spacing.desktopGutterLess : 0,
+      marginLeft: props.labelPosition === 'left' ? baseTheme.spacing.desktopGutterLess : 0
+    },
+    ripple: {
+      color: props.rippleColor || baseTheme.palette.primary1Color,
+      height: '200%',
+      width: '200%',
+      top: -12,
+      left: -12
+    }
+  };
+}
+
+var EnhancedSwitch = function (_Component) {
+  (0, _inherits3.default)(EnhancedSwitch, _Component);
+
+  function EnhancedSwitch() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    (0, _classCallCheck3.default)(this, EnhancedSwitch);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = EnhancedSwitch.__proto__ || (0, _getPrototypeOf2.default)(EnhancedSwitch)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      isKeyboardFocused: false
+    }, _this.handleChange = function (event) {
+      _this.tabPressed = false;
+      _this.setState({
+        isKeyboardFocused: false
+      });
+
+      var isInputChecked = _this.refs.checkbox.checked;
+
+      if (!_this.props.hasOwnProperty('checked') && _this.props.onParentShouldUpdate) {
+        _this.props.onParentShouldUpdate(isInputChecked);
+      }
+
+      if (_this.props.onSwitch) {
+        _this.props.onSwitch(event, isInputChecked);
+      }
+    }, _this.handleKeyDown = function (event) {
+      var code = (0, _keycode2.default)(event);
+
+      if (code === 'tab') {
+        _this.tabPressed = true;
+      }
+      if (_this.state.isKeyboardFocused && code === 'space') {
+        _this.handleChange(event);
+      }
+    }, _this.handleKeyUp = function (event) {
+      if (_this.state.isKeyboardFocused && (0, _keycode2.default)(event) === 'space') {
+        _this.handleChange(event);
+      }
+    }, _this.handleMouseDown = function (event) {
+      // only listen to left clicks
+      if (event.button === 0) {
+        _this.refs.touchRipple.start(event);
+      }
+    }, _this.handleMouseUp = function () {
+      _this.refs.touchRipple.end();
+    }, _this.handleMouseLeave = function () {
+      _this.refs.touchRipple.end();
+    }, _this.handleTouchStart = function (event) {
+      _this.refs.touchRipple.start(event);
+    }, _this.handleTouchEnd = function () {
+      _this.refs.touchRipple.end();
+    }, _this.handleBlur = function (event) {
+      _this.setState({
+        isKeyboardFocused: false
+      });
+
+      if (_this.props.onBlur) {
+        _this.props.onBlur(event);
+      }
+    }, _this.handleFocus = function (event) {
+      // setTimeout is needed becuase the focus event fires first
+      // Wait so that we can capture if this was a keyboard focus
+      // or touch focus
+      setTimeout(function () {
+        if (_this.tabPressed) {
+          _this.setState({
+            isKeyboardFocused: true
+          });
+        }
+      }, 150);
+
+      if (_this.props.onFocus) {
+        _this.props.onFocus(event);
+      }
+    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
+  }
+
+  (0, _createClass3.default)(EnhancedSwitch, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.componentWillReceiveProps(this.props);
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var inputNode = this.refs.checkbox;
+      if ((!this.props.switched || inputNode.checked !== this.props.switched) && this.props.onParentShouldUpdate) {
+        this.props.onParentShouldUpdate(inputNode.checked);
+      }
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      var hasCheckedProp = nextProps.hasOwnProperty('checked');
+      var hasNewDefaultProp = nextProps.hasOwnProperty('defaultChecked') && nextProps.defaultChecked !== this.props.defaultChecked;
+
+      if (hasCheckedProp || hasNewDefaultProp) {
+        var switched = nextProps.checked || nextProps.defaultChecked || false;
+
+        this.setState({
+          switched: switched
+        });
+
+        if (this.props.onParentShouldUpdate && switched !== this.props.switched) {
+          this.props.onParentShouldUpdate(switched);
+        }
+      }
+    }
+  }, {
+    key: 'isSwitched',
+    value: function isSwitched() {
+      return this.refs.checkbox.checked;
+    }
+
+    // no callback here because there is no event
+
+  }, {
+    key: 'setSwitched',
+    value: function setSwitched(newSwitchedValue) {
+      if (!this.props.hasOwnProperty('checked') || this.props.checked === false) {
+        if (this.props.onParentShouldUpdate) {
+          this.props.onParentShouldUpdate(newSwitchedValue);
+        }
+        this.refs.checkbox.checked = newSwitchedValue;
+      } else {
+        undefined !== "production" ? (0, _warning2.default)(false, 'Material-UI: Cannot call set method while checked is defined as a property.') : void 0;
+      }
+    }
+  }, {
+    key: 'getValue',
+    value: function getValue() {
+      return this.refs.checkbox.value;
+    }
+
+    // Checkbox inputs only use SPACE to change their state. Using ENTER will
+    // update the ui but not the input.
+
+
+    /**
+     * Because both the ripples and the checkbox input cannot share pointer
+     * events, the checkbox input takes control of pointer events and calls
+     * ripple animations manually.
+     */
+
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          name = _props.name,
+          value = _props.value,
+          checked = _props.checked,
+          iconStyle = _props.iconStyle,
+          inputStyle = _props.inputStyle,
+          inputType = _props.inputType,
+          label = _props.label,
+          labelStyle = _props.labelStyle,
+          labelPosition = _props.labelPosition,
+          onSwitch = _props.onSwitch,
+          onBlur = _props.onBlur,
+          onFocus = _props.onFocus,
+          onMouseUp = _props.onMouseUp,
+          onMouseDown = _props.onMouseDown,
+          onMouseLeave = _props.onMouseLeave,
+          onTouchStart = _props.onTouchStart,
+          onTouchEnd = _props.onTouchEnd,
+          onParentShouldUpdate = _props.onParentShouldUpdate,
+          disabled = _props.disabled,
+          disableTouchRipple = _props.disableTouchRipple,
+          disableFocusRipple = _props.disableFocusRipple,
+          className = _props.className,
+          rippleColor = _props.rippleColor,
+          rippleStyle = _props.rippleStyle,
+          style = _props.style,
+          switched = _props.switched,
+          switchElement = _props.switchElement,
+          thumbStyle = _props.thumbStyle,
+          trackStyle = _props.trackStyle,
+          other = (0, _objectWithoutProperties3.default)(_props, ['name', 'value', 'checked', 'iconStyle', 'inputStyle', 'inputType', 'label', 'labelStyle', 'labelPosition', 'onSwitch', 'onBlur', 'onFocus', 'onMouseUp', 'onMouseDown', 'onMouseLeave', 'onTouchStart', 'onTouchEnd', 'onParentShouldUpdate', 'disabled', 'disableTouchRipple', 'disableFocusRipple', 'className', 'rippleColor', 'rippleStyle', 'style', 'switched', 'switchElement', 'thumbStyle', 'trackStyle']);
+      var prepareStyles = this.context.muiTheme.prepareStyles;
+
+      var styles = getStyles(this.props, this.context);
+      var wrapStyles = (0, _simpleAssign2.default)(styles.wrap, iconStyle);
+      var mergedRippleStyle = (0, _simpleAssign2.default)(styles.ripple, rippleStyle);
+
+      if (thumbStyle) {
+        wrapStyles.marginLeft /= 2;
+        wrapStyles.marginRight /= 2;
+      }
+
+      var labelElement = label && _react2.default.createElement(
+        'label',
+        { style: prepareStyles((0, _simpleAssign2.default)(styles.label, labelStyle)) },
+        label
+      );
+
+      var showTouchRipple = !disabled && !disableTouchRipple;
+      var showFocusRipple = !disabled && !disableFocusRipple;
+
+      var touchRipple = _react2.default.createElement(_TouchRipple2.default, {
+        ref: 'touchRipple',
+        key: 'touchRipple',
+        style: mergedRippleStyle,
+        color: mergedRippleStyle.color,
+        muiTheme: this.context.muiTheme,
+        centerRipple: true
+      });
+
+      var focusRipple = _react2.default.createElement(_FocusRipple2.default, {
+        key: 'focusRipple',
+        innerStyle: mergedRippleStyle,
+        color: mergedRippleStyle.color,
+        muiTheme: this.context.muiTheme,
+        show: this.state.isKeyboardFocused
+      });
+
+      var ripples = [showTouchRipple ? touchRipple : null, showFocusRipple ? focusRipple : null];
+
+      var inputElement = _react2.default.createElement('input', (0, _extends3.default)({}, other, {
+        ref: 'checkbox',
+        type: inputType,
+        style: prepareStyles((0, _simpleAssign2.default)(styles.input, inputStyle)),
+        name: name,
+        value: value,
+        checked: this.state.switched,
+        disabled: disabled,
+        onBlur: this.handleBlur,
+        onFocus: this.handleFocus,
+        onChange: this.handleChange,
+        onMouseUp: showTouchRipple && this.handleMouseUp,
+        onMouseDown: showTouchRipple && this.handleMouseDown,
+        onMouseLeave: showTouchRipple && this.handleMouseLeave,
+        onTouchStart: showTouchRipple && this.handleTouchStart,
+        onTouchEnd: showTouchRipple && this.handleTouchEnd
+      }));
+
+      // If toggle component (indicated by whether the style includes thumb) manually lay out
+      // elements in order to nest ripple elements
+      var switchOrThumbElement = !thumbStyle ? _react2.default.createElement(
+        'div',
+        { style: prepareStyles(wrapStyles) },
+        switchElement,
+        ripples
+      ) : _react2.default.createElement(
+        'div',
+        { style: prepareStyles(wrapStyles) },
+        _react2.default.createElement('div', { style: prepareStyles((0, _simpleAssign2.default)({}, trackStyle)) }),
+        _react2.default.createElement(
+          _Paper2.default,
+          { style: thumbStyle, zDepth: 1, circle: true },
+          ' ',
+          ripples,
+          ' '
+        )
+      );
+
+      var elementsInOrder = labelPosition === 'right' ? _react2.default.createElement(
+        'div',
+        { style: styles.controls },
+        switchOrThumbElement,
+        labelElement
+      ) : _react2.default.createElement(
+        'div',
+        { style: styles.controls },
+        labelElement,
+        switchOrThumbElement
+      );
+
+      return _react2.default.createElement(
+        'div',
+        { ref: 'root', className: className, style: prepareStyles((0, _simpleAssign2.default)(styles.root, style)) },
+        _react2.default.createElement(_reactEventListener2.default, {
+          target: 'window',
+          onKeyDown: this.handleKeyDown,
+          onKeyUp: this.handleKeyUp
+        }),
+        inputElement,
+        elementsInOrder
+      );
+    }
+  }]);
+  return EnhancedSwitch;
+}(_react.Component);
+
+EnhancedSwitch.contextTypes = {
+  muiTheme: _propTypes2.default.object.isRequired
+};
+EnhancedSwitch.propTypes = undefined !== "production" ? {
+  checked: _propTypes2.default.bool,
+  className: _propTypes2.default.string,
+  defaultChecked: _propTypes2.default.bool,
+  disableFocusRipple: _propTypes2.default.bool,
+  disableTouchRipple: _propTypes2.default.bool,
+  disabled: _propTypes2.default.bool,
+  iconStyle: _propTypes2.default.object,
+  inputStyle: _propTypes2.default.object,
+  inputType: _propTypes2.default.string.isRequired,
+  label: _propTypes2.default.node,
+  labelPosition: _propTypes2.default.oneOf(['left', 'right']),
+  labelStyle: _propTypes2.default.object,
+  name: _propTypes2.default.string,
+  onBlur: _propTypes2.default.func,
+  onFocus: _propTypes2.default.func,
+  onMouseDown: _propTypes2.default.func,
+  onMouseLeave: _propTypes2.default.func,
+  onMouseUp: _propTypes2.default.func,
+  onParentShouldUpdate: _propTypes2.default.func,
+  onSwitch: _propTypes2.default.func,
+  onTouchEnd: _propTypes2.default.func,
+  onTouchStart: _propTypes2.default.func,
+  rippleColor: _propTypes2.default.string,
+  rippleStyle: _propTypes2.default.object,
+  style: _propTypes2.default.object,
+  switchElement: _propTypes2.default.element.isRequired,
+  switched: _propTypes2.default.bool.isRequired,
+  thumbStyle: _propTypes2.default.object,
+  trackStyle: _propTypes2.default.object,
+  value: _propTypes2.default.any
+} : {};
+exports.default = EnhancedSwitch;
+
+/***/ }),
+/* 1134 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _lodash = __webpack_require__(24);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _radium = __webpack_require__(19);
+
+var _radium2 = _interopRequireDefault(_radium);
+
+var _reactRedux = __webpack_require__(16);
+
+var _config = __webpack_require__(26);
+
+var _config2 = _interopRequireDefault(_config);
+
+var _modal = __webpack_require__(76);
+
+var _modal2 = _interopRequireDefault(_modal);
+
+var _textField = __webpack_require__(98);
+
+var _textField2 = _interopRequireDefault(_textField);
+
+var _RaisedButton = __webpack_require__(56);
+
+var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+var _alerts = __webpack_require__(41);
+
+var _reduxForm = __webpack_require__(46);
+
+var _reactDropzone = __webpack_require__(969);
+
+var _reactDropzone2 = _interopRequireDefault(_reactDropzone);
+
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _imgPicker = __webpack_require__(970);
+
+var _imgPicker2 = _interopRequireDefault(_imgPicker);
+
+var _previewImage = __webpack_require__(972);
+
+var _previewImage2 = _interopRequireDefault(_previewImage);
+
+var _cropper = __webpack_require__(973);
+
+var _cropper2 = _interopRequireDefault(_cropper);
+
+var _image = __webpack_require__(203);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var style = {
+    marginRight: {
+        marginRight: "7px"
+    },
+    marginTop: {
+        marginTop: "20px"
+    }
+};
+
+var AddDrawing = function (_Component) {
+    _inherits(AddDrawing, _Component);
+
+    function AddDrawing() {
+        _classCallCheck(this, AddDrawing);
+
+        return _possibleConstructorReturn(this, (AddDrawing.__proto__ || Object.getPrototypeOf(AddDrawing)).apply(this, arguments));
+    }
+
+    _createClass(AddDrawing, [{
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement(_RaisedButton2.default, { labelColor: "#ffffff", disabled: this.props.disabled, backgroundColor: "#f4424b", label: this.props.label });
+        }
+    }]);
+
+    return AddDrawing;
+}(_react.Component);
+
+exports.default = (0, _reactRedux.connect)(null, { infoAlert: _alerts.infoAlert, searchImg: _image.searchImg, searchGif: _image.searchGif, resetSearchImages: _image.resetSearchImages })((0, _radium2.default)(AddDrawing));
+
+/***/ }),
+/* 1135 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _lodash = __webpack_require__(24);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _radium = __webpack_require__(19);
+
+var _radium2 = _interopRequireDefault(_radium);
+
+var _reactRedux = __webpack_require__(16);
+
+var _config = __webpack_require__(26);
+
+var _config2 = _interopRequireDefault(_config);
+
+var _modal = __webpack_require__(76);
+
+var _modal2 = _interopRequireDefault(_modal);
+
+var _textField = __webpack_require__(98);
+
+var _textField2 = _interopRequireDefault(_textField);
+
+var _RaisedButton = __webpack_require__(56);
+
+var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+var _alerts = __webpack_require__(41);
+
+var _reduxForm = __webpack_require__(46);
+
+var _reactDropzone = __webpack_require__(969);
+
+var _reactDropzone2 = _interopRequireDefault(_reactDropzone);
+
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _imgPicker = __webpack_require__(970);
+
+var _imgPicker2 = _interopRequireDefault(_imgPicker);
+
+var _previewImage = __webpack_require__(972);
+
+var _previewImage2 = _interopRequireDefault(_previewImage);
+
+var _cropper = __webpack_require__(973);
+
+var _cropper2 = _interopRequireDefault(_cropper);
+
+var _image = __webpack_require__(203);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var style = {
+    marginRight: {
+        marginRight: "7px"
+    },
+    marginTop: {
+        marginTop: "20px"
+    }
+};
+
+var AddAudio = function (_Component) {
+    _inherits(AddAudio, _Component);
+
+    function AddAudio() {
+        _classCallCheck(this, AddAudio);
+
+        return _possibleConstructorReturn(this, (AddAudio.__proto__ || Object.getPrototypeOf(AddAudio)).apply(this, arguments));
+    }
+
+    _createClass(AddAudio, [{
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement(_RaisedButton2.default, { labelColor: "#ffffff", disabled: this.props.disabled, backgroundColor: "#f4424b", label: this.props.label });
+        }
+    }]);
+
+    return AddAudio;
+}(_react.Component);
+
+exports.default = (0, _reactRedux.connect)(null, { infoAlert: _alerts.infoAlert, searchImg: _image.searchImg, searchGif: _image.searchGif, resetSearchImages: _image.resetSearchImages })((0, _radium2.default)(AddAudio));
 
 /***/ })
 /******/ ]);

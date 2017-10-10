@@ -13,9 +13,18 @@ import {createUserDeck} from "../actions/deck.js";
 import {successAlert, infoAlert, showLoading, hideLoading} from "../actions/alerts.js";
 import {reset} from 'redux-form';
 import AddImage from "./addImage.jsx";
+import AddDrawing from "./addDrawing.jsx";
+import AddAudio from "./addAudio.jsx";
 import _ from "lodash";
 import { Field } from 'redux-form';
 const FORM_NAME = "usercardForm";
+import Toggle from 'material-ui/Toggle';
+
+const style = {
+    toggle:{
+        marginBottom: 16
+    }
+}
 
 
 
@@ -75,6 +84,24 @@ class CreateCard extends Component{
                     </div>);
     }
 
+    renderTextArea({
+                input,
+                placeholder,
+                type,
+                name,
+                value,
+                onChange,
+                className,
+                meta: { touched, error, warning }
+                }){
+                return (<div>
+                    <textarea {...input} className={className} name={name} value={value} onChange={onChange} placeholder={placeholder} type={type} />
+                    {touched &&
+                        ((error && <span>{error}</span>) ||
+                        (warning && <span>{warning}</span>))}
+                    </div>);
+    }
+
     onSubmit({name, description, lang, imgs}){
             this.closeModal();
             this.props.successAlert("Card created succesfully !");
@@ -83,8 +110,9 @@ class CreateCard extends Component{
     renderForm(){
         const {handleSubmit} = this.props;
         return (
-            <div>
-                <form onSubmit={handleSubmit(this.onSubmit)} >
+            <div className="container">
+                <div className="row">
+                <form className="col" onSubmit={handleSubmit(this.onSubmit)} >
                                     <div className="form-group">
                                         <div className="col-sm-12">
                                             <Field
@@ -92,6 +120,7 @@ class CreateCard extends Component{
                                                 onChange={this.onChangeName} 
                                                 name="name"
                                                 type="text"
+                                                className="form-control"
                                                 placeholder="Cards's name"
                                             />
                                         </div>
@@ -99,15 +128,16 @@ class CreateCard extends Component{
                                     <div className="form-group">
                                         <div className="col-sm-12">
                                             <Field
-                                                component={this.renderField}
+                                                className="form-control"
+                                                component={this.renderTextArea}
                                                 name="description"
                                                 type="text"
                                                 placeholder="Description, anything that helps you remember the concept"
                                             />
                                         </div>
                                     </div>
-                                      <div className="form-group">
-                                        <div className="col-sm-12">
+                                      <div className="row form-group">
+                                        <div className="col-4 col-sm-4">
                                             <AddImage searchQuery={this.state.searchQuery}
                                                       onCrop={this.onCrop}
                                                       onDelete={this.onImgDelete}
@@ -119,6 +149,12 @@ class CreateCard extends Component{
                                                       titleModal="Add image for card"
                                                       label="Add image"/>
                                         </div>
+                                         <div className="col-4 col-sm-4">
+                                            <AddDrawing label="Add drawing"/>
+                                        </div>
+                                        <div className="col-4 col-sm-4">
+                                            <AddAudio label="Add audio"/>
+                                        </div>
                                     </div>
                                     <div className="form-group">
                                         <div className="col-sm-offset-2 col-sm-12">
@@ -126,6 +162,16 @@ class CreateCard extends Component{
                                         </div>
                                     </div>
                         </form>
+                </div>
+                <div className="row">
+                    <div className="col">
+                            Autocomplete:
+                            <Toggle/>
+                    </div>
+                    <div className="col">
+                            <RaisedButton labelColor="#ffffff" disabled={this.props.bigLoading} type="submit" backgroundColor="#4286f4" label="Open translator" />
+                    </div>
+                </div>
             </div>
         );
     }
