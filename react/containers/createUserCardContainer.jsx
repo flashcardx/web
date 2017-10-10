@@ -11,17 +11,12 @@ import {successAlert} from "../actions/alerts.js";
 import {proxyImgFromUrl, proxyImgFromData, deleteImageReady} from "../actions/image";
 import CreateCard from "../components/createCard.jsx";
 import _ from "lodash";
-const FORM_NAME = "usercardForm";
-
 
 class CreateUserCardContainer extends Component{
 
     constructor(props){
         super(props);
-        this.state = {modalIsOpen:false, pickedImages: [], indexImageBeingReplaced: -1};
-        this.onSubmit = this.onSubmit.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-        this.openModal = this.openModal.bind(this);
+        this.state = {pickedImages: [], indexImageBeingReplaced: -1};
         this.onImgPick = this.onImgPick.bind(this);
         this.onImgUpload = this.onImgUpload.bind(this);
         this.onImgDelete = this.onImgDelete.bind(this);
@@ -38,33 +33,8 @@ class CreateUserCardContainer extends Component{
         this.props.deleteImageReady();
     }
 
-    closeModal(){
-           console.log("close modal");
-           this.setState({modalIsOpen:false});
-           this.onImgDelete();
-           this.props.destroy();
-    }
+    
 
-    openModal(){
-        this.setState({modalIsOpen:true});
-        console.log("props: ", this.props);
-        console.log("open modal");
-        this.props.initialize();
-    }
-
-    onSubmit({name, description, lang, imgs}){
-            this.closeModal();
-            this.props.successAlert("Card created succesfully !");
-        /*
-        this.props.createUserCard(name, description, lang, imgs, this.props.parentId,()=>{
-            this.closeModal();
-            this.props.successAlert("Card created succesfully !");
-            this.props.destroy(); //resets form
-            this.props.initialize();
-            this.onImgDelete();
-        });
-        */
-    }
 
     componentWillReceiveProps(nextProps){
         if(!_.isEqual(this.props.imageReady, nextProps.imageReady) && nextProps.imageReady){
@@ -108,29 +78,14 @@ class CreateUserCardContainer extends Component{
             <CreateCard onCrop={this.onCrop}
                         onImgDelete={this.onImgDelete}
                         pickedImages={this.state.pickedImages}
-                        modalIsOpen = {this.state.modalIsOpen}
-                        closeModal={this.closeModal}
-                        openModal={this.openModal}
-                        onSubmit={this.onSubmit}
                         onImgPick={this.onImgPick}
                         onImgUpload={this.onImgUpload}
-                        formName={FORM_NAME}
                         {...this.props}
                         />
         );
     }
 
 }
-
-function validate({name, description, lang, imgs}){
-    var errors = {};
-    if(!name || name.length < 4)
-        errors.name = "Card name must be at least 4 characters long!";
-    if(!description || description.length < 5)
-        errors.description = "Card description must be at least 5 characters long!";
-    return errors;
-}
-
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ deleteImageReady, createUserCard, successAlert, proxyImgFromUrl, proxyImgFromData}, dispatch);
@@ -143,4 +98,4 @@ function mapStateToProps(state){
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({validate, form:FORM_NAME, initialValues: { lang: "" }})(CreateUserCardContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(CreateUserCardContainer);
