@@ -59,18 +59,6 @@ class CreateUserCardContainer extends Component{
     }
 
     onCrop(img, callback){
-        /*
-        var pickedImg = this.state.pickedImg;
-        var i=0;
-        if(pickedImg.url == img.src){
-                pickedImg.x = img.x;
-                pickedImg.y = img.y;
-                pickedImg.width = img.width;
-                pickedImg.height = img.height;
-        }
-        this.setState({pickedImg: pickedImg});
-        callback(pickedImg);
-        */
     }
 
     render(){

@@ -59,6 +59,9 @@ class Modal extends Component{
       />
     ];
 
+        if(this.props.titleObject)
+            actions.unshift(this.props.titleObject);
+        else
         if(this.props.confirmLabel){
             actions.unshift(      <FlatButton
                                 label={this.props.confirmLabel}
@@ -70,6 +73,7 @@ class Modal extends Component{
 
         return (
                 <Dialog
+                        {...this.props}
                         contentStyle={ style.dialogStyles }
                         title={this.state.title}
                         actions={actions}

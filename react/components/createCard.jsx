@@ -16,9 +16,9 @@ import AddImage from "./addImage.jsx";
 import AddDrawing from "./addDrawing.jsx";
 import AddAudio from "./addAudio.jsx";
 import _ from "lodash";
-import { Field } from 'redux-form';
-const FORM_NAME = "usercardForm";
 import Toggle from 'material-ui/Toggle';
+import Formsy from 'formsy-react';
+import {MyOwnInput, MyOwnTextarea} from "./util/form.jsx";
 
 const style = {
     toggle:{
@@ -40,6 +40,7 @@ class CreateCard extends Component{
         this.onSubmit = this.onSubmit.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.submitForm = this.submitForm.bind(this);
     }
     closeModal(){
            console.log("close modal");
@@ -112,24 +113,35 @@ class CreateCard extends Component{
         return (
             <div className="container">
                 <div className="row">
-                <form className="col" onSubmit={handleSubmit(this.onSubmit)} >
+                <Formsy.Form className="col" id="cardForm" onValidSubmit={this.onSubmit}>                         
                                     <div className="form-group">
                                         <div className="col-sm-12">
-                                            <Field
-                                                component={this.renderField}
-                                                onChange={this.onChangeName} 
+                                            <MyOwnInput
+                                                validationErrors={{
+                                                    minLength: "Card's name must be at least 2 characters long",
+                                                    isDefaultRequiredValue: "Please enter the card's name"
+                                                    }}
+                                                validations="minLength:2"
                                                 name="name"
+                                                required
                                                 type="text"
                                                 className="form-control"
                                                 placeholder="Cards's name"
+                                                value=""
                                             />
                                         </div>
                                     </div>
                                     <div className="form-group">
                                         <div className="col-sm-12">
-                                            <Field
+                                            <MyOwnTextarea
+                                                validationErrors={{
+                                                    minLength: "Card's description must be at least 4 characters long",
+                                                    isDefaultRequiredValue: "Please enter the card's description"
+                                                    }}
+                                                required
+                                                validations="minLength:4"
+                                                value=""
                                                 className="form-control"
-                                                component={this.renderTextArea}
                                                 name="description"
                                                 type="text"
                                                 placeholder="Description, anything that helps you remember the concept"
@@ -156,12 +168,7 @@ class CreateCard extends Component{
                                             <AddAudio label="Add audio"/>
                                         </div>
                                     </div>
-                                    <div className="form-group">
-                                        <div className="col-sm-offset-2 col-sm-12">
-                                            <RaisedButton labelColor="#ffffff" disabled={this.props.bigLoading} type="submit" backgroundColor="#5cb85c" label="Create" />
-                                        </div>
-                                    </div>
-                        </form>
+                        </Formsy.Form>
                 </div>
                 <div className="row">
                     <div className="col">
@@ -176,10 +183,24 @@ class CreateCard extends Component{
         );
     }
 
+    submitForm(e){
+        var targetNode = document.getElementById('form');
+        targetNode.submit();
+    }
+
     render(){
+        var titleObject = (
+                         <RaisedButton
+                                label="Create"
+                                primary={true}
+                                type="submit"
+                                form="cardForm"
+                                buttonStyle={{backgroundColor:"#5cb85c"}}  
+                                />
+                        );
         return (
             <div>
-                <Modal autoScroll={true} onClose={this.closeModal} modal={false} open={this.state.modalIsOpen} closeLabel="Cancel" title="Create new card">
+                <Modal titleStyle={{backgroundColor:"#5cb85c", marginBottom:"5px"}} titleObject={titleObject} autoScroll={true} onClose={this.closeModal} modal={false} open={this.state.modalIsOpen} closeLabel="Cancel" title="Create new card">
                     {this.renderForm()}
                 </Modal>
                 <RaisedButton onClick={this.openModal} labelColor="#ffffff" disabled={this.props.bigLoading} backgroundColor="#66b543" label="Create card" />
@@ -197,15 +218,6 @@ CreateCard.PropTypes = {
 };
 
 
-function validate({name, description, lang, imgs}){
-    var errors = {};
-    console.log("ERRORS EVERYWHERE");
-    if(!name || name.length < 4)
-        errors.name = "Card name must be at least 4 characters long!";
-    if(!description || description.length < 5)
-        errors.description = "Card description must be at least 5 characters long!";
-    return errors;
-}
 
+export default connect(mapStateToProps)(Radium(CreateCard));
 
-export default connect(mapStateToProps)(reduxForm({validate, form:FORM_NAME})(Radium(CreateCard)));
