@@ -25,8 +25,6 @@ import React from "react";
     }
 */
 
-
-
 export default {
         insertDecks: (state, decks, parentId)=>{
         var newState = {...state};
@@ -41,15 +39,23 @@ export default {
         decks.forEach(deck=>{
                 newState[deck._id] = deck;
                 newState[deck._id].children = [];
-                if(!parentId)
-                    newState.children.push(deck._id);
-                else{
-                    console.log("pushing children: ", deck._id);
-                    if(newState[parentId].children.indexOf(deck._id) == -1)
-                        newState[parentId].children.push(deck._id);
+                if(!parentId){
+                    if(newState.children.indexOf(deck._id) == -1)
+                        newState.children.push(deck._id);
                 }
+                else if(newState[parentId].children.indexOf(deck._id) == -1)
+                        newState[parentId].children.push(deck._id); 
             });
         return newState;
+    },
+    insertNewDeck: (state, deck, parentId)=>{
+        var newState = {};
+        if(!parentId)
+            state.children.unshift(deck._id);
+        else 
+            state[parentId].children.unshift(deck._id);
+        newState[deck._id] = deck;
+        return {...newState, ...state};
     },
     deleteDeck:(state, deckId)=>{
     // deck is not deleted fron children array, the component should
@@ -73,7 +79,6 @@ export default {
     },
     getCards: (state, parentId)=>{
         if(!parentId){
-            console.error("you must send a parentId");
             return null;
         }
     }

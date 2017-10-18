@@ -11,7 +11,6 @@ class DeckGalleryUserContainer extends Component{
     }
 
     fetchDecks(skip){
-        console.log("2");
         this.props.fetchUserDecks(skip, this.props.path);
     }
 

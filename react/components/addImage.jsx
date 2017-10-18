@@ -10,7 +10,6 @@ import {infoAlert} from "../actions/alerts.js";
 import {reduxForm } from 'redux-form';
 import Dropzone from 'react-dropzone';
 import PropTypes from "prop-types";
-import axios from "axios";
 import ImgPicker from "./imgPicker.jsx";
 import PreviewImage from "./previewImage.jsx";
 import Cropper from "./util/cropper.jsx";
@@ -89,6 +88,8 @@ class AddImage extends Component{
 
     componentWillReceiveProps(nextProps){
         this.setState({isLoading: false});
+        if(!_.isEqual(nextProps.searchQuery, this.state.searchQuery))
+            this.setState({searchQuery: nextProps.searchQuery});
     }
 
     onImgPick(img){
@@ -98,7 +99,7 @@ class AddImage extends Component{
 
     onDrop(files, rejectedFiles) {
         if(!_.isEmpty(rejectedFiles)){
-            return this.props.infoAlert("Can not upload file, remenber you can only upload images with size up to 3mb!");
+            return this.props.infoAlert("Can not upload file, remenber you can only upload images with size up to 4mb!");
         }
         this.closeModal();
         const file = files[0];
@@ -184,7 +185,7 @@ class AddImage extends Component{
 
     renderPickedImgs(){
         return (
-            <div>
+            <div style={{overflowX:"auto", margin:"5px"}}>
                 {this.props.pickedImgs.map(this.renderPickedImg)}
             </div>
         );

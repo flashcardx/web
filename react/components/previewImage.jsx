@@ -6,8 +6,8 @@ import CroppedImage from "./util/croppedImage.jsx";
 const style = {
     imgWrap:{
         position: "relative",
-        maxWidth: "150px",
         display: "inline-block",
+        margin:"5px",
         ":hover":{       
         }
     },
@@ -58,14 +58,14 @@ class PreviewImage extends Component{
     render(){
         const {img} = this.props;
         return (
-            <div>
+            <div style={{display:"inline"}}>
                 <div style={style.imgWrap} key={img.url}>
-                    <CroppedImage width="200px" height="200px" src={img.url}/>
+                    <CroppedImage width="180px" height="180px" src={img.url}/>
                     {Radium.getState(this.state, img.url, ':hover') && (
                             <span style={style.imgBtns}>
                                 <i onClick={this.props.onReload} style={style.imgBtn} className="fa fa-repeat" aria-hidden="true"></i>
                                 <i onClick={()=>this.cropImg(img)} style={style.imgBtn} className="fa fa-crop" aria-hidden="true"></i>
-                                <i onClick={this.props.onDelete} style={style.imgBtn} className="fa fa-trash" aria-hidden="true"></i>
+                                <i onClick={()=>this.props.onDelete(img.url)} style={style.imgBtn} className="fa fa-trash" aria-hidden="true"></i>
                             </span>
                     )}
                 </div>
