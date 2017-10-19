@@ -15,6 +15,7 @@ import {reset} from 'redux-form';
 import AddImage from "./addImage.jsx";
 import AddDrawing from "./addDrawing.jsx";
 import AddAudio from "./addAudio.jsx";
+import AddVideo from "./addVideo.jsx";
 import _ from "lodash";
 import Toggle from 'material-ui/Toggle';
 import Formsy from 'formsy-react';
@@ -41,11 +42,16 @@ class CreateCard extends Component{
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.submitForm = this.submitForm.bind(this);
+        this.restartForm = this.restartForm.bind(this);
     }
+
     closeModal(){
-           console.log("close modal");
            this.setState({modalIsOpen:false});
            this.onImgDelete();
+    }
+
+    restartForm(){
+        this.onImgDelete();
     }
 
     openModal(){
@@ -104,7 +110,7 @@ class CreateCard extends Component{
     }
 
     onSubmit({name, description, lang, imgs}){
-            this.closeModal();
+            this.restartForm();
             this.props.successAlert("Card created succesfully !");
     }
 
@@ -149,7 +155,7 @@ class CreateCard extends Component{
                                         </div>
                                     </div>
                                       <div className="row form-group">
-                                        <div className="col-4 col-sm-4">
+                                        <div className="col-3 col-sm-3">
                                             <AddImage searchQuery={this.state.searchQuery}
                                                       onCrop={this.onCrop}
                                                       onDelete={this.onImgDelete}
@@ -161,11 +167,14 @@ class CreateCard extends Component{
                                                       titleModal="Add image for card"
                                                       label="Add image"/>
                                         </div>
-                                         <div className="col-4 col-sm-4">
+                                         <div className="col-3 col-sm-3">
                                             <AddDrawing label="Add drawing"/>
                                         </div>
-                                        <div className="col-4 col-sm-4">
+                                        <div className="col-3 col-sm-3">
                                             <AddAudio label="Add audio"/>
+                                        </div>
+                                        <div className="col-3 col-sm-3">
+                                            <AddAudio label="Add video"/>
                                         </div>
                                     </div>
                         </Formsy.Form>

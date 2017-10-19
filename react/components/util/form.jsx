@@ -1,6 +1,7 @@
 import React from "react";
 import Formsy from 'formsy-react';
 import Radium from "radium";
+import TextEditor from "./textEditor.jsx";
 
 const style = {
     error:{
@@ -86,7 +87,7 @@ export const MyOwnTextarea = Radium(React.createClass({
             apropiateStyle = errorMessage = null;
       return (
           <div>
-            <textarea 
+            <TextEditor 
                    placeholder={this.props.placeholder}
                    className={this.props.className}
                    onFocus={()=>{this.setState({focus:true})}}
