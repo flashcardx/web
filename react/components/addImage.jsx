@@ -61,7 +61,7 @@ class AddImage extends Component{
                     <div className="col-4">
                         <RaisedButton  onClick={() => { this.dropzoneRef.open() }}
                                        labelColor="#ffffff"
-                                       disabled={this.props.bigLoading}
+                                       disabled={this.props.disabled}
                                        backgroundColor="#4286f4"
                                        label="Upload" />
                     </div>
@@ -201,11 +201,12 @@ class AddImage extends Component{
             body.push(<div key={1}>{this.renderButton()}</div>);
         }
         body.push(<div key={2}>{this.renderPickedImgs()}</div>);
-        return body;
+        this.props.updateContainer(body);
     }
 
 
     render(){
+            this.renderBottom();
         return (
             <div>
                     <Cropper onCrop={this.props.onCrop} 
@@ -215,7 +216,6 @@ class AddImage extends Component{
                     <Modal autoScroll={true} onClose={this.closeModal} modal={false} open={this.state.openModal} closeLabel="Cancel" title={this.renderTitle()}>
                         {this.renderPicker()}
                     </Modal>
-                        {this.renderBottom()}
             </div>
         );
     }

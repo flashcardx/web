@@ -24,13 +24,11 @@ class CreateUserDeckContainer extends Component{
         this.openModal = this.openModal.bind(this);
         this.onImgPick = this.onImgPick.bind(this);
         this.onImgUpload = this.onImgUpload.bind(this);
-        this.onImgDelete = this.onImgDelete.bind(this);
         this.onCrop = this.onCrop.bind(this);
     }
 
     onImgDelete(){
         this.setState({pickedImg:null});
-        //this.props.deleteImageReady();
     }
 
     closeModal(){
@@ -78,7 +76,6 @@ class CreateUserDeckContainer extends Component{
         }
         this.setState({pickedImg: pickedImg});
         callback(pickedImg);
-        console.log("pickedImg after: ", this.state.pickedImg);
     }
 
     render(){

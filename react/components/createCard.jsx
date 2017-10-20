@@ -33,16 +33,18 @@ class CreateCard extends Component{
 
     constructor(props){
         super(props);
-        this.state = {searchQuery: "", modalIsOpen:false}
+        this.state = {modalIsOpen:false, form:{name:"", description:""}, multimediaBox: null}
         this.renderForm = this.renderForm.bind(this);
         this.onImgDelete = this.onImgDelete.bind(this);
         this.onCrop = this.onCrop.bind(this);
-        this.onChangeName = this.onChangeName.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.submitForm = this.submitForm.bind(this);
         this.restartForm = this.restartForm.bind(this);
+        this.onChangeFormName = this.onChangeFormName.bind(this);
+        this.onChangeFormDescription = this.onChangeFormDescription.bind(this);
+        this.updateMultimediaBox = this.updateMultimediaBox.bind(this);
     }
 
     closeModal(){
@@ -52,11 +54,13 @@ class CreateCard extends Component{
 
     restartForm(){
         this.onImgDelete();
+        this.setState({form:{name:"", description: ""}}, ()=>{
+            this.refs.form.reset();
+        });
     }
 
     openModal(){
         this.setState({modalIsOpen:true});
-        console.log("open modal");
     }
 
      onCrop(r){
@@ -67,10 +71,6 @@ class CreateCard extends Component{
 
     onImgDelete(url){
             this.props.onImgDelete(url);
-    }
-
-    onChangeName(e){
-        this.setState({searchQuery:e.target.value});
     }
 
     renderField({
@@ -109,9 +109,30 @@ class CreateCard extends Component{
                     </div>);
     }
 
-    onSubmit({name, description, lang, imgs}){
-            this.restartForm();
+    onSubmit({name, description}){
+             this.restartForm();
             this.props.successAlert("Card created succesfully !");
+            //call this.props.onsubmit so container has submit logic
+    }
+
+    onChangeFormName(e){
+        var newForm = _.clone(this.state.form);
+        newForm.name = e.target.value;
+        this.setState({form:newForm});
+    }
+
+    onChangeFormDescription(e){
+        var newForm = _.clone(this.state.form);
+        newForm.description = e.target.value;
+        this.setState({form:newForm});
+    }
+
+    onImgDelete(){
+        this.setState({pickedImg:null});
+    }
+
+    updateMultimediaBox(data){
+        this.setState({multimediaBox: data});
     }
 
     renderForm(){
@@ -119,7 +140,7 @@ class CreateCard extends Component{
         return (
             <div className="container">
                 <div className="row">
-                <Formsy.Form className="col" id="cardForm" onValidSubmit={this.onSubmit}>                         
+                <Formsy.Form ref="form" className="col" id="cardForm" onValidSubmit={this.onSubmit}>                         
                                     <div className="form-group">
                                         <div className="col-sm-12">
                                             <MyOwnInput
@@ -130,10 +151,11 @@ class CreateCard extends Component{
                                                 validations="minLength:2"
                                                 name="name"
                                                 required
+                                                onChange={this.onChangeFormName}
                                                 type="text"
                                                 className="form-control"
                                                 placeholder="Cards's name"
-                                                value=""
+                                                value={this.state.form.name}
                                             />
                                         </div>
                                     </div>
@@ -146,7 +168,8 @@ class CreateCard extends Component{
                                                     }}
                                                 required
                                                 validations="minLength:4"
-                                                value=""
+                                                onChange={this.onChangeFormDescription}
+                                                value={this.state.form.description}
                                                 className="form-control"
                                                 name="description"
                                                 type="text"
@@ -156,7 +179,7 @@ class CreateCard extends Component{
                                     </div>
                                       <div className="row form-group">
                                         <div className="col-3 col-sm-3">
-                                            <AddImage searchQuery={this.state.searchQuery}
+                                            <AddImage searchQuery={this.state.form.name}
                                                       onCrop={this.onCrop}
                                                       onDelete={this.onImgDelete}
                                                       pickedImgs={this.props.pickedImages}
@@ -165,19 +188,24 @@ class CreateCard extends Component{
                                                       onImgPick={this.props.onImgPick}
                                                       onImgUpload={this.props.onImgUpload}
                                                       titleModal="Add image for card"
-                                                      label="Add image"/>
+                                                      label="+ image"
+                                                      updateContainer={this.updateMultimediaBox}
+                                                      />
                                         </div>
                                          <div className="col-3 col-sm-3">
-                                            <AddDrawing label="Add drawing"/>
+                                            <AddDrawing label="+ drawing"/>
                                         </div>
                                         <div className="col-3 col-sm-3">
-                                            <AddAudio label="Add audio"/>
+                                            <AddAudio label="+ audio"/>
                                         </div>
                                         <div className="col-3 col-sm-3">
-                                            <AddAudio label="Add video"/>
+                                            <AddAudio label="+ video"/>
                                         </div>
                                     </div>
                         </Formsy.Form>
+                                    <div className="row">
+                                            {this.state.multimediaBox}
+                                    </div>
                 </div>
                 <div className="row">
                     <div className="col">
