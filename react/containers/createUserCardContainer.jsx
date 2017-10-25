@@ -10,18 +10,28 @@ import {createUserCard} from "../actions/card.js";
 import {successAlert} from "../actions/alerts.js";
 import {proxyImgFromUrl, proxyImgFromData, deleteImageReady} from "../actions/image";
 import CreateCard from "../components/createCard.jsx";
+import userPathAdapter from "../adapters/deckPathAdapter";
 import _ from "lodash";
 
 class CreateUserCardContainer extends Component{
 
     constructor(props){
         super(props);
-        this.state = {pickedImages: [], indexImageBeingReplaced: -1};
+        this.state = {pickedImages: []};
         this.onImgPick = this.onImgPick.bind(this);
         this.onImgUpload = this.onImgUpload.bind(this);
         this.onImgDelete = this.onImgDelete.bind(this);
         this.onCrop = this.onCrop.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
+
+       componentWillReceiveProps(nextProps){
+            if(!_.isEqual(this.props.imageReady, nextProps.imageReady) && nextProps.imageReady){
+                var newImages = this.state.pickedImages.slice(); 
+                newImages.push(nextProps.imageReady);
+                return this.setState({pickedImages: newImages});
+            }
+        }
 
     onImgDelete(url){
         if(!url)//delete all images if not url
@@ -33,19 +43,13 @@ class CreateUserCardContainer extends Component{
         this.props.deleteImageReady();
     }
 
-    
-
-
-    componentWillReceiveProps(nextProps){
-        if(!_.isEqual(this.props.imageReady, nextProps.imageReady) && nextProps.imageReady){
-            var newImages = this.state.pickedImages.slice(); 
-            if(this.state.indexImageBeingReplaced == -1)
-                newImages.push(nextProps.imageReady);
-            else{
-                newImages = newImages.splice(this.state.indexImageBeingReplaced, 1, nextProps.imageReady);
-            }
-            return this.setState({pickedImages: newImages});
-        }
+    onSubmit(name, description, callback){
+        var deckId = userPathAdapter.getLastIdFromPath(this.props.userDecksPath);
+        var imgs = this.state.pickedImages;
+        this.props.createUserCard(name, description, imgs, deckId, ()=>{
+            this.props.successAlert("Card created succesfully !");
+            callback();
+        });
     }
 
     onImgPick(img){
@@ -68,6 +72,7 @@ class CreateUserCardContainer extends Component{
                         pickedImages={this.state.pickedImages}
                         onImgPick={this.onImgPick}
                         onImgUpload={this.onImgUpload}
+                        onSubmit={this.onSubmit}
                         {...this.props}
                         />
         );
@@ -81,7 +86,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state){
     return {
-        imageReady: state.imageReady
+        imageReady: state.imageReady,
+        userDecksPath: state.userDecksPath
     }
 }
 

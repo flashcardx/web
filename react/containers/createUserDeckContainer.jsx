@@ -18,17 +18,27 @@ class CreateUserDeckContainer extends Component{
 
     constructor(props){
         super(props);
-        this.state = {modalIsOpen:false, pickedImg: null};
+        this.state = {modalIsOpen:false, pickedImages:[]};
         this.onSubmit = this.onSubmit.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.openModal = this.openModal.bind(this);
         this.onImgPick = this.onImgPick.bind(this);
         this.onImgUpload = this.onImgUpload.bind(this);
         this.onCrop = this.onCrop.bind(this);
+        this.onImgDelete = this.onImgDelete.bind(this);
+    }
+
+    onSubmit(name, description, lang, callback){
+        var img = this.state.pickedImages[0];
+        this.props.createUserDeck(name, description, lang, img, this.props.parentId,()=>{
+            this.closeModal();
+            this.props.successAlert("Deck created succesfully !");
+            callback();
+        });
     }
 
     onImgDelete(){
-        this.setState({pickedImg:null});
+        this.setState({pickedImages:[]});
     }
 
     closeModal(){
@@ -39,19 +49,9 @@ class CreateUserDeckContainer extends Component{
         this.setState({modalIsOpen:true});
     }
 
-    onSubmit({name, description, lang, img}){
-        this.props.createUserDeck(name, description, lang, img, this.props.parentId,()=>{
-            this.closeModal();
-            this.props.successAlert("Deck created succesfully !");
-            this.props.destroy(); //resets form
-            this.props.initialize();
-            this.onImgDelete();
-        });
-    }
-
     componentWillReceiveProps(nextProps){
         if(!_.isEqual(this.props.imageReady, nextProps.imageReady)){
-            this.setState({pickedImg: nextProps.imageReady});
+            this.setState({pickedImages: [nextProps.imageReady]});
         }
     }
 
@@ -66,27 +66,19 @@ class CreateUserDeckContainer extends Component{
     }
 
     onCrop(img, callback){
-        var pickedImg = this.state.pickedImg;
-        var i=0;
-        if(pickedImg.url == img.src){
-                pickedImg.x = img.x;
-                pickedImg.y = img.y;
-                pickedImg.width = img.width;
-                pickedImg.height = img.height;
-        }
-        this.setState({pickedImg: pickedImg});
-        callback(pickedImg);
+        var pickedImages = this.state.pickedImages;
+        callback(pickedImages);
     }
 
     render(){
         return (
-            <CreateDeck onCrop={this.onCrop}
+            <CreateDeck onSubmit={this.onSubmit}
+                        onCrop={this.onCrop}
                         onImgDelete={this.onImgDelete}
-                        pickedImg={this.state.pickedImg}
+                        pickedImages={this.state.pickedImages}
                         modalIsOpen = {this.state.modalIsOpen}
                         closeModal={this.closeModal}
                         openModal={this.openModal}
-                        onSubmit={this.onSubmit}
                         onImgPick={this.onImgPick}
                         onImgUpload={this.onImgUpload}
                         formName={FORM_NAME}
@@ -97,18 +89,6 @@ class CreateUserDeckContainer extends Component{
 
 }
 
-function validate({name, description, lang, img}){
-    var errors = {};
-    if(!img)
-        errors.img = "Please add an mage for your deck";
-    if(!name || name.length < 4)
-        errors.name = "Deck name must be at least 4 characters long!";
-    if(!description || description.length < 5)
-        errors.description = "Deck description must be at least 5 characters long!";
-    if(!lang)
-        errors.lang = "You must select a language for your deck!";
-    return errors;
-}
 
 
 function mapDispatchToProps(dispatch) {
@@ -122,4 +102,4 @@ function mapStateToProps(state){
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({validate, form:FORM_NAME, initialValues: { lang: "" }})(CreateUserDeckContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(CreateUserDeckContainer);

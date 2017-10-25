@@ -11,15 +11,11 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {createUserDeck} from "../actions/deck.js";
 import {successAlert, infoAlert, showLoading, hideLoading} from "../actions/alerts.js";
-import {reset} from 'redux-form';
-import AddImage from "./addImage.jsx";
-import AddDrawing from "./addDrawing.jsx";
-import AddAudio from "./addAudio.jsx";
-import AddVideo from "./addVideo.jsx";
 import _ from "lodash";
 import Toggle from 'material-ui/Toggle';
 import Formsy from 'formsy-react';
 import {MyOwnInput, MyOwnTextarea} from "./util/form.jsx";
+import MultimediaCreator from "./multimediaCreator.jsx";
 
 const style = {
     toggle:{
@@ -35,13 +31,11 @@ class CreateCard extends Component{
         super(props);
         this.state = {modalIsOpen:false, form:{name:"", description:""}, multimediaBox: null}
         this.renderForm = this.renderForm.bind(this);
-        this.onImgDelete = this.onImgDelete.bind(this);
-        this.onCrop = this.onCrop.bind(this);
+       this.onCrop = this.onCrop.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        this.submitForm = this.submitForm.bind(this);
-        this.restartForm = this.restartForm.bind(this);
+       this.restartForm = this.restartForm.bind(this);
         this.onChangeFormName = this.onChangeFormName.bind(this);
         this.onChangeFormDescription = this.onChangeFormDescription.bind(this);
         this.updateMultimediaBox = this.updateMultimediaBox.bind(this);
@@ -64,9 +58,6 @@ class CreateCard extends Component{
     }
 
      onCrop(r){
-            this.props.onCrop(r, img=>{
-                this.props.dispatch(change(this.props.FORM_NAME, "img", img));
-            });
     }
 
     onImgDelete(url){
@@ -86,7 +77,7 @@ class CreateCard extends Component{
                 return (<div>
                     <input {...input} className={className} name={name} value={value} onChange={onChange} placeholder={placeholder} type={type} />
                     {touched &&
-                        ((error && <span>{error}</span>) ||
+                           ((error && <span>{error}</span>) ||
                         (warning && <span>{warning}</span>))}
                     </div>);
     }
@@ -110,9 +101,10 @@ class CreateCard extends Component{
     }
 
     onSubmit({name, description}){
-             this.restartForm();
-            this.props.successAlert("Card created succesfully !");
-            //call this.props.onsubmit so container has submit logic
+            this.props.onSubmit(name, description,()=>{
+                this.onImgDelete();
+                this.restartForm();
+            });
     }
 
     onChangeFormName(e){
@@ -125,10 +117,6 @@ class CreateCard extends Component{
         var newForm = _.clone(this.state.form);
         newForm.description = e.target.value;
         this.setState({form:newForm});
-    }
-
-    onImgDelete(){
-        this.setState({pickedImg:null});
     }
 
     updateMultimediaBox(data){
@@ -177,57 +165,37 @@ class CreateCard extends Component{
                                             />
                                         </div>
                                     </div>
-                                      <div className="row form-group">
-                                        <div className="col-3 col-sm-3">
-                                            <AddImage searchQuery={this.state.form.name}
-                                                      onCrop={this.onCrop}
-                                                      onDelete={this.onImgDelete}
-                                                      pickedImgs={this.props.pickedImages}
-                                                      maxPickedImgs={3}
-                                                      disabled={this.props.bigLoading}
-                                                      onImgPick={this.props.onImgPick}
-                                                      onImgUpload={this.props.onImgUpload}
-                                                      titleModal="Add image for card"
-                                                      label="+ image"
-                                                      updateContainer={this.updateMultimediaBox}
-                                                      />
-                                        </div>
-                                         <div className="col-3 col-sm-3">
-                                            <AddDrawing label="+ drawing"/>
-                                        </div>
-                                        <div className="col-3 col-sm-3">
-                                            <AddAudio label="+ audio"/>
-                                        </div>
-                                        <div className="col-3 col-sm-3">
-                                            <AddAudio label="+ video"/>
-                                        </div>
-                                    </div>
                         </Formsy.Form>
-                                    <div className="row">
-                                            {this.state.multimediaBox}
-                                    </div>
                 </div>
-                <div className="row">
+                <div className="container">
+                            <MultimediaCreator image drawing audio video
+                                            searchQuery={this.state.form.name}
+                                            onImageCrop={this.onCrop}
+                                            onImgDelete={this.props.onImgDelete}
+                                            pickedImages={this.props.pickedImages}
+                                            maxPickedImgs={3}
+                                            bigLoading={this.props.bigLoading}
+                                            onImgPick={this.props.onImgPick}
+                                            onImgUpload={this.props.onImgUpload}
+                                />
+                </div>
+                <div className="row" style={{margin:"5px"}}>
                     <div className="col">
                             Autocomplete:
                             <Toggle/>
                     </div>
                     <div className="col">
-                            <RaisedButton labelColor="#ffffff" disabled={this.props.bigLoading} type="submit" backgroundColor="#4286f4" label="Open translator" />
+                            <RaisedButton labelColor="#ffffff" type="submit" backgroundColor="#4286f4" label="Open translator" />
                     </div>
                 </div>
             </div>
         );
     }
 
-    submitForm(e){
-        var targetNode = document.getElementById('form');
-        targetNode.submit();
-    }
-
     render(){
         var titleObject = (
                          <RaisedButton
+                                disabled={this.props.bigLoading}
                                 label="Create"
                                 primary={true}
                                 type="submit"

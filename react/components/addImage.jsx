@@ -11,9 +11,9 @@ import {reduxForm } from 'redux-form';
 import Dropzone from 'react-dropzone';
 import PropTypes from "prop-types";
 import ImgPicker from "./imgPicker.jsx";
-import PreviewImage from "./previewImage.jsx";
 import Cropper from "./util/cropper.jsx";
 import {searchImg, searchGif, resetSearchImages} from "../actions/image";
+import IconButton from 'material-ui/IconButton';
 
 const style = {
     marginRight:{
@@ -21,6 +21,13 @@ const style = {
     },
     marginTop:{
         marginTop: "20px"
+    },
+    btn:{
+        cursor:"pointer",
+        fontSize: "25px",
+        ":hover":{
+            color: "#4286f4"
+        }
     }
 }
 
@@ -28,7 +35,7 @@ class AddImage extends Component{
     
     constructor(props){
         super(props);
-        this.state = {openModal: false, searchQuery:"", isLoading:false, cropModal:false, imgBeingCropped: null};
+        this.state = {openModal: false, searchQuery:"", isLoading:false};
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.renderTitle = this.renderTitle.bind(this);
@@ -37,10 +44,6 @@ class AddImage extends Component{
         this.searchGif = this.searchGif.bind(this);
         this.onImgPick = this.onImgPick.bind(this);
         this.renderPicker = this.renderPicker.bind(this);
-        this.renderPickedImgs = this.renderPickedImgs.bind(this);
-        this.renderPickedImg = this.renderPickedImg.bind(this);
-        this.openCropper = this.openCropper.bind(this);
-        this.closeCropper = this.closeCropper.bind(this);
     }
 
     componentWillMount(){
@@ -53,6 +56,8 @@ class AddImage extends Component{
 
     closeModal(){
         this.setState({openModal: false});
+        if(this.props.reloadImage)
+            this.props.onImageReloadCancel();
     }
 
     renderTitle(){
@@ -90,11 +95,17 @@ class AddImage extends Component{
         this.setState({isLoading: false});
         if(!_.isEqual(nextProps.searchQuery, this.state.searchQuery))
             this.setState({searchQuery: nextProps.searchQuery});
+        if(!_.isEqual(this.props.pickedImgs, nextProps.pickedImgs))
+                this.props.updateContainer(this.renderPickedImgs());
+        if(nextProps.reloadImage)
+                this.openModal();
     }
 
     onImgPick(img){
         this.closeModal();
         this.props.onImgPick(img);
+        if(this.props.reloadImage)
+            this.props.onImageReload();
     }
 
     onDrop(files, rejectedFiles) {
@@ -165,61 +176,33 @@ class AddImage extends Component{
         );
     }
 
-    renderPickedImg(img){
-        return (
-            <PreviewImage   onDelete={this.props.onDelete}
-                            cropImg={this.openCropper}
-                            onReload={this.openModal}
-                            key={img.url}
-                            img={img}/>
-        );
-    }
-
-    openCropper(img){
-        this.setState({cropModal: true, imgBeingCropped: img});
-    }
-
-    closeCropper(){
-        this.setState({cropModal: false});
-    }
-
-    renderPickedImgs(){
-        return (
-            <div style={{overflowX:"auto", margin:"5px"}}>
-                {this.props.pickedImgs.map(this.renderPickedImg)}
-            </div>
-        );
-    }
-
+    
     renderButton(){
-        return <RaisedButton onClick={this.openModal} labelColor="#ffffff"  disabled={this.props.disabled} backgroundColor="#f4424b" label={this.props.label} />
+        return (
+            <span>
+                <i className="fa fa-picture-o" aria-hidden="true"
+                    style={style.btn}
+                    data-tip="Add image"
+                    onClick={this.openModal}>
+                </i>       
+            </span>
+        );
     }
-
-    renderBottom(){
-        var body = [];
-        if(this.props.maxPickedImgs - this.props.pickedImgs.length > 0 ){
-            body.push(<div key={1}>{this.renderButton()}</div>);
-        }
-        body.push(<div key={2}>{this.renderPickedImgs()}</div>);
-        this.props.updateContainer(body);
-    }
-
 
     render(){
-            this.renderBottom();
         return (
             <div>
                     <Cropper onCrop={this.props.onCrop} 
-                            onClose={this.closeCropper}
-                            open={this.state.cropModal}
-                            img={this.state.imgBeingCropped}/>
+                             onClose={this.closeCropper}
+                             open={this.props.cropModal}
+                             img={this.props.imgBeingCropped}/>
                     <Modal autoScroll={true} onClose={this.closeModal} modal={false} open={this.state.openModal} closeLabel="Cancel" title={this.renderTitle()}>
                         {this.renderPicker()}
                     </Modal>
+                    {this.renderButton()}
             </div>
         );
     }
-
 }
 
 function mapStateToProps(state){

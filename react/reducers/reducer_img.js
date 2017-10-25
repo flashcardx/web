@@ -24,9 +24,7 @@ export function imageProxyReducer(state=null, action){
                                     url:url,
                                     hash: action.payload.hash,
                                     width: action.width,
-                                    height: action.height,
-                                    x:0,
-                                    y:0
+                                    height: action.height
                             }
         case DELETE_IMAGE_READY: return null;
     }

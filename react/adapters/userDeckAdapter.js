@@ -71,6 +71,7 @@ export default {
             deckIds = state.children;
         else
             deckIds = state[parentId].children;
+        console.log("parentId: " + parentId + ", deckIds: ", JSON.stringify(deckIds));
         deckIds.forEach(deckId=>{
                 if(state[deckId])//if deck was deleted will be undefined
                     decks.push(state[deckId]);
@@ -81,6 +82,18 @@ export default {
         if(!parentId){
             return null;
         }
+    },
+    insertNewCard: (state, card, deckId)=>{
+        if(!deckId){
+            console.error("insert new card didn't get deckId");    
+            return state;
+        }
+        var newState = _.clone(state);
+        if(!newState[deckId].cards)
+            newState[deckId].cards = {};
+        newState[deckId].cards[card._id] = card;
+        console.log("new state: ", newState);
+        return newState;
     }
 
 

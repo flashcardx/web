@@ -11,8 +11,10 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {createUserDeck} from "../actions/deck.js";
 import {successAlert, infoAlert, showLoading, hideLoading} from "../actions/alerts.js";
-import {reset} from 'redux-form';
-import AddImage from "./addImage.jsx";
+import Formsy from 'formsy-react';
+import {MyOwnInput, MyOwnTextarea, MyOwnSelect} from "./util/form.jsx";
+import MultimediaCreator from "./multimediaCreator.jsx";
+
 import _ from "lodash";
 
 function langOptions(){
@@ -49,105 +51,158 @@ class CreateDeck extends Component{
 
     constructor(props){
         super(props);
+        this.state = {form:{name:"", description:"", lang:"", errorMsj:null}};
         this.renderForm = this.renderForm.bind(this);
         this.onImgDelete = this.onImgDelete.bind(this);
         this.onCrop = this.onCrop.bind(this);
         this.loadImageOnForm = this.loadImageOnForm.bind(this);
-    }
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onChangeFormName = this.onChangeFormName.bind(this);
+        this.onChangeFormDescription = this.onChangeFormDescription.bind(this);
+        this.onChangeFormLang = this.onChangeFormLang.bind(this); 
+     }
 
      onCrop(r){
-            this.props.onCrop(r, img=>{
-                this.props.dispatch(change(this.props.formName, "img", img));
-            });
+      
     }
 
-
     componentWillReceiveProps(nextProps){
-            if(!_.isEqual(nextProps.pickedImg, this.props.pickedImg)){
-                console.log("load image on form: ", nextProps.pickedImg);
-                this.loadImageOnForm(nextProps.pickedImg);
+            if(!_.isEqual(nextProps.pickedImages, this.props.pickedImages)){
+                this.loadImageOnForm(nextProps.pickedImages);
             }
+            if(this.state.errorMsg && nextProps.pickedImages.length != 0)
+                this.setState({errorMsg: null});
     }
 
     loadImageOnForm(img){
-            console.log("load img on form: ", img);
             this.props.dispatch(change(this.props.formName, "img", img));
     }
 
     onImgDelete(){
-            this.props.dispatch(change(this.props.formName, "img", null));
-            this.props.onImgDelete();
+        this.props.onImgDelete();
+    }
+
+     onChangeFormName(e){
+        var newForm = _.clone(this.state.form);
+        newForm.name = e.target.value;
+        this.setState({form:newForm});
+    }
+
+    onChangeFormLang(e){
+        var newForm = _.clone(this.state.form);
+        newForm.lang = e.target.value;
+        this.setState({form:newForm});
+    }
+
+    onChangeFormDescription(e){
+        var newForm = _.clone(this.state.form);
+        newForm.description = e.target.value;
+        this.setState({form:newForm});
+    }
+
+    onSubmit({name, description, lang}){
+        if(this.props.pickedImages.length == 0)
+            return this.setState({errorMsg:"Please chose or upload an image for your deck"});
+        this.props.onSubmit(name, description, lang, ()=>{
+            this.restartForm();
+        });
+    }
+
+    restartForm(){
+        this.onImgDelete();
+        this.setState({form:{name:"", description: "", lang:""}}, ()=>{
+            this.refs.form.reset();
+        });
     }
 
     renderForm(){
         const {handleSubmit} = this.props;
-        const imgs = (this.props.pickedImg)? [this.props.pickedImg]: [];
         return (
-            <div>
-                <form onSubmit={handleSubmit(this.props.onSubmit)} >
+            <div className="container">
+                <div className="row">
+                <Formsy.Form ref="form" className="col" id="deckForm" onValidSubmit={this.onSubmit}>                         
                                     <div className="form-group">
                                         <div className="col-sm-12">
-                                            <TextField
+                                                <MyOwnInput
+                                                validationErrors={{
+                                                    minLength: "deck's name must be at least 2 characters long",
+                                                    isDefaultRequiredValue: "Please enter the deck's name"
+                                                    }}
+                                                validations="minLength:2"
                                                 name="name"
+                                                required
+                                                onChange={this.onChangeFormName}
                                                 type="text"
-                                                placeholder="Deck's name"
-                                                fieldType="input"
+                                                className="form-control"
+                                                placeholder="deck's name"
+                                                value={this.state.form.name}
                                             />
                                         </div>
                                     </div>
                                     <div className="form-group">
                                         <div className="col-sm-12">
-                                            <TextField
+                                            <MyOwnTextarea
+                                                validationErrors={{
+                                                    minLength: "deck's description must be at least 4 characters long",
+                                                    isDefaultRequiredValue: "Please enter the deck's description"
+                                                    }}
+                                                required
+                                                validations="minLength:4"
+                                                onChange={this.onChangeFormDescription}
+                                                value={this.state.form.description}
+                                                className="form-control"
                                                 name="description"
                                                 type="text"
-                                                placeholder="Description, What kind of things will your deck hold?"
-                                                fieldType="textarea"
-                                            />
-                                        </div>
-                                    </div>
-                                      <div className="form-group">
-                                        <div className="col-sm-12">
-                                            <AddImage onCrop={this.onCrop}
-                                                      onDelete={this.onImgDelete}
-                                                      pickedImgs={imgs}
-                                                      maxPickedImgs={1}
-                                                      disabled={this.props.bigLoading}
-                                                      onImgPick={this.props.onImgPick}
-                                                      onImgUpload={this.props.onImgUpload}
-                                                      titleModal="Add cover for deck"
-                                                      label="Add cover image"/>
-                                            <TextField
-                                                name="img"
-                                                fieldType="input"
-                                                type="hidden"
+                                                placeholder="Description, What kind of content will this deck hold?"
                                             />
                                         </div>
                                     </div>
                                     <div className="form-group">
                                         <div className="col-sm-12">
-                                            <TextField
+                                            <MyOwnSelect
+                                                 validationErrors={{
+                                                    isDefaultRequiredValue: "Please select a language for the deck"
+                                                    }}
+                                                required
                                                 name="lang"
-                                                placeholder="Description, What kind of things will your deck hold?"
-                                                fieldType="select"
                                                 options={langOptions()}
+                                                onChange={this.onChangeFormLang}
+                                                value={this.state.form.lang}
                                             />
                                         </div>
                                     </div>
-        
-                                    <div className="form-group">
-                                        <div className="col-sm-offset-2 col-sm-12">
-                                            <RaisedButton labelColor="#ffffff" disabled={this.props.bigLoading} type="submit" backgroundColor="#5cb85c" label="Create" />
-                                        </div>
-                                    </div>
-                        </form>
+                        </Formsy.Form>
+                    </div>
+                    <div className="container">
+                        <MultimediaCreator  image
+                                            errorMsg={this.state.errorMsg}
+                                            searchQuery={this.state.form.name}
+                                            onImageCrop={this.onCrop}
+                                            onImgDelete={this.props.onImgDelete}
+                                            pickedImages={this.props.pickedImages}
+                                            maxPickedImgs={1}
+                                            bigLoading={this.props.bigLoading}
+                                            onImgPick={this.props.onImgPick}
+                                            onImgUpload={this.props.onImgUpload}/>
+                    </div>
             </div>
         );
     }
 
     render(){
+        var titleObject = (
+                         <RaisedButton
+                                disabled={this.props.bigLoading}
+                                label="Create"
+                                primary={true}
+                                type="submit"
+                                form="deckForm"
+                                buttonStyle={{backgroundColor:"#f4424b"}}  
+                                />
+                        );
         return (
             <div>
-                <Modal autoScroll={true} onClose={this.props.closeModal} modal={false} open={this.props.modalIsOpen} closeLabel="Cancel" title="Create new deck">
+                <Modal titleStyle={{backgroundColor:"#f4424b", marginBottom:"5px"}} titleObject={titleObject} autoScroll={true} onClose={this.props.closeModal} modal={false} open={this.props.modalIsOpen} closeLabel="Cancel" title="Create new deck">
                     {this.renderForm()}
                 </Modal>
                 <RaisedButton onClick={this.props.openModal} labelColor="#ffffff" disabled={this.props.bigLoading} backgroundColor="#f4424b" label="Create deck" />

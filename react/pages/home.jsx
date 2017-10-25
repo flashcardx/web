@@ -9,6 +9,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import CreateUserDeckContainer from "../containers/createUserDeckContainer.jsx";
 import CreateUserCardContainer from "../containers/createUserCardContainer.jsx";
 import DeckGalleryUserContainer from "../containers/deckGalleryUserContainer.jsx";
+import CardGalleryUserContainer from "../containers/cardGalleryUserContainer.jsx";
 import _ from "lodash";
 import deckPathAdapter from "../adapters/deckPathAdapter.js";
 
@@ -54,21 +55,6 @@ class Home extends Component{
         });
     }
 
-    renderCardGallery(parentId, cards){
-        var cardGallery
-        if(!parentId)
-            return null;
-        else{
-            if(_.isEmpty(cards))
-                cardGallery=<p> You don't have cards in this deck...</p> 
-        }
-        return (<div>
-                    <h2>Cards:</h2>
-                {cardGallery}
-                </div>  
-                    );
-    }
-
     render(){
         const parentId = deckPathAdapter.getLastIdFromPath(this.props.path);
         var createCard = null;
@@ -76,7 +62,6 @@ class Home extends Component{
             createCard = (<div className="col-lg-3 col-sm-3">
                             <CreateUserCardContainer parentId={parentId}/>
                         </div>);
-        var cardGallery = this.renderCardGallery(parentId);
         return (
             <Page name="my collection">
                 <div className="container">
@@ -89,14 +74,22 @@ class Home extends Component{
                             <CreateUserDeckContainer parentId={parentId}/>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col">
-                            {cardGallery}
+                    {
+                    parentId &&
+                        <div className="row">
+                            <div className="col">
+                                <h2>Your cards:</h2>
+                                <CardGalleryUserContainer
+                                            pushToPath={this.pushToPath}
+                                            onDelete={this.onDelete}
+                                            path={this.props.path.slice()}
+                                            decks={this.props.decks}/> 
+                            </div>
                         </div>
-                    </div>
+                    }
                     <div className="row">
                         <div className="col">
-                            <h2>Your decks</h2>
+                            <h2>Your decks:</h2>
                             <DeckGalleryUserContainer
                                          pushToPath={this.pushToPath}
                                          onDelete={this.onDelete}

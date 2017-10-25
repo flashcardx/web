@@ -1,4 +1,4 @@
-import {FETCH_USER_DECKS, CREATE_USER_DECK, DELETE_USER_DECK, PUSH_TO_USER_DECK_PATH, DROP_FROM_USER_DECK_PATH} from "../actions/types";
+import {CREATE_USER_CARD, FETCH_USER_DECKS, CREATE_USER_DECK, DELETE_USER_DECK, PUSH_TO_USER_DECK_PATH, DROP_FROM_USER_DECK_PATH} from "../actions/types";
 import _ from "lodash";
 import userDeckAdapter from "../adapters/userDeckAdapter.js";
 import deckPathAdapter from "../adapters/deckPathAdapter.js";
@@ -11,7 +11,8 @@ export function userDecksReducer(state={}, action){
         case CREATE_USER_DECK:  const newDeck = action.payload.deck;
                                 return userDeckAdapter.insertNewDeck(state, newDeck, action.parentId);
         case DELETE_USER_DECK:  return userDeckAdapter.deleteDeck(state, action.deckId);
-                               
+        case CREATE_USER_CARD: console.log("card: ", action.payload.card);
+                               return userDeckAdapter.insertNewCard(state, action.payload.card, action.deckId);                     
     }
     return state;
 }

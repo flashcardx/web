@@ -21,12 +21,24 @@ const style = {
     },
     marginTop:{
         marginTop: "20px"
-    }
+    },
+    btn:{
+            cursor:"pointer",
+            fontSize: "25px",
+            ":hover":{
+                color: "#731D1D"
+            }
+        }
 }
 
 class AddDrawing extends Component{
         render(){
-        return <RaisedButton labelColor="#ffffff"  disabled={this.props.disabled} backgroundColor="#f4424b" label={this.props.label} />
+        return (<span>
+                <i className="fa fa-pencil-square-o" aria-hidden="true"
+                    style={style.btn}
+                    data-tip="Add drawing">
+                </i>            
+            </span>);
     }
 }
 

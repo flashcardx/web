@@ -1,35 +1,36 @@
 import axios from "axios";
 import config from "../../config";
-import {FETCH_USER_DECKS,
-        CREATE_USER_DECK,
-        DELETE_USER_DECK,
-        PUSH_TO_USER_DECK_PATH,
-        DROP_FROM_USER_DECK_PATH} from "./types";
-const FETCH_USER_DECKS_URL = config.apiGetUserDecks;
-const CREATE_USER_DECK_URL = config.apiCreateUserDeck;
-const DELETE_USER_DECK_URL = config.apiDeleteUserDeck;
+import {CREATE_USER_CARD, GET_USER_CARDS} from "./types";
+const CREATE_USER_CARD_URL = config.apiCreateUserCard;
+const GET_USER_CARDS_URL = config.apiGetUserCards;
 import deckPathAdapter from "../adapters/deckPathAdapter.js";
 
 
-export function createUserCard(name, description, lang, imgs, parentId, callback){
-    callback();
-    /*
+export function createUserCard(name, description, images, deckId, callback){
+    const url = CREATE_USER_CARD_URL + deckId;
     const data = {name,
                   description,
-                  lang,
-                  parentId,
-                  thumbnail: img};
-    const request = axios.post(CREATE_USER_DECK_URL, data,{
+                  images};
+    const request = axios.post(url, data,{
                         headers: {'x-access-token': localStorage.getItem("jwt")}
                         });
     request.then(()=>{
-            callback();
+        callback();
     });
-    return {type: CREATE_USER_DECK,
+    return {type: CREATE_USER_CARD,
             originAPI: true,
             bigLoading: true,
             payload: request,
-            parentId
-    };
-    */
+            deckId
+        }
+}
+
+export function fetchUserCards(skip=0, deckId){
+    const url = GET_USER_CARDS_URL + deckId + "?skip="+skip;
+    const request = axios.get(url, {
+                        headers: {'x-access-token': localStorage.getItem("jwt")}
+                        });
+    return {type: GET_USER_CARDS,
+            deckId
+            };
 }
