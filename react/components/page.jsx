@@ -13,7 +13,7 @@ class Page extends Component{
         return (     
             <div>
                 <Navbar active={this.state.name}/>
-                <div className="container">
+                <div className={this.props.noWrap?null:"container"}>
                      {this.props.children}
                 </div>
             </div>   
