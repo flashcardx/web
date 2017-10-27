@@ -201,7 +201,7 @@ class CreateDeck extends Component{
                                 />
                         );
         return (
-            <div>
+            <div style={{"display":"inline-block","marginRight":"20px"}}>
                 <Modal titleStyle={{backgroundColor:"#f4424b", marginBottom:"5px"}} titleObject={titleObject} autoScroll={true} onClose={this.props.closeModal} modal={false} open={this.props.modalIsOpen} closeLabel="Cancel" title="Create new deck">
                     {this.renderForm()}
                 </Modal>

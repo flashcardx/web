@@ -204,7 +204,7 @@ class CreateCard extends Component{
                                 />
                         );
         return (
-            <div>
+            <div style={{"display":"inline-block","marginRight":"20px"}}>
                 <Modal titleStyle={{backgroundColor:"#5cb85c", marginBottom:"5px"}} titleObject={titleObject} autoScroll={true} onClose={this.closeModal} modal={false} open={this.state.modalIsOpen} closeLabel="Cancel" title="Create new card">
                     {this.renderForm()}
                 </Modal>
