@@ -50,10 +50,10 @@ class Navbar extends Component{
                 </div>
             </div>
             <div className="col-9">
-                <Tabs style={style.colorBase} value={this.state.active}>
-                            <Tab style={style.colorBase} value="my collection" data-route="/" label="My collection"
+                <Tabs tabItemContainerStyle={style.colorBase} value={this.state.active}>
+                            <Tab  value="my collection" data-route="/" label="My collection"
                                 onActive={this.handleActive}/>
-                            <Tab style={style.colorBase} value="practice" label="Practice"
+                            <Tab  value="practice" label="Practice"
                                 data-route="/practice"
                                 onActive={this.handleActive}/>
                 </Tabs>
