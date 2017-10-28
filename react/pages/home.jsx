@@ -21,9 +21,19 @@ const style = {
         padding:"10px"
     },
     path:{
-        color: "blue",
-        cursor: "pointer",
-        lineHeight:"36px"
+        p:{ color: "grey",
+            fontWeight:"400",
+            fontSize:"18px",
+            cursor: "pointer",
+            lineHeight:"36px" 
+          },
+        angle:{ 
+            paddingBottom:"6px",
+            paddingLeft:"10px",
+            paddingRight:"10px",
+            fontSize:"20px"
+        }
+        
     },
     rowContent:{
         marginTop:"30px"
@@ -124,9 +134,9 @@ class Home extends Component{
     renderPath(){
         return (
             <span>
-                <span onClick={()=>this.goToIndex(0)} style={style.path}>Root</span>
+                <span onClick={()=>this.goToIndex(0)} style={style.path.p}>Root</span>
                 {this.props.path.map((p, i)=>{
-                    return <span key={(i+1)}> > <span onClick={()=>this.goToIndex(i+1)} style={style.path}>{p.name}</span></span>
+                    return <span key={(i+1)}><i style={style.path.angle} className="fa fa-angle-right fa-lg"></i><span onClick={()=>this.goToIndex(i+1)} style={style.path.p}>{p.name}</span></span>
                     })
                 }
             </span>
