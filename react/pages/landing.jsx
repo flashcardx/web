@@ -5,12 +5,14 @@ import Radium from "radium";
 import RaisedButton from 'material-ui/RaisedButton';
 import SigninForm from "../containers/signinForm.jsx";
 import SignupForm from "../containers/signupForm.jsx";
-import {resendEmailSignup, fbAuth} from "../actions/auth";
+import {resendEmailSignup, fbAuth, googleAuth} from "../actions/auth";
 import ReCAPTCHA from "react-google-recaptcha";
 import config from "../../config";
 import FacebookLogin from 'react-facebook-login';
+import {GoogleLogin} from 'react-google-login';
 const RECAPTCHA_KEY = config.recaptchaSiteKey;
 const FB_APPID = config.fbAppId;
+const GOOGLE_CLIENTID = config.googleClientId;
 
 const style = {
     base:{
@@ -109,54 +111,70 @@ class Landing extends Component{
                                 </nav>
                                 <div className="container">
                                     {signupMsg}
-                                    <Details fbAuth={this.props.fbAuth}/>
+                                    <Details googleAuth={this.props.googleAuth} fbAuth={this.props.fbAuth}/>
                                 </div>
             </div>
         );
     }
 }
 
-function Details({fbAuth}){
+function Details({fbAuth, googleAuth}){
     return(
         <div>   
-              <div className="alert alert-info" role="alert">
+                <div className="alert alert-info" role="alert">
                     <strong>Heads up!</strong> This is a BETA version, we will be launching soon the first MAJOR version of our service with lots of new features and design improvements.If you want to keep in touch<a href="javascript: document.body.scrollIntoView(false);"> follow us on social networks or send us an email</a>(Tell us your suggestions and you could see them implemented in the near future ;) ). We would love to have you here once we are ready!
                 </div>
-                    <div className="row">
-                            <div className="col-md-6">
-                                    <h1>Learn anything with beautiful images</h1>
-                                    <p></p>
+                <div className="row">
+                    <h1>Learn anything with beautiful images</h1>
+                </div>
+                <div className="row">
+                        <div className="col">
+                            <div className="row">
                                 <FacebookLogin
                                     appId={FB_APPID}
                                     fields="name,email,picture"
-                                    textButton="Continue with facebook"
+                                    textButton="Continue with Facebook"
                                     size="small"
                                     icon="fa fa-facebook-official"
                                     callback={fbAuth} />
                             </div>
-                            <div className="col-md-6">
-                                    <SignupForm captchaExecute={signupExecute} className="form-horizontal"/>
-                            </div>
-                    </div>
-                                <div style={style.margin5}>
-                                        <div className="row">
-                                                    <h2>Our mission is to optimize your learning experience to its maximum</h2>
-                                        </div>
-                                        <div style={style.breakword} className="row">
-                                            <h3 style={style.breakword}>Use this tool for improving the learning of:<br/>
-                                                Languages, mathematics, physics, history, nuclear science, aliens and much more!
-                                            </h3>
-                                        </div>
-                                </div>
                             <div className="row">
-                                <div className="col-md-12 text-center">
-                                    <h2> What are Flashcards?</h2>
+                                <GoogleLogin
+                                    style={{marginBottom:"10px", marginTop:"10px", fontWeight:"500", fontSize: "16px", border:"1px solid gray"}}
+                                    className="btn btn-light"
+                                    type="button"
+                                    scope="profile email"
+                                    clientId={GOOGLE_CLIENTID}
+                                    onSuccess={googleAuth}
+                                    onFailure={googleAuth}>
+                                    <i style={{color:"#d34836", marginRight:"5px"}} className="fa fa-google" aria-hidden="true"></i>
+                                    <span>CONTINUE WITH GOOGLE</span>
+                                </GoogleLogin>
+                            </div>
+                        </div>
+                        <div className="col">
+                             <SignupForm captchaExecute={signupExecute} className="form-horizontal"/>
+                        </div>
+                    </div>
+                <div style={style.margin5}>
+                            <div className="row">
+                                    <h2>Our mission is to optimize your learning experience to its maximum</h2>
+                            </div>
+                            <div style={style.breakword} className="row">
+                                    <h3 style={style.breakword}>Use this tool for improving the learning of:<br/>
+                                        Languages, mathematics, physics, history, nuclear science, aliens and much more!
+                                    </h3>
+                            </div>
+                </div>
+                <div className="row">
+                            <div className="col-md-12 text-center">
+                                <h2> What are Flashcards?</h2>
                                     <div minLength="embed-responsive embed-responsive-16by9">
                                         <iframe width="100%" height="400px" className="embed-responsive-item" src="https://www.youtube.com/embed/mzCEJVtED0U" allowFullScreen></iframe>
                                     </div>
-                                </div>
-                            </div> 
-                            <FeatureList/>
+                            </div>
+                </div> 
+            <FeatureList/>
         </div>
     );
 }
@@ -188,5 +206,5 @@ function mapStateToProps({signupMsg}){
     return {signupMsg};
 }
 
-export default connect(mapStateToProps,{resendEmailSignup, fbAuth})(Radium(Landing));
+export default connect(mapStateToProps,{resendEmailSignup, fbAuth, googleAuth})(Radium(Landing));
 

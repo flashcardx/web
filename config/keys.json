@@ -2,6 +2,9 @@
 	"fbAuth":{
 				"appId": "731168503758461"
 			},
+	"googleAuth": {
+			"clientId": "980618590126-29jvs38s15lq708q41mr262v9pdoq27d.apps.googleusercontent.com"
+	},
 	"reCaptcha":{
 					"siteKey": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
 			},
@@ -11,10 +14,13 @@
 		"fbAuth":{
 				"appId": "731168503758461"
 			},
+		"googleAuth": {
+				"clientId": "980618590126-29jvs38s15lq708q41mr262v9pdoq27d.apps.googleusercontent.com"
+		},
 		"reCaptcha":{
 					"siteKey": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
 			},
-	"cloudfrontUrl":"https://d2pkpj1gudc0wt.cloudfront.net/"
+		"cloudfrontUrl":"https://d2pkpj1gudc0wt.cloudfront.net/"
 	},
 "production":{
 		"fbAuth":{
@@ -23,6 +29,9 @@
 		"reCaptcha":{
 					"siteKey": "6LcrqSwUAAAAAPby-Rm9KnQVI_DulbhGzQmWcOGo"
 			},
+		"googleAuth":{
+			"clientId": "980618590126-29jvs38s15lq708q41mr262v9pdoq27d.apps.googleusercontent.com"
+		},
 	"cloudfrontUrl":"https://d32suzxs6u0rur.cloudfront.net/"
 	}
 }
