@@ -140,14 +140,17 @@ function Details({fbAuth, googleAuth}){
                             </div>
                             <div className="row">
                                 <GoogleLogin
-                                    style={{marginBottom:"10px", marginTop:"10px", fontWeight:"500", fontSize: "16px", border:"1px solid gray"}}
+                                    style={{backgroundColor:"#ffffff", marginBottom:"10px", marginTop:"10px", fontWeight:"500", fontSize: "16px", border:"1px solid gray"}}
                                     className="btn btn-light"
                                     type="button"
                                     scope="profile email"
                                     clientId={GOOGLE_CLIENTID}
                                     onSuccess={googleAuth}
-                                    onFailure={googleAuth}>
-                                    <i style={{color:"#d34836", marginRight:"5px"}} className="fa fa-google" aria-hidden="true"></i>
+                                    onFailure={googleAuth}
+                                    >
+                                    <i style={{marginRight:"5px"}} aria-hidden="true">
+                                        <img src="/assets/img/icon_google16.png" alt="Google icon"/>
+                                    </i>
                                     <span>CONTINUE WITH GOOGLE</span>
                                 </GoogleLogin>
                             </div>

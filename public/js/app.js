@@ -118679,14 +118679,19 @@ function Details(_ref) {
                     _react2.default.createElement(
                         _reactGoogleLogin.GoogleLogin,
                         {
-                            style: { marginBottom: "10px", marginTop: "10px", fontWeight: "500", fontSize: "16px", border: "1px solid gray" },
+                            style: { backgroundColor: "#ffffff", marginBottom: "10px", marginTop: "10px", fontWeight: "500", fontSize: "16px", border: "1px solid gray" },
                             className: "btn btn-light",
                             type: "button",
                             scope: "profile email",
                             clientId: GOOGLE_CLIENTID,
                             onSuccess: googleAuth,
-                            onFailure: googleAuth },
-                        _react2.default.createElement("i", { style: { color: "#d34836", marginRight: "5px" }, className: "fa fa-google", "aria-hidden": "true" }),
+                            onFailure: googleAuth
+                        },
+                        _react2.default.createElement(
+                            "i",
+                            { style: { marginRight: "5px" }, "aria-hidden": "true" },
+                            _react2.default.createElement("img", { src: "/assets/img/icon_google16.png", alt: "Google icon" })
+                        ),
                         _react2.default.createElement(
                             "span",
                             null,
