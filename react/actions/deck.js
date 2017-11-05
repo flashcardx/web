@@ -31,12 +31,12 @@ export function createUserDeck(name, description, lang, img, parentId, callback)
                   lang,
                   parentId,
                   thumbnail: img};
-    console.log("data: " , data);
     const request = axios.post(CREATE_USER_DECK_URL, data,{
                         headers: {'x-access-token': localStorage.getItem("jwt")}
                         });
-    request.then(()=>{
-            callback();
+    request.then(r=>{
+            if(r.data.success)
+                callback();  
     });
     return {type: CREATE_USER_DECK,
             originAPI: true,

@@ -30,7 +30,7 @@ class CreateUserDeckContainer extends Component{
 
     onSubmit(name, description, lang, callback){
         var img = this.state.pickedImages[0];
-        this.props.createUserDeck(name, description, lang, img, this.props.parentId,()=>{
+        this.props.createUserDeck(name, description, lang, img, this.props.parentId, ()=>{
             this.closeModal();
             this.props.successAlert("Deck created succesfully !");
             callback();

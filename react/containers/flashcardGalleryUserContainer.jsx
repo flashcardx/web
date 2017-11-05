@@ -19,9 +19,7 @@ class FlashcardGalleryUserContainer extends Component{
     render(){
         if(!this.props.deckId)
             return null;
-        console.log("decks are: ", this.props.decks);
         const cards = userDeckAdapter.getCards(this.props.decks, this.props.deckId);
-        console.log("cards", cards);
         return (
                 <FlashcardGallery deckId={this.props.deckId}
                                   fetch={this.fetchCards}

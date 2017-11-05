@@ -46,7 +46,6 @@ export default {
                 else if(newState[parentId].children.indexOf(deck._id) == -1)
                         newState[parentId].children.push(deck._id); 
             });
-            console.log("after insert decks, state is: ", newState);
         return newState;
     },
     insertNewDeck: (state, deck, parentId)=>{
@@ -81,7 +80,6 @@ export default {
         return decks;
     },
     getCards: (state, deckId)=>{
-        console.log("state: ", state);
         if(!deckId || !state[deckId].cards){
             return [];
         }
@@ -89,7 +87,6 @@ export default {
         _.forEach(state[deckId].cards, card=>{
             cards.push(card);
         });
-        console.log("cards: ", cards);
         return cards;
     },
     insertNewCard: (state, card, deckId)=>{
