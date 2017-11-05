@@ -7,9 +7,9 @@ import {successAlert} from "../actions/alerts";
 import {deleteUserDeck, fetchUserDecks, pushToPath, dropFromPath} from "../actions/deck.js";
 import Button from 'material-ui/RaisedButton';
 import CreateUserDeckContainer from "../containers/createUserDeckContainer.jsx";
-import CreateUserCardContainer from "../containers/createUserCardContainer.jsx";
+import CreateUserFlashcardContainer from "../containers/createUserFlashcardContainer.jsx";
 import DeckGalleryUserContainer from "../containers/deckGalleryUserContainer.jsx";
-import CardGalleryUserContainer from "../containers/cardGalleryUserContainer.jsx";
+import FlashcardGalleryUserContainer from "../containers/flashcardGalleryUserContainer.jsx";
 import _ from "lodash";
 import deckPathAdapter from "../adapters/deckPathAdapter.js";
 
@@ -48,7 +48,7 @@ class Home extends Component{
         this.pushToPath = this.pushToPath.bind(this);
         this.goToIndex = this.goToIndex.bind(this);
         this.renderPath = this.renderPath.bind(this);
-        this.onDelete = this.onDelete.bind(this);
+        this.onDeckDelete = this.onDeckDelete.bind(this);
     }
 
     componentDidMount(){
@@ -65,7 +65,7 @@ class Home extends Component{
         }
     }
 
-    onDelete(deckId){
+    onDeckDelete(deckId){
         this.props.deleteUserDeck(deckId, ()=>{
             this.props.successAlert("Deck deleted succesfully !");
             this.forceUpdate();
@@ -76,7 +76,7 @@ class Home extends Component{
         const parentId = deckPathAdapter.getLastIdFromPath(this.props.path);
         var createCard = null;
         if(parentId)
-            createCard = <CreateUserCardContainer parentId={parentId}/>;
+            createCard = <CreateUserFlashcardContainer parentId={parentId}/>;
                         
         return (
             <Page noWrap name="my collection">
@@ -89,8 +89,7 @@ class Home extends Component{
                                 </div>
                                 <div className="text-center col-lg-6 col-md-12 col-sm-12">
                                     {createCard}
-                                    <CreateUserDeckContainer parentId={parentId}/>
-                                     
+                                    <CreateUserDeckContainer parentId={parentId}/>                          
                                 </div>
                             </div>
                         </div>
@@ -100,11 +99,10 @@ class Home extends Component{
                       <div className="container">
                         <div style={style.rowContent}  className="row">
                             <div className="col">
-                                <h2>Your cards:</h2>
-                                <CardGalleryUserContainer
-                                            pushToPath={this.pushToPath}
-                                            onDelete={this.onDelete}
-                                            path={this.props.path.slice()}
+                                <h2>Cards:</h2>
+                                <FlashcardGalleryUserContainer
+                                            dotsContainer=""
+                                            deckId={parentId}
                                             decks={this.props.decks}/> 
                             </div>
                         </div>
@@ -113,10 +111,10 @@ class Home extends Component{
                     <div className="container">
                         <div style={style.rowContent} className="row">
                             <div className="col">
-                                <h2>Your decks:</h2>
+                                <h2>Decks:</h2>
                                 <DeckGalleryUserContainer
                                              pushToPath={this.pushToPath}
-                                             onDelete={this.onDelete}
+                                             onDelete={this.onDeckDelete}
                                              path={this.props.path.slice()}
                                              decks={this.props.decks}/> 
                             </div>

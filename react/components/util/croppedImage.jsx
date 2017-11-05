@@ -4,7 +4,7 @@ import Radium from "radium";
 
 export default Radium(props=>{
 
-    const {src, height, width} = props;
+    const {height, width} = props;
 
    var styleWrapperImg = {
         position: "relative",
@@ -17,16 +17,14 @@ export default Radium(props=>{
         position: "absolute",
         left: "50%",
         top: "50%",
-        height: "auto",
-        width: "100%",
         WebkitTransform: "translate(-50%,-50%)",
         MsTransform: "translate(-50%,-50%)",
         transform: "translate(-50%,-50%)"
         }
 
     return (
-        <div style={styleWrapperImg}>
-            <img {...props} style={[styleImg, props.style]} src={src}/>
+        <div data-src={props["data-src"]} style={styleWrapperImg}>
+            <img className="owl-lazy" {...props} style={[styleImg, props.style]}/>
         </div>
     );
 });

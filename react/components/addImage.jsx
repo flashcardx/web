@@ -55,7 +55,7 @@ class AddImage extends Component{
     }
 
     closeModal(){
-        this.setState({openModal: false});
+        this.setState({openModal: false, isLoading:false});
         if(this.props.reloadImage)
             this.props.onImageReloadCancel();
     }

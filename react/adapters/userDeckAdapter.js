@@ -46,6 +46,7 @@ export default {
                 else if(newState[parentId].children.indexOf(deck._id) == -1)
                         newState[parentId].children.push(deck._id); 
             });
+            console.log("after insert decks, state is: ", newState);
         return newState;
     },
     insertNewDeck: (state, deck, parentId)=>{
@@ -71,17 +72,25 @@ export default {
             deckIds = state.children;
         else
             deckIds = state[parentId].children;
-        console.log("parentId: " + parentId + ", deckIds: ", JSON.stringify(deckIds));
+        if(!deckIds)
+            return [];
         deckIds.forEach(deckId=>{
                 if(state[deckId])//if deck was deleted will be undefined
                     decks.push(state[deckId]);
         });
         return decks;
     },
-    getCards: (state, parentId)=>{
-        if(!parentId){
-            return null;
+    getCards: (state, deckId)=>{
+        console.log("state: ", state);
+        if(!deckId || !state[deckId].cards){
+            return [];
         }
+        var cards = []
+        _.forEach(state[deckId].cards, card=>{
+            cards.push(card);
+        });
+        console.log("cards: ", cards);
+        return cards;
     },
     insertNewCard: (state, card, deckId)=>{
         if(!deckId){
@@ -91,8 +100,26 @@ export default {
         var newState = _.clone(state);
         if(!newState[deckId].cards)
             newState[deckId].cards = {};
-        newState[deckId].cards[card._id] = card;
-        console.log("new state: ", newState);
+        var newCards = {};
+        newCards[card._id] = card;
+        newState[deckId].cards = {
+            ...newCards, ...newState[deckId].cards
+        }        
+        return newState;
+    },
+    insertMoreCards: (state, cards, deckId)=>{
+        if(!cards)
+            return state;
+        if(!deckId){
+            console.error("insert new cards didn't get deckId");    
+            return state;
+        }
+        var newState = _.clone(state);
+        if(!newState[deckId].cards)
+            newState[deckId].cards = {};
+        cards.forEach(card=>{
+            newState[deckId].cards[card._id] = card;
+        });
         return newState;
     }
 

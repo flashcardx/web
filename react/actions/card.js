@@ -10,7 +10,7 @@ export function createUserCard(name, description, images, deckId, callback){
     const url = CREATE_USER_CARD_URL + deckId;
     const data = {name,
                   description,
-                  images};
+                  imgs: images};
     const request = axios.post(url, data,{
                         headers: {'x-access-token': localStorage.getItem("jwt")}
                         });
@@ -31,6 +31,9 @@ export function fetchUserCards(skip=0, deckId){
                         headers: {'x-access-token': localStorage.getItem("jwt")}
                         });
     return {type: GET_USER_CARDS,
+            originAPI: true,
+            bigLoading: true,
+            payload: request,
             deckId
             };
 }

@@ -7,6 +7,7 @@ import CroppedImage from "./util/croppedImage.jsx";
 import Truncate from "./util/truncate.jsx";
 import language from "./util/language.js";
 import {Link} from "react-router-dom";
+import ImageGallery from "./imageGallery.jsx";
 
 const style = {
     deck: {
@@ -37,13 +38,15 @@ class Deck extends Component{
 
     render(){
         const {deck} = this.props;
+        var img = {
+            src: deck.thumbnail.src,
+            onClick: ()=>this.props.pushToPath(deck._id, deck.name),
+            style:{cursor:"pointer"}
+        }
         return (
             <Card style={style.deck} className="col-lg-3 col-md-4 col-sm-12">
                 <CardMedia>
-                    <CroppedImage style={{cursor:"pointer"}}
-                                  onClick={()=>this.props.pushToPath(deck._id, deck.name)}
-                                  width="auto" height="200px"
-                                  src={deck.thumbnail.src} />
+                    <ImageGallery imgs={[img]}/>
                 </CardMedia>
                 <CardTitle titleStyle={{ wordBreak: "break-all" }} title={<a style={style.a} onClick={()=>this.props.pushToPath(deck._id, deck.name)}>{deck.name}</a>} subtitle={language(deck.lang)} />
                 <CardText>

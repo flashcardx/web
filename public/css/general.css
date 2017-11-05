@@ -115,24 +115,6 @@ a:visited {
   text-decoration: none;
 }
 
-.slick .prev {
-  display: inline;
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  z-index: 1;
-  cursor: pointer;
-}
-
-.slick .next {
-  display: inline;
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  z-index: 1;
-  cursor: pointer;
-}
-
 button:focus {outline:0;}
 
 .round{
@@ -145,55 +127,9 @@ button:focus {outline:0;}
   border-radius: 50%;
 }
 
-/* CSS used here will be applied after bootstrap.css */
-.badge-notify{
-   background:#d9534f;
-   position:relative;
-   top: -20px;
-   left: -35px;
-  }
-
-
-  .background-blue{
-    background: #f0ad4e;
-    border-color: #f0ad4e;
-  }
 
 
 
-  .background-blue:hover{
-    background: #c08a3e;
-    border-color: #c08a3e;
-  }
-
-
-  .activity{
-    border: 1px solid #d9534f;
-    text-align: left;
-}
-
-
-#activity-content{
-    height: 150px;
-    max-width: auto;
-    overflow: auto;
-    text-align: left;
-}
-
-
-
-
-.activity-padding{
-  padding-left:6px;
-}
-
-.seen{
-    background-color: white;
-}
-
-.unseen{
-    background-color:  #e0ebfd;
-}
 
 .top-buffer { margin-top:20px; }
 
@@ -201,10 +137,7 @@ button:focus {outline:0;}
   padding: 0px;
 }
 
-.blue-hover:hover{
-  background: #f0ad4e;
-  border-color: #f0ad4e;
-}
+
 
 .my-thumbnail{
       display:inline-block;

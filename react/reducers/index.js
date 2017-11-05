@@ -7,7 +7,7 @@ import {userDecksReducer, userDecksPathReducer} from "./reducer_deck.js"
 import {searchImagesReducer, imageProxyReducer} from "./reducer_img";
 import {reducer as formReducer} from "redux-form";
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   notificationCount: countReducer,
   isAuthenticated: authReducer,
   form: formReducer,
@@ -22,5 +22,11 @@ const rootReducer = combineReducers({
   searchImages: searchImagesReducer,
   imageReady: imageProxyReducer 
 });
+
+const rootReducer = (state, action) => {
+   if (action.type === 'SIGNOUT')
+      state = undefined
+  return appReducer(state, action);
+}
 
 export default rootReducer;
