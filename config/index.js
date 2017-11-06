@@ -14,7 +14,6 @@ module.exports = {
     apiLogin: api.login,
     apiGetUserCards: api.getUserCards,
     apiValidateToken: api.validateToken,
-    apiDeleteCard: api.deleteCard,
     apiSearchImage: api.searchImage,
     apiCreateUserCard: api.createUserCard,
     apiDiscoverCards: api.discoverCards,
@@ -79,5 +78,6 @@ module.exports = {
     cloudfrontUrl: keys.cloudfrontUrl,
     apiCreateUserDeck: api.createUserDeck,
     apiImageProxy: api.imageProxy,
-    apiDeleteUserDeck: api.deleteUserDeck
+    apiDeleteUserDeck: api.deleteUserDeck,
+    apiDeleteUserFlashcard: api.deleteUserFlashcard
 };

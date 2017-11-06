@@ -22,6 +22,7 @@ class FlashcardGalleryUserContainer extends Component{
         const cards = userDeckAdapter.getCards(this.props.decks, this.props.deckId);
         return (
                 <FlashcardGallery deckId={this.props.deckId}
+                                  onDelete={this.props.onDelete}
                                   fetch={this.fetchCards}
                                   cards={cards}/> 
         );

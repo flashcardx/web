@@ -4,6 +4,7 @@ import Radium from "radium";
 import {connect} from "react-redux";
 import {getUserInfo} from "../actions/user";
 import {successAlert} from "../actions/alerts";
+import {deleteUserFlashcard} from "../actions/card";
 import {deleteUserDeck, fetchUserDecks, pushToPath, dropFromPath} from "../actions/deck.js";
 import Button from 'material-ui/RaisedButton';
 import CreateUserDeckContainer from "../containers/createUserDeckContainer.jsx";
@@ -49,6 +50,7 @@ class Home extends Component{
         this.goToIndex = this.goToIndex.bind(this);
         this.renderPath = this.renderPath.bind(this);
         this.onDeckDelete = this.onDeckDelete.bind(this);
+        this.onFlashcardDelete = this.onFlashcardDelete.bind(this);
     }
 
     componentDidMount(){
@@ -68,6 +70,14 @@ class Home extends Component{
     onDeckDelete(deckId){
         this.props.deleteUserDeck(deckId, ()=>{
             this.props.successAlert("Deck deleted succesfully !");
+            this.forceUpdate();
+        });
+    }
+
+    onFlashcardDelete(flashcardId){
+        const deckId = deckPathAdapter.getLastIdFromPath(this.props.path);
+        this.props.deleteUserFlashcard(deckId, flashcardId, ()=>{
+            this.props.successAlert("Card deleted succesfully !");
             this.forceUpdate();
         });
     }
@@ -101,7 +111,7 @@ class Home extends Component{
                             <div className="col">
                                 <h2>Cards:</h2>
                                 <FlashcardGalleryUserContainer
-                                            dotsContainer=""
+                                            onDelete={this.onFlashcardDelete}
                                             deckId={parentId}
                                             decks={this.props.decks}/> 
                             </div>
@@ -148,4 +158,4 @@ function mapStateToProps(state){
     return {decks: state.userDecks, path: state.userDecksPath};
 }
 
-export default connect(mapStateToProps, {getUserInfo, deleteUserDeck, successAlert, fetchUserDecks, pushToPath, dropFromPath})(Radium(Home));
+export default connect(mapStateToProps, {getUserInfo, deleteUserDeck,deleteUserFlashcard, successAlert, fetchUserDecks, pushToPath, dropFromPath})(Radium(Home));
