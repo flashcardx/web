@@ -18,10 +18,8 @@ class CreateUserDeckContainer extends Component{
 
     constructor(props){
         super(props);
-        this.state = {modalIsOpen:false, pickedImages:[]};
+        this.state = {pickedImages:[]};
         this.onSubmit = this.onSubmit.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-        this.openModal = this.openModal.bind(this);
         this.onImgPick = this.onImgPick.bind(this);
         this.onImgUpload = this.onImgUpload.bind(this);
         this.onCrop = this.onCrop.bind(this);
@@ -31,7 +29,6 @@ class CreateUserDeckContainer extends Component{
     onSubmit(name, description, lang, callback){
         var img = this.state.pickedImages[0];
         this.props.createUserDeck(name, description, lang, img, this.props.parentId, ()=>{
-            this.closeModal();
             this.props.successAlert("Deck created succesfully !");
             callback();
         });
@@ -39,15 +36,9 @@ class CreateUserDeckContainer extends Component{
 
     onImgDelete(){
         this.setState({pickedImages:[]});
+        this.props.deleteImageReady();
     }
 
-    closeModal(){
-           this.setState({modalIsOpen:false});
-    }
-
-    openModal(){
-        this.setState({modalIsOpen:true});
-    }
 
     componentWillReceiveProps(nextProps){
         if(!_.isEqual(this.props.imageReady, nextProps.imageReady)){
@@ -76,9 +67,6 @@ class CreateUserDeckContainer extends Component{
                         onCrop={this.onCrop}
                         onImgDelete={this.onImgDelete}
                         pickedImages={this.state.pickedImages}
-                        modalIsOpen = {this.state.modalIsOpen}
-                        closeModal={this.closeModal}
-                        openModal={this.openModal}
                         onImgPick={this.onImgPick}
                         onImgUpload={this.onImgUpload}
                         formName={FORM_NAME}
@@ -92,7 +80,9 @@ class CreateUserDeckContainer extends Component{
 
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ deleteImageReady, createUserDeck, successAlert, proxyImgFromUrl, proxyImgFromData}, dispatch);
+  return bindActionCreators({ deleteImageReady, createUserDeck, successAlert,
+            proxyImgFromUrl, proxyImgFromData,
+           deleteImageReady}, dispatch);
 }
 
 function mapStateToProps(state){

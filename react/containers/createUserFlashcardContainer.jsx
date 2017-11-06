@@ -68,12 +68,13 @@ class CreateUserCardContainer extends Component{
     render(){
         return (
             <CreateFlashcard onCrop={this.onCrop}
-                        onImgDelete={this.onImgDelete}
-                        pickedImages={this.state.pickedImages}
-                        onImgPick={this.onImgPick}
-                        onImgUpload={this.onImgUpload}
-                        onSubmit={this.onSubmit}
-                        {...this.props}
+
+                             onImgDelete={this.onImgDelete}
+                             pickedImages={this.state.pickedImages}
+                             onImgPick={this.onImgPick}
+                             onImgUpload={this.onImgUpload}
+                             onSubmit={this.onSubmit}
+                             {...this.props}
                         />
         );
     }

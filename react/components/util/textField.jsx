@@ -56,7 +56,6 @@ class TextInput extends Component{
   render(){
         var props = this.state;
         let wrapperClass = 'form-group';
-        console.log("render text field value: ", this.props.value);
         return (
           <div style={props.style} className={wrapperClass}>
             {props.label && <label htmlFor={props.name}>{props.label}</label>}

@@ -200,7 +200,7 @@ class AddImage extends Component{
                     <Modal autoScroll={true} onClose={this.closeModal} modal={false} open={this.state.openModal} closeLabel="Cancel" title={this.renderTitle()}>
                         {this.renderPicker()}
                     </Modal>
-                    {this.renderButton()}
+                        {this.renderButton()}
             </div>
         );
     }

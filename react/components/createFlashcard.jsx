@@ -43,7 +43,7 @@ class CreateFlashcard extends Component{
 
     closeModal(){
            this.setState({modalIsOpen:false});
-           this.onImgDelete();
+           this.restartForm();
     }
 
     restartForm(){
@@ -54,6 +54,7 @@ class CreateFlashcard extends Component{
     }
 
     openModal(){
+        this.restartForm();//resets images(otherwise old images could be displayed when opening modal)
         this.setState({modalIsOpen:true});
     }
 
@@ -205,7 +206,7 @@ class CreateFlashcard extends Component{
                         );
         return (
             <div style={{"display":"inline-block","marginRight":"20px"}}>
-                <Modal titleStyle={{backgroundColor:"#5cb85c", marginBottom:"5px"}} titleObject={titleObject} autoScroll={true} onClose={this.closeModal} modal={false} open={this.state.modalIsOpen} closeLabel="Cancel" title="Create new card">
+                <Modal titleStyle={{backgroundColor:"#5cb85c", padding:"10px 10px 10px 15px", marginBottom:"10px"}} titleObject={titleObject} autoScroll={true} onClose={this.closeModal} modal={false} open={this.state.modalIsOpen} closeLabel="Cancel" title="New card">
                     {this.renderForm()}
                 </Modal>
                 <RaisedButton onClick={this.openModal} labelColor="#ffffff" disabled={this.props.bigLoading} backgroundColor="#66b543" label="Create card" />

@@ -51,7 +51,7 @@ class CreateDeck extends Component{
 
     constructor(props){
         super(props);
-        this.state = {form:{name:"", description:"", lang:"", errorMsj:null}};
+        this.state = {modalIsOpened:false, form:{name:"", description:"", lang:"", errorMsj:null}};
         this.renderForm = this.renderForm.bind(this);
         this.onImgDelete = this.onImgDelete.bind(this);
         this.onCrop = this.onCrop.bind(this);
@@ -60,7 +60,27 @@ class CreateDeck extends Component{
         this.onChangeFormName = this.onChangeFormName.bind(this);
         this.onChangeFormDescription = this.onChangeFormDescription.bind(this);
         this.onChangeFormLang = this.onChangeFormLang.bind(this); 
-     }
+        this.closeModal = this.closeModal.bind(this);
+        this.openModal = this.openModal.bind(this);
+        this.reset = this.reset.bind(this);
+    }
+
+    reset(){
+        this.setState({form:{name:"", description:"", lang:"", errorMsj:null}}, ()=>{
+             this.refs.form.reset();
+        });
+        this.props.onImgDelete();
+    }
+
+    closeModal(){
+           this.setState({modalIsOpened:false});
+           this.reset();
+    }
+
+    openModal(){
+        this.reset();
+        this.setState({modalIsOpened:true});     
+    }
 
      onCrop(r){
       
@@ -104,14 +124,7 @@ class CreateDeck extends Component{
         if(this.props.pickedImages.length == 0)
             return this.setState({errorMsg:"Please chose or upload an image for your deck"});
         this.props.onSubmit(name, description, lang, ()=>{
-            this.restartForm();
-        });
-    }
-
-    restartForm(){
-        this.onImgDelete();
-        this.setState({form:{name:"", description: "", lang:""}}, ()=>{
-            this.refs.form.reset();
+            this.closeModal();
         });
     }
 
@@ -202,10 +215,10 @@ class CreateDeck extends Component{
                         );
         return (
             <div style={{"display":"inline-block","marginRight":"20px"}}>
-                <Modal titleStyle={{backgroundColor:"#f4424b", marginBottom:"5px"}} titleObject={titleObject} autoScroll={true} onClose={this.props.closeModal} modal={false} open={this.props.modalIsOpen} closeLabel="Cancel" title="Create new deck">
+                <Modal titleStyle={{backgroundColor:"#f4424b", padding:"10px 10px 10px 15px", marginBottom:"10px"}} titleObject={titleObject} autoScroll={true} onClose={this.closeModal} modal={false} open={this.state.modalIsOpened} closeLabel="Cancel" title="New deck">
                     {this.renderForm()}
                 </Modal>
-                <RaisedButton onClick={this.props.openModal} labelColor="#ffffff" disabled={this.props.bigLoading} backgroundColor="#f4424b" label="Create deck" />
+                <RaisedButton onClick={this.openModal} labelColor="#ffffff" disabled={this.props.bigLoading} backgroundColor="#f4424b" label="Create deck" />
             </div>
         );
     }

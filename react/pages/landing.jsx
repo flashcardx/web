@@ -106,7 +106,7 @@ class Landing extends Component{
                                 onChange={recaptchaChange}
                             />
                             <nav style={style.base} className="navbar navbar-expand-lg">
-                                <a style={style.logo} className="navbar-brand" href="#">FlashCardX<sub style={style.beta}>BETA</sub></a>
+                                <a style={style.logo} className="navbar-brand" href="#">FlashcardX<sub style={style.beta}>BETA</sub></a>
                                 <SigninForm captchaExecute={signinExecute} className="form-inline my-2 my-lg-0"/>
                                 </nav>
                                 <div className="container">
