@@ -56,7 +56,7 @@ class FlashcardGallery extends Component{
         if(!card)
             return null;
         return (
-            <Flashcard key={card._id} card={card}/>
+            <Flashcard key={card._id} onDelete={this.props.onDelete} card={card}/>
         );
     }
 
@@ -67,10 +67,8 @@ class FlashcardGallery extends Component{
     }
 
     increasePage(){
-        console.log("increase page");
         if(this.state.isFetching)
             return;
-        console.log("is about to fetch");
         this.setState({isFetching: true, skip:(this.state.skip+CARDS_PER_PAGE)}, ()=>{
             this.props.fetch(this.state.skip);
         });

@@ -58,11 +58,16 @@ export default {
         return {...newState, ...state};
     },
     deleteDeck:(state, deckId)=>{
-    // deck is not deleted fron children array, the component should
-    // re fetch the parent decks before diplaying them
-    var newState = {...state};
-    delete newState[deckId];
-    return newState;
+        // deck is not deleted fron children array, the component should
+        // re fetch the parent decks before diplaying them
+        var newState = {...state};
+        delete newState[deckId];
+        return newState;
+    },
+    deleteFlashcard: (state, deckId, flashcardId)=>{
+        var newState = {...state};
+        delete newState[deckId].cards[flashcardId];
+        return newState;
     },
     getDecks:(state, parentId)=>{
         var decks = [];
