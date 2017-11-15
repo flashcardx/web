@@ -39,7 +39,7 @@ class Deck extends Component{
     render(){
         const {deck} = this.props;
         var img = {
-            src: deck.thumbnail.src,
+            src: deck.img.src,
             onClick: ()=>this.props.pushToPath(deck._id, deck.name),
             style:{cursor:"pointer"}
         }

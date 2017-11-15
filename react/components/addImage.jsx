@@ -139,7 +139,7 @@ class AddImage extends Component{
                           disableClick={true}
                           multiple={false}
                           ref={node=>{this.dropzoneRef=node;}}
-                          maxSize={3000000}
+                          maxSize={5000000}
                           accept="image/*"
                           onDrop={this.onDrop.bind(this)}>
                     <div className="row">

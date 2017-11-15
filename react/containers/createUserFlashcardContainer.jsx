@@ -25,20 +25,22 @@ class CreateUserCardContainer extends Component{
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-       componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps){
             if(!_.isEqual(this.props.imageReady, nextProps.imageReady) && nextProps.imageReady){
                 var newImages = this.state.pickedImages.slice(); 
                 newImages.push(nextProps.imageReady);
                 return this.setState({pickedImages: newImages});
             }
-        }
+    }
 
-    onImgDelete(url){
-        if(!url)//delete all images if not url
-            this.setState({pickedImages: []});
+    onImgDelete(src){
+        console.log("src: ", src);
+        if(!src)//delete all images if not src
+            return this.setState({pickedImages: []});
         var newImages = this.state.pickedImages.slice();
-        var index = newImages.findIndex(i=>{return i.url == url});
+        var index = newImages.findIndex(i=>{return i.src == src});
         newImages.splice(index, 1);
+        console.log("new images: ", newImages);
         this.setState({pickedImages: newImages});
         this.props.deleteImageReady();
     }
@@ -68,7 +70,6 @@ class CreateUserCardContainer extends Component{
     render(){
         return (
             <CreateFlashcard onCrop={this.onCrop}
-
                              onImgDelete={this.onImgDelete}
                              pickedImages={this.state.pickedImages}
                              onImgPick={this.onImgPick}

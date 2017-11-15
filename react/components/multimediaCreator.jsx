@@ -65,20 +65,20 @@ class MultimediaCreator extends Component{
         this.setState({reloadImage: null});
     }
 
-     renderPickedImage(img){
-         if(!img)
+    renderPickedImage(img){
+        if(!img)
             return null;
         return (
             <PreviewImage   onDelete={this.props.onImgDelete}
                             cropImg={this.openCropper}
-                            onReload={()=>this.reloadImage(img.url)}
-                            key={img.url}
+                            onReload={()=>this.reloadImage(img.src)}
+                            key={img.src}
                             img={img}/>
         );
     }
 
-    reloadImage(url){
-        this.setState({reloadImage:url});
+    reloadImage(src){
+        this.setState({reloadImage:src});
     }
 
     openCropper(img){

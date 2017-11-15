@@ -9,8 +9,7 @@ export default Radium(props=>{
    var styleWrapperImg = {
         position: "relative",
         width: width,
-        height: height,
-        overflow: "hidden"
+        height: height
     };
 
     var styleImg = {

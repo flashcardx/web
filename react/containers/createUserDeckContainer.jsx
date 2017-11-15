@@ -42,7 +42,12 @@ class CreateUserDeckContainer extends Component{
 
     componentWillReceiveProps(nextProps){
         if(!_.isEqual(this.props.imageReady, nextProps.imageReady)){
-            this.setState({pickedImages: [nextProps.imageReady]});
+            if(nextProps.imageReady) 
+                this.setState({pickedImages: [nextProps.imageReady]});
+            else 
+                this.setState({pickedImages: []});
+            
+
         }
     }
 
@@ -81,8 +86,7 @@ class CreateUserDeckContainer extends Component{
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ deleteImageReady, createUserDeck, successAlert,
-            proxyImgFromUrl, proxyImgFromData,
-           deleteImageReady}, dispatch);
+            proxyImgFromUrl, proxyImgFromData}, dispatch);
 }
 
 function mapStateToProps(state){

@@ -61,8 +61,8 @@ class CreateFlashcard extends Component{
      onCrop(r){
     }
 
-    onImgDelete(url){
-            this.props.onImgDelete(url);
+    onImgDelete(src){
+            this.props.onImgDelete(src);
     }
 
     renderField({

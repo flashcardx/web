@@ -56,12 +56,10 @@ class DeckGallery extends Component{
     renderDeck(deck){
         if(!deck)
             return null;
-        if(deck.thumbnail)
-            deck.thumbnail.src = CLOUDFRONT_URL + deck.thumbnail.hash;
-        else
-            deck.thumbnail = {src:"/assets/img/default.jpg"};
         return (
-            <Deck key={deck._id} pushToPath={this.props.pushToPath} onDelete={this.props.onDelete} deck={deck}/>
+            <span key={deck._id}>
+                <Deck pushToPath={this.props.pushToPath} onDelete={this.props.onDelete} deck={deck}/>
+            </span>
         );
     }
 

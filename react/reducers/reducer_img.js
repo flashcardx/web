@@ -1,8 +1,6 @@
 import {SEARCH_IMG, RESET_SEARCH_IMAGES, IMAGE_PROXY, DELETE_IMAGE_READY} from "../actions/types";
 import _ from "lodash";
 import config from "../../config";
-const CLOUDFRONT_URL = config.cloudfrontUrl;
-
 
 export function searchImagesReducer(state=[], action){
     switch (action.type) {
@@ -15,13 +13,10 @@ export function searchImagesReducer(state=[], action){
 
 export function imageProxyReducer(state=null, action){
     switch (action.type) {
-        case IMAGE_PROXY:
-                            console.log("payload: ", action.payload); 
-                            if(action.payload.success == false)
+        case IMAGE_PROXY:   if(action.payload.success == false)
                                 return null;
-                            const url = CLOUDFRONT_URL + action.payload.hash;
                             return {
-                                    url:url,
+                                    src: action.payload.src,
                                     hash: action.payload.hash,
                                     width: action.width,
                                     height: action.height

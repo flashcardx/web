@@ -8,8 +8,6 @@ import css from "../../public/css/imageGallery.css";
 export default Radium(function({imgs}){
     var bottomFiller = null;
     var content = null;
-   // if(imgs.length <= 1)
-       // bottomFiller = <div style={{padding:"17px"}}></div>
     if(_.isEmpty(imgs))
         content = <CroppedImage width="auto"
                 height="200px" src="/assets/img/no-image.png"/>

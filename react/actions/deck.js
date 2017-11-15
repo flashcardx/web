@@ -30,7 +30,7 @@ export function createUserDeck(name, description, lang, img, parentId, callback)
                   description,
                   lang,
                   parentId,
-                  thumbnail: img};
+                  img};
     const request = axios.post(CREATE_USER_DECK_URL, data,{
                         headers: {'x-access-token': localStorage.getItem("jwt")}
                         });

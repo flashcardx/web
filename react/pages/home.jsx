@@ -41,9 +41,7 @@ const style = {
     }
 }
 
-
 class Home extends Component{
-
     constructor(props){
         super(props);
         this.pushToPath = this.pushToPath.bind(this);

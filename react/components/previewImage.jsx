@@ -59,13 +59,13 @@ class PreviewImage extends Component{
         const {img} = this.props;
         return (
             <div style={{display:"inline"}}>
-                <div style={style.imgWrap} key={img.url}>
-                    <CroppedImage width="180px" height="180px" src={img.url}/>
-                    {Radium.getState(this.state, img.url, ':hover') && (
+                <div style={style.imgWrap} key={img.src}>
+                    <CroppedImage width="180px" height="180px" src={img.src}/>
+                    {Radium.getState(this.state, img.src, ':hover') && (
                             <span style={style.imgBtns}>
                                 <i onClick={this.props.onReload} style={style.imgBtn} className="fa fa-repeat" aria-hidden="true"></i>
                                 <i onClick={()=>this.cropImg(img)} style={style.imgBtn} className="fa fa-crop" aria-hidden="true"></i>
-                                <i onClick={()=>this.props.onDelete(img.url)} style={style.imgBtn} className="fa fa-trash" aria-hidden="true"></i>
+                                <i onClick={()=>this.props.onDelete(img.src)} style={style.imgBtn} className="fa fa-trash" aria-hidden="true"></i>
                             </span>
                     )}
                 </div>

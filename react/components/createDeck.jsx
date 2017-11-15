@@ -129,6 +129,7 @@ class CreateDeck extends Component{
     }
 
     renderForm(){
+        console.log("rendering multimedia creator: ", this.props.pickedImages);
         const {handleSubmit} = this.props;
         return (
             <div className="container">
