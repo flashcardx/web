@@ -69,7 +69,7 @@ class AddImage extends Component{
                                        labelColor="#ffffff"
                                        disabled={this.props.disabled}
                                        backgroundColor="#4286f4"
-                                       label="Upload" />
+                                       label="Subi la tuya" />
                     </div>
                     <div className="col-8">
                         {this.props.titleModal}
@@ -111,7 +111,7 @@ class AddImage extends Component{
 
     onDrop(files, rejectedFiles) {
         if(!_.isEmpty(rejectedFiles)){
-            return this.props.infoAlert("Can not upload file, remenber you can only upload images with size up to 4mb!");
+            return this.props.infoAlert("No se pudo cargar la imagen, recorda que el tamaño maximo permitido por imagen es de 7Mb");
         }
         this.closeModal();
         const file = files[0];
@@ -139,7 +139,7 @@ class AddImage extends Component{
                           disableClick={true}
                           multiple={false}
                           ref={node=>{this.dropzoneRef=node;}}
-                          maxSize={5000000}
+                          maxSize={7000000}
                           accept="image/*"
                           onDrop={this.onDrop.bind(this)}>
                     <div className="row">
@@ -183,7 +183,7 @@ class AddImage extends Component{
             <span>
                 <i className="fa fa-picture-o" aria-hidden="true"
                     style={style.btn}
-                    data-tip="Add image"
+                    data-tip="Agregar imagen"
                     onClick={this.openModal}>
                 </i>       
             </span>

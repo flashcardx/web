@@ -64,7 +64,7 @@ class PreviewImage extends Component{
                     {Radium.getState(this.state, img.src, ':hover') && (
                             <span style={style.imgBtns}>
                                 <i onClick={this.props.onReload} style={style.imgBtn} className="fa fa-repeat" aria-hidden="true"></i>
-                                <i onClick={()=>this.cropImg(img)} style={style.imgBtn} className="fa fa-crop" aria-hidden="true"></i>
+                             {/* <i onClick={()=>this.cropImg(img)} style={style.imgBtn} className="fa fa-crop" aria-hidden="true"></i>*/}
                                 <i onClick={()=>this.props.onDelete(img.src)} style={style.imgBtn} className="fa fa-trash" aria-hidden="true"></i>
                             </span>
                     )}

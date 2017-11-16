@@ -8,6 +8,7 @@ import Truncate from "./util/truncate.jsx";
 import language from "./util/language.js";
 import {Link} from "react-router-dom";
 import ImageGallery from "./imageGallery.jsx";
+import EditUserDeckContainer from "../containers/editUserDeckContainer.jsx";
 
 const style = {
     deck: {
@@ -57,12 +58,12 @@ class Deck extends Component{
                     </Truncate>
                 </CardText>
                 <CardActions>
-                    <IconButton onClick={()=>this.props.onDelete(deck._id)} iconStyle={{ color: "red" }} data-tip="Delete" iconClassName="material-icons">
-                        clear
-                    </IconButton>
-                    <IconButton iconStyle={{ color: "#FF664C" }} data-tip="Edit" iconClassName="material-icons">
-                        create
-                    </IconButton>
+                    <div className="row">
+                        <IconButton onClick={()=>this.props.onDelete(deck._id)} iconStyle={{ color: "red" }} data-tip="Delete" iconClassName="material-icons">
+                            clear
+                        </IconButton>
+                        <EditUserDeckContainer deck={deck}/>
+                    </div>
                 </CardActions>
             </Card>
         );

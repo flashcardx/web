@@ -14,11 +14,11 @@ import {successAlert, infoAlert, showLoading, hideLoading} from "../actions/aler
 import Formsy from 'formsy-react';
 import {MyOwnInput, MyOwnTextarea, MyOwnSelect} from "./util/form.jsx";
 import MultimediaCreator from "./multimediaCreator.jsx";
-
+import IconButton from 'material-ui/IconButton';
 import _ from "lodash";
 
 function langOptions(){
-        return [{value:"", label:"Choose a language for the deck"},
+        return [{value:"", label:"Elige un lenguaje para tu mazo"},
                 {label: "English", value:"en"},
                 {label: "Español", value:"es"},
                 {label: "Čeština", value:"cs"},
@@ -51,7 +51,7 @@ class CreateDeck extends Component{
 
     constructor(props){
         super(props);
-        this.state = {modalIsOpened:false, form:{name:"", description:"", lang:"", errorMsj:null}};
+        this.state = {form:{name:props.name, description:props.description, lang:props.lang, errorMsj:null}};
         this.renderForm = this.renderForm.bind(this);
         this.onImgDelete = this.onImgDelete.bind(this);
         this.onCrop = this.onCrop.bind(this);
@@ -61,7 +61,6 @@ class CreateDeck extends Component{
         this.onChangeFormDescription = this.onChangeFormDescription.bind(this);
         this.onChangeFormLang = this.onChangeFormLang.bind(this); 
         this.closeModal = this.closeModal.bind(this);
-        this.openModal = this.openModal.bind(this);
         this.reset = this.reset.bind(this);
     }
 
@@ -73,13 +72,10 @@ class CreateDeck extends Component{
     }
 
     closeModal(){
-           this.setState({modalIsOpened:false});
-           this.reset();
-    }
-
-    openModal(){
-        this.reset();
-        this.setState({modalIsOpened:true});     
+           if(this.props.resetOnClose){
+                this.reset();
+           }
+           this.props.closeModal();
     }
 
      onCrop(r){
@@ -122,14 +118,13 @@ class CreateDeck extends Component{
 
     onSubmit({name, description, lang}){
         if(this.props.pickedImages.length == 0)
-            return this.setState({errorMsg:"Please chose or upload an image for your deck"});
+            return this.setState({errorMsg:"Tu mazo debe necesita imagen de portada!"});
         this.props.onSubmit(name, description, lang, ()=>{
             this.closeModal();
         });
     }
 
     renderForm(){
-        console.log("rendering multimedia creator: ", this.props.pickedImages);
         const {handleSubmit} = this.props;
         return (
             <div className="container">
@@ -139,8 +134,8 @@ class CreateDeck extends Component{
                                         <div className="col-sm-12">
                                                 <MyOwnInput
                                                 validationErrors={{
-                                                    minLength: "deck's name must be at least 2 characters long",
-                                                    isDefaultRequiredValue: "Please enter the deck's name"
+                                                    minLength: "El nombre de tu mazo debe tener al menos 2 caracteres",
+                                                    isDefaultRequiredValue: "Tu mazo debe contener un nombre"
                                                     }}
                                                 validations="minLength:2"
                                                 name="name"
@@ -148,7 +143,7 @@ class CreateDeck extends Component{
                                                 onChange={this.onChangeFormName}
                                                 type="text"
                                                 className="form-control"
-                                                placeholder="deck's name"
+                                                placeholder="Nombre del mazo"
                                                 value={this.state.form.name}
                                             />
                                         </div>
@@ -157,8 +152,8 @@ class CreateDeck extends Component{
                                         <div className="col-sm-12">
                                             <MyOwnTextarea
                                                 validationErrors={{
-                                                    minLength: "deck's description must be at least 4 characters long",
-                                                    isDefaultRequiredValue: "Please enter the deck's description"
+                                                    minLength: "La descripcion de tu mazo debe contener almenos 4 caracteres",
+                                                    isDefaultRequiredValue: "Tu mazo necesita una descripcion!"
                                                     }}
                                                 required
                                                 validations="minLength:4"
@@ -167,23 +162,30 @@ class CreateDeck extends Component{
                                                 className="form-control"
                                                 name="description"
                                                 type="text"
-                                                placeholder="Description, What kind of content will this deck hold?"
+                                                placeholder="Descripcion, ¿que tipo/tema de contenido vas a guardar en este mazo?"
                                             />
                                         </div>
                                     </div>
                                     <div className="form-group">
                                         <div className="col-sm-12">
-                                            <MyOwnSelect
-                                                 validationErrors={{
-                                                    isDefaultRequiredValue: "Please select a language for the deck"
-                                                    }}
-                                                required
-                                                name="lang"
-                                                options={langOptions()}
-                                                onChange={this.onChangeFormLang}
-                                                value={this.state.form.lang}
-                                            />
-                                        </div>
+                                            <div className="row">
+                                                <div className="col">
+                                                    <MyOwnSelect
+                                                        validationErrors={{
+                                                            isDefaultRequiredValue: "Por favor elegí un idioma para tú mazo"
+                                                            }}
+                                                        required
+                                                        name="lang"
+                                                        options={langOptions()}
+                                                        onChange={this.onChangeFormLang}
+                                                        value={this.state.form.lang}
+                                                    />
+                                                </div>
+                                                <div className="col">
+                                                    <i className="fa fa-info-circle" style={{margin:"5px"}} aria-hidden="true" data-for="modal-tooltip"	 data-tip="El lenguaje en el que vas a crear los titulos de las fichas adentro de este mazo, <br/> es importante ya que otros servicios como por ejemplo la &quot;pronunciacion automatica&quot; se basan en este campo. <br/>Si experimentas problemas relacionados al idioma puede que tengas que cambiar este campo"></i>
+                                                </div>
+                                            </div>                                           
+                                            </div>
                                     </div>
                         </Formsy.Form>
                     </div>
@@ -202,12 +204,11 @@ class CreateDeck extends Component{
             </div>
         );
     }
-
     render(){
         var titleObject = (
                          <RaisedButton
                                 disabled={this.props.bigLoading}
-                                label="Create"
+                                label={this.props.buttonTitle}
                                 primary={true}
                                 type="submit"
                                 form="deckForm"
@@ -216,10 +217,9 @@ class CreateDeck extends Component{
                         );
         return (
             <div style={{"display":"inline-block","marginRight":"20px"}}>
-                <Modal titleStyle={{backgroundColor:"#f4424b", padding:"10px 10px 10px 15px", marginBottom:"10px"}} titleObject={titleObject} autoScroll={true} onClose={this.closeModal} modal={false} open={this.state.modalIsOpened} closeLabel="Cancel" title="New deck">
+                <Modal titleStyle={{backgroundColor:"#f4424b", padding:"10px 10px 10px 15px", marginBottom:"10px"}} titleObject={titleObject} autoScroll={true} onClose={this.closeModal} modal={false} open={this.props.modalOpened} closeLabel="Cancelar" title={this.props.title}>
                     {this.renderForm()}
                 </Modal>
-                <RaisedButton onClick={this.openModal} labelColor="#ffffff" disabled={this.props.bigLoading} backgroundColor="#f4424b" label="Create deck" />
             </div>
         );
     }

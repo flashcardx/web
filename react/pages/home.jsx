@@ -67,7 +67,7 @@ class Home extends Component{
 
     onDeckDelete(deckId){
         this.props.deleteUserDeck(deckId, ()=>{
-            this.props.successAlert("Deck deleted succesfully !");
+            this.props.successAlert("Mazo eliminado exitosamente!");
             this.forceUpdate();
         });
     }
@@ -75,7 +75,7 @@ class Home extends Component{
     onFlashcardDelete(flashcardId){
         const deckId = deckPathAdapter.getLastIdFromPath(this.props.path);
         this.props.deleteUserFlashcard(deckId, flashcardId, ()=>{
-            this.props.successAlert("Card deleted succesfully !");
+            this.props.successAlert("Ficha eliminada exitosamente!");
             this.forceUpdate();
         });
     }
@@ -92,12 +92,14 @@ class Home extends Component{
                     <div style={style.row1} >
                         <div className="container">
                             <div className="row">
-                                <div className="col-lg-6  col-md-12 col-sm-12">
+                                <div className="col-lg-8  col-md-7 col-sm-12">
                                      {this.renderPath()}
                                 </div>
-                                <div className="text-center col-lg-6 col-md-12 col-sm-12">
-                                    {createCard}
-                                    <CreateUserDeckContainer parentId={parentId}/>                          
+                                <div className="text-center col-lg-4 col-md-5 col-sm-12">
+                                    <div className="row">
+                                        {createCard}
+                                        <CreateUserDeckContainer parentId={parentId}/>                          
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -107,7 +109,7 @@ class Home extends Component{
                       <div className="container">
                         <div style={style.rowContent}  className="row">
                             <div className="col">
-                                <h2>Cards:</h2>
+                                <h2>Fichas:</h2>
                                 <FlashcardGalleryUserContainer
                                             onDelete={this.onFlashcardDelete}
                                             deckId={parentId}
@@ -119,7 +121,7 @@ class Home extends Component{
                     <div className="container">
                         <div style={style.rowContent} className="row">
                             <div className="col">
-                                <h2>Decks:</h2>
+                                <h2>Mazos:</h2>
                                 <DeckGalleryUserContainer
                                              pushToPath={this.pushToPath}
                                              onDelete={this.onDeckDelete}

@@ -38,21 +38,21 @@ class MultimediaCreator extends Component{
                                                       />
                                         </div>);
         }
-        if(this.props.drawing){
+       /* if(this.props.drawing){
             btns.push(<div key={2} className="col-3 col-sm-3">
                                 <AddDrawing />
                       </div>);
-        }
-        if(this.props.audio){
+        }*/
+       /* if(this.props.audio){
             btns.push( <div key={3} className="col-3 col-sm-3">
                                 <AddAudio />
                         </div>);
-        }
-      if(this.props.video){
+        }*/
+      /*if(this.props.video){
           btns.push(<div key={4} className="col-3 col-sm-3">
                             <AddVideo />
                     </div>);
-      }
+      }*/
         return btns;
     }
 

@@ -79,5 +79,6 @@ module.exports = {
     apiCreateUserDeck: api.createUserDeck,
     apiImageProxy: api.imageProxy,
     apiDeleteUserDeck: api.deleteUserDeck,
-    apiDeleteUserFlashcard: api.deleteUserFlashcard
+    apiDeleteUserFlashcard: api.deleteUserFlashcard,
+    apiEditUserDeck: api.editUserDeck
 };

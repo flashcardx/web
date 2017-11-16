@@ -81,7 +81,7 @@ class Modal extends Component{
                         open={this.state.opened}
                         onRequestClose={this.handleClose}
                         autoScrollBodyContent={this.props.autoScroll}>
-                        <ReactTooltip delayShow={500}/>
+                        <ReactTooltip html={true}  data-multiline={true} id="modal-tooltip" delayShow={500}/>
                             {this.props.children}
                 </Dialog>
         );

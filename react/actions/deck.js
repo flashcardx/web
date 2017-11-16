@@ -4,10 +4,12 @@ import {FETCH_USER_DECKS,
         CREATE_USER_DECK,
         DELETE_USER_DECK,
         PUSH_TO_USER_DECK_PATH,
-        DROP_FROM_USER_DECK_PATH} from "./types";
+        DROP_FROM_USER_DECK_PATH,
+        EDIT_USER_DECK} from "./types";
 const FETCH_USER_DECKS_URL = config.apiGetUserDecks;
 const CREATE_USER_DECK_URL = config.apiCreateUserDeck;
 const DELETE_USER_DECK_URL = config.apiDeleteUserDeck;
+const EDIT_USER_DECK_URL = config.apiEditUserDeck;
 import deckPathAdapter from "../adapters/deckPathAdapter.js";
 
 export function fetchUserDecks(skip=0, path=[]){
@@ -39,6 +41,28 @@ export function createUserDeck(name, description, lang, img, parentId, callback)
                 callback();  
     });
     return {type: CREATE_USER_DECK,
+            originAPI: true,
+            bigLoading: true,
+            payload: request,
+            parentId
+            };
+}
+
+export function editUserDeck(name, description, lang, img, deckId, parentId, callback){
+        const data = {name,
+                      description,
+                      lang,
+                      parentId,
+                      img};
+    const url = EDIT_USER_DECK_URL + deckId;
+    const request = axios.post(url, data,{
+                        headers: {'x-access-token': localStorage.getItem("jwt")}
+                        });
+    request.then(r=>{
+            if(r.data.success)
+                callback();  
+    });
+    return {type: EDIT_USER_DECK,
             originAPI: true,
             bigLoading: true,
             payload: request,

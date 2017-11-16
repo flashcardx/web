@@ -78,7 +78,7 @@ class FlashcardGallery extends Component{
     renderCards(cards){
         const parentId = this.props.deckId;
         if(this.state.wasRendered && _.isEmpty(cards))
-            return <p>You don't have cards in this location :(</p>
+            return <p>No tenes fichas en esta ruta :(</p>
         var renderedCards = [];
         cards.forEach(card=>{
             renderedCards.push(this.renderCard(card));
@@ -92,7 +92,7 @@ class FlashcardGallery extends Component{
 
     render(){
         if(!this.state.wasRendered && _.isEmpty(this.props.cards))
-            return <p>Loading...</p>
+            return <p>Cargando...</p>
         return (            
             <div style={{overflow:"hidden"}}>
                 {this.renderCards(this.props.cards)}

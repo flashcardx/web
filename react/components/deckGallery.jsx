@@ -81,7 +81,7 @@ class DeckGallery extends Component{
         const parentId = deckPathAdapter.getLastIdFromPath(path);
         const decksArray = userDeckAdapter.getDecks(decks, parentId);
         if(this.state.wasRendered && _.isEmpty(decksArray))
-            return <p>You don't have decks in this location :(</p>
+            return <p>Parece que no tenes mazos en esta ruta :(</p>
         var renderedDecks = [];
         decksArray.forEach(deck=>{
             renderedDecks.push(this.renderDeck(deck));

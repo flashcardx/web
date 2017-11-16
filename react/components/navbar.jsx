@@ -51,9 +51,9 @@ class Navbar extends Component{
             </div>
             <div className="col-9">
                 <Tabs tabItemContainerStyle={style.colorBase} value={this.state.active}>
-                            <Tab  value="my collection" data-route="/" label="MY COLLECCION"
+                            <Tab  value="my collection" data-route="/" label="Mi colección"
                                 onActive={this.handleActive}/>
-                            <Tab  value="practice" label="PRACTICE"
+                            <Tab  value="practice" label="Practica"
                                 data-route="/practice"
                                 onActive={this.handleActive}/>
                 </Tabs>
@@ -80,10 +80,10 @@ class Navbar extends Component{
                 targetOrigin={{horizontal: 'right', vertical: 'top'}}
                 anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             >
-                <Link to="/"><MenuItem primaryText="MY COLLECTION" /></Link>
-                <Link to="/practice"><MenuItem primaryText="PRACTICE" /></Link>
-                <Link to="/settings"><MenuItem primaryText="SETTINGS" /></Link>
-                <Link to="/signout"> <MenuItem primaryText="SIGN OUT" /></Link>
+                <Link to="/"><MenuItem primaryText="Mi colección" /></Link>
+                <Link to="/practice"><MenuItem primaryText="Practica" /></Link>
+                <Link to="/settings"><MenuItem primaryText="Configuración" /></Link>
+                <Link to="/signout"> <MenuItem primaryText="Cerrar sesión" /></Link>
             </IconMenu>
         );
     }
@@ -91,7 +91,7 @@ class Navbar extends Component{
     renderMobile(){
         return (
              <AppBar
-                title="FlashCardX"
+                title="FlashcardX"
                 style={style.colorBase}
                 iconElementLeft = {this.mobileMenu()}
                 iconElementRight= {<NotificationBadge/>}
@@ -120,12 +120,12 @@ const Options = connect(null, {signout})(props=>{
     return (
         <IconMenu
                         style={style.colorBase}
-                        iconButtonElement={<IconButton data-tip="Options"><MoreVertIcon /></IconButton>}
+                        iconButtonElement={<IconButton data-tip="Opciones"><MoreVertIcon /></IconButton>}
                         anchorOrigin={{horizontal: 'middle', vertical: 'bottom'}}
                         targetOrigin={{horizontal: 'middle', vertical: 'top'}}
                         >
-                        <MenuItem onClick={()=>props.history.push("/settings")} primaryText="Settings" />
-                        <MenuItem onClick={()=>props.history.push("/signout")} primaryText="Sign out" />
+                        <MenuItem onClick={()=>props.history.push("/settings")} primaryText="Configuración" />
+                        <MenuItem onClick={()=>props.history.push("/signout")} primaryText="Cerrar sesión" />
         </IconMenu>
     );
 })
