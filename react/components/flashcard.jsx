@@ -4,6 +4,9 @@ import _ from "lodash";
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import CroppedImage from "./util/croppedImage.jsx";
 import Truncate from "./util/truncate.jsx";
 import language from "./util/language.js";
@@ -33,6 +36,14 @@ const style = {
         ":hover":{
             textDecoration: "underline"
         }
+    },
+    speaker:{
+        fontSize:"18px",
+        marginLeft:"10px",
+        cursor:"pointer",
+        ":hover":{
+            color:"red"
+        }
     }
 }
 
@@ -42,10 +53,20 @@ class Flashcard extends Component{
 
     renderTitle(card){
         return (<div className="row">
-                    <div className="col-8">
+                    <div className="col-9">
                         {card.name}
-                        <i style={{fontSize:"18px", margin:"10px"}} className="fa fa-volume-up" aria-hidden="true"></i>
+                        <i style={style.speaker} className="fa fa-volume-up" aria-hidden="true"></i>
                     </div>
+                    <div className="col-3">
+                         <IconMenu
+                                iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                                anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+                                targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                                >
+                                <MenuItem primaryText="Mover" />
+                        </IconMenu>
+                    </div>           
+                    
                 </div>);
     }
 
