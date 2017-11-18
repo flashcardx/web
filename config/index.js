@@ -22,7 +22,7 @@ module.exports = {
     apiToggleAutocomplete: api.toggleAutocomplete,
     apiExamples: api.examples,
     apiDefine: api.define,
-    apiUpdateCard: api.updateCard,
+    apiEditCard: api.editCard,
     apiGetCategories: api.getCategories,
     apiGetUserPlan: api.getUserPlan,
     apiGetUserLang: api.getUserLang,

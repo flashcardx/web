@@ -56,7 +56,7 @@ class FlashcardGallery extends Component{
         if(!card)
             return null;
         return (
-            <Flashcard key={card._id} onDelete={this.props.onDelete} card={card}/>
+            <Flashcard key={card._id} onDelete={this.props.onDelete} deckId={this.props.deckId} card={card}/>
         );
     }
 

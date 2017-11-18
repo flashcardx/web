@@ -59,7 +59,6 @@ export default {
     },
     replaceDeck: (state, deck, parentId)=>{
         var newState = {...state};
-        console.log("replace with deck: ", deck);
         newState[deck._id] = deck;
         return newState;
     },
@@ -102,7 +101,6 @@ export default {
     },
     insertNewCard: (state, card, deckId)=>{
         if(!deckId){
-            console.error("insert new card didn't get deckId");    
             return state;
         }
         var newState = _.clone(state);
@@ -115,11 +113,18 @@ export default {
         }        
         return newState;
     },
+    replaceCard: (state, card, deckId)=>{
+        if(!deckId){
+            return state;
+        }
+        var newState = _.clone(state);
+        newState[deckId].cards[card._id] = card;
+        return newState;
+    },
     insertMoreCards: (state, cards, deckId)=>{
         if(!cards)
             return state;
         if(!deckId){
-            console.error("insert new cards didn't get deckId");    
             return state;
         }
         var newState = _.clone(state);

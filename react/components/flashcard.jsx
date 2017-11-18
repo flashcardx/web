@@ -9,6 +9,7 @@ import Truncate from "./util/truncate.jsx";
 import language from "./util/language.js";
 import {Link} from "react-router-dom";
 import ImageGallery from "./imageGallery.jsx";
+import EditUserFlashcardContainer from "../containers/editUserFlashcardContainer.jsx";
 
 const style = {
     card: {
@@ -51,7 +52,7 @@ class Flashcard extends Component{
     generateImgs(imgs){
         var r = [];
         imgs.forEach(img=>{
-            r.push({src: img.url});
+            r.push({src: img.src});
         });
         return r;
     }
@@ -74,12 +75,14 @@ class Flashcard extends Component{
                     </Truncate>
                 </CardText>
                 <CardActions>
-                    <IconButton onClick={()=>this.props.onDelete(card._id)} iconStyle={{ color: "red" }} data-tip="Delete" iconClassName="material-icons">
-                        clear
-                    </IconButton>
-                    <IconButton iconStyle={{ color: "#FF664C" }} data-tip="Edit" iconClassName="material-icons">
-                        create
-                    </IconButton>
+                    <div className="row">
+                        <IconButton onClick={()=>this.props.onDelete(card._id)} iconStyle={{ color: "red" }} data-tip="Delete" iconClassName="material-icons">
+                            clear
+                        </IconButton>
+                        <EditUserFlashcardContainer
+                        deckId={this.props.deckId}
+                        card={card}/>
+                    </div>
                 </CardActions>
             </Card>
         );

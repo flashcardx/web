@@ -72,7 +72,7 @@ class MultimediaCreator extends Component{
             <PreviewImage   onDelete={this.props.onImgDelete}
                             cropImg={this.openCropper}
                             onReload={()=>this.reloadImage(img.src)}
-                            key={img.src}
+                            key={img.src + Math.random()}
                             img={img}/>
         );
     }

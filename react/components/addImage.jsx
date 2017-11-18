@@ -69,7 +69,7 @@ class AddImage extends Component{
                                        labelColor="#ffffff"
                                        disabled={this.props.disabled}
                                        backgroundColor="#4286f4"
-                                       label="Subi la tuya" />
+                                       label="Subir"/>
                     </div>
                     <div className="col-8">
                         {this.props.titleModal}
@@ -145,7 +145,7 @@ class AddImage extends Component{
                     <div className="row">
                         <div className="col">
                                 <input onChange={this.onChange} 
-                                placeholder="Search"
+                                placeholder="Buscar"
                                 value={this.state.searchQuery}
                                 type="text"/>
                         </div>
@@ -155,12 +155,12 @@ class AddImage extends Component{
                                         labelColor="#ffffff"
                                         disabled={btnsDisabled}
                                         backgroundColor="#4286f4"
-                                        label="Search Img"/>                    
+                                        label="Buscar imagen"/>                    
                             <RaisedButton onClick={this.searchGif}
                                         labelColor="#ffffff"
                                         disabled={btnsDisabled}
                                         backgroundColor="#4286f4"
-                                        label="Search Gif"/>                    
+                                        label="Buscar GIF"/>                    
                         </div>
                     </div> 
                     <div style={style.marginTop} className="row">

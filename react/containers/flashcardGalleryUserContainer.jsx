@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import FlashcardGallery from "../components/flashcardGallery.jsx";
-import {fetchUserCards} from "../actions/card.js";
+import {fetchUserCards} from "../actions/flashcard.js";
 import userDeckAdapter from "../adapters/userDeckAdapter";
 
 

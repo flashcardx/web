@@ -13,8 +13,7 @@ export function signin({email, password}, key){
         email,
         password,
         "g-recaptcha-response": key
-    });
-    
+    });  
     return {
         type: SIGNIN,
         originAPI: true,

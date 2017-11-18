@@ -4,7 +4,7 @@ import Radium from "radium";
 import {connect} from "react-redux";
 import {getUserInfo} from "../actions/user";
 import {successAlert} from "../actions/alerts";
-import {deleteUserFlashcard} from "../actions/card";
+import {deleteUserFlashcard} from "../actions/flashcard";
 import {deleteUserDeck, fetchUserDecks, pushToPath, dropFromPath} from "../actions/deck.js";
 import Button from 'material-ui/RaisedButton';
 import CreateUserDeckContainer from "../containers/createUserDeckContainer.jsx";

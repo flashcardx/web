@@ -23,39 +23,32 @@ const style = {
     }
 }
 
-
-
 class CreateFlashcard extends Component{
 
     constructor(props){
         super(props);
-        this.state = {modalIsOpen:false, form:{name:"", description:""}, multimediaBox: null}
+        this.state = {form:{name: this.props.name, description:this.props.description}, multimediaBox: null}
         this.renderForm = this.renderForm.bind(this);
-       this.onCrop = this.onCrop.bind(this);
+        this.onCrop = this.onCrop.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
-       this.restartForm = this.restartForm.bind(this);
+        this.reset = this.reset.bind(this);
         this.onChangeFormName = this.onChangeFormName.bind(this);
         this.onChangeFormDescription = this.onChangeFormDescription.bind(this);
         this.updateMultimediaBox = this.updateMultimediaBox.bind(this);
     }
 
     closeModal(){
-           this.setState({modalIsOpen:false});
-           this.restartForm();
+           if(this.props.resetOnClose)
+                this.reset();
+           this.props.closeModal();
     }
 
-    restartForm(){
+    reset(){
         this.onImgDelete();
         this.setState({form:{name:"", description: ""}}, ()=>{
             this.refs.form.reset();
         });
-    }
-
-    openModal(){
-        this.restartForm();//resets images(otherwise old images could be displayed when opening modal)
-        this.setState({modalIsOpen:true});
     }
 
      onCrop(r){
@@ -102,9 +95,11 @@ class CreateFlashcard extends Component{
     }
 
     onSubmit({name, description}){
+            if(!description && this.props.pickedImages.length == 0)
+                return this.props.infoAlert("Ouch!, Tu ficha debe contener una descripcion o algun contenido multimedia");
             this.props.onSubmit(name, description,()=>{
-                this.onImgDelete();
-                this.restartForm();
+                if(this.props.resetOnClose)
+                    this.reset();
             });
     }
 
@@ -134,16 +129,16 @@ class CreateFlashcard extends Component{
                                         <div className="col-sm-12">
                                             <MyOwnInput
                                                 validationErrors={{
-                                                    minLength: "Card's name must be at least 2 characters long",
-                                                    isDefaultRequiredValue: "Please enter the card's name"
+                                                    maxLength: "El nombre de tu ficha debe contener menos de 40 caracteres",
+                                                    isDefaultRequiredValue: "Tu ficha necesita un nombre"
                                                     }}
-                                                validations="minLength:2"
                                                 name="name"
                                                 required
+                                                validations="maxLength:40"
                                                 onChange={this.onChangeFormName}
                                                 type="text"
                                                 className="form-control"
-                                                placeholder="Cards's name"
+                                                placeholder="Nombre de la ficha, concepto que queres recordar"
                                                 value={this.state.form.name}
                                             />
                                         </div>
@@ -152,17 +147,15 @@ class CreateFlashcard extends Component{
                                         <div className="col-sm-12">
                                             <MyOwnTextarea
                                                 validationErrors={{
-                                                    minLength: "Card's description must be at least 4 characters long",
-                                                    isDefaultRequiredValue: "Please enter the card's description"
+                                                    maxLength: "La descripcion de tu ficha debe contener menos de 850 caracteres",
                                                     }}
-                                                required
-                                                validations="minLength:4"
+                                                validations="maxLength:850"
                                                 onChange={this.onChangeFormDescription}
                                                 value={this.state.form.description}
                                                 className="form-control"
                                                 name="description"
                                                 type="text"
-                                                placeholder="Description, anything that helps you remember the concept"
+                                                placeholder="Descripción, algo que te ayude a recordar el concepto"
                                             />
                                         </div>
                                     </div>
@@ -178,16 +171,7 @@ class CreateFlashcard extends Component{
                                             bigLoading={this.props.bigLoading}
                                             onImgPick={this.props.onImgPick}
                                             onImgUpload={this.props.onImgUpload}
-                                />
-                </div>
-                <div className="row" style={{margin:"5px"}}>
-                    <div className="col">
-                            Autocomplete:
-                            <Toggle/>
-                    </div>
-                    <div className="col">
-                            <RaisedButton labelColor="#ffffff" type="submit" backgroundColor="#4286f4" label="Open translator" />
-                    </div>
+                            />
                 </div>
             </div>
         );
@@ -197,7 +181,7 @@ class CreateFlashcard extends Component{
         var titleObject = (
                          <RaisedButton
                                 disabled={this.props.bigLoading}
-                                label="Create"
+                                label={this.props.buttonTitle}
                                 primary={true}
                                 type="submit"
                                 form="cardForm"
@@ -206,10 +190,9 @@ class CreateFlashcard extends Component{
                         );
         return (
             <div style={{"display":"inline-block","marginRight":"20px"}}>
-                <Modal titleStyle={{backgroundColor:"#5cb85c", padding:"10px 10px 10px 15px", marginBottom:"10px"}} titleObject={titleObject} autoScroll={true} onClose={this.closeModal} modal={false} open={this.state.modalIsOpen} closeLabel="Cancel" title="New card">
+                <Modal titleStyle={{backgroundColor:"#5cb85c", padding:"10px 10px 10px 15px", marginBottom:"10px"}} titleObject={titleObject} autoScroll={true} onClose={this.closeModal} modal={false} open={this.props.modalOpened} closeLabel="Cancelar" title={this.props.title}>
                     {this.renderForm()}
                 </Modal>
-                <RaisedButton onClick={this.openModal} labelColor="#ffffff" disabled={this.props.bigLoading} backgroundColor="#66b543" label="Create card" />
             </div>
         );
     }
@@ -225,5 +208,5 @@ CreateFlashcard.PropTypes = {
 
 
 
-export default connect(mapStateToProps)(Radium(CreateFlashcard));
+export default connect(mapStateToProps, {infoAlert})(Radium(CreateFlashcard));
 
