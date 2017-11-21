@@ -9,7 +9,7 @@ export default Radium(function({imgs}){
     var bottomFiller = null;
     var content = null;
     if(_.isEmpty(imgs))
-        content = <CroppedImage width="auto"
+        content = <CroppedImage width="100%"
                 height="200px" src="/assets/img/no-image.png"/>
     else
         content = <OwlCarousel

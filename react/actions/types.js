@@ -29,3 +29,5 @@ export const GET_USER_CARDS = "GET_USER_CARDS";
 export const DELETE_USER_FLASHCARD = "DELETE_USER_FLASHCARD";
 export const EDIT_USER_DECK = "EDIT_USER_DECK";
 export const EDIT_USER_CARD = "EDIT_USER_CARD"; 
+export const LIST_DECKS_NAME = "LIST_DECKS_NAME";
+export const AUDIO_PLAY = "AUDIO_PLAY";

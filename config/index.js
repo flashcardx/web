@@ -80,5 +80,7 @@ module.exports = {
     apiImageProxy: api.imageProxy,
     apiDeleteUserDeck: api.deleteUserDeck,
     apiDeleteUserFlashcard: api.deleteUserFlashcard,
-    apiEditUserDeck: api.editUserDeck
+    apiEditUserDeck: api.editUserDeck,
+    apiListDecksNameUrl: api.listDecksNameUrl,
+    apiTextToSpeech: api.textToSpeech
 };

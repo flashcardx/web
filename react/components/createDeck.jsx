@@ -118,7 +118,7 @@ class CreateDeck extends Component{
 
     onSubmit({name, description, lang}){
         if(this.props.pickedImages.length == 0)
-            return this.setState({errorMsg:"Tu mazo debe necesita imagen de portada!"});
+            return this.setState({errorMsg:"Tu mazo necesita una imagen de portada!"});
         this.props.onSubmit(name, description, lang, ()=>{
             this.closeModal();
         });

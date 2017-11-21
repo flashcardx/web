@@ -134,6 +134,9 @@ export default {
             newState[deckId].cards[card._id] = card;
         });
         return newState;
+    },
+    getLang(decks, deckId){
+        return decks[deckId].lang;
     }
 
 

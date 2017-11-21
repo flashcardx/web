@@ -1,4 +1,4 @@
-import {GET_USER_CARDS, CREATE_USER_CARD, EDIT_USER_CARD, FETCH_USER_DECKS, EDIT_USER_DECK, CREATE_USER_DECK, DELETE_USER_DECK, PUSH_TO_USER_DECK_PATH, DROP_FROM_USER_DECK_PATH, DELETE_USER_FLASHCARD} from "../actions/types";
+import {GET_USER_CARDS, CREATE_USER_CARD, EDIT_USER_CARD, FETCH_USER_DECKS, EDIT_USER_DECK, CREATE_USER_DECK, DELETE_USER_DECK, PUSH_TO_USER_DECK_PATH, DROP_FROM_USER_DECK_PATH, DELETE_USER_FLASHCARD, LIST_DECKS_NAME} from "../actions/types";
 import _ from "lodash";
 import userDeckAdapter from "../adapters/userDeckAdapter.js";
 import deckPathAdapter from "../adapters/deckPathAdapter.js";
@@ -28,6 +28,13 @@ export function userDecksPathReducer(state=[], action){
         case DROP_FROM_USER_DECK_PATH:
                     const limitToDrop = state.length - action.pathLastIndex;
                     return deckPathAdapter.cloneAndDropFromRight(state, limitToDrop);
+    }
+    return state;
+}
+
+export function decksNameReducer(state=[], action){
+    switch (action.type) {
+        case LIST_DECKS_NAME: return action.payload.msg;
     }
     return state;
 }

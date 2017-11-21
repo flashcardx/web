@@ -1,16 +1,18 @@
 import axios from "axios";
 import config from "../../config";
+import deckPathAdapter from "../adapters/deckPathAdapter.js";
 import {FETCH_USER_DECKS,
         CREATE_USER_DECK,
         DELETE_USER_DECK,
         PUSH_TO_USER_DECK_PATH,
         DROP_FROM_USER_DECK_PATH,
-        EDIT_USER_DECK} from "./types";
+        EDIT_USER_DECK,
+        LIST_DECKS_NAME} from "./types";
 const FETCH_USER_DECKS_URL = config.apiGetUserDecks;
 const CREATE_USER_DECK_URL = config.apiCreateUserDeck;
 const DELETE_USER_DECK_URL = config.apiDeleteUserDeck;
 const EDIT_USER_DECK_URL = config.apiEditUserDeck;
-import deckPathAdapter from "../adapters/deckPathAdapter.js";
+const LIST_DECKS_NAME_URL = config.apiListDecksNameUrl;
 
 export function fetchUserDecks(skip=0, path=[]){
     const parentId = deckPathAdapter.getLastIdFromPath(path);
@@ -25,6 +27,20 @@ export function fetchUserDecks(skip=0, path=[]){
             payload: request,
             path: path,
             skip: skip}
+}
+
+export function listDecksName(deckId){
+        var url = LIST_DECKS_NAME_URL;
+        if(deckId)
+                url += "?deckId="+deckId;
+        const request = axios.get(url,
+                    {headers: {'x-access-token': localStorage.getItem("jwt")}});
+        return {
+                type: LIST_DECKS_NAME,
+                originAPI: true,
+                bigLoading: true,
+                payload: request
+        }
 }
 
 export function createUserDeck(name, description, lang, img, parentId, callback){

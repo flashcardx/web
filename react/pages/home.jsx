@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import Page from "../components/page.jsx";
+import Path from "../components/util/path.jsx";
 import Radium from "radium";
 import {connect} from "react-redux";
 import {getUserInfo} from "../actions/user";
@@ -21,21 +22,6 @@ const style = {
         boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px",
         padding:"10px"
     },
-    path:{
-        p:{ color: "grey",
-            fontWeight:"400",
-            fontSize:"18px",
-            cursor: "pointer",
-            lineHeight:"36px" 
-          },
-        angle:{ 
-            paddingBottom:"6px",
-            paddingLeft:"10px",
-            paddingRight:"10px",
-            fontSize:"20px"
-        }
-        
-    },
     rowContent:{
         marginTop:"30px"
     }
@@ -46,7 +32,6 @@ class Home extends Component{
         super(props);
         this.pushToPath = this.pushToPath.bind(this);
         this.goToIndex = this.goToIndex.bind(this);
-        this.renderPath = this.renderPath.bind(this);
         this.onDeckDelete = this.onDeckDelete.bind(this);
         this.onFlashcardDelete = this.onFlashcardDelete.bind(this);
     }
@@ -93,7 +78,7 @@ class Home extends Component{
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-8  col-md-7 col-sm-12">
-                                     {this.renderPath()}
+                                     <Path goToIndex={this.goToIndex} path={this.props.path}/>
                                 </div>
                                 <div className="text-center col-lg-4 col-md-5 col-sm-12">
                                     <div className="row">
@@ -138,19 +123,6 @@ class Home extends Component{
     goToIndex(pathLastIndex){
         this.props.dropFromPath(pathLastIndex);
     }
-
-    renderPath(){
-        return (
-            <span>
-                <span onClick={()=>this.goToIndex(0)} style={style.path.p}>Root</span>
-                {this.props.path.map((p, i)=>{
-                    return <span key={(i+1)}><i style={style.path.angle} className="fa fa-angle-right fa-lg"></i><span onClick={()=>this.goToIndex(i+1)} style={style.path.p}>{p.name}</span></span>
-                    })
-                }
-            </span>
-        );
-    }
-
 
 }
 

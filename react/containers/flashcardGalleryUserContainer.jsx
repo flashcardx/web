@@ -9,6 +9,8 @@ class FlashcardGalleryUserContainer extends Component{
 
     constructor(props){
         super(props);
+        var lang = userDeckAdapter.getLang(this.props.decks, this.props.deckId);
+        this.state = {lang: lang};
         this.fetchCards = this.fetchCards.bind(this);
     }
 
@@ -21,7 +23,9 @@ class FlashcardGalleryUserContainer extends Component{
             return null;
         const cards = userDeckAdapter.getCards(this.props.decks, this.props.deckId);
         return (
-                <FlashcardGallery deckId={this.props.deckId}
+                <FlashcardGallery 
+                                  lang={this.state.lang}
+                                  deckId={this.props.deckId}
                                   onDelete={this.props.onDelete}
                                   fetch={this.fetchCards}
                                   cards={cards}/> 
@@ -29,4 +33,10 @@ class FlashcardGalleryUserContainer extends Component{
     }
 }
 
-export default connect(null, {fetchUserCards})(FlashcardGalleryUserContainer);
+function mapStateToProps(state){
+    return {
+        decks: state.userDecks
+    }
+}
+
+export default connect(mapStateToProps, {fetchUserCards})(FlashcardGalleryUserContainer);
