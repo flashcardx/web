@@ -72,9 +72,6 @@ class CreateDeck extends Component{
     }
 
     closeModal(){
-           if(this.props.resetOnClose){
-                this.reset();
-           }
            this.props.closeModal();
     }
 
@@ -88,8 +85,6 @@ class CreateDeck extends Component{
             }
             if(this.state.errorMsg && nextProps.pickedImages.length != 0)
                 this.setState({errorMsg: null});
-        if(!this.props.modalOpened && nextProps.modalOpened)
-            this.reset();
     }
 
     loadImageOnForm(img){
@@ -122,6 +117,7 @@ class CreateDeck extends Component{
         if(this.props.pickedImages.length == 0)
             return this.setState({errorMsg:"Tu mazo necesita una imagen de portada!"});
         this.props.onSubmit(name, description, lang, ()=>{
+            this.reset();
             this.closeModal();
         });
     }

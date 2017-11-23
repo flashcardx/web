@@ -30,7 +30,7 @@ class CreateUserCardContainer extends Component{
 
     componentWillReceiveProps(nextProps){
             if(!_.isEqual(this.props.imageReady, nextProps.imageReady) && nextProps.imageReady){
-                if(this.state.pickedImages.length >=3)
+                if(this.state.pickedImages.length >=3 || !this.state.modalOpened)
                     return;
                 var newImages = this.state.pickedImages.slice(); 
                 newImages.push(nextProps.imageReady);

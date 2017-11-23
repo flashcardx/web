@@ -42,8 +42,8 @@ class CreateUserDeckContainer extends Component{
     }
 
     componentWillReceiveProps(nextProps){
-        if(!_.isEqual(this.props.imageReady, nextProps.imageReady)){
-            if(nextProps.imageReady) 
+        if(!_.isEqual(this.props.imageReady, nextProps.imageReady) && this.state.modalOpened){
+            if(nextProps.imageReady)
                 this.setState({pickedImages: [nextProps.imageReady]});
             else 
                 this.setState({pickedImages: []});

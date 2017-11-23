@@ -39,14 +39,7 @@ class CreateFlashcard extends Component{
     }
 
     closeModal(){
-           if(this.props.resetOnClose)
-                this.reset();
            this.props.closeModal();
-    }
-
-    componentWillReceiveProps(nextProps){
-        if(!this.props.modalOpened && nextProps.modalOpened)
-            this.reset();
     }
 
     reset(){
