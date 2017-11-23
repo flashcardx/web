@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import Radium from "radium";
 import CircularProgress from 'material-ui/CircularProgress';
-import Bricks from 'bricks.js';
+import Bricks from 'bricks';
 import _ from "lodash";
 
 const style = {

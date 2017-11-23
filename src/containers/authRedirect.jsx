@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
-import {reSignin, emailVerification, verifySession} from "../actions/auth";
+import {reSignin, emailVerification} from "../actions/auth";
 
 export function requireAuth(ComposedComponent, route){
     class Authenticate extends Component{
@@ -71,5 +71,5 @@ export function validateEmail(ComposedComponent, route){
         }
     }
 
-    return connect(null, {emailVerification, verifySession})(withRouter(Authenticate));
+    return connect(null, {emailVerification})(withRouter(Authenticate));
 }
