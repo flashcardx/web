@@ -60,7 +60,8 @@ export function createUserDeck(name, description, lang, img, parentId, callback)
             originAPI: true,
             bigLoading: true,
             payload: request,
-            parentId
+            parentId,
+            successMsg: "Mazo creado exitosamente!"
             };
 }
 
@@ -82,7 +83,8 @@ export function editUserDeck(name, description, lang, img, deckId, parentId, cal
             originAPI: true,
             bigLoading: true,
             payload: request,
-            parentId
+            parentId,
+            successMsg: "Tu mazo ha sido editado!"
             };
 }
 
@@ -97,7 +99,9 @@ export function deleteUserDeck(deckId, callback){
             deckId: deckId,
             originAPI: true,
             bigLoading: true,
-            payload:request};
+            payload:request,
+            successMsg: "Mazo eliminado correctamente"
+        };
 }
 
 export function pushToPath(deckId, deckName){

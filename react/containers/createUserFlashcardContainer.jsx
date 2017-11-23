@@ -52,8 +52,7 @@ class CreateUserCardContainer extends Component{
         var deckId = userPathAdapter.getLastIdFromPath(this.props.userDecksPath);
         var imgs = this.state.pickedImages;
         this.props.createUserCard(name, description, imgs, deckId, ()=>{
-            this.props.successAlert("Ficha creada exitosamente!");
-            callback();
+             callback();
         });
     }
 

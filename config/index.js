@@ -82,5 +82,6 @@ module.exports = {
     apiDeleteUserFlashcard: api.deleteUserFlashcard,
     apiEditUserDeck: api.editUserDeck,
     apiListDecksNameUrl: api.listDecksNameUrl,
-    apiTextToSpeech: api.textToSpeech
+    apiTextToSpeech: api.textToSpeech,
+    apiMoveCard: api.moveCard
 };

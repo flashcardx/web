@@ -25,8 +25,7 @@ import React from "react";
     }
 */
 
-export default {
-    insertDecks: (state, decks, parentId)=>{
+function insertDecks(state, decks, parentId){
         var newState = {...state};
         if(!parentId){
             if(!newState.children)
@@ -47,8 +46,9 @@ export default {
                         newState[parentId].children.push(deck._id); 
             });
         return newState;
-    },
-    insertNewDeck: (state, deck, parentId)=>{
+};
+
+function insertNewDeck(state, deck, parentId){
         var newState = {};
         if(!parentId)
             state.children.unshift(deck._id);
@@ -56,25 +56,29 @@ export default {
             state[parentId].children.unshift(deck._id);
         newState[deck._id] = deck;
         return {...newState, ...state};
-    },
-    replaceDeck: (state, deck, parentId)=>{
+};
+
+function replaceDeck(state, deck, parentId){
         var newState = {...state};
         newState[deck._id] = deck;
         return newState;
-    },
-    deleteDeck:(state, deckId)=>{
+};
+
+function deleteDeck(state, deckId){
         // deck is not deleted fron children array, the component should
         // re fetch the parent decks before diplaying them
         var newState = {...state};
         delete newState[deckId];
         return newState;
-    },
-    deleteFlashcard: (state, deckId, flashcardId)=>{
+};
+
+function deleteFlashcard(state, deckId, flashcardId){
         var newState = {...state};
         delete newState[deckId].cards[flashcardId];
         return newState;
-    },
-    getDecks:(state, parentId)=>{
+};
+    
+ function getDecks(state, parentId){
         var decks = [];
         var deckIds;
         if(!parentId)
@@ -88,8 +92,9 @@ export default {
                     decks.push(state[deckId]);
         });
         return decks;
-    },
-    getCards: (state, deckId)=>{
+};
+   
+function getCards(state, deckId){
         if(!deckId || !state[deckId].cards){
             return [];
         }
@@ -98,8 +103,9 @@ export default {
             cards.push(card);
         });
         return cards;
-    },
-    insertNewCard: (state, card, deckId)=>{
+};
+  
+function insertNewCard(state, card, deckId){
         if(!deckId){
             return state;
         }
@@ -112,16 +118,18 @@ export default {
             ...newCards, ...newState[deckId].cards
         }        
         return newState;
-    },
-    replaceCard: (state, card, deckId)=>{
+};
+
+function replaceCard(state, card, deckId){
         if(!deckId){
             return state;
         }
         var newState = _.clone(state);
         newState[deckId].cards[card._id] = card;
         return newState;
-    },
-    insertMoreCards: (state, cards, deckId)=>{
+};
+    
+function insertMoreCards(state, cards, deckId){
         if(!cards)
             return state;
         if(!deckId){
@@ -134,10 +142,34 @@ export default {
             newState[deckId].cards[card._id] = card;
         });
         return newState;
-    },
-    getLang(decks, deckId){
+};
+
+function getLang(decks, deckId){
         return decks[deckId].lang;
-    }
+};
+
+function moveCard(state, cardId, oldDeckId, newDeckId){
+        var card = state[oldDeckId].cards[cardId];
+        delete state[oldDeckId].cards[cardId];
+        card.deckId = newDeckId;
+        return insertNewCard(state, card, newDeckId);
+}
 
 
+
+
+
+export default {
+    insertDecks: insertDecks,
+    insertNewDeck: insertNewDeck,
+    replaceDeck: replaceDeck,
+    deleteDeck: deleteDeck,
+    deleteFlashcard: deleteFlashcard,
+    getDecks: getDecks,
+    getCards: getCards,
+    insertNewCard: insertNewCard,
+    replaceCard: replaceCard,
+    insertMoreCards: insertMoreCards,
+    getLang: getLang,
+    moveCard: moveCard
 }

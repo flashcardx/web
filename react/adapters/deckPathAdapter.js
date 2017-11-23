@@ -9,6 +9,6 @@ export default {
             return path.concat([newPath]);
         },
         cloneAndDropFromRight:(path, limitToDrop)=>{
-            return _.dropRight(path.slice(), limitToDrop);
+            return _.dropRight(path, limitToDrop);
     }
 };

@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React, {Component} from "react";
 import RaisedButton from 'material-ui/RaisedButton';
 import Modal from "./util/modal.jsx";
@@ -6,6 +7,9 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
+import Path from "./util/path.jsx";
+import {List, ListItem} from 'material-ui/List';
+import Divider from 'material-ui/Divider';
 
 const style = {
     path:{
@@ -32,18 +36,28 @@ class SelectDeck extends Component{
         this.addDeck = this.addDeck.bind(this);
         this.goToIndex = this.goToIndex.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        this.renderPath = this.renderPath.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        this.renderBody = this.renderBody.bind(this);
+        this.pickDeck = this.pickDeck.bind(this);
+        this.submit = this.submit.bind(this);
+        this.props.listDecks();   
     }
 
-    componentWillMount(){
-        const lastDeckId = (this.state.path.length>0)?this.state.path[this.state.path.length - 1]._id : undefined;
-        console.log("lastdeckid: ", lastDeckId);
-        this.props.listDecks(lastDeckId);   
+    submit(){
+        const deckId = this.state.path[this.state.path.length-1]._id;
+        this.props.onSubmit(deckId, ()=>{
+            this.closeModal();
+        });
     }
 
     closeModal(){
         this.props.onClose();
+        this.setState({path: [], ready:true});
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(!_.isEqual(nextProps.decksName, this.props.decksName)){
+            this.setState({ready: true});
+        }
     }
 
     addDeck(deckName, deckId){
@@ -52,37 +66,31 @@ class SelectDeck extends Component{
         this.setState({path:newPath});
     }
 
-    goToIndex(pathLastIndex){
-        return _.dropRight(this.state.path.slice(), pathLastIndex);
+    goToIndex(index){
+        const limitToDrop = this.state.path.length - index;
+        const newPath = _.dropRight(this.state.path, limitToDrop);
+        this.setState({path: newPath});
+        var lastId = newPath.length>0?newPath[newPath.length - 1]._id : undefined;
+        this.props.listDecks(lastId);
     }
 
-    handleChange = (event, index, value) =>{
-        this.setState({selectedValue: value, ready:false})
+    pickDeck = (deckId, name) =>{
+        this.addDeck(name, deckId);
+        this.setState({ready:false})
+        this.props.listDecks(deckId);  
     };
 
-    renderPath(){
-        console.log("ready: ", this.state.ready);
-        console.log("decksName: ", this.props.decksName);
-        return (
+    renderBody(){
+        var opciones = null;
+        if(!this.state.ready)
+                return <span>Cargando...</span>;
+         return (
             <span>
                 <div className="row">
                     <div className="col">
-                        <span onClick={()=>this.goToIndex(0)} style={style.path.p}>Root <span style={{color:"black"}}> > </span></span>
-                        {this.state.path.map((p, i)=>{
-                            return <span key={(i+1)}><span onClick={()=>this.goToIndex(i+1)} style={style.path.p}>{p.name}</span> <span style={{color:"black"}}> > </span></span>
-                            })
-                        }
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col">
-                        <SelectField
-                            value={this.state.selectedValue}
-                            onChange={this.handleChange}
-                            >
-                            <MenuItem disabled value="" primaryText="Selecciona un mazo" />
-                            {this.state.ready && this.props.decksName.map(d=><MenuItem key={d._id} value={d._id} primaryText={d.name} />) }
-                        </SelectField>
+                        <List>
+                            {this.props.decksName.map(d=><ListItem onClick={()=>this.pickDeck(d._id, d.name)}key={d._id} primaryText={d.name} />) }
+                        </List>
                     </div>
                 </div>
             </span>
@@ -90,20 +98,25 @@ class SelectDeck extends Component{
     }
 
     render(){
-         var titleObject = (
+         var confirmObject = (
                          <RaisedButton
                                 disabled={(this.props.bigLoading || this.state.path.length==0)}
-                                label={this.props.buttonTitle}
+                                label="Mover aqui"
                                 primary={true}
-                                onClick={this.addDeck}
+                                onClick={this.submit}
                                 buttonStyle={{backgroundColor:"#4286f4"}}  
                                 />
                 );
         return (
             <div style={{"display":"inline-block","marginRight":"20px"}}>
-                <Modal titleStyle={{backgroundColor:"#4286f4", padding:"10px 10px 10px 15px", marginBottom:"10px"}} titleObject={titleObject} autoScroll={true} onClose={this.closeModal} modal={false} open={this.props.modalOpened} closeLabel="Cancelar" title={this.props.title}>
-                     {this.props.pathText} {this.renderPath()}
-                 </Modal>
+                <Modal titleStyle={{display:"none"}} confirmObject={confirmObject} autoScroll={true} onClose={this.closeModal} modal={false} open={this.props.modalOpened}>
+                     <span>
+                        Mover a: &nbsp;
+                        <Path goToIndex={this.goToIndex} path={this.state.path}/>           
+                        <Divider/>
+                     </span>
+                     {this.renderBody()}
+                </Modal>
             </div>
         );
     }

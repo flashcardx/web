@@ -44,6 +44,11 @@ class CreateFlashcard extends Component{
            this.props.closeModal();
     }
 
+    componentWillReceiveProps(nextProps){
+        if(!this.props.modalOpened && nextProps.modalOpened)
+            this.reset();
+    }
+
     reset(){
         this.onImgDelete();
         this.setState({form:{name:"", description: ""}}, ()=>{
@@ -178,7 +183,7 @@ class CreateFlashcard extends Component{
     }
 
     render(){
-        var titleObject = (
+        var confirmObject = (
                          <RaisedButton
                                 disabled={this.props.bigLoading}
                                 label={this.props.buttonTitle}
@@ -190,7 +195,7 @@ class CreateFlashcard extends Component{
                         );
         return (
             <div style={{"display":"inline-block","marginRight":"20px"}}>
-                <Modal titleStyle={{backgroundColor:"#5cb85c", padding:"10px 10px 10px 15px", marginBottom:"10px"}} titleObject={titleObject} autoScroll={true} onClose={this.closeModal} modal={false} open={this.props.modalOpened} closeLabel="Cancelar" title={this.props.title}>
+                <Modal titleStyle={{backgroundColor:"#5cb85c", padding:"10px 10px 10px 15px", marginBottom:"10px"}} confirmObject={confirmObject} autoScroll={true} onClose={this.closeModal} modal={false} open={this.props.modalOpened} closeLabel="Cancelar" title={this.props.title}>
                     {this.renderForm()}
                 </Modal>
             </div>

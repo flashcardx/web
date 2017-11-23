@@ -39,7 +39,6 @@ class EditUserFlashcardContainer extends Component{
             cardId: this.props.card._id
         };
         this.props.editUserFlashcard(data, ()=>{
-            this.props.successAlert("Ficha editada exitosamente!");
             this.closeModal();
             callback();
         });

@@ -52,15 +52,14 @@ class Modal extends Component{
     };
 
     render(){
-         var actions = [
-      <FlatButton
-        label={this.state.closeLabel}
-        onClick={this.handleClose}
-      />
-    ];
-
-        if(this.props.titleObject)
-            actions.unshift(this.props.titleObject);
+         var actions = [];
+        if(this.props.closeLabel)
+            actions.push(<FlatButton
+                        label={this.state.closeLabel}
+                        onClick={this.handleClose}
+                    />);
+        if(this.props.confirmObject)
+            actions.unshift(this.props.confirmObject);
         else
         if(this.props.confirmLabel){
             actions.unshift(      <FlatButton

@@ -42,6 +42,14 @@ class FlashcardGallery extends Component{
        this.props.fetch(this.state.skip);
     }
 
+    componentWillReceiveProps(nextProps){
+        if(nextProps.deckId != this.props.deckId)
+            this.props.fetch(this.state.skip);
+        //the function could be called even when props didnt change, so we need to check before doing somehing nasty
+        if(!_.isEqual(this.props, nextProps))
+            this.setState({isFetching: false});
+    }
+
     componentDidMount(){
         this.setState({wasRendered: true});
     }
@@ -59,13 +67,7 @@ class FlashcardGallery extends Component{
             <Flashcard lang={this.props.lang} key={card._id} onDelete={this.props.onDelete} deckId={this.props.deckId} card={card}/>
         );
     }
-
-    componentWillReceiveProps(nextProps){
-        //the function could be called even when props didnt change, so we need to check before doing somehing nasty
-        if(!_.isEqual(this.props,nextProps))
-            this.setState({isFetching: false});
-    }
-
+    
     increasePage(){
         if(this.state.isFetching)
             return;

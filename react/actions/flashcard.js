@@ -1,9 +1,10 @@
 import axios from "axios";
 import config from "../../config";
 import deckPathAdapter from "../adapters/deckPathAdapter.js";
-import {CREATE_USER_CARD, EDIT_USER_CARD, GET_USER_CARDS, DELETE_USER_FLASHCARD} from "./types";
+import {CREATE_USER_CARD, EDIT_USER_CARD, GET_USER_CARDS, DELETE_USER_FLASHCARD, MOVE_USER_CARD} from "./types";
 const CREATE_USER_CARD_URL = config.apiCreateUserCard;
 const EDIT_USER_CARD_URL = config.apiEditCard;
+const MOVE_USER_CARD_URL = config.apiMoveCard;
 const GET_USER_CARDS_URL = config.apiGetUserCards;
 const DELETE_USER_FLASHCARD_URL = config.apiDeleteUserFlashcard;
 
@@ -24,7 +25,8 @@ export function createUserCard(name, description, images, deckId, callback){
             originAPI: true,
             bigLoading: true,
             payload: request,
-            deckId
+            deckId,
+            successMsg: "Tu ficha fue creada exitosamente!"
         }
 }
 
@@ -47,7 +49,8 @@ export function editUserFlashcard({name, cardId, description, imgs, deckId}, cal
         type: EDIT_USER_CARD,
         originAPI: true,
         payload: request,
-        deckId: deckId
+        deckId: deckId,
+        successMsg: "Tu ficha fue editada!"
     }
 }
 
@@ -77,5 +80,27 @@ export function deleteUserFlashcard(deckId, flashcardId, callback){
             deckId: deckId,
             originAPI: true,
             bigLoading: true,
-            payload:request};
+            payload:request,
+            successMsg: "Tu ficha ha sido eliminada!"
+        };
+}
+
+export function moveUserFlashcardToDeck(cardId, oldDeckId, newDeckId, callback){
+    const url = MOVE_USER_CARD_URL + cardId + "/" + newDeckId;
+    const request = axios.get(url, {
+                        headers: {'x-access-token': localStorage.getItem("jwt")}
+                        });
+    request.then(r=>{
+        if(r.data.success == true)
+            callback();
+    })
+    return {
+        type: MOVE_USER_CARD,
+        originAPI: true,
+        payload: request,
+        oldDeckId: oldDeckId,
+        newDeckId: newDeckId,
+        cardId: cardId,
+        successMsg: "Tu ficha ha sido movida!"
+    }
 }

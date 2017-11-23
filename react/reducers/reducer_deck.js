@@ -1,4 +1,4 @@
-import {GET_USER_CARDS, CREATE_USER_CARD, EDIT_USER_CARD, FETCH_USER_DECKS, EDIT_USER_DECK, CREATE_USER_DECK, DELETE_USER_DECK, PUSH_TO_USER_DECK_PATH, DROP_FROM_USER_DECK_PATH, DELETE_USER_FLASHCARD, LIST_DECKS_NAME} from "../actions/types";
+import {GET_USER_CARDS, MOVE_USER_CARD, CREATE_USER_CARD, EDIT_USER_CARD, FETCH_USER_DECKS, EDIT_USER_DECK, CREATE_USER_DECK, DELETE_USER_DECK, PUSH_TO_USER_DECK_PATH, DROP_FROM_USER_DECK_PATH, DELETE_USER_FLASHCARD, LIST_DECKS_NAME} from "../actions/types";
 import _ from "lodash";
 import userDeckAdapter from "../adapters/userDeckAdapter.js";
 import deckPathAdapter from "../adapters/deckPathAdapter.js";
@@ -16,7 +16,8 @@ export function userDecksReducer(state={}, action){
         case DELETE_USER_FLASHCARD: return userDeckAdapter.deleteFlashcard(state, action.deckId, action.flashcardId);
         case CREATE_USER_CARD:  return userDeckAdapter.insertNewCard(state, action.payload.card, action.deckId);                     
         case EDIT_USER_CARD: return userDeckAdapter.replaceCard(state, action.payload.card, action.deckId);
-        case GET_USER_CARDS:    return userDeckAdapter.insertMoreCards(state, action.payload.cards, action.deckId)
+        case GET_USER_CARDS:    return userDeckAdapter.insertMoreCards(state, action.payload.cards, action.deckId);
+        case MOVE_USER_CARD: return userDeckAdapter.moveCard(state, action.cardId, action.oldDeckId, action.newDeckId);
     }
     return state;
 }

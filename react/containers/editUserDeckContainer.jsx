@@ -33,7 +33,6 @@ class EditUserDeckContainer extends Component{
     onSubmit(name, description, lang, callback){
         var img = this.state.pickedImages[0];
         this.props.editUserDeck(name, description, lang, img, this.props.deck._id, this.props.parentId, ()=>{
-            this.props.successAlert("Mazo editado exitosamente!");
             callback();
         });
     }

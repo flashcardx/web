@@ -31,3 +31,4 @@ export const EDIT_USER_DECK = "EDIT_USER_DECK";
 export const EDIT_USER_CARD = "EDIT_USER_CARD"; 
 export const LIST_DECKS_NAME = "LIST_DECKS_NAME";
 export const AUDIO_PLAY = "AUDIO_PLAY";
+export const MOVE_USER_CARD = "MOVE_USER_CARD";

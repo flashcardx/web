@@ -12,7 +12,7 @@ import CroppedImage from "./util/croppedImage.jsx";
 import Truncate from "./util/truncate.jsx";
 import {Link} from "react-router-dom";
 import ImageGallery from "./imageGallery.jsx";
-import SelectDeckUserMoveContainer from "../containers/selectDeckUserMoveContainer.jsx";
+import MoveUserFlashcardContainer from "../containers/moveUserFlashcardContainer.jsx";
 import EditUserFlashcardContainer from "../containers/editUserFlashcardContainer.jsx";
 import {} from "../actions/audio";
 import Speaker from "./util/speaker.jsx";
@@ -93,7 +93,7 @@ class Flashcard extends Component{
         var imgs = this.generateImgs(card.imgs);
         return (
             <span>
-                    <SelectDeckUserMoveContainer title="Mover ficha" onClose={this.closeEditModal} modalOpened={this.state.openEditModal} editModal={this.state.editModal}/>
+                    <MoveUserFlashcardContainer deckId={this.props.deckId} cardId={card._id} title="Mover ficha" onClose={this.closeEditModal} modalOpened={this.state.openEditModal} editModal={this.state.editModal}/>
                     <Card style={style.card} className="col-lg-3 col-md-4 col-sm-12">
                         <CardMedia>
                             <ImageGallery imgs={imgs}/>

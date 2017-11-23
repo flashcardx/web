@@ -88,6 +88,8 @@ class CreateDeck extends Component{
             }
             if(this.state.errorMsg && nextProps.pickedImages.length != 0)
                 this.setState({errorMsg: null});
+        if(!this.props.modalOpened && nextProps.modalOpened)
+            this.reset();
     }
 
     loadImageOnForm(img){
@@ -205,7 +207,7 @@ class CreateDeck extends Component{
         );
     }
     render(){
-        var titleObject = (
+        var confirmObject = (
                          <RaisedButton
                                 disabled={this.props.bigLoading}
                                 label={this.props.buttonTitle}
@@ -217,7 +219,7 @@ class CreateDeck extends Component{
                         );
         return (
             <div style={{"display":"inline-block","marginRight":"20px"}}>
-                <Modal titleStyle={{backgroundColor:"#f4424b", padding:"10px 10px 10px 15px", marginBottom:"10px"}} titleObject={titleObject} autoScroll={true} onClose={this.closeModal} modal={false} open={this.props.modalOpened} closeLabel="Cancelar" title={this.props.title}>
+                <Modal titleStyle={{backgroundColor:"#f4424b", padding:"10px 10px 10px 15px", marginBottom:"10px"}} confirmObject={confirmObject} autoScroll={true} onClose={this.closeModal} modal={false} open={this.props.modalOpened} closeLabel="Cancelar" title={this.props.title}>
                     {this.renderForm()}
                 </Modal>
             </div>
