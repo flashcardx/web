@@ -24,7 +24,7 @@ class Speaker extends Component{
     }
 
     componentWillUpdate(nextProps){
-        if(nextProps.lang != this.props.lang || nextProps.text != this.props.text){
+        if(nextProps.lang !== this.props.lang || nextProps.text !== this.props.text){
             this.setState({src: null});
         }
     }

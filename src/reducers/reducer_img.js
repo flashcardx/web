@@ -1,6 +1,4 @@
 import {SEARCH_IMG, RESET_SEARCH_IMAGES, IMAGE_PROXY, DELETE_IMAGE_READY} from "../actions/types";
-import _ from "lodash";
-import config from "../../config";
 
 export function searchImagesReducer(state=[], action){
     switch (action.type) {

@@ -1,0 +1,34 @@
+{"development" : {
+	"fbAuth":{
+				"appId": "731168503758461"
+			},
+	"googleAuth": {
+			"clientId": "980618590126-29jvs38s15lq708q41mr262v9pdoq27d.apps.googleusercontent.com"
+	},
+	"reCaptcha":{
+					"siteKey": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+			}
+	},
+"pi" : {
+		"fbAuth":{
+				"appId": "731168503758461"
+			},
+		"googleAuth": {
+				"clientId": "980618590126-29jvs38s15lq708q41mr262v9pdoq27d.apps.googleusercontent.com"
+		},
+		"reCaptcha":{
+					"siteKey": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+			}
+		},
+"production":{
+		"fbAuth":{
+				"appId": "1949034375312261"
+		},
+		"reCaptcha":{
+					"siteKey": "6LcrqSwUAAAAAPby-Rm9KnQVI_DulbhGzQmWcOGo"
+			},
+		"googleAuth":{
+			"clientId": "980618590126-29jvs38s15lq708q41mr262v9pdoq27d.apps.googleusercontent.com"
+		}
+	}
+}

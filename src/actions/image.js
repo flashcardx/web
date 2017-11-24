@@ -1,5 +1,5 @@
 import axios from "axios";
-import config from "../../config";
+import config from "../api_config";
 import {SEARCH_IMG,
         SEARCH_GIF,
         RESET_SEARCH_IMAGES,

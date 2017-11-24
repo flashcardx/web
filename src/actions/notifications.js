@@ -1,5 +1,5 @@
 import axios from "axios";
-import config from "../../config";
+import config from "../api_config";
 import {NOTIFICATIONS_COUNT, SHOW_NOTIFS, HIDE_NOTIFS, GET_NOTIFICATIONS, APPEND_NOTIFICATIONS} from "./types";
 const GET_COUNT_URL = config.apiGetActivityCount;
 const GET_NOTIFICATIONS_URL = config.apiGetActivity;

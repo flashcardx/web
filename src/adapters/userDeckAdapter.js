@@ -1,5 +1,4 @@
 import _ from "lodash";
-import React from "react";
 
 /*
     HOW USER DECK STRUCTURE LOOKS LIKE I THE REDUX STORE?
@@ -39,10 +38,10 @@ function insertDecks(state, decks, parentId){
                 newState[deck._id] = deck;
                 newState[deck._id].children = [];
                 if(!parentId){
-                    if(newState.children.indexOf(deck._id) == -1)
+                    if(newState.children.indexOf(deck._id) === -1)
                         newState.children.push(deck._id);
                 }
-                else if(newState[parentId].children.indexOf(deck._id) == -1)
+                else if(newState[parentId].children.indexOf(deck._id) === -1)
                         newState[parentId].children.push(deck._id); 
             });
         return newState;

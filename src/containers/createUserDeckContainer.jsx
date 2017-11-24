@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import Radium from "radium";
 import axios from "axios";
-import config from "../../config";
+import config from "../api_config";
 import {reduxForm } from 'redux-form';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";

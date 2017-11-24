@@ -1,5 +1,5 @@
 import axios from "axios";
-import config from "../../config";
+import config from "../api_config";
 import {SIGNIN, SIGNUP, SIGNUP_RESEND_EMAIL, SIGNOUT, RE_SIGNIN, EMAIL_VERIFICATION} from "./types";
 const SIGNIN_URL = config.apiLogin;
 const SIGNUP_URL = config.apiSignup;

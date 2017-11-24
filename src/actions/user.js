@@ -1,5 +1,5 @@
 import axios from "axios";
-import config from "../../config";
+import config from "../api_config";
 import {USER_INFO} from "./types";
 const USER_INFO_URL = config.apiGetUserInfo;
 

@@ -10,7 +10,6 @@ import Signout from "./pages/signout.jsx";
 import Landing from "./pages/landing.jsx";
 import reducers from "./reducers";
 import {requireAuth, redirectIfAuth, validateEmail} from "./containers/authRedirect.jsx";
-import Alert from "./components/util/alert.jsx";
 import promiseMDW from "./middlewares/promise";
 import errorHandlerMDW from "./middlewares/errorHandler.js";
 import showLoadingMDW from "./middlewares/showLoading.js";
@@ -25,10 +24,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 const createStoreWithMiddleware = applyMiddleware(showLoadingMDW, promiseMDW, reduxThunk, parseApiMDW, hideLoadingMDW, errorHandlerMDW, successMessage)(createStore);
 
 class App extends Component{
-    constructor(props){
-        super(props);
-    }
-
+ 
     render(){
        return ( <BrowserRouter>
                     <Switch>

@@ -1,5 +1,4 @@
 import {successAlert} from "../actions/alerts";
-import {SIGNOUT} from "../actions/types";
 
 export default function({dispatch}){
     return next=>action=>{

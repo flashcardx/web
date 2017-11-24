@@ -23,7 +23,7 @@ export default Radium(props=>{
 
     return (
         <div data-src={props["data-src"]} style={styleWrapperImg}>
-            <img className="owl-lazy" {...props} style={[styleImg, props.style]}/>
+            <img alt="" className="owl-lazy" {...props} style={[styleImg, props.style]}/>
         </div>
     );
 });

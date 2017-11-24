@@ -45,7 +45,7 @@ class Navbar extends Component{
             <div className="col-1">
                 <div className="container">
                         <Link to="/">
-                            <img className="img-fluid" style={style.logo} src="/assets/img/favicon.ico"/>
+                            <img className="img-fluid" style={style.logo} src={process.env.PUBLIC_URL+"/img/favicon.ico"}/>
                         </Link>
                 </div>
             </div>

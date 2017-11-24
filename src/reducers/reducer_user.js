@@ -1,5 +1,4 @@
 import {USER_INFO} from "../actions/types";
-import _ from "lodash";
 
 
 export function getUserInfoReducer(state=null, action){

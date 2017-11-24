@@ -1,5 +1,4 @@
 import {ERROR_ALERT, SUCCESS_ALERT, INFO_ALERT, SHOW_BIGLOADING, HIDE_BIGLOADING} from "../actions/types";
-import _ from "lodash";
 
 export function alertsReducer(state=null, action){
     const {payload} = action;

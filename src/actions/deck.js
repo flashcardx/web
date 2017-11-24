@@ -1,5 +1,5 @@
 import axios from "axios";
-import config from "../../config";
+import config from "../api_config";
 import deckPathAdapter from "../adapters/deckPathAdapter.js";
 import {FETCH_USER_DECKS,
         CREATE_USER_DECK,

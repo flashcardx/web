@@ -1,5 +1,5 @@
 import axios from "axios";
-import config from "../../config";
+import config from "../api_config";
 const TEXT_TO_SPEECH_URL = config.apiTextToSpeech;
 
 export function fetchTextToSpeech(lang, text, callback){

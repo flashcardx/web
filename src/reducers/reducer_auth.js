@@ -1,5 +1,4 @@
 import {SIGNIN, SIGNUP, SIGNUP_RESEND_EMAIL, RE_SIGNIN, SIGNOUT, EMAIL_VERIFICATION} from "../actions/types";
-import _ from "lodash";
 
 export function authReducer(state=false, action){
     const {payload} = action;

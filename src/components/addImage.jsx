@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import _ from "lodash";
 import Radium from "radium";
 import {connect} from "react-redux";
-import config from "../../config";
+import config from "../api_config";
 import Modal from "./util/modal.jsx";
 import TextField from "./util/textField.jsx";
 import RaisedButton from 'material-ui/RaisedButton';

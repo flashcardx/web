@@ -1,5 +1,4 @@
 import {NOTIFICATIONS_COUNT, SHOW_NOTIFS, HIDE_NOTIFS, GET_NOTIFICATIONS, APPEND_NOTIFICATIONS} from "../actions/types";
-import _ from "lodash";
 
 export function countReducer(state=0, action){
     switch (action.type) {

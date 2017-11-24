@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
 import Radium from "radium";
 import _ from "lodash";
 import PropTypes from 'prop-types';
-import config from "../../config";
-import InfiniteScroll from 'react-bidirectional-infinite-scroll';
+import config from "../api_config";
+import InfiniteScroll from './util/infiniteScroll.jsx';
 import Flashcard from "../components/flashcard.jsx";
-import deckPathAdapter from "../adapters/deckPathAdapter.js";
 import userDeckAdapter from "../adapters/userDeckAdapter.js";
 const CLOUDFRONT_URL = config.cloudfrontUrl;
 const CARDS_PER_PAGE = 14;

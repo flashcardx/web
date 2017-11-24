@@ -1,13 +1,12 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import Page from "../components/page.jsx";
 import Radium from "radium";
 import RaisedButton from 'material-ui/RaisedButton';
 import SigninForm from "../containers/signinForm.jsx";
 import SignupForm from "../containers/signupForm.jsx";
 import {resendEmailSignup, fbAuth, googleAuth} from "../actions/auth";
 import ReCAPTCHA from "react-google-recaptcha";
-import config from "../../config";
+import config from "../api_config";
 import FacebookLogin from 'react-facebook-login';
 import {GoogleLogin} from 'react-google-login';
 const RECAPTCHA_KEY = config.recaptchaSiteKey;
@@ -149,7 +148,7 @@ function Details({fbAuth, googleAuth}){
                                     onFailure={googleAuth}
                                     >
                                     <i style={{marginRight:"5px"}} aria-hidden="true">
-                                        <img src="/assets/img/icon_google16.png" alt="Google icon"/>
+                                        <img src={process.env.PUBLIC_URL+"/img/icon_google16.png"} alt="Google icon"/>
                                     </i>
                                     <span>CONTINUE WITH GOOGLE</span>
                                 </GoogleLogin>

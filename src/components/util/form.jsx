@@ -1,6 +1,7 @@
 import React from "react";
 import Formsy from 'formsy-react';
 import Radium from "radium";
+var createReactClass = require('create-react-class');
 
 const style = {
     error:{
@@ -8,7 +9,7 @@ const style = {
     }
 }
 
-export const MyOwnInput = Radium(React.createClass({
+export const MyOwnInput = Radium(createReactClass({
 
     getInitialState(){
         return {focus: false}
@@ -54,7 +55,7 @@ export const MyOwnInput = Radium(React.createClass({
     }
   }));
 
-  export const MyOwnSelect = Radium(React.createClass({
+  export const MyOwnSelect = Radium(createReactClass({
 
     getInitialState(){
         return {focus: false}
@@ -105,7 +106,7 @@ export const MyOwnInput = Radium(React.createClass({
 
 
 
-export const MyOwnTextarea = Radium(React.createClass({
+export const MyOwnTextarea = Radium(createReactClass({
 
     getInitialState(){
         return {focus: false}

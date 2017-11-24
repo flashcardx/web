@@ -1,12 +1,8 @@
-.loader {
-  border: 14px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 14px solid #4286f4;
-  border-bottom: 14px solid #4286f4;
-  width: 100px;
-  height: 100px;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
+
+.owl-dots{
+    margin-top: -20px !important;
+    position: relative !important;
+    opacity: 0.5;
 }
 
 #react{

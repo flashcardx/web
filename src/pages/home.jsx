@@ -7,7 +7,6 @@ import {getUserInfo} from "../actions/user";
 import {successAlert} from "../actions/alerts";
 import {deleteUserFlashcard} from "../actions/flashcard";
 import {deleteUserDeck, fetchUserDecks, pushToPath, dropFromPath} from "../actions/deck.js";
-import Button from 'material-ui/RaisedButton';
 import CreateUserDeckContainer from "../containers/createUserDeckContainer.jsx";
 import CreateUserFlashcardContainer from "../containers/createUserFlashcardContainer.jsx";
 import DeckGalleryUserContainer from "../containers/deckGalleryUserContainer.jsx";
@@ -52,7 +51,6 @@ class Home extends Component{
 
     onDeckDelete(deckId){
         this.props.deleteUserDeck(deckId, ()=>{
-            this.props.successAlert("Mazo eliminado exitosamente!");
             this.forceUpdate();
         });
     }
@@ -60,8 +58,7 @@ class Home extends Component{
     onFlashcardDelete(flashcardId){
         const deckId = deckPathAdapter.getLastIdFromPath(this.props.path);
         this.props.deleteUserFlashcard(deckId, flashcardId, ()=>{
-            this.props.successAlert("Ficha eliminada exitosamente!");
-            this.forceUpdate();
+           this.forceUpdate();
         });
     }
 

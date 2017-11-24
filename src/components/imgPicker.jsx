@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import Radium from "radium";
 import CircularProgress from 'material-ui/CircularProgress';
-import Bricks from 'bricks';
+import Brick from 'bricks.js';
 import _ from "lodash";
 
 const style = {
@@ -24,7 +24,7 @@ class ImgPicker extends Component{
     }
 
     renderImg(img){
-        return <img onClick={()=>this.pickImg(img.real)}key={img.preview} style={style.img} src={img.preview}/>     
+        return <img alt="" onClick={()=>this.pickImg(img.real)}key={img.preview} style={style.img} src={img.preview}/>     
     }
 
     componentDidUpdate(){
@@ -33,7 +33,7 @@ class ImgPicker extends Component{
                         { mq: '768px', columns: 3, gutter: 25 },
                         { mq: '1024px', columns: 4, gutter: 50 }
                     ];
-        Bricks({
+        Brick({
             container: "#gallery",
             packed: 'packed',
             sizes:sizes
@@ -46,7 +46,7 @@ class ImgPicker extends Component{
                         { mq: '768px', columns: 3, gutter: 25 },
                         { mq: '1024px', columns: 4, gutter: 50 }
                     ];
-        Bricks({
+        Brick({
             container: "#gallery",
             packed: 'packed',
             sizes:sizes
@@ -74,4 +74,4 @@ class ImgPicker extends Component{
 }
 
 
-export default Radium(ImgPicker);
+export default ImgPicker;

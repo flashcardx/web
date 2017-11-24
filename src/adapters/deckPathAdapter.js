@@ -1,8 +1,7 @@
 import _ from "lodash";
-import React from "react";
 export default {
         getLastIdFromPath: path=>{
-        if(path.length == 0)
+        if(path.length === 0)
             return null;
         return path[path.length - 1].id;    
         },

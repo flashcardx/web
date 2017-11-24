@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Responsive from 'react-responsive';
 import {Cropper} from 'react-image-cropper'
 import Modal from "./modal.jsx";
 

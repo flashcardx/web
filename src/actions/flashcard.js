@@ -1,5 +1,5 @@
 import axios from "axios";
-import config from "../../config";
+import config from "../api_config";
 import deckPathAdapter from "../adapters/deckPathAdapter.js";
 import {CREATE_USER_CARD, EDIT_USER_CARD, GET_USER_CARDS, DELETE_USER_FLASHCARD, MOVE_USER_CARD} from "./types";
 const CREATE_USER_CARD_URL = config.apiCreateUserCard;

@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
-import { bindActionCreators } from 'redux';
 import Radium from "radium";
-import axios from "axios";
-import config from "../../config";
+import config from "../api_config";
 import Modal from "./util/modal.jsx";
 import TextField from "./util/textField.jsx";
 import RaisedButton from 'material-ui/RaisedButton';
-import {reduxForm, change} from 'redux-form';
+import {change} from 'redux-form';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {createUserDeck} from "../actions/deck.js";
