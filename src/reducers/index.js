@@ -5,7 +5,8 @@ import {alertsReducer, loadingReducer} from "./reducer_alerts";
 import {getUserInfoReducer} from "./reducer_user";
 import {userDecksReducer,
         userDecksPathReducer,
-        decksNameReducer} from "./reducer_deck.js";
+        decksNameReducer,
+        deckNameReducer} from "./reducer_deck.js";
 import {searchImagesReducer, imageProxyReducer} from "./reducer_img";
 import {reducer as formReducer} from "redux-form";
 
@@ -23,7 +24,8 @@ const appReducer = combineReducers({
   userDecksPath: userDecksPathReducer,
   searchImages: searchImagesReducer,
   imageReady: imageProxyReducer,
-  decksName: decksNameReducer
+  decksName: decksNameReducer,
+  deckName: deckNameReducer
 });
 
 const rootReducer = (state, action) => {

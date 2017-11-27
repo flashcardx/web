@@ -7,12 +7,14 @@ import {FETCH_USER_DECKS,
         PUSH_TO_USER_DECK_PATH,
         DROP_FROM_USER_DECK_PATH,
         EDIT_USER_DECK,
-        LIST_DECKS_NAME} from "./types";
+        LIST_DECKS_NAME,
+        GET_DECK_NAME} from "./types";
 const FETCH_USER_DECKS_URL = config.apiGetUserDecks;
 const CREATE_USER_DECK_URL = config.apiCreateUserDeck;
 const DELETE_USER_DECK_URL = config.apiDeleteUserDeck;
 const EDIT_USER_DECK_URL = config.apiEditUserDeck;
 const LIST_DECKS_NAME_URL = config.apiListDecksNameUrl;
+const GET_DECK_URL = config.apiGetDeckUrl;
 
 export function fetchUserDecks(skip=0, path=[]){
     const parentId = deckPathAdapter.getLastIdFromPath(path);
@@ -120,4 +122,15 @@ export function dropFromPath(pathLastIndex){
                 type: DROP_FROM_USER_DECK_PATH,
                 pathLastIndex
         }
+}
+
+export function getDeckName(deckId){
+        const url = GET_DECK_URL + deckId + "?fields=name";
+        const request = axios.get(url,
+                    {headers: {'x-access-token': localStorage.getItem("jwt")}});
+        return {
+                type: GET_DECK_NAME,
+                payload: request,
+                originAPI: true
+                }        
 }

@@ -1,4 +1,8 @@
-import {GET_USER_CARDS, MOVE_USER_CARD, CREATE_USER_CARD, EDIT_USER_CARD, FETCH_USER_DECKS, EDIT_USER_DECK, CREATE_USER_DECK, DELETE_USER_DECK, PUSH_TO_USER_DECK_PATH, DROP_FROM_USER_DECK_PATH, DELETE_USER_FLASHCARD, LIST_DECKS_NAME} from "../actions/types";
+import {GET_USER_CARDS, MOVE_USER_CARD, CREATE_USER_CARD,
+        EDIT_USER_CARD, FETCH_USER_DECKS, EDIT_USER_DECK,
+        CREATE_USER_DECK, DELETE_USER_DECK, PUSH_TO_USER_DECK_PATH,
+        DROP_FROM_USER_DECK_PATH, DELETE_USER_FLASHCARD, LIST_DECKS_NAME,
+        GET_DECK_NAME} from "../actions/types";
 import userDeckAdapter from "../adapters/userDeckAdapter.js";
 import deckPathAdapter from "../adapters/deckPathAdapter.js";
 
@@ -37,4 +41,12 @@ export function decksNameReducer(state=[], action){
         case LIST_DECKS_NAME: return action.payload.msg;
     }
     return state;
+}
+
+export function deckNameReducer(state=null, action){
+    switch (action.type) {
+        case GET_DECK_NAME: console.log("deckname: ", action.payload.msg.name);
+                            return new String(action.payload.msg.name);
+    }
+        return state;
 }

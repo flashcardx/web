@@ -83,5 +83,6 @@ module.exports = {
     apiEditUserDeck: api.editUserDeck,
     apiListDecksNameUrl: api.listDecksNameUrl,
     apiTextToSpeech: api.textToSpeech,
-    apiMoveCard: api.moveCard
+    apiMoveCard: api.moveCard,
+    apiGetDeckUrl: api.getDeckUrl
 };

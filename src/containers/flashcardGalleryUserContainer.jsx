@@ -9,9 +9,20 @@ class FlashcardGalleryUserContainer extends Component{
 
     constructor(props){
         super(props);
+        this.fetchCards = this.fetchCards.bind(this);
+        this.updateLang = this.updateLang.bind(this);
         var lang = userDeckAdapter.getLang(this.props.decks, this.props.deckId);
         this.state = {lang: lang};
-        this.fetchCards = this.fetchCards.bind(this);
+    }
+
+    updateLang(deckId){
+        var lang = userDeckAdapter.getLang(this.props.decks, deckId);
+        this.setState({lang: lang});
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.deckId != this.props.deckId)
+            this.updateLang(nextProps.deckId);
     }
 
     fetchCards(skip){

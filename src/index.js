@@ -4,10 +4,12 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { BrowserRouter, Switch, Route,Redirect } from 'react-router-dom';
 import Home from "./pages/home.jsx";
-import Practice from "./pages/practice.jsx";
 import Settings from "./pages/settings.jsx";
 import Signout from "./pages/signout.jsx";
 import Landing from "./pages/landing.jsx";
+import PracticeMethodChooser from "./pages/practice/methodChooser.jsx";
+import PracticeDeckChooser from "./pages/practice/deckChooser.jsx";
+import PracticeSpacedRepetition from "./pages/practice/spacedRepetition.jsx";
 import reducers from "./reducers";
 import {requireAuth, redirectIfAuth, validateEmail} from "./containers/authRedirect.jsx";
 import promiseMDW from "./middlewares/promise";
@@ -28,7 +30,9 @@ class App extends Component{
     render(){
        return ( <BrowserRouter>
                     <Switch>
-                        <Route path="/practice" component={requireAuth(Practice, "/landing")}/>
+                        <Route path="/practice/spaced-repetition/:deckId" component={requireAuth(PracticeSpacedRepetition, "/landing")}/>
+                        <Route path="/practice/:method" component={requireAuth(PracticeDeckChooser, "/landing")}/>
+                        <Route path="/practice" component={requireAuth(PracticeMethodChooser, "/landing")}/>
                         <Route path="/settings" component={requireAuth(Settings, "/landing")}/>
                         <Route path="/email-verification/:id" component={validateEmail(Landing, "/landing")}/>
                         <Route path="/landing" component={redirectIfAuth(Landing, "/")}/>

@@ -24,7 +24,7 @@ class Path extends Component{
     render(){
         return (
             <span>
-                <span onClick={()=>this.props.goToIndex(0)} style={style.path.p}>Root</span>
+                <span onClick={()=>this.props.goToIndex(0)} style={style.path.p}>Todo</span>
                 {this.props.path.map((p, i)=>{
                     return <span key={(i+1)}><span style={style.path.angle}> > </span><span onClick={()=>this.props.goToIndex(i+1)} style={style.path.p}>{p.name}</span></span>
                     })

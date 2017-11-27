@@ -13,18 +13,7 @@ import DeckGalleryUserContainer from "../containers/deckGalleryUserContainer.jsx
 import FlashcardGalleryUserContainer from "../containers/flashcardGalleryUserContainer.jsx";
 import _ from "lodash";
 import deckPathAdapter from "../adapters/deckPathAdapter.js";
-
-const style = {
-    row1:{
-        margin: "0px",
-        backgroundColor:"white",
-        boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px",
-        padding:"10px"
-    },
-    rowContent:{
-        marginTop:"30px"
-    }
-}
+import WhiteBar from "../components/util/whiteBar.jsx";
 
 class Home extends Component{
     constructor(props){
@@ -66,14 +55,11 @@ class Home extends Component{
         const parentId = deckPathAdapter.getLastIdFromPath(this.props.path);
         var createCard = null;
         if(parentId)
-            createCard = <CreateUserFlashcardContainer parentId={parentId}/>;
-                        
+            createCard = <CreateUserFlashcardContainer parentId={parentId}/>;                   
         return (
             <Page noWrap name="my collection">
                 <div>
-                    <div style={style.row1} >
-                        <div className="container">
-                            <div className="row">
+                    <WhiteBar>
                                 <div className="col-lg-8  col-md-7 col-sm-12">
                                      <Path goToIndex={this.goToIndex} path={this.props.path}/>
                                 </div>
@@ -83,13 +69,11 @@ class Home extends Component{
                                         <CreateUserDeckContainer parentId={parentId}/>                          
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                    </WhiteBar> 
                     {
                     parentId &&
                       <div className="container">
-                        <div style={style.rowContent}  className="row">
+                        <div style={{marginBottom:"30px"}}  className="row">
                             <div className="col">
                                 <h2>Fichas:</h2>
                                 <FlashcardGalleryUserContainer
@@ -101,7 +85,7 @@ class Home extends Component{
                        </div>
                     }
                     <div className="container">
-                        <div style={style.rowContent} className="row">
+                        <div className="row">
                             <div className="col">
                                 <h2>Mazos:</h2>
                                 <DeckGalleryUserContainer

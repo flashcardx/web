@@ -74,7 +74,8 @@
             "editUserDeck": "http://localhost:3000/editDeck/u/",
             "listDecksNameUrl": "http://localhost:3000/decksName/u/",
             "textToSpeech": "http://localhost:3000/textToSpeech/",
-            "moveCard": "http://localhost:3000/moveCard/"
+            "moveCard": "http://localhost:3000/moveCard/",
+            "getDeckUrl": "http://localhost:3000/deck/"
             },
         "pi":{
             "getInitialCards": "http://pi.api.flashcardx.co/allCards",
@@ -151,7 +152,8 @@
             "editUserDeck": "http://pi.api.flashcardx.co/editDeck/u/",
             "listDecksNameUrl": "http://pi.api.flashcardx.co/decksName/u/",
             "textToSpeech": "http://pi.api.flashcardx.co/textToSpeech/",
-            "moveCard": "https://pi.api.flashcardx.co/moveCard/"
+            "moveCard": "http://pi.api.flashcardx.co/moveCard/",
+            "getDeckUrl": "http://pi.api.flashcardx.co/deck/"
             },
         "production":{
             "getInitialCards": "https://api.flashcardx.co/allCards",
@@ -228,6 +230,7 @@
             "editUserDeck": "https://api.flashcardx.co/editDeck/u/",
             "listDecksNameUrl": "https://api.flashcardx.co/decksName/u/",
             "textToSpeech": "https://api.flashcardx.co/textToSpeech/",
-            "moveCard": "https://api.flashcardx.co/moveCard/"
+            "moveCard": "https://api.flashcardx.co/moveCard/",
+            "getDeckUrl": "https://api.flashcardx.co/deck/"
         }
 }

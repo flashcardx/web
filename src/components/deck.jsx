@@ -9,6 +9,7 @@ import language from "./util/language.js";
 import {Link} from "react-router-dom";
 import ImageGallery from "./imageGallery.jsx";
 import EditUserDeckContainer from "../containers/editUserDeckContainer.jsx";
+import AskConfirmation from "./util/askConfirmation.jsx";
 
 const style = {
     deck: {
@@ -37,6 +38,11 @@ const style = {
 
 class Deck extends Component{
 
+    constructor(props){
+        super(props);
+        this.state = {deleteDeck: false};
+    }
+
     render(){
         const {deck} = this.props;
         var img = {
@@ -59,9 +65,10 @@ class Deck extends Component{
                 </CardText>
                 <CardActions>
                     <div className="row">
-                        <IconButton onClick={()=>this.props.onDelete(deck._id)} iconStyle={{ color: "red" }} data-tip="Delete" iconClassName="material-icons">
-                            clear
-                        </IconButton>
+                            <AskConfirmation onClose={()=>this.setState({deleteDeck:false})} show={this.state.deleteDeck} text="Cuidado: Si eliminas el mazo, todo el contenido que se encuentre dentro del mismo sera borrado de forma permanente" onConfirm={()=>{this.props.onDelete(deck._id);this.setState({deleteDeck:false})}}/>
+                            <IconButton onClick={()=>this.setState({deleteDeck:true})} iconStyle={{ color: "red" }} data-tip="Delete" iconClassName="material-icons">
+                                clear
+                            </IconButton>
                         <EditUserDeckContainer deck={deck}/>
                     </div>
                 </CardActions>

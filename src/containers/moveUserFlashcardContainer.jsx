@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import SelectDeck from "../components/selectDeck.jsx";
+import SelectDeckModal from "../components/selectDeckModal.jsx";
 import {listDecksName} from "../actions/deck";
 import {moveUserFlashcardToDeck} from "../actions/flashcard";
 import {connect} from "react-redux";
@@ -18,7 +18,9 @@ class MoveUserFlashcardContainer extends Component{
     }
 
     render(){
-        return (<SelectDeck
+        return (<SelectDeckModal
+                confirmLabel="Mover aqui:"
+                description="Mover a:"
                 onSubmit={this.onSubmit}
                 decksName={this.props.decksName}
                 listDecks={this.props.listDecksName}
