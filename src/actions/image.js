@@ -1,7 +1,6 @@
 import axios from "axios";
 import config from "../api_config";
 import {SEARCH_IMG,
-        SEARCH_GIF,
         RESET_SEARCH_IMAGES,
         IMAGE_PROXY,
         DELETE_IMAGE_READY

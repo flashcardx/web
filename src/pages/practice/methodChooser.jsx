@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import Page from "../../components/page.jsx";
 import {Redirect } from 'react-router';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import WhiteBar from "../../components/util/whiteBar.jsx";
 

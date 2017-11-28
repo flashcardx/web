@@ -75,13 +75,13 @@ class Landing extends Component{
     }
 
     signupSight(state){
-    if(state.type == 1)
+    if(state.type === 1)
         return (
             <div className="alert alert-success" role="alert">
                 {state.msg}
             </div>
         );
-    if(state.type == 2)
+    if(state.type === 2)
         return (
             <div className="alert alert-info" role="alert">
                 {state.msg}
@@ -172,7 +172,7 @@ function Details({fbAuth, googleAuth}){
                             <div className="col-md-12 text-center">
                                 <h2> What are Flashcards?</h2>
                                     <div minLength="embed-responsive embed-responsive-16by9">
-                                        <iframe width="100%" height="400px" className="embed-responsive-item" src="https://www.youtube.com/embed/mzCEJVtED0U" allowFullScreen></iframe>
+                                        <iframe title ="" width="100%" height="400px" className="embed-responsive-item" src="https://www.youtube.com/embed/mzCEJVtED0U" allowFullScreen></iframe>
                                     </div>
                             </div>
                 </div> 

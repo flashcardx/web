@@ -2,18 +2,13 @@ import React, {Component} from "react";
 import _ from "lodash";
 import Radium from "radium";
 import {connect} from "react-redux";
-import config from "../api_config";
 import Modal from "./util/modal.jsx";
-import TextField from "./util/textField.jsx";
 import RaisedButton from 'material-ui/RaisedButton';
 import {infoAlert} from "../actions/alerts.js";
-import {reduxForm } from 'redux-form';
 import Dropzone from 'react-dropzone';
-import PropTypes from "prop-types";
 import ImgPicker from "./imgPicker.jsx";
 import Cropper from "./util/cropper.jsx";
 import {searchImg, searchGif, resetSearchImages} from "../actions/image";
-import IconButton from 'material-ui/IconButton';
 
 const style = {
     marginRight:{

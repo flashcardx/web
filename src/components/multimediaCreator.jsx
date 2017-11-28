@@ -1,9 +1,6 @@
 import React, {Component} from "react";
 import Radium from "radium";
 import AddImage from "./addImage.jsx";
-import AddDrawing from "./addDrawing.jsx";
-import AddAudio from "./addAudio.jsx";
-import AddVideo from "./addVideo.jsx";
 import PreviewImage from "./previewImage.jsx";
 
 class MultimediaCreator extends Component{

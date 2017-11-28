@@ -52,7 +52,7 @@ class SelectDeckModal extends Component{
     render(){
         var confirmObject = (
                          <RaisedButton
-                                disabled={(this.props.bigLoading || this.state.path.length==0)}
+                                disabled={(this.props.bigLoading || this.state.path.length===0)}
                                 label={this.props.confirmLabel}
                                 primary={true}
                                 onClick={this.submit}

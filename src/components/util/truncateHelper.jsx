@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Motion, spring } from "react-motion";
 import PropTypes from 'prop-types';
-import ReactDOM from "react-dom";
 
 export default class ReactTextCollapse extends Component {
   static propTypes = {

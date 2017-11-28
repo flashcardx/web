@@ -1,13 +1,10 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import Radium from "radium";
-import axios from "axios";
-import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import {hideNotifs, appendNotifications} from "../actions/notifications";
 import Date from "../components/util/date.jsx";
 import Modal from "../components/util/modal.jsx";
-import ReactTooltip from 'react-tooltip';
 import CircularProgress from 'material-ui/CircularProgress';
 
 const style = {
@@ -62,7 +59,7 @@ class NotificationModal extends Component{
         if(this.props.notifs == null)
             content =  <div style={style.center} ><CircularProgress size={80} thickness={7}/> </div>;
         else
-            if(this.props.notifs.length!=0)
+            if(this.props.notifs.length!==0)
                 content = this.props.notifs.map(n=>this.renderNotif(n));
             else
                 content = <p style={style.center} >You don't have notifications at the moment :( </p>;

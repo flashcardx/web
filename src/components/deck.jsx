@@ -1,12 +1,9 @@
 import React, {Component} from "react";
 import Radium from "radium";
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import { Card, CardActions, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton';
-import FontIcon from 'material-ui/FontIcon';
-import CroppedImage from "./util/croppedImage.jsx";
 import Truncate from "./util/truncate.jsx";
 import language from "./util/language.js";
-import {Link} from "react-router-dom";
 import ImageGallery from "./imageGallery.jsx";
 import EditUserDeckContainer from "../containers/editUserDeckContainer.jsx";
 import AskConfirmation from "./util/askConfirmation.jsx";
@@ -19,12 +16,17 @@ const style = {
         minWidth: "180px"
     },
     wordBreak: {
+        // eslint-disable-next-line
         whiteSpace: "-webkit-pre-wrap", /*Chrome & Safari */
+        // eslint-disable-next-line
         whiteSpace: "-pre-wrap",      /* Opera 4-6 */
+        // eslint-disable-next-line
         whiteSpace: "-o-pre-wrap",    /* Opera 7 */
+        // eslint-disable-next-line
         whiteSpace: "pre-wrap",       /* css-3 */
         wordWrap: "break-word",       /* Internet Explorer 5.5+ */
         wordBreak: "break-all",
+        // eslint-disable-next-line
         whiteSpace: "normal"
     },
     a:{

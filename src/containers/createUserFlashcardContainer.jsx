@@ -1,11 +1,6 @@
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
-import Radium from "radium";
-import axios from "axios";
-import config from "../api_config";
-import {reduxForm } from 'redux-form';
 import {connect} from "react-redux";
-import PropTypes from "prop-types";
 import {createUserCard} from "../actions/flashcard.js";
 import {successAlert} from "../actions/alerts.js";
 import RaisedButton from 'material-ui/RaisedButton';
@@ -42,7 +37,7 @@ class CreateUserCardContainer extends Component{
         if(!src)//delete all images if not src
             return this.setState({pickedImages: []});
         var newImages = this.state.pickedImages.slice();
-        var index = newImages.findIndex(i=>{return i.src == src});
+        var index = newImages.findIndex(i=>{return i.src === src});
         newImages.splice(index, 1);
         this.setState({pickedImages: newImages});
         this.props.deleteImageReady();

@@ -1,18 +1,13 @@
 import React, {Component} from 'react';
 import Radium from "radium";
-import config from "../api_config";
 import Modal from "./util/modal.jsx";
-import TextField from "./util/textField.jsx";
 import RaisedButton from 'material-ui/RaisedButton';
 import {change} from 'redux-form';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {createUserDeck} from "../actions/deck.js";
-import {successAlert, infoAlert, showLoading, hideLoading} from "../actions/alerts.js";
 import Formsy from 'formsy-react';
 import {MyOwnInput, MyOwnTextarea, MyOwnSelect} from "./util/form.jsx";
 import MultimediaCreator from "./multimediaCreator.jsx";
-import IconButton from 'material-ui/IconButton';
 import _ from "lodash";
 
 function langOptions(){
@@ -81,7 +76,7 @@ class CreateDeck extends Component{
             if(!_.isEqual(nextProps.pickedImages, this.props.pickedImages)){
                 this.loadImageOnForm(nextProps.pickedImages);
             }
-            if(this.state.errorMsg && nextProps.pickedImages.length != 0)
+            if(this.state.errorMsg && nextProps.pickedImages.length !== 0)
                 this.setState({errorMsg: null});
     }
 
@@ -112,7 +107,7 @@ class CreateDeck extends Component{
     }
 
     onSubmit({name, description, lang}){
-        if(this.props.pickedImages.length == 0)
+        if(this.props.pickedImages.length === 0)
             return this.setState({errorMsg:"Tu mazo necesita una imagen de portada!"});
         this.props.onSubmit(name, description, lang, ()=>{
             this.reset();
@@ -121,7 +116,6 @@ class CreateDeck extends Component{
     }
 
     renderForm(){
-        const {handleSubmit} = this.props;
         return (
             <div className="container">
                 <div className="row">

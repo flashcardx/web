@@ -6,7 +6,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Radium from "radium";
 import {connect} from "react-redux";
 import {signin as SigninAction} from "../actions/auth";
-import {withRouter} from "react-router-dom";
 
 const style = {
     marginLeft:{

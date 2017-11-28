@@ -1,25 +1,14 @@
 import React, {Component} from 'react';
 import Radium from "radium";
-import config from "../api_config";
 import Modal from "./util/modal.jsx";
-import TextField from "./util/textField.jsx";
 import RaisedButton from 'material-ui/RaisedButton';
-import {reduxForm, change} from 'redux-form';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {createUserDeck} from "../actions/deck.js";
-import {successAlert, infoAlert, showLoading, hideLoading} from "../actions/alerts.js";
+import {infoAlert} from "../actions/alerts.js";
 import _ from "lodash";
-import Toggle from 'material-ui/Toggle';
 import Formsy from 'formsy-react';
 import {MyOwnInput, MyOwnTextarea} from "./util/form.jsx";
 import MultimediaCreator from "./multimediaCreator.jsx";
-
-const style = {
-    toggle:{
-        marginBottom: 16
-    }
-}
 
 class CreateFlashcard extends Component{
 
@@ -91,7 +80,7 @@ class CreateFlashcard extends Component{
     }
 
     onSubmit({name, description}){
-            if(!description && this.props.pickedImages.length == 0)
+            if(!description && this.props.pickedImages.length === 0)
                 return this.props.infoAlert("Ouch!, Tu ficha debe contener una descripcion o algun contenido multimedia");
             this.props.onSubmit(name, description,()=>{
                 if(this.props.resetOnClose)
@@ -116,7 +105,6 @@ class CreateFlashcard extends Component{
     }
 
     renderForm(){
-        const {handleSubmit} = this.props;
         return (
             <div className="container">
                 <div className="row">
