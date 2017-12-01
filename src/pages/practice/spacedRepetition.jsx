@@ -14,6 +14,7 @@ import _ from "lodash"
 import Flashcard from "../../components/flashcard.jsx"
 import Speaker from "../../components/util/speaker.jsx";
 import Fade from "../../components/util/fadeContent.jsx";
+import axios from "axios";
 const WIN_SOUND_URL = config.urlSoundWin,
       LOSE_SOUND_URL = config.urlSoundLose,
       HIT_TRANSITION_TIME=500;
@@ -42,6 +43,9 @@ class SpacedRepetition extends Component{
     componentDidMount(){
         this.replaceDeckName();
         this.getCards();
+        //we request the audio files as soon as possible, so when we gotta play them user does not experience delay
+        axios.get(WIN_SOUND_URL);
+        axios.get(LOSE_SOUND_URL);
     }
 
     getCards(){
@@ -147,19 +151,22 @@ class SpacedRepetition extends Component{
         return  null;
     }
 
+    componentDidUpdate(){
+        if(this.state.stage === 0)
+            this.getCards();
+        if(this.state.stage === 1 && this.state.showHit)
+            setTimeout(() => {
+                this.setState({showHit:false});
+            }, 2000);
+    }
+
     render(){
         const sound = this.renderSound();
         var body = null;
         if(this.state.stage === 0){
-            this.getCards();
             body =  <div className="row"><div  style={{textAlign: "center"}} className="col"><CircularProgress style={{margin:"auto"}} size={130} thickness={7} /></div></div>
         }
         else if(this.state.stage === 1){
-            if(this.state.showHit){
-                setTimeout(() => {
-                    this.setState({showHit:false});
-                }, 2000);
-            }
             if(_.isEmpty(this.state.cards))
             body = <h2>En este momento no tenes fichas por practicar! vuelve en otro momento</h2>    
             else 

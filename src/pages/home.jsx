@@ -54,15 +54,21 @@ class Home extends Component{
     }
 
     generateUserInfoBar(){
+        if(_.isEmpty(this.props.userInfo)){
+            return <WhiteBar>Cargando...</WhiteBar>
+        }
+        const points = this.props.userInfo.points;
+        const upperLimit = this.props.userInfo.upperLimit - points;
         return <WhiteBar>
                     <div className="col">
                         <Points>
-                            Puntos: {this.props.userInfo.points}
+                            Puntos: {points}
                         </Points>
                     </div>
                     <div className="col">
                         <Level>
                             Nivel: {this.props.userInfo.level}
+                            (A {upperLimit} ptos del siguiente nivel)
                         </Level>
                     </div>
             </WhiteBar>
