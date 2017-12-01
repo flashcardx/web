@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import Radium from "radium";
-import Modal from "./util/modal.jsx";
 import CroppedImage from "./util/croppedImage.jsx";
 
 const style = {

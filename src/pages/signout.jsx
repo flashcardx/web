@@ -41,7 +41,7 @@ class Signout extends Component{
                             <div className="container">
                                 <h3>Have a great rest of the day {this.props.username}! Hope we see you again soon!</h3>
                                 <br/>
-                                <img src={process.env.PUBLIC_URL+"/img/signout.jpg"}/>
+                                <img alt="sign out" src={process.env.PUBLIC_URL+"/img/signout.jpg"}/>
                             </div>
                         </div>
                         <br/>
@@ -71,12 +71,14 @@ class Signout extends Component{
 
 function mapStateToProps(state){
     if(!state.user)
-        return {username:"Anonymus"}
+        return {username:"Humano"}
     var name = getFirstName(state.user.name);
     return {username: name};
 }
 
 function getFirstName(name){
+    if(!name)
+        return "Humano";
     return name.split(' ')[0];
 }
 

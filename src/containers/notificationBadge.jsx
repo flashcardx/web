@@ -1,9 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import Radium from "radium";
-import axios from "axios";
 import Badge from 'material-ui/Badge';
-import FlatButton from 'material-ui/FlatButton';
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 import IconButton from 'material-ui/IconButton';
 import {fetchCount, showNotifs} from "../actions/notifications";

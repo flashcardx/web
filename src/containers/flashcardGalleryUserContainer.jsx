@@ -21,7 +21,7 @@ class FlashcardGalleryUserContainer extends Component{
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.deckId != this.props.deckId)
+        if(nextProps.deckId !== this.props.deckId)
             this.updateLang(nextProps.deckId);
     }
 

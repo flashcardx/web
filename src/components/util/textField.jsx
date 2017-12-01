@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form'
+import { Field } from 'redux-form'
 import Radium from "radium";
 
 const style = {
@@ -39,8 +39,10 @@ class TextInput extends Component{
                                 </select>
                           )
                   break;
-    case "textarea": component = <textarea {...field.input} type={field.type} placeholder={field.placeholder} className="form-control"/>
+    //case textarea
+    default: component = <textarea {...field.input} type={field.type} placeholder={field.placeholder} className="form-control"/>
                      break;
+    
   }
   return(
     <div className="form-group has-danger">

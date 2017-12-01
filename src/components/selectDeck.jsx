@@ -1,30 +1,9 @@
-import _ from "lodash";
 import React, {Component} from "react";
 import Radium from "radium";
-import Select from 'react-select';
 import 'react-select/dist/react-select.css';
-import MenuItem from 'material-ui/MenuItem';
-import SelectField from 'material-ui/SelectField';
 import Path from "./util/path.jsx";
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
-
-const style = {
-    path:{
-        p:{ color: "grey",
-            fontWeight:"400",
-            fontSize:"18px",
-            cursor: "pointer",
-            lineHeight:"36px" 
-          },
-        angle:{ 
-            paddingBottom:"6px",
-            paddingLeft:"10px",
-            paddingRight:"10px",
-            fontSize:"20px"
-        }
-    }
-}
 
 class SelectDeck extends Component{
 
@@ -36,8 +15,7 @@ class SelectDeck extends Component{
     }
 
     renderBody(){
-        var opciones = null;
-         return (
+        return (
             <span>
                 <div className="row">
                     <div className="col">

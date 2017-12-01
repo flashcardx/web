@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Motion, spring } from "react-motion";
 import PropTypes from 'prop-types';
-import ReactDOM from "react-dom";
 
 export default class ReactTextCollapse extends Component {
   static propTypes = {
@@ -58,7 +57,7 @@ export default class ReactTextCollapse extends Component {
                 style={{
                   display: `block`,
                   overflow: `hidden`,
-                  height: `${h}` + 'px'
+                  height: `${h}px`
                 }}>
                 <span style={{display:"block"}} ref={r => { this.childrenRef = r; }} >
                     {children}

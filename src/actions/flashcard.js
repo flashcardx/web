@@ -1,6 +1,5 @@
 import axios from "axios";
 import config from "../api_config";
-import deckPathAdapter from "../adapters/deckPathAdapter.js";
 import {CREATE_USER_CARD, EDIT_USER_CARD, GET_USER_CARDS, DELETE_USER_FLASHCARD, MOVE_USER_CARD} from "./types";
 const CREATE_USER_CARD_URL = config.apiCreateUserCard;
 const EDIT_USER_CARD_URL = config.apiEditCard;
@@ -18,7 +17,7 @@ export function createUserCard(name, description, images, deckId, callback){
                         headers: {'x-access-token': localStorage.getItem("jwt")}
                         });
     request.then(r=>{
-        if(r.data.success == true)
+        if(r.data.success === true)
             callback();
     });
     return {type: CREATE_USER_CARD,
@@ -42,7 +41,7 @@ export function editUserFlashcard({name, cardId, description, imgs, deckId}, cal
                         headers: {'x-access-token': localStorage.getItem("jwt")}
                         });
     request.then(r=>{
-        if(r.data.success == true)
+        if(r.data.success === true)
             callback();
     })
     return {
@@ -72,7 +71,7 @@ export function deleteUserFlashcard(deckId, flashcardId, callback){
     const request = axios.delete(url,
                     {headers: {'x-access-token': localStorage.getItem("jwt")}});
     request.then(r=>{
-        if(r.data.success == true)
+        if(r.data.success === true)
             callback();
     });
     return {type:DELETE_USER_FLASHCARD,
@@ -91,7 +90,7 @@ export function moveUserFlashcardToDeck(cardId, oldDeckId, newDeckId, callback){
                         headers: {'x-access-token': localStorage.getItem("jwt")}
                         });
     request.then(r=>{
-        if(r.data.success == true)
+        if(r.data.success === true)
             callback();
     })
     return {

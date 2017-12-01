@@ -21,8 +21,9 @@ export function userDecksReducer(state={}, action){
         case EDIT_USER_CARD: return userDeckAdapter.replaceCard(state, action.payload.card, action.deckId);
         case GET_USER_CARDS:    return userDeckAdapter.insertMoreCards(state, action.payload.cards, action.deckId);
         case MOVE_USER_CARD: return userDeckAdapter.moveCard(state, action.cardId, action.oldDeckId, action.newDeckId);
+        default: return state;
     }
-    return state;
+    
 }
 
 export function userDecksPathReducer(state=[], action){
@@ -32,21 +33,24 @@ export function userDecksPathReducer(state=[], action){
         case DROP_FROM_USER_DECK_PATH:
                     const limitToDrop = state.length - action.pathLastIndex;
                     return deckPathAdapter.cloneAndDropFromRight(state, limitToDrop);
+        default: return state;
     }
-    return state;
+    
 }
 
 export function decksNameReducer(state=[], action){
     switch (action.type) {
         case LIST_DECKS_NAME: return action.payload.msg;
+        default: return state;
     }
-    return state;
+    
 }
 
 export function deckNameReducer(state=null, action){
     switch (action.type) {
         case GET_DECK_NAME: console.log("deckname: ", action.payload.msg.name);
+        // eslint-disable-next-line
                             return new String(action.payload.msg.name);
+        default: return state;
     }
-        return state;
 }

@@ -2,29 +2,9 @@ import React, {Component} from 'react';
 import Radium from "radium";
 import _ from "lodash";
 import PropTypes from 'prop-types';
-import config from "../api_config";
 import InfiniteScroll from './util/infiniteScroll.jsx';
 import Flashcard from "../components/flashcard.jsx";
-import userDeckAdapter from "../adapters/userDeckAdapter.js";
-const CLOUDFRONT_URL = config.cloudfrontUrl;
 const CARDS_PER_PAGE = 14;
-
-const style = {
-    card:{
-        padding: "0px",
-        margin: "6px",
-        display: "inline-block"
-    },
-    wordBreak:{
-        whiteSpace: "-webkit-pre-wrap", /*Chrome & Safari */ 
-        whiteSpace: "-pre-wrap",      /* Opera 4-6 */
-        whiteSpace: "-o-pre-wrap",    /* Opera 7 */
-        whiteSpace: "pre-wrap",       /* css-3 */
-        wordWrap: "break-word",       /* Internet Explorer 5.5+ */
-        wordBreak: "break-all",
-        whiteSpace: "normal"
-    }
-}
 
 class FlashcardGallery extends Component{
 
@@ -41,7 +21,7 @@ class FlashcardGallery extends Component{
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.deckId != this.props.deckId)
+        if(nextProps.deckId !== this.props.deckId)
             this.props.fetch(this.state.skip);
         //the function could be called even when props didnt change, so we need to check before doing somehing nasty
         if(!_.isEqual(this.props, nextProps))
@@ -53,7 +33,7 @@ class FlashcardGallery extends Component{
     }
 
     shouldComponentUpdate(nextProps, nextState){
-        if(nextState.wasRendered != this.state.wasRendered)
+        if(nextState.wasRendered !== this.state.wasRendered)
             return false;
         return true;
     }
@@ -76,7 +56,6 @@ class FlashcardGallery extends Component{
     
 
     renderCards(cards){
-        const parentId = this.props.deckId;
         if(this.state.wasRendered && _.isEmpty(cards))
             return <p>No tenes fichas en esta ruta :(</p>
         var renderedCards = [];

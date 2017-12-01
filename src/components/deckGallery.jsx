@@ -2,29 +2,11 @@ import React, {Component} from 'react';
 import Radium from "radium";
 import _ from "lodash";
 import PropTypes from 'prop-types';
-import config from "../api_config";
 import InfiniteScroll from './util/infiniteScroll.jsx';
 import Deck from "../components/deck.jsx";
 import deckPathAdapter from "../adapters/deckPathAdapter.js";
 import userDeckAdapter from "../adapters/userDeckAdapter.js";
 const DECKS_PER_PAGE = 14;
-
-const style = {
-    deck:{
-        padding: "0px",
-        margin: "6px",
-        display: "inline-block"
-    },
-    wordBreak:{
-        whiteSpace: "-webkit-pre-wrap", /*Chrome & Safari */ 
-        whiteSpace: "-pre-wrap",      /* Opera 4-6 */
-        whiteSpace: "-o-pre-wrap",    /* Opera 7 */
-        whiteSpace: "pre-wrap",       /* css-3 */
-        wordWrap: "break-word",       /* Internet Explorer 5.5+ */
-        wordBreak: "break-all",
-        whiteSpace: "normal"
-    }
-}
 
 class DeckGallery extends Component{
 
@@ -45,7 +27,7 @@ class DeckGallery extends Component{
     }
 
     shouldComponentUpdate(nextProps, nextState){
-        if(nextState.wasRendered != this.state.wasRendered)
+        if(nextState.wasRendered !== this.state.wasRendered)
             return false;
         return true;
     }

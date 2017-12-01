@@ -10,15 +10,14 @@ export function alertsReducer(state=null, action){
         case ERROR_ALERT_GAME:  return {msg:payload, time:4000, theme:"red", type:"error-game"};
         case SUCCESS_ALERT_GAME: return {msg:payload, time:3000, theme:"green", type:"success-game"};
         case INFO_ALERT_GAME: return {msg:payload, time:3000, theme:"yellow", type:"info-game"};
+        default: return state;   
     }
-    return state;
 }
 
 export function loadingReducer(state=false, action){
     switch (action.type) {
         case SHOW_BIGLOADING: return true;
-        case HIDE_BIGLOADING: return false;    
+        case HIDE_BIGLOADING: return false;
+        default: return state;   
     }
-    
-    return state;
 }

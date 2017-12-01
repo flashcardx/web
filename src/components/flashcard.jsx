@@ -1,16 +1,12 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import Radium from "radium";
-import _ from "lodash";
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import { Card, CardActions, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton';
-import FontIcon from 'material-ui/FontIcon';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import CroppedImage from "./util/croppedImage.jsx";
 import Truncate from "./util/truncate.jsx";
-import {Link} from "react-router-dom";
 import ImageGallery from "./imageGallery.jsx";
 import MoveUserFlashcardContainer from "../containers/moveUserFlashcardContainer.jsx";
 import EditUserFlashcardContainer from "../containers/editUserFlashcardContainer.jsx";
@@ -27,12 +23,17 @@ const style = {
         minWidth: "180px"
     },
     wordBreak: {
+        // eslint-disable-next-line
         whiteSpace: "-webkit-pre-wrap", /*Chrome & Safari */
+        // eslint-disable-next-line
         whiteSpace: "-pre-wrap",      /* Opera 4-6 */
+        // eslint-disable-next-line
         whiteSpace: "-o-pre-wrap",    /* Opera 7 */
+        // eslint-disable-next-line
         whiteSpace: "pre-wrap",       /* css-3 */
         wordWrap: "break-word",       /* Internet Explorer 5.5+ */
         wordBreak: "break-all",
+        // eslint-disable-next-line
         whiteSpace: "normal"
     },
     a:{
@@ -123,7 +124,7 @@ class Flashcard extends Component{
                         <CardMedia>
                             <ImageGallery imgs={imgs}/>
                         </CardMedia>
-                        <CardTitle style={{paddingBottom:"0px", paddingLeft:"0px", paddingRight:"8px", paddingLeft:"8px"}} titleStyle={{wordBreak: "break-all" }} title={title} />
+                        <CardTitle style={{paddingBottom:"0px", paddingRight:"8px", paddingLeft:"8px"}} titleStyle={{wordBreak: "break-all" }} title={title} />
                         <CardText>
                             <Truncate>
                                 <span style={style.wordBreak}>
