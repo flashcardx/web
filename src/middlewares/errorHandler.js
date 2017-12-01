@@ -1,5 +1,6 @@
 import {errorAlert, infoAlert} from "../actions/alerts";
 import {SIGNOUT} from "../actions/types";
+import {errorCodes} from "../api_config";
 
 export default function({dispatch}){
     return next=>action=>{
@@ -10,8 +11,8 @@ export default function({dispatch}){
             if(action.payload.code === 1)
                 return dispatch({type:SIGNOUT});
             var msg;
-            if(action.customMsgForCode && action.payload.code){
-                msg = extractMsg(action.customMsgForCode, action.payload.code);
+            if(!action.customErrorMsg && action.payload.code){
+                msg = extractMsg(action.payload.code);
             }
             else
                  msg = (action.customErrorMsg)? action.customErrorMsg : action.payload.msg;   
@@ -24,6 +25,8 @@ export default function({dispatch}){
     }
 }
 
-function extractMsg(msgs, code){
-    return msgs[code];
+function extractMsg(code){
+    if(!errorCodes[code])
+        return null;
+    return errorCodes[code].es;
 }

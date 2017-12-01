@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Radium from "radium";
 import Modal from "./util/modal.jsx";
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {infoAlert} from "../actions/alerts.js";

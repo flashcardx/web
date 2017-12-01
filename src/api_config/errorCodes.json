@@ -1,0 +1,17 @@
+{
+    "1": {
+        "es":"La sesion ah expirado, por favor vuelva a loguearse"
+    },
+    "2":{
+        "es":"El email ingresado no se encuentra registrado en el sistema"
+    },
+    "3":{
+        "es":"La contraseña ingresada es incorrecta"
+    },
+    "4": {
+        "es": "Ya existe otro usuario registrado con ese Email(verifica que no tengas un usuario creado con Facebook, Google o de la forma tradicional y que utilize ese Email)"
+    },
+    "5":{
+        "es": "El email ingresado esta en espera de ser verificado(Verifica tu casilla de correo)"    
+    }
+}

@@ -2,6 +2,7 @@ const env = process.env.NODE_ENV || "development";
 const api = require("./api.json")[env];
 const keys = require("./keys.json")[env];
 const urls = require("./urls.json")[env];
+const errorCodes = require("./errorCodes.json");
 
 module.exports = {
 
@@ -87,5 +88,6 @@ module.exports = {
     apiGetSpUserCards: api.getSpUserCards,
     apiRankCard: api.rankCard,
     urlSoundWin: urls.sounds.win,
-    urlSoundLose: urls.sounds.lose
+    urlSoundLose: urls.sounds.lose,
+    errorCodes: errorCodes
 };

@@ -1,18 +1,20 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Radium from "radium";
-import {Link} from "react-router-dom";
 import {signout} from "../actions/auth";
+/*
+import {Link} from "react-router-dom";
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import InstagramEmbed from 'react-instagram-embed';
+*/
 import {Redirect} from 'react-router';
-
+/*
 const style = {
     header:{
         backgroundColor: "#4286f4"
     }
-}
-
+}*/
+/*
 function renderInstagram(url){
     return (
         <InstagramEmbed
@@ -28,13 +30,13 @@ function renderInstagram(url){
         />
     );
 }
-
+*/
 class Signout extends Component{
 
     render(){
         this.props.signout();
         return  <Redirect push to="/landing"/>
-        return (
+      /*  return (
             <MuiThemeProvider>
                     <div>
                         <div style={style.header}>
@@ -65,7 +67,7 @@ class Signout extends Component{
                     </div>
 
             </MuiThemeProvider>
-        )
+        )*/
     }
 }
 

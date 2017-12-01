@@ -1,6 +1,5 @@
 import axios from "axios";
 import config from "../api_config";
-import deckPathAdapter from "../adapters/deckPathAdapter.js";
 import {FETCH_SP_USER_CARDS, RANK_USER_CARD} from "./types";
 const FETCH_SP_USER_CARDS_URL = config.apiGetSpUserCards;
 const RANK_USER_CARD_URL = config.apiRankCard;

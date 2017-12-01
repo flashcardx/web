@@ -12,7 +12,6 @@ import CircularProgress from 'material-ui/CircularProgress';
 import _ from "lodash"
 import Flashcard from "../../components/flashcard.jsx"
 import Speaker from "../../components/util/speaker.jsx";
-import Transition from 'react-transition-group/Transition';
 import Fade from "../../components/util/fadeContent.jsx";
 const WIN_SOUND_URL = config.urlSoundWin,
       LOSE_SOUND_URL = config.urlSoundLose,
@@ -26,7 +25,7 @@ class SpacedRepetition extends Component{
     
     constructor(props){
         super(props);
-        this.state = {hit:null, playWin:false, playLose:false, deckName:"Cargando...", stage:0, points:0, cards:[], cardNameInput: ""};
+        this.state = {showHit:false, hit:null, playWin:false, playLose:false, deckName:"Cargando...", stage:0, points:0, cards:[], cardNameInput: ""};
         this.replaceDeckName = this.replaceDeckName.bind(this);
         this.getCards = this.getCards.bind(this);
         this.renderNextCard = this.renderNextCard.bind(this);
@@ -77,13 +76,13 @@ class SpacedRepetition extends Component{
         if(nextProps.cardRank !== this.props.cardRank){
             var newPoints = this.state.points + nextProps.cardRank.points;
             if(nextProps.cardRank.hit){
-                this.setState({hit:nextProps.cardRank.hit});
+                this.setState({hit:nextProps.cardRank.hit, showHit:true});
                 setTimeout(() => {
                     this.setState({points: newPoints});
                 }, HIT_TRANSITION_TIME);
             }
             else
-                this.setState({points: newPoints});
+                this.setState({points: newPoints, showHit:false});
             switch (nextProps.cardRank.rank) {
                     case 5:  this.props.successAlertGame("Excelente");
                              this.playWin();
@@ -148,7 +147,6 @@ class SpacedRepetition extends Component{
     }
 
     render(){
-        var hit;
         const sound = this.renderSound();
         var body = null;
         if(this.state.stage === 0){
@@ -156,10 +154,10 @@ class SpacedRepetition extends Component{
             body =  <div className="row"><div  style={{textAlign: "center"}} className="col"><CircularProgress style={{margin:"auto"}} size={130} thickness={7} /></div></div>
         }
         else if(this.state.stage === 1){
-            if(this.state.hit){
+            if(this.state.showHit){
                 setTimeout(() => {
-                    this.setState({hit:null});
-                }, 2400);
+                    this.setState({showHit:false});
+                }, 2000);
             }
             if(_.isEmpty(this.state.cards))
             body = <h2>En este momento no tenes fichas por practicar! vuelve en otro momento</h2>    
@@ -177,8 +175,8 @@ class SpacedRepetition extends Component{
                         <span style={{color:"#e5c100", fontWeight:"bold"}} className="col">
                             {this.state.points} Puntos 
                             <span style={{color:"red", fontWeight:"bold"}}>
-                                <Fade inProp={this.state.hit!=null} duration={HIT_TRANSITION_TIME}>
-                                    X{this.props.cardRank.hit} !
+                                <Fade inProp={this.state.showHit} duration={HIT_TRANSITION_TIME}>
+                                    X{this.state.hit} !
                                 </Fade>
                             </span>
                         </span>
