@@ -3,17 +3,16 @@ import _ from "lodash";
 import Radium from "radium";
 import {connect} from "react-redux";
 import Modal from "./util/modal.jsx";
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import {infoAlert} from "../actions/alerts.js";
 import Dropzone from 'react-dropzone';
 import ImgPicker from "./imgPicker.jsx";
 import Cropper from "./util/cropper.jsx";
 import {searchImg, searchGif, resetSearchImages} from "../actions/image";
+import TextField from 'material-ui/TextField';
+import SearchIcon from 'material-ui/svg-icons/action/search';
 
 const style = {
-    marginRight:{
-        marginRight: "7px"
-    },
     marginTop:{
         marginTop: "20px"
     },
@@ -23,6 +22,10 @@ const style = {
         ":hover":{
             color: "#4286f4"
         }
+    },
+    white:{
+        color:"#fff",
+        margin:"4px"
     }
 }
 
@@ -60,10 +63,11 @@ class AddImage extends Component{
         return (
             <div className="row">
                     <div className="col-4">
-                        <RaisedButton  onClick={() => { this.dropzoneRef.open() }}
-                                       labelColor="#ffffff"
+                        <FlatButton  onClick={() => { this.dropzoneRef.open() }}
                                        disabled={this.props.disabled}
                                        backgroundColor="#4286f4"
+                                       hoverColor="#346bc3"
+                                       labelStyle={style.white}
                                        label="Subir"/>
                     </div>
                     <div className="col-8">
@@ -138,24 +142,31 @@ class AddImage extends Component{
                           accept="image/*"
                           onDrop={this.onDrop.bind(this)}>
                     <div className="row">
-                        <div className="col">
-                                <input onChange={this.onChange} 
-                                placeholder="Buscar"
-                                value={this.state.searchQuery}
-                                type="text"/>
+                        <div className="col-12 col-sm-7 col-md-7">
+                        <TextField
+                            onChange={this.onChange}
+                            value={this.state.searchQuery}
+                            style={{overflow:"hidden", width:"100%"}}
+                            hintText="Buscar"
+                        />
                         </div>
-                        <div className="col">
-                            <RaisedButton onClick={this.searchImg}
-                                        style={style.marginRight}
-                                        labelColor="#ffffff"
-                                        disabled={btnsDisabled}
-                                        backgroundColor="#4286f4"
-                                        label="Buscar imagen"/>                    
-                            <RaisedButton onClick={this.searchGif}
-                                        labelColor="#ffffff"
-                                        disabled={btnsDisabled}
-                                        backgroundColor="#4286f4"
-                                        label="Buscar GIF"/>                    
+                        <div className="col-12 col-sm-5 col-md-5">
+                            <div className="row">
+                                <FlatButton onClick={this.searchImg}
+                                            style={style.white}
+                                            disabled={btnsDisabled}
+                                            backgroundColor="#4286f4"
+                                            hoverColor="#346bc3"
+                                            icon={<SearchIcon />}
+                                            label="imagen"/>                    
+                                <FlatButton onClick={this.searchGif}
+                                            style={style.white}
+                                            disabled={btnsDisabled}
+                                            backgroundColor="#4286f4"
+                                            hoverColor="#346bc3"
+                                            icon={<SearchIcon />}
+                                            label="GIF"/>                    
+                            </div>
                         </div>
                     </div> 
                     <div style={style.marginTop} className="row">

@@ -5,6 +5,10 @@
     opacity: 0.5;
 }
 
+:disabled {
+  background-color: gray !important;
+  cursor: not-allowed !important; 
+}
 
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
@@ -200,26 +204,11 @@ button:focus {outline:0;}
     background-color: #4286f4 !important;
   }
 
-  .nav-item{
+  .white{
        color:white !important;
   }
 
-   .nav-item:hover {
-     font-weight: bold;
-  }
 
-
-  .nav-item.active {
-     font-weight: bold;
-  }
-
-  .nav-link{
-    color:white !important;
-  }
-
-  .margin5{
-    margin:5px;
-  }
 /* Move down content because we have a fixed navbar that is 50px tall */
 .fixed-top {
   position: relative;

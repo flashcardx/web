@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {reduxForm } from 'redux-form';
 import TextField from "../components/util/textField.jsx";
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import Radium from "radium";
 import {connect} from "react-redux";
 import {signin as SigninAction} from "../actions/auth";
@@ -43,7 +43,7 @@ class SigninForm extends Component{
                 placeholder="password"
                 fieldType="input"
             />
-            <RaisedButton disabled={this.props.bigLoading} type="submit" style={style.marginLeft} backgroundColor="#5cb85c" label="Sign in" />
+            <FlatButton  className="white" disabled={this.props.bigLoading} type="submit" style={style.marginLeft} hoverColor="#499349" backgroundColor="#5cb85c" label="Sign in" />
         </form>
        );
     }

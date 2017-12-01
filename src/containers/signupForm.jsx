@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {reduxForm } from 'redux-form';
 import TextField from "../components/util/textField.jsx";
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import Radium from "radium";
 import {connect} from "react-redux";
 import {signup as SignupAction} from "../actions/auth";
@@ -75,7 +75,7 @@ class SignupForm extends Component{
                                     </div>
                                     <div className="form-group">
                                     <div className="col-sm-offset-2 col-sm-12">
-                                        <RaisedButton disabled={this.props.bigLoading} type="submit" backgroundColor="#5cb85c" label="Sign up!" />
+                                        <FlatButton className="white" disabled={this.props.bigLoading} type="submit" hoverColor="#499349" backgroundColor="#5cb85c" label="Sign up!" />
                                     </div>
                                 </div>
                         </form>
