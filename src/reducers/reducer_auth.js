@@ -3,7 +3,7 @@ import {SIGNIN, SIGNUP, SIGNUP_RESEND_EMAIL, RE_SIGNIN, SIGNOUT, EMAIL_VERIFICAT
 export function authReducer(state=false, action){
     const {payload} = action;
     switch (action.type) {
-        case SIGNIN:  localStorage.setItem("jwt", payload.token);
+        case SIGNIN:   localStorage.setItem("jwt", payload.token);
                        return true;
         case RE_SIGNIN: return true;
         case SIGNOUT: localStorage.removeItem("jwt");

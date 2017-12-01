@@ -3,8 +3,7 @@ import Radium from "radium";
 import config from "../api_config";
 import Modal from "./util/modal.jsx";
 import TextField from "./util/textField.jsx";
-import RaisedButton from 'material-ui/RaisedButton';
-import {change} from 'redux-form';
+import { change} from 'redux-form';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {createUserDeck} from "../actions/deck.js";
@@ -13,37 +12,31 @@ import Formsy from 'formsy-react';
 import {MyOwnInput, MyOwnTextarea, MyOwnSelect} from "./util/form.jsx";
 import MultimediaCreator from "./multimediaCreator.jsx";
 import IconButton from 'material-ui/IconButton';
+import FlatButton from 'material-ui/FlatButton';
 import _ from "lodash";
 
 function langOptions(){
         return [{value:"", label:"Elige un lenguaje para tu mazo"},
                 {label: "English", value:"en"},
                 {label: "Español", value:"es"},
-                {label: "Čeština", value:"cs"},
                 {label: "Dansk", value:"da"},
                 {label: "Deutsch", value:"de"},
                 {label: "Français", value:"fr"},
-                {label: "Indonesia", value:"id"},
                 {label: "Italiano", value:"it"},
-                {label: "Magyar", value:"hu"},
                 {label: "Nederlands", value:"nl"},
-                {label: "Norsk", value:"no"},
                 {label: "Polski", value:"pl"},
                 {label: "Português", value:"pt"},
                 {label: "Română", value:"ro"},
-                {label: "Slovenčina", value:"sk"},
-                {label: "Suomi", value:"fi"},
                 {label: "Svenska", value:"sv"},
                 {label: "Türkçe", value:"tr"},
-                {label: "Việt", value:"vi"},
-                {label: "ไทย", value:"th"},
-                {label: "Български", value:"bq"},
                 {label: "Русский", value:"ru"},
-                {label: "Ελληνική", value:"el"},
                 {label: "한국어", value:"ko"},
                 {label: "日本語", value:"ja"},
-                {label: "简体中文", value:"zh"}];
+                {label: "Cymraeg", value:"cy"},
+                {label: "Íslenska", value:"is"},
+                {label: "Norsk Bokmål", value:"nb"}];
     }
+
 
 class CreateDeck extends Component{
 
@@ -202,13 +195,16 @@ class CreateDeck extends Component{
     }
     render(){
         var confirmObject = (
-                         <RaisedButton
+                         <FlatButton
                                 disabled={this.props.bigLoading}
                                 label={this.props.buttonTitle}
                                 primary={true}
                                 type="submit"
                                 form="deckForm"
-                                buttonStyle={{backgroundColor:"#f4424b"}}  
+                                className="deck-btn"
+                                backgroundColor="#f4424b"
+                                hoverColor="#92272d"
+                                labelStyle={{color:"white"}}
                                 />
                         );
         return (

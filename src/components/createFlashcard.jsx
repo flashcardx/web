@@ -3,7 +3,7 @@ import Radium from "radium";
 import config from "../api_config";
 import Modal from "./util/modal.jsx";
 import TextField from "./util/textField.jsx";
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import {reduxForm, change} from 'redux-form';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
@@ -175,13 +175,15 @@ class CreateFlashcard extends Component{
 
     render(){
         var confirmObject = (
-                         <RaisedButton
+                         <FlatButton
                                 disabled={this.props.bigLoading}
                                 label={this.props.buttonTitle}
                                 primary={true}
                                 type="submit"
                                 form="cardForm"
-                                buttonStyle={{backgroundColor:"#5cb85c"}}  
+                                backgroundColor="#5cb85c"
+                                hoverColor="#499349"
+                                labelStyle={{color:"white"}}
                                 />
                         );
         return (

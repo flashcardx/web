@@ -29,7 +29,7 @@ class MethodChooser extends Component{
                                         <img style={{height:"200px", width:"200px"}}src={process.env.PUBLIC_URL+"/img/spaced-repetition.gif"} alt="" />
                                         </CardMedia>
                                         <CardText>
-                                             Rankeate vos mismo segun que tan bien sabes el concepto, el sistema calcula el momento mas optimo para volver a mostrarte la ficha segun tu historial
+                                             Descubri que tanto conoces tus fichas, el sistema calcula el momento mas optimo para volver a mostrarte la ficha segun tu historial
                                         </CardText>
                                         <CardActions>
                                             <FlatButton onClick={()=>this.setState({redirect:'spaced-repetition'})} className="col" label="Jugar" />

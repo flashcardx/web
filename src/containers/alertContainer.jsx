@@ -10,7 +10,7 @@ class AlertContainer extends Component{
         const {alert} = this.props;
         if(!alert)
             return null;
-        return <Alert msg={alert.msg} type={alert.type}/>;     
+        return <Alert msg={alert.msg} time={alert.time} theme={alert.theme} type={alert.type}/>;     
     }
 }
 

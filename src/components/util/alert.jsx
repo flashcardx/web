@@ -1,13 +1,12 @@
 import React, {Component} from 'react'
-import AlertContainer from 'react-alert'
+import AlertContainer from 'react-alert';
 import PropTypes from 'prop-types';
  
 const TIME = 9000
 
  const alertOptions = {
     offset: 14,
-    position: 'top right',
-    theme: 'light',
+    position: 'top center',
     time: TIME,
     transition: 'scale'
   }
@@ -15,18 +14,14 @@ const TIME = 9000
 class Alert extends Component {
     constructor(props){
         super(props);
-        this.state = {type: props.type, msg:props.msg};
         this.showAlert = this.showAlert.bind(this);
     }
 
-    componentWillReceiveProps(nextProps){
-      this.setState({type: nextProps.type, msg: nextProps.msg});
-    }
-
   showAlert = () => {
-    this.msg.show(this.state.msg, {
-      time: TIME,
-      type: this.state.type
+    this.msg.show(this.props.msg, {
+      time: this.props.time? this.props.time : TIME ,
+      type: this.props.type,
+      theme: this.props.theme? this.props.theme: "light" 
     })
   }
 
@@ -48,7 +43,7 @@ class Alert extends Component {
 
 Alert.propTypes = {
     msg: PropTypes.string,
-    type: PropTypes.oneOf(['info', 'success', 'error'])
+    type: PropTypes.oneOf(['info', 'success', 'error', "success-game", "error-game", "info-game"])
 }
 
 export default Alert;

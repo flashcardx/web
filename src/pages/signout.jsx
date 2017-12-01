@@ -5,6 +5,7 @@ import Radium from "radium";
 import {Link} from "react-router-dom";
 import {signout} from "../actions/auth";
 import InstagramEmbed from 'react-instagram-embed';
+import {Redirect} from 'react-router';
 
 const style = {
     header:{
@@ -30,11 +31,9 @@ function renderInstagram(url){
 
 class Signout extends Component{
 
-    componentDidMount(){
-        this.props.signout();
-    }
-
     render(){
+        this.props.signout();
+        return  <Redirect push to="/landing"/>
         return (
             <MuiThemeProvider>
                     <div>
@@ -71,7 +70,6 @@ class Signout extends Component{
 }
 
 function mapStateToProps(state){
-    console.log("user props: ", state);
     if(!state.user)
         return {username:"Anonymus"}
     var name = getFirstName(state.user.name);

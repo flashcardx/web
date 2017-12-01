@@ -15,7 +15,9 @@ import ImageGallery from "./imageGallery.jsx";
 import MoveUserFlashcardContainer from "../containers/moveUserFlashcardContainer.jsx";
 import EditUserFlashcardContainer from "../containers/editUserFlashcardContainer.jsx";
 import {} from "../actions/audio";
-import Speaker from "./util/speaker.jsx";
+import SpeakerLangContainer from "../containers/speakerLangContainer.jsx";
+import TextField from 'material-ui/TextField';
+import FlatButton from 'material-ui/FlatButton';
 
 const style = {
     card: {
@@ -42,7 +44,6 @@ const style = {
     }
 }
 
-
 class Flashcard extends Component{
     
     constructor(props){
@@ -50,14 +51,32 @@ class Flashcard extends Component{
         this.state = {openEditModal:false};
         this.openEditModal = this.openEditModal.bind(this);
         this.closeEditModal = this.closeEditModal.bind(this);
+        this.renderNameInput = this.renderNameInput.bind(this);
     }
+
+    renderNameInput(){
+        return  <div className="row">
+                    <div style={{width:"100%"}} className="col">
+                        <TextField
+                            value={this.props.nameImput}
+                            onChange={this.props.onNameChange}
+                            style={{overflow:"hidden", width:"100%"}}
+                            hintText="Completa el nombre"
+                        />
+                    </div>
+                </div> 
+    }
+
 
     renderTitle(card){
         return (<div className="row">
                     <div style={{whiteSpace: "pre-line", wordBreak: "break-all" }} className="col-9">
                         {card.name}
-                        <Speaker lang={this.props.lang} text={card.name}/>
-                    </div> 
+                        <SpeakerLangContainer lang={this.props.lang} text={card.name}/>
+                    </div>
+                    {
+                    this.props["practice-stage"]? null
+                    :
                     <div style={{whiteSpace: "pre-line", wordBreak: "break-all" }} className="col-3">
                          <IconMenu
                                 iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
@@ -68,6 +87,7 @@ class Flashcard extends Component{
                                 />
                         </IconMenu>
                     </div>             
+                    }
                 </div>);
     }
 
@@ -87,9 +107,14 @@ class Flashcard extends Component{
         this.setState({openEditModal: false});
     }
 
+    hideName(description){
+        description = description.replace(new RegExp(this.props.card.name, "gi"), "<span class='blur noselect'>"+this.props.card.name+"</span>");
+        return <span dangerouslySetInnerHTML={{__html:description}}></span>
+    }
+
     render(){
         const {card} = this.props;
-        var title = this.renderTitle(card);
+        var title = (this.props["practice-stage"]===1)? this.renderNameInput() :this.renderTitle(card);
         var imgs = this.generateImgs(card.imgs);
         return (
             <span>
@@ -102,19 +127,26 @@ class Flashcard extends Component{
                         <CardText>
                             <Truncate>
                                 <span style={style.wordBreak}>
-                                    {card.description}
+                                    {this.props["practice-stage"]===1?  this.hideName(card.description) : card.description}
                                 </span>
                             </Truncate>
                         </CardText>
                         <CardActions>
-                            <div className="row">
-                                <IconButton onClick={()=>this.props.onDelete(card._id)} iconStyle={{ color: "red" }} data-tip="Delete" iconClassName="material-icons">
-                                    clear
-                                </IconButton>
-                                <EditUserFlashcardContainer
-                                deckId={this.props.deckId}
-                                card={card}/>
-                            </div>
+                            {(this.props["practice-stage"]===1)?
+                                <FlatButton onClick={this.props.submitName} disabled={!this.props.nameImput} hoverColor="#52a552" backgroundColor="#5cb85c" className="col" label="Confirmar" />
+                                :
+                                (this.props["practice-stage"]===2)?
+                                <FlatButton disabled={this.props.bigLoading} onClick={this.props.onContinue} hoverColor="#346bc3" backgroundColor="#4286f4" className="col" label="Continuar" />
+                                :
+                                <div className="row">
+                                    <IconButton onClick={()=>this.props.onDelete(card._id)} iconStyle={{ color: "red" }} data-tip="Delete" iconClassName="material-icons">
+                                        clear
+                                    </IconButton>
+                                    <EditUserFlashcardContainer
+                                    deckId={this.props.deckId}
+                                    card={card}/>
+                                </div>
+                            }
                         </CardActions>
                     </Card>
             </span>

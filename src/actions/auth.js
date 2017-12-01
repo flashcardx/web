@@ -14,11 +14,17 @@ export function signin({email, password}, key){
         password,
         "g-recaptcha-response": key
     });  
+    var custimMsgs ={
+        "2": "El email no se encuentra registrado en el sistema",
+        "3": "Contraseña incorrecta"
+    }
     return {
         type: SIGNIN,
         originAPI: true,
         bigLoading: true,
-        payload: request
+        customMsgForCode: custimMsgs, 
+        payload: request,
+        customErrorMsg: "No se puede iniciar sesion"
     }
 }
 

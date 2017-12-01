@@ -25,8 +25,6 @@
             "updateUserLang": "http://localhost:3000/updateUserLang",
             "fbAuth": "http://localhost:3000/fbAuth",
             "googleAuth": "http://localhost:3000/googleAuth",
-            "getPracticeCards": "http://localhost:3000/practiceCards",
-            "rankCard": "http://localhost:3000/rankCard",
             "suggest": "http://localhost:3000/suggest",
             "getUserInfo": "http://localhost:3000/getUserInfo",
             "getActivity": "http://localhost:3000/activity",
@@ -75,7 +73,9 @@
             "listDecksNameUrl": "http://localhost:3000/decksName/u/",
             "textToSpeech": "http://localhost:3000/textToSpeech/",
             "moveCard": "http://localhost:3000/moveCard/",
-            "getDeckUrl": "http://localhost:3000/deck/"
+            "getDeckUrl": "http://localhost:3000/deck/",
+            "getSpUserCards": "http://localhost:3000/spCards",
+            "rankCard": "http://localhost:3000/rankCard"
             },
         "pi":{
             "getInitialCards": "http://pi.api.flashcardx.co/allCards",
@@ -103,8 +103,6 @@
             "updateUserLang": "http://pi.api.flashcardx.co/updateUserLang",
             "fbAuth": "http://pi.api.flashcardx.co/fbAuth",
             "googleAuth": "http://pi.api.flashcardx.co/googleAuth",
-            "getPracticeCards":"http://pi.api.flashcardx.co/practiceCards",
-            "rankCard":"http://pi.api.flashcardx.co/rankCard",
             "suggest":"http://pi.api.flashcardx.co/suggest",
             "getUserInfo": "http://pi.api.flashcardx.co/getUserInfo",
             "getActivity": "http://pi.api.flashcardx.co/activity",
@@ -153,7 +151,9 @@
             "listDecksNameUrl": "http://pi.api.flashcardx.co/decksName/u/",
             "textToSpeech": "http://pi.api.flashcardx.co/textToSpeech/",
             "moveCard": "http://pi.api.flashcardx.co/moveCard/",
-            "getDeckUrl": "http://pi.api.flashcardx.co/deck/"
+            "getDeckUrl": "http://pi.api.flashcardx.co/deck/",
+            "getSpUserCards": "http://pi.api.flashcardx.co/spCards",
+            "rankCard":"http://pi.api.flashcardx.co/rankCard"
             },
         "production":{
             "getInitialCards": "https://api.flashcardx.co/allCards",
@@ -181,8 +181,6 @@
             "updateUserLang": "https://api.flashcardx.co/updateUserLang",
             "fbAuth": "https://api.flashcardx.co/fbAuth",
             "googleAuth": "https://api.flashcardx.co/googleAuth",
-            "getPracticeCards":"https://api.flashcardx.co/practiceCards",
-            "rankCard":"https://api.flashcardx.co/rankCard",
             "suggest":"https://api.flashcardx.co/suggest",
             "getUserInfo": "https://api.flashcardx.co/getUserInfo",
             "getActivity": "https://api.flashcardx.co/activity",
@@ -231,6 +229,8 @@
             "listDecksNameUrl": "https://api.flashcardx.co/decksName/u/",
             "textToSpeech": "https://api.flashcardx.co/textToSpeech/",
             "moveCard": "https://api.flashcardx.co/moveCard/",
-            "getDeckUrl": "https://api.flashcardx.co/deck/"
+            "getDeckUrl": "https://api.flashcardx.co/deck/",
+            "getSpUserCards": "https://api.flashcardx.co/spCards",
+            "rankCard":"https://api.flashcardx.co/rankCard"
         }
 }

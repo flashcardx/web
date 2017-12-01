@@ -1,6 +1,7 @@
 const env = process.env.NODE_ENV || "development";
 const api = require("./api.json")[env];
 const keys = require("./keys.json")[env];
+const urls = require("./urls.json")[env];
 
 module.exports = {
 
@@ -31,8 +32,6 @@ module.exports = {
     apiGoogleAuthUrl: api.googleAuth,
     fbAppId: keys.fbAuth.appId,
     googleClientId: keys.googleAuth.clientId,
-    apiGetPracticeCards: api.getPracticeCards,
-    apiRankCard: api.rankCard,
     apiSuggest: api.suggest,
     apiGetUserInfo: api.getUserInfo,
     apiGetActivity: api.getActivity,
@@ -84,5 +83,9 @@ module.exports = {
     apiListDecksNameUrl: api.listDecksNameUrl,
     apiTextToSpeech: api.textToSpeech,
     apiMoveCard: api.moveCard,
-    apiGetDeckUrl: api.getDeckUrl
+    apiGetDeckUrl: api.getDeckUrl,
+    apiGetSpUserCards: api.getSpUserCards,
+    apiRankCard: api.rankCard,
+    urlSoundWin: urls.sounds.win,
+    urlSoundLose: urls.sounds.lose
 };

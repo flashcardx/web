@@ -66,10 +66,19 @@ export function validateEmail(ComposedComponent, route){
             this.props.emailVerification(id);
         }
 
+        componentWillReceiveProps(nextProps){
+            if(nextProps.isAuthenticated)
+                return this.props.history.push(route);
+        }
+
         render(){
             return <ComposedComponent {...this.props}/>
         }
     }
 
-    return connect(null, {emailVerification})(withRouter(Authenticate));
+    function mapStateToProps(state){
+        return {isAuthenticated: state.isAuthenticated};
+    }
+    
+    return connect(mapStateToProps, {emailVerification})(withRouter(Authenticate));
 }
