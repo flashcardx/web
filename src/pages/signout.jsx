@@ -71,14 +71,15 @@ class Signout extends Component{
 }
 
 function mapStateToProps(state){
-    console.log("user props: ", state);
     if(!state.user)
-        return {username:"Anonymus"}
+        return {username:"Humano"}
     var name = getFirstName(state.user.name);
     return {username: name};
 }
 
 function getFirstName(name){
+    if(!name)
+        return "Humano";
     return name.split(' ')[0];
 }
 

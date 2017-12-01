@@ -57,7 +57,7 @@ export default class ReactTextCollapse extends Component {
                 style={{
                   display: `block`,
                   overflow: `hidden`,
-                  height: `${h}` + 'px'
+                  height: `${h}px`
                 }}>
                 <span style={{display:"block"}} ref={r => { this.childrenRef = r; }} >
                     {children}

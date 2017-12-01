@@ -9,6 +9,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import config from "../api_config";
 import FacebookLogin from 'react-facebook-login';
 import {GoogleLogin} from 'react-google-login';
+import {Link} from "react-router-dom";
 const RECAPTCHA_KEY = config.recaptchaSiteKey;
 const FB_APPID = config.fbAppId;
 const GOOGLE_CLIENTID = config.googleClientId;
@@ -100,12 +101,13 @@ class Landing extends Component{
         return (
             <div>
                             <ReCAPTCHA
-                                ref={(el) => { captchaRef = el; }}                            size="invisible"
+                                ref={(el) => { captchaRef = el; }}
+                                size="invisible"
                                 sitekey={RECAPTCHA_KEY}
                                 onChange={recaptchaChange}
                             />
                             <nav style={style.base} className="navbar navbar-expand-lg">
-                                <a style={style.logo} className="navbar-brand" href="#">FlashcardX<sub style={style.beta}>BETA</sub></a>
+                                <Link style={style.logo} className="navbar-brand" to="#">FlashcardX<sub style={style.beta}>BETA</sub></Link>
                                 <SigninForm captchaExecute={signinExecute} className="form-inline my-2 my-lg-0"/>
                                 </nav>
                                 <div className="container">
@@ -120,9 +122,6 @@ class Landing extends Component{
 function Details({fbAuth, googleAuth}){
     return(
         <div>   
-                <div className="alert alert-info" role="alert">
-                    <strong>Heads up!</strong> This is a BETA version, we will be launching soon the first MAJOR version of our service with lots of new features and design improvements.If you want to keep in touch<a href="javascript: document.body.scrollIntoView(false);"> follow us on social networks or send us an email</a>(Tell us your suggestions and you could see them implemented in the near future ;) ). We would love to have you here once we are ready!
-                </div>
                 <div className="row">
                     <h1>Learn anything with beautiful images</h1>
                 </div>
@@ -172,7 +171,7 @@ function Details({fbAuth, googleAuth}){
                             <div className="col-md-12 text-center">
                                 <h2> What are Flashcards?</h2>
                                     <div minLength="embed-responsive embed-responsive-16by9">
-                                        <iframe title ="" width="100%" height="400px" className="embed-responsive-item" src="https://www.youtube.com/embed/mzCEJVtED0U" allowFullScreen></iframe>
+                                        <iframe title ="video" width="100%" height="400px" className="embed-responsive-item" src="https://www.youtube.com/embed/mzCEJVtED0U" allowFullScreen></iframe>
                                     </div>
                             </div>
                 </div> 
