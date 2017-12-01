@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import {infoAlert} from "../actions/alerts.js";
 import _ from "lodash";
 import Formsy from 'formsy-react';
-import {MyOwnInput, MyOwnTextarea} from "./util/form.jsx";
+import {MyOwnInput} from "./util/form.jsx";
 import MultimediaCreator from "./multimediaCreator.jsx";
 
 class CreateFlashcard extends Component{
@@ -43,42 +43,6 @@ class CreateFlashcard extends Component{
             this.props.onImgDelete(src);
     }
 
-    renderField({
-                input,
-                placeholder,
-                type,
-                name,
-                value,
-                onChange,
-                className,
-                meta: { touched, error, warning }
-                }){
-                return (<div>
-                    <input {...input} className={className} name={name} value={value} onChange={onChange} placeholder={placeholder} type={type} />
-                    {touched &&
-                           ((error && <span>{error}</span>) ||
-                        (warning && <span>{warning}</span>))}
-                    </div>);
-    }
-
-    renderTextArea({
-                input,
-                placeholder,
-                type,
-                name,
-                value,
-                onChange,
-                className,
-                meta: { touched, error, warning }
-                }){
-                return (<div>
-                    <textarea {...input} className={className} name={name} value={value} onChange={onChange} placeholder={placeholder} type={type} />
-                    {touched &&
-                        ((error && <span>{error}</span>) ||
-                        (warning && <span>{warning}</span>))}
-                    </div>);
-    }
-
     onSubmit({name, description}){
             if(!description && this.props.pickedImages.length === 0)
                 return this.props.infoAlert("Ouch!, Tu ficha debe contener una descripcion o algun contenido multimedia");
@@ -109,8 +73,7 @@ class CreateFlashcard extends Component{
             <div className="container">
                 <div className="row">
                 <Formsy.Form ref="form" className="col" id="cardForm" onValidSubmit={this.onSubmit}>                         
-                                    <div className="form-group">
-                                        <div className="col-sm-12">
+                                     <div className="col-sm-12">
                                             <MyOwnInput
                                                 validationErrors={{
                                                     maxLength: "El nombre de tu ficha debe contener menos de 40 caracteres",
@@ -120,29 +83,23 @@ class CreateFlashcard extends Component{
                                                 required
                                                 validations="maxLength:40"
                                                 onChange={this.onChangeFormName}
-                                                type="text"
-                                                className="form-control"
                                                 placeholder="Nombre de la ficha, concepto que queres recordar"
                                                 value={this.state.form.name}
                                             />
                                         </div>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="col-sm-12">
-                                            <MyOwnTextarea
+                                     <div className="col-sm-12">
+                                            <MyOwnInput
                                                 validationErrors={{
                                                     maxLength: "La descripcion de tu ficha debe contener menos de 850 caracteres",
                                                     }}
                                                 validations="maxLength:850"
                                                 onChange={this.onChangeFormDescription}
                                                 value={this.state.form.description}
-                                                className="form-control"
                                                 name="description"
-                                                type="text"
+                                                multiLine={true}
                                                 placeholder="Descripción, algo que te ayude a recordar el concepto"
                                             />
                                         </div>
-                                    </div>
                         </Formsy.Form>
                 </div>
                 <div className="container">

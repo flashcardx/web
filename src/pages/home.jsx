@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import Page from "../components/page.jsx";
 import Path from "../components/util/path.jsx";
+import {Points, Level} from "../components/util/text.jsx"
 import Radium from "radium";
 import {connect} from "react-redux";
 import {getUserInfo} from "../actions/user";
@@ -22,6 +23,7 @@ class Home extends Component{
         this.goToIndex = this.goToIndex.bind(this);
         this.onDeckDelete = this.onDeckDelete.bind(this);
         this.onFlashcardDelete = this.onFlashcardDelete.bind(this);
+        this.generateUserInfoBar = this.generateUserInfoBar.bind(this);
     }
 
     componentDidMount(){
@@ -51,15 +53,33 @@ class Home extends Component{
         });
     }
 
+    generateUserInfoBar(){
+        return <WhiteBar>
+                    <div className="col">
+                        <Points>
+                            Puntos: {this.props.userInfo.points}
+                        </Points>
+                    </div>
+                    <div className="col">
+                        <Level>
+                            Nivel: {this.props.userInfo.level}
+                        </Level>
+                    </div>
+            </WhiteBar>
+    }
+
     render(){
         const parentId = deckPathAdapter.getLastIdFromPath(this.props.path);
-        var createCard = null;
+        var createCard = null,
+            userInfo = null;
         if(parentId)
             createCard = <CreateUserFlashcardContainer parentId={parentId}/>;                   
+        else
+            userInfo = this.generateUserInfoBar();
         return (
             <Page noWrap name="my collection">
                 <div>
-                    <WhiteBar>
+                    <WhiteBar noMargin={parentId===null}>
                                 <div className="col-lg-8  col-md-7 col-sm-12">
                                      <Path goToIndex={this.goToIndex} path={this.props.path}/>
                                 </div>
@@ -69,7 +89,8 @@ class Home extends Component{
                                         <CreateUserDeckContainer parentId={parentId}/>                          
                                     </div>
                                 </div>
-                    </WhiteBar> 
+                    </WhiteBar>
+                    {userInfo} 
                     {
                     parentId &&
                       <div className="container">
@@ -108,7 +129,10 @@ class Home extends Component{
 }
 
 function mapStateToProps(state){
-    return {decks: state.userDecks, path: state.userDecksPath};
+    return {decks: state.userDecks,
+         path: state.userDecksPath,
+         userInfo: state.user
+        };
 }
 
 export default connect(mapStateToProps, {getUserInfo, deleteUserDeck,deleteUserFlashcard, successAlert, fetchUserDecks, pushToPath, dropFromPath})(Radium(Home));

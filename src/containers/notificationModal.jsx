@@ -62,18 +62,18 @@ class NotificationModal extends Component{
             if(this.props.notifs.length!==0)
                 content = this.props.notifs.map(n=>this.renderNotif(n));
             else
-                content = <p style={style.center} >You don't have notifications at the moment :( </p>;
+                content = <p style={style.center} >No tienes notificaciones en este momento :( </p>;
         var btn = null;
         if(this.state.countLastAdded>=12)
-            btn = <FlatButton onClick={this.loadMore}label="Show more" primary={true} />;
+            btn = <FlatButton onClick={this.loadMore}label="Mostrar mas" primary={true} />;
         return (
-                <Modal autoScroll={true} title="Notifications" onClose={this.handleClose} closeLabel="Close" open={this.props.open}>
+                <Modal autoScroll={true} title="Notificaciones" onClose={this.handleClose} closeLabel="Cerrar" open={this.props.open}>
                             <ul style={style.noScroll} className="list-group activity-feed">
                                 {content} 
                             </ul>
                             <div style={{textAlign:"center"}}>
                                 {this.state.loadingMore?
-                                    (<p>Loading more...</p>)
+                                    (<p>Cargando mas...</p>)
                                 :
                                     btn
                                 }

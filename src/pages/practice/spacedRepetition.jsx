@@ -3,6 +3,7 @@ import Radium from "radium";
 import config from "../../api_config";
 import Page from "../../components/page.jsx";
 import WhiteBar from "../../components/util/whiteBar.jsx";
+import {Points} from "../../components/util/text.jsx";
 import { Link } from 'react-router-dom';
 import {getDeckName} from "../../actions/deck";
 import {fetchSpacedRepetitionCards, rankCard} from "../../actions/practice";
@@ -172,14 +173,14 @@ class SpacedRepetition extends Component{
                  <WhiteBar>
                         <span className="col">Método: Repeticion espaceada <Link to="/practice"><i className="fa fa-pencil" aria-hidden="true"></i></Link></span>
                         <span className="col">Mazo: {this.state.deckName} <Link to="/practice/spaced-repetition"><i className="fa fa-pencil" aria-hidden="true"></i></Link></span>
-                        <span style={{color:"#e5c100", fontWeight:"bold"}} className="col">
+                        <Points className="col">
                             {this.state.points} Puntos 
                             <span style={{color:"red", fontWeight:"bold"}}>
                                 <Fade inProp={this.state.showHit} duration={HIT_TRANSITION_TIME}>
                                     X{this.state.hit} !
                                 </Fade>
                             </span>
-                        </span>
+                        </Points>
                 </WhiteBar>
                 <div className="container">
                   {sound}

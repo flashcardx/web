@@ -24,6 +24,8 @@ class MethodChooser extends Component{
                             <div className="col col-sm col-md-6	col-lg-6 col-xl-4">
                                  <Card>
                                         <CardMedia
+                                        style={{cursor:"pointer"}}
+                                        onClick={()=>this.setState({redirect:'spaced-repetition'})} 
                                         overlay={<CardTitle style={{height:"100%"}} title="Repeticion espaceada"/>}
                                         >
                                         <img style={{height:"200px", width:"200px"}}src={process.env.PUBLIC_URL+"/img/spaced-repetition.gif"} alt="" />

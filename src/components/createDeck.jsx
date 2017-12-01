@@ -6,13 +6,12 @@ import FlatButton from 'material-ui/FlatButton';
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import Formsy from 'formsy-react';
-import {MyOwnInput, MyOwnTextarea, MyOwnSelect} from "./util/form.jsx";
+import {MyOwnInput, MyOwnSelect} from "./util/form.jsx";
 import MultimediaCreator from "./multimediaCreator.jsx";
 import _ from "lodash";
 
 function langOptions(){
-        return [{value:"", label:"Elige un lenguaje para tu mazo"},
-                {label: "English", value:"en"},
+        return [{label: "English", value:"en"},
                 {label: "Español", value:"es"},
                 {label: "Dansk", value:"da"},
                 {label: "Deutsch", value:"de"},
@@ -87,9 +86,9 @@ class CreateDeck extends Component{
         this.setState({form:newForm});
     }
 
-    onChangeFormLang(e){
+    onChangeFormLang(event, index, value){
         var newForm = _.clone(this.state.form);
-        newForm.lang = e.target.value;
+        newForm.lang = value;
         this.setState({form:newForm});
     }
 
@@ -113,7 +112,6 @@ class CreateDeck extends Component{
             <div className="container">
                 <div className="row">
                 <Formsy.Form ref="form" className="col" id="deckForm" onValidSubmit={this.onSubmit}>                         
-                                    <div className="form-group">
                                         <div className="col-sm-12">
                                                 <MyOwnInput
                                                 validationErrors={{
@@ -124,52 +122,45 @@ class CreateDeck extends Component{
                                                 name="name"
                                                 required
                                                 onChange={this.onChangeFormName}
-                                                type="text"
-                                                className="form-control"
                                                 placeholder="Nombre del mazo"
                                                 value={this.state.form.name}
                                             />
                                         </div>
-                                    </div>
-                                    <div className="form-group">
-                                        <div className="col-sm-12">
-                                            <MyOwnTextarea
+                                    <div className="col-sm-12">
+                                            <MyOwnInput
                                                 validationErrors={{
                                                     minLength: "La descripcion de tu mazo debe contener almenos 4 caracteres",
                                                     isDefaultRequiredValue: "Tu mazo necesita una descripcion!"
                                                     }}
                                                 required
+                                                multiLine={true}
                                                 validations="minLength:4"
                                                 onChange={this.onChangeFormDescription}
                                                 value={this.state.form.description}
-                                                className="form-control"
                                                 name="description"
-                                                type="text"
                                                 placeholder="Descripcion, ¿que tipo/tema de contenido vas a guardar en este mazo?"
                                             />
                                         </div>
-                                    </div>
-                                    <div className="form-group">
                                         <div className="col-sm-12">
                                             <div className="row">
-                                                <div className="col">
+                                                <div className="col-10 col-sm-10 col-md-11">
                                                     <MyOwnSelect
                                                         validationErrors={{
-                                                            isDefaultRequiredValue: "Por favor elegí un idioma para tú mazo"
+                                                            isDefaultRequiredValue: "Elige un idioma para tú mazo"
                                                             }}
                                                         required
+                                                        placeholder="Idioma de tú mazo"
                                                         name="lang"
                                                         options={langOptions()}
                                                         onChange={this.onChangeFormLang}
                                                         value={this.state.form.lang}
                                                     />
                                                 </div>
-                                                <div className="col">
-                                                    <i className="fa fa-info-circle" style={{margin:"5px"}} aria-hidden="true" data-for="modal-tooltip"	 data-tip="El lenguaje en el que vas a crear los titulos de las fichas adentro de este mazo, <br/> es importante ya que otros servicios como por ejemplo la &quot;pronunciacion automatica&quot; se basan en este campo. <br/>Si experimentas problemas relacionados al idioma puede que tengas que cambiar este campo"></i>
+                                                <div className="col-2 col-sm-2 col-md-1">
+                                                    <i className="fa fa-info-circle" style={{margin:"5px", bottom:4, position:"absolute"}} aria-hidden="true" data-for="modal-tooltip"	 data-tip="El lenguaje en el que vas a crear los titulos de las fichas adentro de este mazo, <br/> es importante ya que otros servicios como por ejemplo la &quot;pronunciacion automatica&quot; se basan en este campo. <br/>Si experimentas problemas relacionados al idioma puede que tengas que cambiar este campo"></i>
                                                 </div>
                                             </div>                                           
                                             </div>
-                                    </div>
                         </Formsy.Form>
                     </div>
                     <div className="container">
