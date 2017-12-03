@@ -89,5 +89,9 @@ module.exports = {
     apiRankCard: api.rankCard,
     urlSoundWin: urls.sounds.win,
     urlSoundLose: urls.sounds.lose,
-    errorCodes: errorCodes
+    errorCodes: errorCodes,
+    apiMasterCardCount: api.masterCardCount,
+    apiMasterUserCount: api.masterUserCount,
+    apiMasterLogins: api.masterLogins,
+    apiMasterCodegen: api.masterCodegen
 };

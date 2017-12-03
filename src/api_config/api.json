@@ -75,7 +75,11 @@
             "moveCard": "http://localhost:3000/moveCard/",
             "getDeckUrl": "http://localhost:3000/deck/",
             "getSpUserCards": "http://localhost:3000/spCards",
-            "rankCard": "http://localhost:3000/rankCard"
+            "rankCard": "http://localhost:3000/rankCard",
+            "masterCardCount": "http://localhost:3000/cardCount",
+            "masterUserCount": "http://localhost:3000/userCount",
+            "masterLogins": "http://localhost:3000/loginRegistry",
+            "masterCodegen": "http://localhost:3000/promocodes/"
             },
         "pi":{
             "getInitialCards": "http://pi.api.flashcardx.co/allCards",
@@ -153,7 +157,11 @@
             "moveCard": "http://pi.api.flashcardx.co/moveCard/",
             "getDeckUrl": "http://pi.api.flashcardx.co/deck/",
             "getSpUserCards": "http://pi.api.flashcardx.co/spCards",
-            "rankCard":"http://pi.api.flashcardx.co/rankCard"
+            "rankCard":"http://pi.api.flashcardx.co/rankCard",
+            "masterCardCount": "http://pi.api.flashcardx.co/cardCount",
+            "masterUserCount": "http://pi.api.flashcardx.co/userCount",
+            "masterLogins": "http://pi.api.flashcardx.co/loginRegistry",
+            "masterCodegen": "http://pi.api.flashcardx.co/promocodes/"
             },
         "production":{
             "getInitialCards": "https://api.flashcardx.co/allCards",
@@ -231,6 +239,10 @@
             "moveCard": "https://api.flashcardx.co/moveCard/",
             "getDeckUrl": "https://api.flashcardx.co/deck/",
             "getSpUserCards": "https://api.flashcardx.co/spCards",
-            "rankCard":"https://api.flashcardx.co/rankCard"
+            "rankCard":"https://api.flashcardx.co/rankCard",
+            "masterCardCount": "https://api.flashcardx.co/cardCount",
+            "masterUserCount": "https://api.flashcardx.co/userCount",
+            "masterLogins": "https://api.flashcardx.co/loginRegistry",
+            "masterCodegen": "https://api.flashcardx.co/promocodes/"
         }
 }
