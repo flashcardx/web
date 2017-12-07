@@ -13,7 +13,9 @@ const style = {
         padding: "0px",
         margin: "6px",
         display: "inline-block",
-        minWidth: "180px"
+        position: "relative",
+        minWidth: "180px",
+        boxShadow: "5px 10px #888888"
     },
     wordBreak: {
         // eslint-disable-next-line
