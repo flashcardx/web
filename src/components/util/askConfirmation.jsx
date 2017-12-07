@@ -1,15 +1,12 @@
 import React from "react";
 import Modal from "./modal.jsx";
-import FlatButton from 'material-ui/FlatButton';
+import GreenButton from './greenButton.jsx';
 
 function AskConfirmation(props){
     const confirmObject = (
-                         <FlatButton
-                                className="white"
+                         <GreenButton
                                 label="Confirmar"
                                 onClick={props.onConfirm}
-                                backgroundColor="#5cb85c"
-                                hoverColor="#499349"
                                 />
                         );
     return (

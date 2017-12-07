@@ -93,5 +93,6 @@ module.exports = {
     apiMasterCardCount: api.masterCardCount,
     apiMasterUserCount: api.masterUserCount,
     apiMasterLogins: api.masterLogins,
-    apiMasterCodegen: api.masterCodegen
+    apiMasterCodegen: api.masterCodegen,
+    apiSetPromocode: api.setPromocode
 };

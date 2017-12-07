@@ -14,8 +14,6 @@ class Master extends Component{
     constructor(props){
         super(props);
         this.state = {months:0, school:"", count:0}
-        this.renderCardCount = this.renderCardCount.bind(this)
-        this.renderUserCount = this.renderUserCount.bind(this);
         this.renderLogins = this.renderLogins.bind(this);
         this.submitCodeGen = this.submitCodeGen.bind(this);
     }
@@ -24,18 +22,6 @@ class Master extends Component{
         this.props.fetchCardCount();
         this.props.fetchUserCount();
         this.props.fetchLogins();    
-    }
-
-    renderCardCount(){
-        if(!this.props.master.cardCount)
-            return   <CircularProgress style={{margin:"auto"}} size={50} thickness={6} />
-        return this.props.master.cardCount
-    }
-
-    renderUserCount(){
-        if(!this.props.master.userCount)
-            return   <CircularProgress style={{margin:"auto"}} size={50} thickness={6} />
-        return this.props.master.userCount
     }
 
     renderLogins(){
@@ -73,9 +59,6 @@ class Master extends Component{
                             </div>;
                         </div>
                    </Page>
-        const cardCount = this.renderCardCount(),
-              userCount = this.renderUserCount(),
-              userLogins = this.renderLogins()
         return (
             <Page name="master">
                 <div className="container">

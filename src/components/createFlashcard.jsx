@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Radium from "radium";
 import Modal from "./util/modal.jsx";
-import FlatButton from 'material-ui/FlatButton';
+import GreenButton from "./util/greenButton";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {infoAlert} from "../actions/alerts.js";
@@ -120,15 +120,11 @@ class CreateFlashcard extends Component{
 
     render(){
         var confirmObject = (
-                         <FlatButton
+                         <GreenButton
                                 disabled={this.props.bigLoading}
                                 label={this.props.buttonTitle}
-                                primary={true}
                                 type="submit"
                                 form="cardForm"
-                                backgroundColor="#5cb85c"
-                                hoverColor="#499349"
-                                labelStyle={{color:"white"}}
                                 />
                         );
         return (

@@ -14,7 +14,7 @@ import {} from "../actions/audio";
 import SpeakerLangContainer from "../containers/speakerLangContainer.jsx";
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
-
+import GreenButton from "./util/greenButton"
 const style = {
     card: {
         padding: "0px",
@@ -134,7 +134,7 @@ class Flashcard extends Component{
                         </CardText>
                         <CardActions>
                             {(this.props["practice-stage"]===1)?
-                                <FlatButton onClick={this.props.submitName} disabled={!this.props.nameImput} hoverColor="#52a552" backgroundColor="#5cb85c" className="col" label="Confirmar" />
+                                <GreenButton onClick={this.props.submitName} disabled={!this.props.nameImput} className="col" label="Confirmar" />
                                 :
                                 (this.props["practice-stage"]===2)?
                                 <FlatButton disabled={this.props.bigLoading} onClick={this.props.onContinue} hoverColor="#346bc3" backgroundColor="#4286f4" className="col" label="Continuar" />

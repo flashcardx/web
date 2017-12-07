@@ -9,6 +9,7 @@ import {userDecksReducer,
         deckNameReducer} from "./reducer_deck";
 import masterReducer from "./reducer_master"
 import {spCardsReducer, rankCardReducer} from "./reducer_practice";
+import {redirectReducer} from "./reducer_util"
 import {searchImagesReducer, imageProxyReducer} from "./reducer_img";
 import {reducer as formReducer} from "redux-form";
 
@@ -30,7 +31,8 @@ const appReducer = combineReducers({
   deckName: deckNameReducer,
   cardsToPractice: spCardsReducer,
   practiceCardRank: rankCardReducer,
-  master: masterReducer
+  master: masterReducer,
+  redirect: redirectReducer
 });
 
 const rootReducer = (state, action) => {

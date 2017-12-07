@@ -48,8 +48,8 @@ export function submitCodeGen(count, months, school){
     if(school)
         url += "?school="+school;
     const request = axios.get(url, {
-                                headers: {'x-access-token': localStorage.getItem("jwt")}
-                                });
+                headers: {'x-access-token': localStorage.getItem("jwt")}
+            });
     return {type:  MASTER_CODE_GEN,
             payload: request,
             originAPI: true,

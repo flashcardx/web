@@ -13,5 +13,11 @@
     },
     "5":{
         "es": "El email ingresado esta en espera de ser verificado(Verifica tu casilla de correo)"    
+    },
+    "6":{
+        "redirect": "/getpromocode"
+    },
+    "7":{
+        "es": "Código inválido"
     }
 }

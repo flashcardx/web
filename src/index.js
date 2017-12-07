@@ -6,6 +6,7 @@ import { BrowserRouter, Switch, Route,Redirect } from 'react-router-dom';
 import Home from "./pages/home.jsx";
 import Settings from "./pages/settings.jsx";
 import Master from "./pages/master.jsx";
+import GetPromocode from "./pages/getPromocode.jsx";
 import Signout from "./pages/signout.jsx";
 import Landing from "./pages/landing.jsx";
 import PracticeMethodChooser from "./pages/practice/methodChooser.jsx";
@@ -35,10 +36,11 @@ class App extends Component{
                         <Route path="/practice/:method" component={requireAuth(PracticeDeckChooser, "/landing")}/>
                         <Route path="/practice" component={requireAuth(PracticeMethodChooser, "/landing")}/>
                         <Route path="/settings" component={requireAuth(Settings, "/landing")}/>
+                        <Route path="/getpromocode" component={requireAuth(GetPromocode, "/landing")}/>
                         <Route path="/master" component={requireAuth(Master, "/landing")}/>
                         <Route path="/email-verification/:id" component={validateEmail(Landing, "/landing")}/>
-                        <Route path="/landing" component={redirectIfAuth(Landing, "/")}/>
                         <Route path="/signout" component={Signout}/>
+                        <Route path="/landing" component={redirectIfAuth(Landing, "/")}/>
                         <Route path="/" component={requireAuth(Home, "/landing")}/>
                         <Redirect from='*' to='/'/>
                     </Switch>

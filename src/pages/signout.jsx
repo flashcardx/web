@@ -33,8 +33,11 @@ function renderInstagram(url){
 */
 class Signout extends Component{
 
-    render(){
+    componentWillMount(){
         this.props.signout();
+    }
+
+    render(){
         return  <Redirect push to="/landing"/>
       /*  return (
             <MuiThemeProvider>
