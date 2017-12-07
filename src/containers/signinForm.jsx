@@ -24,7 +24,9 @@ class SigninForm extends Component{
     }    
 
     onSubmit(values){
+        console.log("1");
         this.captchaExecute(key=>{
+            console.log(2);
             this.props.SigninAction(values, key);
         });
     }

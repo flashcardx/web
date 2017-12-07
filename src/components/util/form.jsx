@@ -42,6 +42,7 @@ export const MyOwnInput = Radium(createReactClass({
       return (
           <div>
               <TextField
+                            type={this.props.type}
                             multiLine={this.props.multiLine}
                             value={this.props.value}
                             hintText={this.props.placeholder}
