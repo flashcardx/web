@@ -6,6 +6,8 @@ import GreenButton from "../components/util/greenButton.jsx";
 import Radium from "radium";
 import {connect} from "react-redux";
 import {signin as SigninAction} from "../actions/auth";
+import Formsy from 'formsy-react';
+import {MyOwnInput} from "../components/util/form.jsx";
 
 const style = {
     marginLeft:{
@@ -16,7 +18,7 @@ const style = {
 class SigninForm extends Component{
     constructor(props){
         super(props);
-        this.state = {className: props.className};
+        this.state = {className: props.className, email:"", password:""};
         this.captchaExecute = props.captchaExecute.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }    
@@ -29,22 +31,39 @@ class SigninForm extends Component{
 
     render(){
        const {handleSubmit} = this.props;
-       return ( <form onSubmit={handleSubmit(this.onSubmit)} className={this.state.className}>
-            <TextField
-                name="email"
-                type="text"
-                placeholder="Email"
-                fieldType="input"
-            />
-            <TextField
-                style={style.marginLeft}
-                name="password"
-                type="password"
-                placeholder="password"
-                fieldType="input"
-            />
-            <GreenButton   disabled={this.props.bigLoading} type="submit" style={style.marginLeft} label="Sign in" />
-        </form>
+       return ( 
+                <span>
+                    <Formsy.Form ref="form" onValidSubmit={this.onSubmit} className={this.state.className}>
+                        <MyOwnInput
+                            validationErrors={{
+                                isEmail: "Debes ingresar un email valido",
+                                isDefaultRequiredValue: "No ingresaste un email"
+                            }}
+                            required
+                            style={{backgroundColor:"white"}}
+                            validations="isEmail"
+                            name="email"
+                            type="text"
+                            onChange={e=>this.setState({email:e.target.value})}
+                            value={this.state.email}
+                            placeholder="Email"
+                            />
+                        <MyOwnInput
+                            validationErrors={{
+                                minLength: "La contraseña debe contener al menos 4 caracteres",
+                                isDefaultRequiredValue: "No ingresaste la contraseña"
+                            }}
+                            style={{...style.marginLeft, backgroundColor:"white"}}
+                            name="password"
+                            required
+                            onChange={e=>this.setState({password:e.target.value})}
+                            value={this.state.password}
+                            type="password"
+                            placeholder="contraseña"
+                            />
+                    </Formsy.Form>
+                    <GreenButton disabled={this.props.bigLoading} type="submit" style={style.marginLeft} label="Sign in" />
+                </span>
        );
     }
 }

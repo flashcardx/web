@@ -46,7 +46,7 @@ export const MyOwnInput = Radium(createReactClass({
                             value={this.props.value}
                             hintText={this.props.placeholder}
                             className={this.props.className}
-                            style={{width:"100%"}}
+                            style={{width:"100%", ...this.props.style}}
                             onFocus={()=>{this.setState({focus:true})}}
                             onBlur={()=>{this.setState({focus:false})}}
                             onChange={this.props.onChange} 

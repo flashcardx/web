@@ -47,7 +47,7 @@ var finishSignin;
 
 function recaptchaChange(key) {
     switch(submitOrigin){
-        case "signin": finishSignin(key);
+        case "signin":  finishSignin(key);
                         break;
         case "signup": finishSignup(key);
                         break;
