@@ -1,0 +1,19 @@
+{"development" : {
+	"sounds":{
+        "win": "https://d32suzxs6u0rur.cloudfront.net/static/win.mp3",
+        "lose": "https://d32suzxs6u0rur.cloudfront.net/static/lose.mp3"
+        }
+	},
+"pi" : {
+    "sounds":{
+        "win": "https://d32suzxs6u0rur.cloudfront.net/static/win.mp3",
+        "lose": "https://d32suzxs6u0rur.cloudfront.net/static/lose.mp3"
+            }
+		},
+"production":{
+    "sounds":{
+        "win": "https://d32suzxs6u0rur.cloudfront.net/static/win.mp3",
+        "lose": "https://d32suzxs6u0rur.cloudfront.net/static/lose.mp3"
+        }
+	}
+}

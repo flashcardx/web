@@ -1,0 +1,340 @@
+div{
+  border-radius: 5px !important;
+}
+
+
+.owl-dots{
+    margin-top: -20px !important;
+    position: relative !important;
+    opacity: 0.5;
+}
+
+:disabled {
+  background-color: gray !important;
+  cursor: not-allowed !important; 
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+#react{
+  min-height: 600px;
+}
+
+.blue-btn{
+  background: #4286f4;
+    border-color: #4286f4;
+}
+.blue-btn:hover{
+  background: #346bc3;
+    border-color: #346bc3;
+}
+
+a{
+  outline: none;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+@import url( 'https://fonts.googleapis.com/css?family=Work+Sans');
+
+body {
+  background: #efefef;
+  opacity: .95;
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.alert-deleted {
+    position:fixed; 
+    top: 20px; 
+    left: 0px; 
+    width: 100%;
+    z-index:9999; 
+    border-radius:0px
+}
+
+.alert-side {
+ position:fixed; 
+    top: 20px; 
+    left: 0px; 
+    width: 100%;
+    z-index:9999; 
+    border-radius:0px
+}
+
+
+.alignVMiddle {
+  float: none;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.speaker:hover {
+  cursor: pointer;
+  color: #0080ff;
+}
+
+.btn {
+  cursor: pointer;
+}
+
+.min-height {
+  min-height: 650px;
+}
+
+.pull-left {
+  float: left;
+}
+
+.black {
+  color: black;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+button:focus {outline:0;}
+
+.round{
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 21px;
+  line-height: 1;
+  border-radius: 50%;
+}
+
+
+
+
+
+.top-buffer { margin-top:20px; }
+
+.activity{
+  padding: 0px;
+}
+
+
+
+.my-thumbnail{
+      display:inline-block;
+      border: 1px solid #ddd; /* Gray border */
+      border-radius: 5px;  /* Rounded border */
+      padding: 5px; /* Some padding */
+      width: 110px; /* Set a small width */
+      height: auto;
+}
+.my-thumbnail-2{
+      display:inline-block;
+      border: 1px solid #ddd; /* Gray border */
+      border-radius: 5px;  /* Rounded border */
+      padding: 2px; /* Some padding */
+      width: 90px; /* Set a small width */
+      height: auto;
+}
+
+.my-thumbnail-3{
+      display:inline-block;
+      border: 1px solid #ddd; /* Gray border */
+      border-radius: 5px;  /* Rounded border */
+      padding: 2px; /* Some padding */
+      width: 57px; /* Set a small width */
+      height: auto;
+}
+  
+.my-thumbnail-4{
+      display:inline-block;
+      border: 1px solid #ddd; /* Gray border */
+      border-radius: 3px;  /* Rounded border */
+      padding: 2px; /* Some padding */
+      width: 35px; /* Set a small width */
+      height: auto;
+}
+  
+
+  .activity-body{
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+
+  hr{
+    border: 2px solid #4286f4;
+  }
+
+
+  .navbar-header{
+    background-color: #85DCB0;
+  }
+
+  .bg-inverse{
+    background-color: #4286f4 !important;
+  }
+
+  .white{
+       color:white !important;
+  }
+
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+.fixed-top {
+  position: relative;
+}
+
+  .main-content {
+  margin: 10px;
+  text-align: center;
+}
+.btn-space-left {
+  margin-left: 10px;
+}
+
+
+#activity-modal-dialog{
+  max-width: 460px;
+}
+
+.activity-feed {
+    padding: 15px;
+    overflow: auto;
+    max-height: 320px;
+}
+.activity-feed .feed-item {
+  position: relative;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  border-left: 2px solid #e4e8eb;
+}
+.activity-feed .feed-item:last-child {
+  border-color: transparent;
+}
+.activity-feed .feed-item:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 22px;
+  left: -6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid #f37167;
+}
+.activity-feed .feed-item .date {
+  position: relative;
+  top: -5px;
+  color: #8c96a3;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+.activity-feed .feed-item .text {
+  position: relative;
+  top: -3px;
+}
+
+.list-unstyled {
+	padding-left: 0;
+	list-style: none;
+}
+.list-inline li {
+	display: inline-block;
+	padding-right: 5px;
+	padding-left: 5px;
+	margin-bottom: 10px;
+}
+/*---- Genral classes end -------*/
+
+/*Change icons size here*/
+.social-icons .fa {
+	font-size: 1.8em;
+}
+/*Change icons circle size and color here*/
+.social-icons .fa {
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	color: #FFF;
+	color: rgba(255, 255, 255, 0.8);
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-ms-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+}
+
+.social-icons.icon-circle .fa{ 
+	border-radius: 50%;
+}
+.social-icons.icon-rounded .fa{
+	border-radius:5px;
+}
+.social-icons.icon-flat .fa{
+	border-radius: 0;
+}
+
+.social-icons .fa:hover, .social-icons .fa:active {
+	color: #FFF;
+	-webkit-box-shadow: 1px 1px 3px #333;
+	-moz-box-shadow: 1px 1px 3px #333;
+	box-shadow: 1px 1px 3px #333; 
+}
+.social-icons.icon-zoom .fa:hover, .social-icons.icon-zoom .fa:active { 
+ 	-webkit-transform: scale(1.1);
+	-moz-transform: scale(1.1);
+	-ms-transform: scale(1.1);
+	-o-transform: scale(1.1);
+	transform: scale(1.1); 
+}
+.social-icons.icon-rotate .fa:hover, .social-icons.icon-rotate .fa:active { 
+	-webkit-transform: scale(1.1) rotate(360deg);
+	-moz-transform: scale(1.1) rotate(360deg);
+	-ms-transform: scale(1.1) rotate(360deg);
+	-o-transform: scale(1.1) rotate(360deg);
+	transform: scale(1.1) rotate(360deg);
+}
+
+.social-icons .fa-facebook,.social-icons .fa-facebook-square{background-color:#3C599F;}  
+
+.social-icons .fa-instagram{background-color: #c32aa3;}
+
+.hide{
+  display: none;
+}
+
+.blur{
+            -webkit-filter: blur(5px);
+            -moz-filter: blur(5px);
+            -o-filter: blur(5px);
+            -ms-filter: blur(5px);
+            filter: blur(5px);
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+}
