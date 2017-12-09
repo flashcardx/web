@@ -90,7 +90,7 @@ class Landing extends Component{
                                 onChange={this.recaptchaChange}
                                 />
                             <nav style={style.base} className="navbar navbar-expand-lg">
-                                <Link style={style.logo} className="navbar-brand mr-auto" to="/"><img style={style.logoImg} src={process.env.PUBLIC_URL+"/img/logo_text_white.png"}/><sub style={style.beta}>BETA</sub></Link>
+                                <Link style={style.logo} className="navbar-brand mr-auto" to="/"><img alt="logo" style={style.logoImg} src={process.env.PUBLIC_URL+"/img/logo_text_white.png"}/><sub style={style.beta}>BETA</sub></Link>
                                 <span className="p-2">
                                     <Link to="/signup" className="nav-item btn btn-light"> Registrate</Link>
                                 </span>

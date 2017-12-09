@@ -41,7 +41,7 @@ class Landing extends Component{
         return (
             <div>
                             <nav style={style.base} className="navbar navbar-expand-lg d-flex">
-                                <Link style={style.logo} className="navbar-brand mr-auto" to="#"><img style={style.logoImg} src={process.env.PUBLIC_URL+"/img/logo_text_white.png"}/><sub style={style.beta}>BETA</sub></Link>
+                                <Link style={style.logo} className="navbar-brand mr-auto" to="#"><img alt="logo" style={style.logoImg} src={process.env.PUBLIC_URL+"/img/logo_text_white.png"}/><sub style={style.beta}>BETA</sub></Link>
                                 <span className="p-2">
                                     <span className="p-2">
                                         <Link to="/signin" className="nav-item btn btn-light"> Ingresar</Link>
