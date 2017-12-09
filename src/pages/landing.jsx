@@ -1,15 +1,6 @@
 import React, {Component} from "react";
-import {connect} from "react-redux";
 import Radium from "radium";
-import RaisedButton from 'material-ui/RaisedButton';
-import ReCAPTCHA from "react-google-recaptcha";
-import config from "../api_config";
-import FacebookLogin from 'react-facebook-login';
-import {GoogleLogin} from 'react-google-login';
 import {Link} from "react-router-dom";
-const RECAPTCHA_KEY = config.recaptchaSiteKey;
-const FB_APPID = config.fbAppId;
-const GOOGLE_CLIENTID = config.googleClientId;
 
 const style = {
     base:{
@@ -17,6 +8,10 @@ const style = {
     },
     logo:{
         color: "#fff"
+    },
+    logoImg:{
+        maxHeight:"45px",
+        width: "auto"
     },
     right:{
         float: "right"
@@ -34,26 +29,26 @@ const style = {
         listStyleType:"disc"
     },
     beta:{
-        fontSize: "x-small"
+        fontSize: "x-small",
+        verticalAlign: "text-bottom"
     }
 }
 
 class Landing extends Component{
 
-    constructor(props){
-        super(props);
-    }
 
     render(){
         return (
             <div>
                             <nav style={style.base} className="navbar navbar-expand-lg d-flex">
-                                <Link style={style.logo} className="navbar-brand mr-auto" to="#">FlashcardX<sub style={style.beta}>BETA</sub></Link>
+                                <Link style={style.logo} className="navbar-brand mr-auto" to="#"><img style={style.logoImg} src={process.env.PUBLIC_URL+"/img/logo_text_white.png"}/><sub style={style.beta}>BETA</sub></Link>
                                 <span className="p-2">
-                                    <Link to="/signin" className="nav-item btn btn-light"> Ingresar</Link>
-                                </span>
-                                <span className="p-2">
-                                    <Link to="/signup" className="nav-item btn btn-light"> Registrate</Link>
+                                    <span className="p-2">
+                                        <Link to="/signin" className="nav-item btn btn-light"> Ingresar</Link>
+                                    </span>
+                                    <span className="p-2">
+                                        <Link to="/signup" className="nav-item btn btn-light"> Registrate</Link>
+                                    </span>
                                 </span>
                             </nav>
                                 <div className="container">
@@ -66,9 +61,9 @@ class Landing extends Component{
 
 function Details({fbAuth, googleAuth}){
     return(
-        <div>   
-                <div className="row">
-                    <h1>Learn anything with beautiful images</h1>
+        <div className="container">   
+                <div style={{paddingTop:"10px"}} className="row">
+                    <h1>Aprende de todo con fichas multimedia</h1>
                 </div>
                 <div style={style.margin5}>
                             <div className="row">
@@ -83,9 +78,6 @@ function Details({fbAuth, googleAuth}){
                 <div className="row">
                             <div className="col-md-12 text-center">
                                 <h2> What are Flashcards?</h2>
-                                    <div minLength="embed-responsive embed-responsive-16by9">
-                                        <iframe title ="video" width="100%" height="400px" className="embed-responsive-item" src="https://www.youtube.com/embed/mzCEJVtED0U" allowFullScreen></iframe>
-                                    </div>
                             </div>
                 </div> 
             <FeatureList/>

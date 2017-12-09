@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import Radium from "radium";
-import RaisedButton from 'material-ui/RaisedButton';
 import {fbAuth, googleAuth} from "../actions/auth";
 import ReCAPTCHA from "react-google-recaptcha";
 import {signin as SigninAction} from "../actions/auth";
@@ -23,6 +22,10 @@ const style = {
     logo:{
         color: "#fff"
     },
+    logoImg:{
+        maxHeight:"45px",
+        width: "auto"
+    },
     right:{
         float: "right"
     },
@@ -39,7 +42,8 @@ const style = {
         listStyleType:"disc"
     },
     beta:{
-        fontSize: "x-small"
+        fontSize: "x-small",
+        verticalAlign: "text-bottom"
     },
     box:{
         margin: "20px",
@@ -52,7 +56,6 @@ const style = {
     }
 }
 var captchaRef;
-var finishSignin;
 
 class Landing extends Component{
 
@@ -87,7 +90,7 @@ class Landing extends Component{
                                 onChange={this.recaptchaChange}
                                 />
                             <nav style={style.base} className="navbar navbar-expand-lg">
-                                <Link style={style.logo} className="navbar-brand" to="/">FlashcardX<sub style={style.beta}>BETA</sub></Link>
+                                <Link style={style.logo} className="navbar-brand mr-auto" to="/"><img style={style.logoImg} src={process.env.PUBLIC_URL+"/img/logo_text_white.png"}/><sub style={style.beta}>BETA</sub></Link>
                                 <span className="p-2">
                                     <Link to="/signup" className="nav-item btn btn-light"> Registrate</Link>
                                 </span>

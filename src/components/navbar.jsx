@@ -23,6 +23,7 @@ var style = {
     },
     logo:{
         maxWidth: "40px",
+        padding: "4px",
         height: "auto"
     }
 };

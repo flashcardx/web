@@ -8,6 +8,7 @@
         <link rel="shortcut icon" href="%PUBLIC_URL%/img/favicon.ico">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
         <link rel="stylesheet" href="%PUBLIC_URL%/css/general.css">
+        <link rel="stylesheet" href="%PUBLIC_URL%/css/footer.css">
         <script src="https://use.fontawesome.com/6cbcc3e9b8.js"></script>
         <!--react material-ui theme: -->
         <link rel="stylesheet" href="https://unpkg.com/react-md@1.1.0/dist/react-md.deep_purple-pink.min.css">
@@ -16,36 +17,57 @@
     </head>
     <body>
         <div id="react"></div>
-        <footer class="footer" id="footer2">
-                <div class="container">
-                    <div class="row">
-                            <div class="col-8 col-sm-8 col-lg-8">
-                                <div class="row">
-                                    <div class="col-5 ">
-                                        <span class="">© 2017 FlashcardX. All rights reserved.</span>
-                                    </div>
-                                    <div class="col-7 ">
-                                        <span class="">We would love your feedback: contact@flashcardx.co</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 pull-left">
-                                        <span class="">Powered by:
-                                            <a href="https://wordnik.com" target="_blank">wordnik.com</a>
-                                        </span>
-                                    </div>
+        <footer class="footer-distributed">
+            
+                        <div class="footer-left">
+            
+                            <div><img class="footer-logo" src="%PUBLIC_URL%/img/logo_text_white.png"/></div>
+            
+                            <p class="footer-links">
+                                Aprende de todo con fichas multimedia
+                            </p>
+            
+                            <p class="footer-company-name">FlashcardX &copy; 2018</p>
+                        </div>
+            
+                        <div class="footer-center">
+            
+                            <div>
+                                <i class="fa fa-map-marker"></i>
+                                <p> Buenos Aires, Argentina</p>
                             </div>
+            
+                            <div>
+                                <i class="fa fa-phone"></i>
+                                <p>+54 911 30530305</p>
+                            </div>
+            
+                            <div>
+                                <i class="fa fa-envelope"></i>
+                                <p><a href="mailto:contact@flashcardx.co">contact@flashcardx.co</a></p>
+                            </div>
+            
                         </div>
-                        <div class="col-2 col-sm-2">  
-                            <ul class="social-icons icon-circle icon-rotate list-unstyled list-inline"> 
-                                <li><a data-toggle='tooltip' data-placement='right' title='Follow us on Instagram!' alt="Social Network" target="_blank" href="https://www.instagram.com/flashcardx"><i class="fa fa-instagram"></i></a> </li> 
-                                <li> <a data-toggle='tooltip' data-placement='right' title='Like us on Facebook!' alt="Social Network" target="_blank" href="https://www.facebook.com/CardsFlashx"><i class="fa fa-facebook"></i></a></li> 
-                            </ul>
+            
+                        <div class="footer-right">
+            
+                            <p class="footer-company-about">
+                                <span>Acerca de nosotros</span>
+                                FlashcardX es una plataforma de aprendizaje, con la mision de convertirse en una herramienta para optimizar el aprendizaje de casi cualquier cosa. <strong>Somos un proyecto open source</strong>
+                            </p>
+            
+                            <div class="footer-icons">
+            
+                                <a target="_blank" href="https://www.facebook.com/CardsFlashx"><i class="fa fa-facebook"></i></a>
+                                <a target="_blank" href="https://www.instagram.com/flashcardx"><i class="fa fa-instagram"></i></a>
+                                <a target="_blank" href="https://www.linkedin.com/company/flashcardx/"><i class="fa fa-linkedin"></i></a>
+                                <a target="_blank" href="https://github.com/flashcardx"><i class="fa fa-github"></i></a>
+            
+                            </div>
+            
                         </div>
-                    </div>
-                    
-                </div>
-            </footer>
+            
+                    </footer>
         <script type="text/jsx" src="%PUBLIC_URL%/js/app.js"></script>
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     </body>

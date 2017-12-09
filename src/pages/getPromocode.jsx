@@ -25,11 +25,7 @@ const style = {
         boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px",
         padding:"10px",
         margin: "10px",
-        background: "#ffc0cb", /* For browsers that do not support gradients */
-        background: "-webkit-linear-gradient(left, #4cb7ff, #0089e5)", /* For Safari 5.1 to 6.0 */
-        background: "-o-linear-gradient(right, #4cb7ff , #0089e5)", /* For Opera 11.1 to 12.0 */
-        background: "-moz-linear-gradient(right, #4cb7ff , #0089e5)", /* For Firefox 3.6 to 15 */
-        background: "linear-gradient(to right, #4cb7ff , #0089e5)" /* Standard syntax */
+        background: "linear-gradient(to right, #4cb7ff , #0089e5)"
     },
     img:{
         width:"70px",
@@ -54,37 +50,28 @@ const style = {
 }
 
 let captcha = null;
-let captchaKey = null;
 class GetPromocode extends Component{
     
     constructor(props){
         super(props);
-        this.state = {code:"", key:""}
+        this.state = {code:""}
         this.shouldNotBeInThisPage = this.shouldNotBeInThisPage.bind(this);
         this.submitPromocode = this.submitPromocode.bind(this);
         this.recaptchaChange = this.recaptchaChange.bind(this);
     }
 
     recaptchaChange(key){
-        console.log("captcha execute: ",key);
-        this.setState({key: key});
-    }
-
-    componentDidUpdate(prevProps, prevState){
-        if(prevState.key !== this.state.key)
-            this.submitPromocode();
-    }
-    
-    submitPromocode(){
-        if(!this.state.key)
-            return captcha.execute();
-        this.props.submitPromocode(this.state.code, this.state.key, ()=>{
+        this.props.submitPromocode(this.state.code, key, ()=>{
             //gives some time so the action for re logging the user can finalize, and its state in the app can be updated
             //otherwise the landing page will kick the user back to here
             setTimeout(() => {
                 this.props.redirectAction("/landing");
             }, 100);
         });
+    }
+    
+    submitPromocode(){
+        captcha.execute();
     }
 
     render(){
@@ -168,7 +155,7 @@ class GetPromocode extends Component{
                                                 Seguinos en <LinkRadium style={style.link} rel="noopener noreferrer" target="_blank" to="https://www.instagram.com/flashcardx/">Instagram</LinkRadium>
                                             </li>
                                         </h3>
-                                        <h3>
+                                        <h3 style={{whiteSpace: "initial"}}>
                                             <li>
                                             Dale Like a alguna de nuestras fotos(la que mas te guste)
                                             </li>

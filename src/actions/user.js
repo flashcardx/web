@@ -1,6 +1,6 @@
 import axios from "axios";
 import config from "../api_config";
-import {USER_INFO, SET_PROMOCODE, ERROR_ALERT, SIGNIN} from "./types";
+import {USER_INFO, SIGNIN} from "./types";
 const USER_INFO_URL = config.apiGetUserInfo;
 const SET_PROMOCODE_URL = config.apiSetPromocode
 

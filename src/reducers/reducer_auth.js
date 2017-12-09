@@ -18,8 +18,10 @@ export function signupReducer(state=null, action){
                         return {type:1, msg: action.payload.msg};
                      if(action.payload.code === 5)
                         return {type:2, email:action.payload.email, msg: action.payload.msg};
+                     break;
         case SIGNUP_RESEND_EMAIL: if(action.payload.success===true)
                                     return {type:1, msg: action.payload.msg};
+                                  break;
         case EMAIL_VERIFICATION: return {type:1, msg: action.payload.msg};
         default: return state;   
     }

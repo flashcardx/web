@@ -4,7 +4,10 @@ import Page from "../components/page.jsx";
 function Settings(){
     return (
         <Page name="settings">
-            Settings
+            <h1>
+                Mmmm, Esta seccion todavia no esta disponible,
+                estamos trabajando tan rapido como podemos para agregar nuevas funcionalidades
+            </h1>
         </Page>
     );
 }
