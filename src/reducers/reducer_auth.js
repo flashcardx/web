@@ -14,14 +14,12 @@ export function authReducer(state=false, action){
 
 export function signupReducer(state=null, action){
     switch(action.type){ 
-        case SIGNUP: if(action.payload.success===true && !action.payload.errorCode)
+        case SIGNUP: if(action.payload.success===true && !action.payload.code)
                         return {type:1, msg: action.payload.msg};
-                     if(action.payload.errorCode === 1)
+                     if(action.payload.code === 5)
                         return {type:2, email:action.payload.email, msg: action.payload.msg};
-                    break;
         case SIGNUP_RESEND_EMAIL: if(action.payload.success===true)
                                     return {type:1, msg: action.payload.msg};
-                                    break;
         case EMAIL_VERIFICATION: return {type:1, msg: action.payload.msg};
         default: return state;   
     }

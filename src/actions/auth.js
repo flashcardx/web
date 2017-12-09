@@ -8,7 +8,7 @@ const EMAIL_VERIFICATION_URL = config.apiEmailVerification;
 const FB_AUTH_URL = config.apiFbAuthUrl;
 const GOOGLE_AUTH_URL = config.apiGoogleAuthUrl;
 
-export function signin({email, password}, key){
+export function signin(email, password, key){
     const request = axios.post(SIGNIN_URL, {
         email,
         password,
@@ -22,7 +22,7 @@ export function signin({email, password}, key){
     }
 }
 
-export function signup({name, email, password}, key){
+export function signup(email,name, password, key){
     const request = axios.post(SIGNUP_URL, {
         email,
         name,

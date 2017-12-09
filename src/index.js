@@ -9,6 +9,8 @@ import Master from "./pages/master.jsx";
 import GetPromocode from "./pages/getPromocode.jsx";
 import Signout from "./pages/signout.jsx";
 import Landing from "./pages/landing.jsx";
+import Signin from "./pages/signin.jsx";
+import Signup from "./pages/signup.jsx";
 import PracticeMethodChooser from "./pages/practice/methodChooser.jsx";
 import PracticeDeckChooser from "./pages/practice/deckChooser.jsx";
 import PracticeSpacedRepetition from "./pages/practice/spacedRepetition.jsx";
@@ -38,9 +40,11 @@ class App extends Component{
                         <Route path="/settings" component={requireAuth(Settings, "/landing")}/>
                         <Route path="/getpromocode" component={requireAuth(GetPromocode, "/landing")}/>
                         <Route path="/master" component={requireAuth(Master, "/landing")}/>
-                        <Route path="/email-verification/:id" component={validateEmail(Landing, "/landing")}/>
+                        <Route path="/email-verification/:id" component={validateEmail(Signin, "/landing")}/>
                         <Route path="/signout" component={Signout}/>
                         <Route path="/landing" component={redirectIfAuth(Landing, "/")}/>
+                        <Route path="/signin" component={redirectIfAuth(Signin, "/")}/>
+                        <Route path="/signup" component={redirectIfAuth(Signup, "/")}/>
                         <Route path="/" component={requireAuth(Home, "/landing")}/>
                         <Redirect from='*' to='/'/>
                     </Switch>

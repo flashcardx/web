@@ -2,9 +2,6 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import Radium from "radium";
 import RaisedButton from 'material-ui/RaisedButton';
-import SigninForm from "../containers/signinForm.jsx";
-import SignupForm from "../containers/signupForm.jsx";
-import {resendEmailSignup, fbAuth, googleAuth} from "../actions/auth";
 import ReCAPTCHA from "react-google-recaptcha";
 import config from "../api_config";
 import FacebookLogin from 'react-facebook-login';
@@ -40,78 +37,26 @@ const style = {
         fontSize: "x-small"
     }
 }
-var captchaRef;
-var submitOrigin;
-var finishSignup;
-var finishSignin;
-
-function recaptchaChange(key) {
-    switch(submitOrigin){
-        case "signin":  finishSignin(key);
-                        break;
-        case "signup": finishSignup(key);
-                        break;
-        default: console.error("invalid submit origin");
-    }
-    captchaRef.reset();
-}
-
-function signinExecute(callback){
-    submitOrigin = "signin";
-    finishSignin = callback;
-    captchaRef.execute();
-}
-
-function signupExecute(callback){
-    submitOrigin = "signup";
-    finishSignup = callback;
-    captchaRef.execute();
-}
 
 class Landing extends Component{
 
     constructor(props){
         super(props);
-        this.signupSight = this.signupSight.bind(this);
     }
 
-    signupSight(state){
-    if(state.type === 1)
-        return (
-            <div className="alert alert-success" role="alert">
-                {state.msg}
-            </div>
-        );
-    if(state.type === 2)
-        return (
-            <div className="alert alert-info" role="alert">
-                {state.msg}
-                <br/>
-                <RaisedButton backgroundColor="#5cb85c" onClick ={()=>this.props.resendEmailSignup(state.email)} label="Resend verification email" />
-            </div>
-        );
-    return null;
-    }
-
-    
     render(){
-        var signupMsg = null;
-        if(this.props.signupMsg)
-            signupMsg = this.signupSight(this.props.signupMsg);
         return (
             <div>
-                            <ReCAPTCHA
-                                ref={(el) => { captchaRef = el; }}
-                                size="invisible"
-                                sitekey={RECAPTCHA_KEY}
-                                onChange={recaptchaChange}
-                            />
-                            <nav style={style.base} className="navbar navbar-expand-lg">
-                                <Link style={style.logo} className="navbar-brand" to="#">FlashcardX<sub style={style.beta}>BETA</sub></Link>
-                                <SigninForm captchaExecute={signinExecute} className="form-inline my-2 my-lg-0"/>
-                                </nav>
+                            <nav style={style.base} className="navbar navbar-expand-lg d-flex">
+                                <Link style={style.logo} className="navbar-brand mr-auto" to="#">FlashcardX<sub style={style.beta}>BETA</sub></Link>
+                                <span className="p-2">
+                                    <Link to="/signin" className="nav-item btn btn-light"> Ingresar</Link>
+                                </span>
+                                <span className="p-2">
+                                    <Link to="/signup" className="nav-item btn btn-light"> Registrate</Link>
+                                </span>
+                            </nav>
                                 <div className="container">
-                                    {signupMsg}
                                     <Details googleAuth={this.props.googleAuth} fbAuth={this.props.fbAuth}/>
                                 </div>
             </div>
@@ -125,38 +70,6 @@ function Details({fbAuth, googleAuth}){
                 <div className="row">
                     <h1>Learn anything with beautiful images</h1>
                 </div>
-                <div className="row">
-                        <div className="col">
-                            <div className="row">
-                                <FacebookLogin
-                                    appId={FB_APPID}
-                                    fields="name,email,picture"
-                                    textButton="Continue with Facebook"
-                                    size="small"
-                                    icon="fa fa-facebook-official"
-                                    callback={fbAuth} />
-                            </div>
-                            <div className="row">
-                                <GoogleLogin
-                                    style={{backgroundColor:"#ffffff", marginBottom:"10px", marginTop:"10px", fontWeight:"500", fontSize: "16px", border:"1px solid gray"}}
-                                    className="btn btn-light"
-                                    type="button"
-                                    scope="profile email"
-                                    clientId={GOOGLE_CLIENTID}
-                                    onSuccess={googleAuth}
-                                    onFailure={googleAuth}
-                                    >
-                                    <i style={{marginRight:"5px"}} aria-hidden="true">
-                                        <img src={process.env.PUBLIC_URL+"/img/icon_google16.png"} alt="Google icon"/>
-                                    </i>
-                                    <span>CONTINUE WITH GOOGLE</span>
-                                </GoogleLogin>
-                            </div>
-                        </div>
-                        <div className="col">
-                             <SignupForm captchaExecute={signupExecute} className="form-horizontal"/>
-                        </div>
-                    </div>
                 <div style={style.margin5}>
                             <div className="row">
                                     <h2>Our mission is to optimize your learning experience to its maximum</h2>
@@ -203,9 +116,5 @@ function FeatureList(){
     );
 }
 
-function mapStateToProps({signupMsg}){
-    return {signupMsg};
-}
-
-export default connect(mapStateToProps,{resendEmailSignup, fbAuth, googleAuth})(Radium(Landing));
+export default Radium(Landing);
 

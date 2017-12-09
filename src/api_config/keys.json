@@ -6,7 +6,7 @@
 			"clientId": "980618590126-29jvs38s15lq708q41mr262v9pdoq27d.apps.googleusercontent.com"
 	},
 	"reCaptcha":{
-					"siteKey": "6LcsqSwUAAAAACvwzZfJjFh0y0Pj6v34XVZZedtl"
+					"siteKey": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
 			}
 	},
 "pi" : {
@@ -17,7 +17,7 @@
 				"clientId": "980618590126-29jvs38s15lq708q41mr262v9pdoq27d.apps.googleusercontent.com"
 		},
 		"reCaptcha":{
-					"siteKey": "6LcsqSwUAAAAACvwzZfJjFh0y0Pj6v34XVZZedtl"
+					"siteKey": "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
 			}
 		},
 "production":{
