@@ -25,7 +25,7 @@ import successMessage from "./middlewares/successMessage.js";
 import AlertContainer from "./containers/alertContainer.jsx";
 import reduxThunk from 'redux-thunk';
 import ReactTooltip from 'react-tooltip';
-import Loading from "./containers/loading.jsx";
+import Loading from './containers/loading.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 const createStoreWithMiddleware = applyMiddleware(showLoadingMDW, promiseMDW, reduxThunk, parseApiMDW, hideLoadingMDW, errorHandlerMDW, successMessage)(createStore);
 
