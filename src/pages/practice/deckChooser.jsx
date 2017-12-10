@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import SelectDeck from "../../components/selectDeck.jsx";
 import _ from "lodash";
 import {Redirect} from 'react-router';
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import WhiteBar from "../../components/util/whiteBar.jsx";
 import Page from "../../components/page.jsx";
 
@@ -63,11 +63,12 @@ class DeckChooser extends Component{
                                             listDecks={this.props.listDecksName}/>   
                             </div>
                             <div className="col-5">
-                                <RaisedButton
+                                <FlatButton
                                         label="Practicar"
-                                        primary={true}
                                         onClick={this.submit}
-                                        buttonStyle={{backgroundColor:"#f952ae"}}  
+                                        labelStyle={{color:"white"}}
+                                        backgroundColor="#f952ae"
+                                        hoverColor="#c7418b" 
                                         />
                             </div>
                     </WhiteBar>

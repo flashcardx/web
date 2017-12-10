@@ -119,7 +119,7 @@ class GetPromocode extends Component{
                             <span style={{width:"100%"}}>
                                 <img style={style.img} alt="cry emoji" className="img-fluid" src={process.env.PUBLIC_URL+"/img/tablet.svg"}/>
                                 <h2>¿No tenes un codigo de promoción?</h2>
-                                <h2>Segui las instrucciones de alguna de las opciones listadas abajo para obtener el tuyo</h2>
+                                <h2>Segui las alguna de las opciones listadas abajo para obtener el tuyo</h2>
                             </span>
                         </div>
                         <div style={style.box2} className="row">

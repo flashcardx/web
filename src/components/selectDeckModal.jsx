@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import Radium from "radium";
 import SelectDeck from "./selectDeck.jsx";
 import _ from "lodash";
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import Modal from "./util/modal.jsx";
 
 class SelectDeckModal extends Component{
@@ -51,12 +51,13 @@ class SelectDeckModal extends Component{
 
     render(){
         var confirmObject = (
-                         <RaisedButton
+                         <FlatButton
                                 disabled={(this.props.bigLoading || this.state.path.length===0)}
                                 label={this.props.confirmLabel}
-                                primary={true}
+                                labelStyle={{color:"white"}}
                                 onClick={this.submit}
-                                buttonStyle={{backgroundColor:"#4286f4"}}  
+                                backgroundColor="#4286f4"
+                                hoverColor="#346bc3"
                                 />
                 );
         return (
