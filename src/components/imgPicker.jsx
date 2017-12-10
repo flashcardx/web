@@ -59,9 +59,9 @@ class ImgPicker extends Component{
         return true;
     }
 
-    render(){
+    render(){  
         if(this.props.isLoading)
-            return  <CircularProgress size={80} thickness={7} />;
+            return <CircularProgress size={80} thickness={7} />;
         if(this.state.wasRendered && _.isEmpty(this.props.searchImages))
             return <p>OMG!, WE COULDN'T FIND IMAGES FOR THAT TERM, TRY WITH SOMETHING DIFFERENT!</p>
         return (

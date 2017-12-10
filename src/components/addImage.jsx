@@ -33,7 +33,7 @@ class AddImage extends Component{
     
     constructor(props){
         super(props);
-        this.state = {openModal: false, searchQuery:"", isLoading:false};
+        this.state = {btnsDisabled:true, openModal: false, searchQuery:"", isLoading:false};
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.renderTitle = this.renderTitle.bind(this);
@@ -59,22 +59,26 @@ class AddImage extends Component{
             this.props.onImageReloadCancel();
     }
 
+    componentWillUpdate(nextProps, nextState){
+            if(nextState.searchQuery !== this.state.searchQuery ||
+                nextState.isLoading !== this.state.isLoading)
+                this.setState({btnsDisabled:(_.isEmpty(nextState.searchQuery) || this.state.isLoading)});        
+    }
+
     renderTitle(){
-        return (
-            <div className="row">
+         return <div className="row">
                     <div className="col-4">
                         <FlatButton  onClick={() => { this.dropzoneRef.open() }}
-                                       disabled={this.props.disabled}
-                                       backgroundColor="#4286f4"
-                                       hoverColor="#346bc3"
-                                       labelStyle={style.white}
-                                       label="Subir"/>
+                                     backgroundColor="#4286f4"
+                                     hoverColor="#346bc3"
+                                     disabled={this.state.btnsDisabled}
+                                     labelStyle={style.white}
+                                     label="Subir"/>
                     </div>
                     <div className="col-8">
                         {this.props.titleModal}
                     </div>
             </div>
-        );
     }
 
     onChange(e){
@@ -131,7 +135,6 @@ class AddImage extends Component{
     }
 
     renderPicker(){
-        const btnsDisabled = (_.isEmpty(this.state.searchQuery) || this.state.isLoading);
         return (
             <div className="container">
                 <Dropzone style={{borderStyle:"none"}}
@@ -154,14 +157,14 @@ class AddImage extends Component{
                             <div className="row">
                                 <FlatButton onClick={this.searchImg}
                                             style={style.white}
-                                            disabled={btnsDisabled}
+                                            disabled={this.state.btnsDisabled}
                                             backgroundColor="#4286f4"
                                             hoverColor="#346bc3"
                                             icon={<SearchIcon />}
                                             label="imagen"/>                    
                                 <FlatButton onClick={this.searchGif}
                                             style={style.white}
-                                            disabled={btnsDisabled}
+                                            disabled={this.state.btnsDisabled}
                                             backgroundColor="#4286f4"
                                             hoverColor="#346bc3"
                                             icon={<SearchIcon />}

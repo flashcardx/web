@@ -3,7 +3,6 @@ import Radium from "radium";
 import Modal from "./util/modal.jsx";
 import GreenButton from "./util/greenButton";
 import {connect} from "react-redux";
-import PropTypes from "prop-types";
 import {infoAlert} from "../actions/alerts.js";
 import _ from "lodash";
 import Formsy from 'formsy-react';
@@ -141,9 +140,6 @@ function mapStateToProps(state){
     return {bigLoading: state.bigLoading};
 }
 
-CreateFlashcard.PropTypes = {
-    parentId: PropTypes.string.isRequired
-};
 
 
 

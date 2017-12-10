@@ -18,7 +18,7 @@ class Modal extends Component{
 
     constructor(props){
         super(props);
-        this.state = {opened:props.open, closeLabel:props.closeLabel, title:props.title};
+        this.state = {opened:props.open, closeLabel:props.closeLabel};
         this.onClose = props.onClose;
         this.handleClose = this.handleClose.bind(this);
         this.handleConfirm = this.handleConfirm.bind(this);
@@ -74,7 +74,7 @@ class Modal extends Component{
                 <Dialog
                         {...this.props}
                         contentStyle={ style.dialogStyles }
-                        title={this.state.title}
+                        title={this.props.title}
                         actions={actions}
                         modal={this.props.modal}
                         open={this.state.opened}

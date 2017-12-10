@@ -4,7 +4,6 @@ import Modal from "./util/modal.jsx";
 import {change} from 'redux-form';
 import FlatButton from 'material-ui/FlatButton';
 import {connect} from "react-redux";
-import PropTypes from "prop-types";
 import Formsy from 'formsy-react';
 import {MyOwnInput, MyOwnSelect} from "./util/form.jsx";
 import MultimediaCreator from "./multimediaCreator.jsx";
@@ -205,9 +204,5 @@ class CreateDeck extends Component{
 function mapStateToProps(state){
     return {bigLoading: state.bigLoading};
 }
-
-CreateDeck.PropTypes = {
-    path: PropTypes.array.isRequired
-};
 
 export default connect(mapStateToProps)(Radium(CreateDeck));
