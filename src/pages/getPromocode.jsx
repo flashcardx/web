@@ -22,10 +22,13 @@ const style = {
         margin: "10px"
     },
     box2:{
-        boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px",
-        padding:"10px",
-        margin: "10px",
-        background: "linear-gradient(to right, #4cb7ff , #0089e5)"
+        background: "linear-gradient(to right, #5dbeff , #0089e5)"
+    },
+    box3:{
+        background: "linear-gradient(to right, #bc2a8d ,  #8a3ab9)"
+    },
+    box4:{
+        background: "linear-gradient(to right, #fccc63 ,  #c3aa14)"
     },
     img:{
         width:"70px",
@@ -34,14 +37,15 @@ const style = {
         display: "inline-block"
     },
     img2:{
-        width:"100%",
-        height: "100%",
+        width:"auto",
+        maxHeight:"70px",
         display: "inline-block",
         verticalAlign: "middle",
-        float: "left"
+        float: "left",
+        margin:"5px"
     },
     link:{
-        color: "red",
+        color: "blue",
         textDecoration: "underline",
         ":hover":{
             color: "#B20000"
@@ -68,6 +72,7 @@ class GetPromocode extends Component{
                 this.props.redirectAction("/landing");
             }, 100);
         });
+        captcha.reset();
     }
     
     submitPromocode(){
@@ -88,41 +93,31 @@ class GetPromocode extends Component{
                             <span style={{width:"100%"}}>
                                 <img style={style.img} alt="cry emoji" className="img-fluid" src={process.env.PUBLIC_URL+"/img/crying.svg"}/>
                                 <h2 style={{color:"#4286f4"}}>Parece que no tenes una subscripción activa</h2>
-                                <h2 style={{color:"#4286f4"}}>No te preocupes!, para activarla ingresa tu promocode abajo</h2>
                             </span>
                         </div>
                         <div style={style.box} className="row">
-                            <div style={{maxHeight:"70px"}} className="col-4 col-sm-2 col-md-2">
+                        <div className="container">
+                            <div className="col-4">
                                 <img style={style.img2} alt="invoice emoji" className="img-fluid" src={process.env.PUBLIC_URL+"/img/invoice.svg"}/>
                             </div>
-                            <div className="col-8 col-sm-5 col-sm-5">
-                                <h2 style={{color:"#4286f4"}}>Si tenes un codigo ingresalo acá</h2>
+                            <div className="col-8 col-sm-6">
+                                            <h2 style={{color:"#4286f4"}}>Ingresa tu codigo</h2>
                             </div>
-                            <div className="col-12 col-sm-5 col-md-5">
-                                    <div className="form-inline">
-                                          <TextField
-                                            className="form-group"
-                                            value={this.state.code}
-                                            onChange={e=>this.setState({code:e.target.value})}
-                                            floatingLabelText="Codigo"
-                                            />
-                                            <GreenButton
-                                            onClick={this.submitPromocode}
-                                            className="btn"
-                                            style={{margin:"10px"}}
-                                            disabled={this.props.bigLoading}
-                                            label="Validar"/>
-                                    </div>
+                            <div className="col-12 col-sm-12">
+                                                <TextField
+                                                value={this.state.code}
+                                                onChange={e=>this.setState({code:e.target.value})}
+                                                floatingLabelText="Codigo"
+                                                />
+                                                <GreenButton
+                                                        style={{margin:"5px"}}
+                                                        onClick={this.submitPromocode}
+                                                        disabled={this.props.bigLoading}
+                                                        label="Validar"/>      
+                            </div>
                             </div>
                         </div>
-                        <div style={style.box2} className="row">
-                            <span style={{width:"100%"}}>
-                                <img style={style.img} alt="cry emoji" className="img-fluid" src={process.env.PUBLIC_URL+"/img/tablet.svg"}/>
-                                <h2>¿No tenes un codigo de promoción?</h2>
-                                <h2>Segui las alguna de las opciones listadas abajo para obtener el tuyo</h2>
-                            </span>
-                        </div>
-                        <div style={style.box2} className="row">
+                        <div style={{...style.box, ...style.box2}} className="row">
                             <span style={{width:"100%"}}>
                                 <img style={style.img} alt="cry emoji" className="img-fluid" src={process.env.PUBLIC_URL+"/img/facebook.svg"}/>
                                 <h2>Opción 1</h2>
@@ -145,7 +140,7 @@ class GetPromocode extends Component{
                                     </ol>
                             </span>
                         </div>
-                        <div style={style.box2} className="row">
+                        <div style={{...style.box, ...style.box3}} className="row">
                             <span style={{width:"100%"}}>
                                 <img style={style.img} alt="cry emoji" className="img-fluid" src={process.env.PUBLIC_URL+"/img/instagram.svg"}/>
                                 <h2>Opción 2</h2>
@@ -168,7 +163,7 @@ class GetPromocode extends Component{
                                 </ol>
                             </span>
                         </div>
-                        <div style={style.box2} className="row">
+                        <div style={{...style.box, ...style.box4}} className="row">
                              <span style={{width:"100%"}}>
                                 <img style={style.img} alt="cry emoji" className="img-fluid" src={process.env.PUBLIC_URL+"/img/email.svg"}/>
                                 <h2>Opción 3</h2>

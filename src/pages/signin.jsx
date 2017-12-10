@@ -68,10 +68,10 @@ class Landing extends Component{
     }
 
     signupSight(state){
-        if(state.type === 1)
+        if(state.type === 3)
             return (
                 <div className="alert alert-success" role="alert">
-                    {state.msg}
+                    El usuario fue registrado correctamente, ya podes ingresar bienvenido!
                 </div>
             );
         return null;

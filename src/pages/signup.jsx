@@ -72,7 +72,7 @@ class Landing extends Component{
         if(state.type === 1)
             return (
                 <div className="alert alert-success" role="alert">
-                    {state.msg}
+                    Enviamos un enlace de confirmacion a tu casilla de email, para poder ingresar debes acceder al mismo!
                 </div>
             );
         if(state.type === 2)

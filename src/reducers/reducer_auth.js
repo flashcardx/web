@@ -22,7 +22,9 @@ export function signupReducer(state=null, action){
         case SIGNUP_RESEND_EMAIL: if(action.payload.success===true)
                                     return {type:1, msg: action.payload.msg};
                                   break;
-        case EMAIL_VERIFICATION: return {type:1, msg: action.payload.msg};
+        case EMAIL_VERIFICATION:if(action.payload.success===true) 
+                                    return {type:3, msg: action.payload.msg};
+                                break;
         default: return state;   
     }
 }
