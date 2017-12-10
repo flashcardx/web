@@ -175,7 +175,7 @@
             "login": "https://api.flashcardx.co/login",
             "getUserCards": "https://api.flashcardx.co/cards/u/",
             "validateToken": "https://api.flashcardx.co/validateToken",
-            "deleteUserFlashcard": "http://localhost:3000/card/u/",
+            "deleteUserFlashcard": "https://api.flashcardx.co/card/u/",
             "searchImage": "https://api.flashcardx.co/searchBing/",
             "createUserCard": "https://api.flashcardx.co/card/u/",
             "discoverCards": "https://api.flashcardx.co/discoverCards",
