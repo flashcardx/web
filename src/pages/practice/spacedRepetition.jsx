@@ -18,7 +18,8 @@ import axios from "axios";
 const WIN_SOUND_URL = config.urlSoundWin,
       LOSE_SOUND_URL = config.urlSoundLose,
       HIT_TRANSITION_TIME=500;
-
+// eslint-disable-next-line 
+var winSound, loseSound;
 /*stage: 0 //loading, need to get more cards
   stage: 1 //show card without title
   stage: 2 //show result, real card(if user failed the answer), lasts until user clicks on continue
@@ -44,8 +45,13 @@ class SpacedRepetition extends Component{
         this.replaceDeckName();
         this.getCards();
         //we request the audio files as soon as possible, so when we gotta play them user does not experience delay
-        axios.get(WIN_SOUND_URL);
-        axios.get(LOSE_SOUND_URL);
+        axios.get(WIN_SOUND_URL)
+        .then(r=>{
+            winSound = r;  
+        });
+        axios.get(LOSE_SOUND_URL).then(r=>{
+            loseSound = r;  
+        });;
     }
 
     getCards(){

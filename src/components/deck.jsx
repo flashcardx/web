@@ -3,7 +3,7 @@ import Radium from "radium";
 import { Card, CardActions, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton';
 import Truncate from "./util/truncate.jsx";
-import language from "./util/language.js";
+import {getLangName} from "./util/language.js";
 import ImageGallery from "./imageGallery.jsx";
 import EditUserDeckContainer from "../containers/editUserDeckContainer.jsx";
 import AskConfirmation from "./util/askConfirmation.jsx";
@@ -59,7 +59,7 @@ class Deck extends Component{
                 <CardMedia>
                     <ImageGallery imgs={[img]}/>
                 </CardMedia>
-                <CardTitle titleStyle={{ wordBreak: "break-all" }} title={<a style={style.a} onClick={()=>this.props.pushToPath(deck._id, deck.name)}>{deck.name}</a>} subtitle={language(deck.lang)} />
+                <CardTitle titleStyle={{ wordBreak: "break-all" }} title={<a style={style.a} onClick={()=>this.props.pushToPath(deck._id, deck.name)}>{deck.name}</a>} subtitle={getLangName(deck.lang)} />
                 <CardText>
                     <Truncate>
                         <span style={style.wordBreak}>

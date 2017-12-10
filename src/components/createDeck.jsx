@@ -8,28 +8,7 @@ import Formsy from 'formsy-react';
 import {MyOwnInput, MyOwnSelect} from "./util/form.jsx";
 import MultimediaCreator from "./multimediaCreator.jsx";
 import _ from "lodash";
-
-function langOptions(){
-        return [{label: "English", value:"en"},
-                {label: "Español", value:"es"},
-                {label: "Dansk", value:"da"},
-                {label: "Deutsch", value:"de"},
-                {label: "Français", value:"fr"},
-                {label: "Italiano", value:"it"},
-                {label: "Nederlands", value:"nl"},
-                {label: "Polski", value:"pl"},
-                {label: "Português", value:"pt"},
-                {label: "Română", value:"ro"},
-                {label: "Svenska", value:"sv"},
-                {label: "Türkçe", value:"tr"},
-                {label: "Русский", value:"ru"},
-                {label: "한국어", value:"ko"},
-                {label: "日本語", value:"ja"},
-                {label: "Cymraeg", value:"cy"},
-                {label: "Íslenska", value:"is"},
-                {label: "Norsk Bokmål", value:"nb"}];
-    }
-
+import {langs} from "./util/language.js";
 
 class CreateDeck extends Component{
 
@@ -150,7 +129,7 @@ class CreateDeck extends Component{
                                                         required
                                                         placeholder="Idioma de tú mazo"
                                                         name="lang"
-                                                        options={langOptions()}
+                                                        options={langs}
                                                         onChange={this.onChangeFormLang}
                                                         value={this.state.form.lang}
                                                     />
