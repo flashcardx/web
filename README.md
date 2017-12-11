@@ -13,7 +13,7 @@ https://flashcardx.slack.com
 
 ## Contributing
 
-We'd greatly appreciate any contribution you make :). Please make a pull request to the branch [develop](https://github.com/flashcardx/web/tree/develop). Every week we merge the develop branch with the master branch
+We'd greatly appreciate any contribution you make :). Please make a pull request to the branch [develop](https://github.com/flashcardx/web/tree/develop). Every week we merge the develop branch with master.
 
 
 ## Thanks
