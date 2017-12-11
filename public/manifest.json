@@ -1,15 +1,38 @@
 {
   "short_name": "FlashcardX",
   "name": "FlashcardX: Crea tus fichas didacticas multimedia",
-  "icons": [
-    {
-      "src": "/img/favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    }
-  ],
-  "start_url": "./index.html",
+  "icons": [{
+    "src": "/img/logos/icon-36.png",
+    "type": "image/png",
+    "sizes": "36x36"
+  },{
+    "src": "/img/logos/icon-48.png",
+    "type": "image/png",
+    "sizes": "48x48"
+  },
+  {
+    "src": "/img/logos/icon-72.png",
+    "type": "image/png",
+    "sizes": "72x72"
+  },{
+    "src": "/img/logos/icon-96.png",
+    "type": "image/png",
+    "sizes": "96x96"
+  },{
+    "src": "/img/logos/icon-144.png",
+    "type": "image/png",
+    "sizes": "144x144"
+  },{
+    "src": "/img/logos/icon-192.png",
+    "type": "image/png",
+    "sizes": "192x192"
+  },{
+    "src": "/img/logos/icon-512.png",
+    "type": "image/png",
+    "sizes": "512x512"
+  }],
+  "start_url": "./signin",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "white",
+  "background_color": "#4286f4"
 }

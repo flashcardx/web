@@ -27,6 +27,8 @@ import reduxThunk from 'redux-thunk';
 import ReactTooltip from 'react-tooltip';
 import Loading from './containers/loading.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import registerServiceWorker from "./registerServiceWorker";
+
 const createStoreWithMiddleware = applyMiddleware(showLoadingMDW, promiseMDW, reduxThunk, parseApiMDW, hideLoadingMDW, errorHandlerMDW, successMessage)(createStore);
 
 class App extends Component{
@@ -66,3 +68,6 @@ ReactDOM.render(
         </Provider>
     ,
     document.getElementById('react'));
+
+
+registerServiceWorker();
