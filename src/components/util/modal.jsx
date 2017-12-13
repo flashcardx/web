@@ -4,7 +4,6 @@ import FlatButton from 'material-ui/FlatButton';
 import ReactTooltip from 'react-tooltip';
 import PropTypes from 'prop-types';
 import Radium from "radium";
-import Responsive from 'react-responsive';
 
 const style = {
     dialogStyles:{
@@ -12,17 +11,7 @@ const style = {
          left: '50%',
          top: '50%',
          transform: 'translate(-50%, -50%)'
-    },
-    mobileStyles:{
-        position: "fixed",
-        width: "100%",
-        minHeight: "100%",
-        margin: 0,
-        padding: 0,
-        left: '50%',
-        top: '50%',
-        transform: 'translate(-50%, -50%)'
-    }   
+    }
 }
 
 class Modal extends Component{
@@ -33,8 +22,6 @@ class Modal extends Component{
         this.onClose = props.onClose;
         this.handleClose = this.handleClose.bind(this);
         this.handleConfirm = this.handleConfirm.bind(this);
-        this.renderDesktop = this.renderDesktop.bind(this);
-        this.renderMobile = this.renderMobile.bind(this);
     }
 
     componentDidUpdate(){
@@ -58,44 +45,14 @@ class Modal extends Component{
             this.onClose();
         this.setState({opened: false});
     };
-    
-    handleConfirm(){
+
+     handleConfirm(){
         this.props.handleConfirm();
         this.handleClose();
     };
 
-    renderDesktop(actions){
-        return <Dialog
-        {...this.props}
-        contentStyle={ style.dialogStyles }
-        title={this.props.title}
-        actions={actions}
-        modal={this.props.modal}
-        open={this.state.opened}
-        onRequestClose={this.handleClose}
-        autoScrollBodyContent={this.props.autoScroll}>
-                <ReactTooltip html={true}  data-multiline={true} id="modal-tooltip" delayShow={500}/>
-                    {this.props.children}
-        </Dialog>
-    }
-
-    renderMobile(actions){
-        return <Dialog
-                        {...this.props}
-                        contentStyle={ style.mobileStyles }
-                        title={this.props.title}
-                        actions={actions}
-                        modal={this.props.modal}
-                        open={this.state.opened}
-                        onRequestClose={this.handleClose}
-                        autoScrollBodyContent={this.props.autoScroll}>
-                                <ReactTooltip html={true}  data-multiline={true} id="modal-tooltip" delayShow={500}/>
-                                    {this.props.children}
-            </Dialog>
-    }
-    
     render(){
-        var actions = [];
+         var actions = [];
         if(this.props.closeLabel)
             actions.push(<FlatButton
                         label={this.state.closeLabel}
@@ -112,20 +69,23 @@ class Modal extends Component{
                                 />
                         );
         }
-        
+
         return (
-            <Responsive minWidth={700}>
-            {(matches) => {
-                if (matches) {
-                    return this.renderDesktop(actions)
-                } else {
-                    return this.renderMobile(actions)
-                }
-            }}
-            </Responsive>
+                <Dialog
+                        {...this.props}
+                        contentStyle={ style.dialogStyles }
+                        title={this.props.title}
+                        actions={actions}
+                        modal={this.props.modal}
+                        open={this.state.opened}
+                        onRequestClose={this.handleClose}
+                        autoScrollBodyContent={this.props.autoScroll}>
+                        <ReactTooltip html={true}  data-multiline={true} id="modal-tooltip" delayShow={500}/>
+                            {this.props.children}
+                </Dialog>
         );
     }
-    
+
 }
 
 Modal.propTypes = {
