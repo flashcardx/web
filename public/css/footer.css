@@ -180,3 +180,12 @@
 	}
 
 }
+
+@media (max-width: 700px) {
+		.footer-distributed .footer-left,
+		.footer-distributed .footer-center,
+		.footer-distributed .footer-right{
+			margin-bottom: 0px;
+		}
+
+}
