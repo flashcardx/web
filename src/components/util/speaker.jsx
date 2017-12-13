@@ -6,20 +6,25 @@ import ReactAudioPlayer from 'react-audio-player';
 class Speaker extends Component{
 
 
+    constructor(props){
+        super(props);
+        this.play = this.play.bind(this);
+    }
+
+    play(){
+        if(this.props.play)
+            this.rap.audioEl.play();
+    }
+
    render(){
-       var play = null;
-       if(this.props.play)
-            play = (<ReactAudioPlayer
+       return  (<ReactAudioPlayer
+                    preload="auto"
+                    ref={(element) => { this.rap = element; }}
                     src={this.props.src}
-                    autoPlay
+                    onCanPlay={this.play}
                     style={{display:"none"}}
                     onEnded={this.props.onEnded}
                     />)
-       return(
-           <span>
-                {play}
-           </span>
-       )
    } 
 }
 
