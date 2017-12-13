@@ -103,7 +103,7 @@ class Navbar extends Component{
     render(){
         return (
             <div>
-                <Responsive minWidth={700}>
+                <Responsive minWidth={670}>
                     {(matches) => {
                         if (matches) {
                          return this.renderDesktop()
