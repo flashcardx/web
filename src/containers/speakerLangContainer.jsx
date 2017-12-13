@@ -3,14 +3,19 @@ import {connect} from "react-redux";
 import Radium from "radium";
 import {fetchTextToSpeech} from "../actions/audio";
 import Speaker from "../components/util/speaker.jsx";
+import ReactAudioPlayer from 'react-audio-player';
+import ReactHowler from 'react-howler'
 
 const style = {
     speaker:{
         fontSize:"18px",
         marginLeft:"10px",
+        padding: "3px",
         cursor:"pointer",
+        border: "1px solid gray",
         ":hover":{
-            color:"red"
+            color:"red",
+            border: "1px solid red"
         }
     }    
 }
@@ -30,23 +35,27 @@ class SpeakerLangContainer extends Component{
     }
 
     play(){
+        console.log("play");
         if(this.state.src)
-            this.setState({play: true});
+            this.rap.audioEl.play()
         else
             this.props.fetchTextToSpeech(this.props.lang, this.props.text, r=>{
-                this.setState({src:r, play: true});
+                this.setState({src:r, play: true}, ()=>{
+                    this.inputElement.click();
+                });
             });
     }
 
    render(){
        return(
            <span>
-                <Speaker
-                        play={this.state.play}
-                        src={this.state.src}
-                        onEnded={()=>this.setState({play:false})}
-                />
-                <i onClick={this.play} style={style.speaker} className="fa fa-volume-up" aria-hidden="true"></i>
+                <ReactAudioPlayer
+                    src={this.state.src}
+                    preload="auto"
+                    ref={(element) => { this.rap = element; }}
+                    style={{display:"none"}}
+                 />
+                <i ref={input => this.inputElement = input} onClick={this.play} style={style.speaker} className="fa fa-volume-up" aria-hidden="true"></i>
            </span>
        )
    } 

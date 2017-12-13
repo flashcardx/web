@@ -12,6 +12,16 @@ class Speaker extends Component{
         }
     }
 
+    constructor(props){
+        super(props);
+        this.play = this.play.bind(this);
+    }
+
+    play(){
+        if(this.props.play)
+            this.rap.audioEl.play();
+    }
+
    render(){
        var play = null;
 
