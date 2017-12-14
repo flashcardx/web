@@ -28,7 +28,7 @@ import ReactTooltip from 'react-tooltip';
 import Loading from './containers/loading.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import registerServiceWorker from "./registerServiceWorker";
-
+import Footer from "./components/footer.jsx"
 const createStoreWithMiddleware = applyMiddleware(showLoadingMDW, promiseMDW, reduxThunk, parseApiMDW, hideLoadingMDW, errorHandlerMDW, successMessage)(createStore);
 
 class App extends Component{
@@ -68,6 +68,11 @@ ReactDOM.render(
         </Provider>
     ,
     document.getElementById('react'));
+
+ReactDOM.render(
+        <Footer/>
+    ,
+    document.getElementById('footer'));
 
 
 registerServiceWorker();
