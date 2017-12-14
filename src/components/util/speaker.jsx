@@ -16,15 +16,13 @@ class Speaker extends Component{
             this.rap.audioEl.play();
     }
 
+
    render(){
-       return  (<ReactAudioPlayer
-                    preload="auto"
-                    ref={(element) => { this.rap = element; }}
-                    src={this.props.src}
-                    onCanPlay={this.play}
-                    style={{display:"none"}}
-                    onEnded={this.props.onEnded}
-                    />)
+    if(this.props.play){
+        const audio = new Audio(this.props.src);
+        audio.play()
+    }
+       return null;
    } 
 }
 
