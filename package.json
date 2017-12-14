@@ -88,7 +88,7 @@
   "scripts": {
     "start": "PORT=8081 BROWSER=none node scripts/start.js",
     "build": "node scripts/build.js",
-    "build-deploy-prod": "npm run build && aws s3 cp build s3://webapp-production/ --recursive --cache-control '0' && aws cloudfront create-invalidation --distribution-id E2D6W0HIX6W8TQ --paths '/*'",
+    "build-deploy-prod": "npm run build && aws s3 cp build s3://webapp-production/ --recursive --cache-control 'max-age=3600' && aws cloudfront create-invalidation --distribution-id E2D6W0HIX6W8TQ --paths '/*'",
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {

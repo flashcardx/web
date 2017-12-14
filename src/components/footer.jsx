@@ -1,5 +1,6 @@
 import React from "react";
 import Responsive from 'react-responsive';
+import styles from "../css/footer.css";
 
 function FooterMobile(props){
         return <span>
