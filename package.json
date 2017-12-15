@@ -40,6 +40,7 @@
     "lodash": "^4.17.4",
     "material-ui": "^0.19.4",
     "material-ui-fullscreen-dialog": "^0.7.1",
+    "material-ui-next": "^1.0.0-beta.23",
     "moment": "^2.18.1",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
