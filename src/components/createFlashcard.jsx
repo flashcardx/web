@@ -69,7 +69,7 @@ class CreateFlashcard extends Component{
 
     renderForm(){
         return (
-            <div className="container">
+            <div style={{marginTop:"10px"}} className="container">
                 <div className="row">
                 <Formsy.Form ref="form" className="col" id="cardForm" onValidSubmit={this.onSubmit}>                         
                                      <div className="col-sm-12">
@@ -101,7 +101,7 @@ class CreateFlashcard extends Component{
                                         </div>
                         </Formsy.Form>
                 </div>
-                <div className="container">
+                <div style={{marginTop:"10px"}} className="container">
                             <MultimediaCreator image drawing audio video
                                             searchQuery={this.state.form.name}
                                             onImageCrop={this.onCrop}
