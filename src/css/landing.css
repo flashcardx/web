@@ -43,10 +43,7 @@ body{
 }
 
  @media (max-width: 800px){	
-    .practice{
-             margin-top: 80px;
-             padding-top: 60px;
-            }
+
     .practice-box{
                 height: 500px;
                 margin-top: 50px;

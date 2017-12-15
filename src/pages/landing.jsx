@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import Radium from "radium";
 import {Link} from "react-router-dom";
+import Responsive from 'react-responsive';
 
 // eslint-disable-next-line 
 import styles from "../css/landing.css";
@@ -73,7 +74,7 @@ class Landing extends Component{
 function Details(){
     return(
         <div className="maincontent">   
-                    <div  style={{height:"80vh"}}>
+                    <div>
                         <div className="container">
                             <div className="row align-items-center justify-content-center">
                                 <div className="col-md-5 col-lg-5">
@@ -115,7 +116,7 @@ function Details(){
                         </div>
                     </div>
                     <div className="container">
-                        <div style={{height:"400px"}} className="row align-items-center justify-content-center  ">
+                        <div className="practice row align-items-center justify-content-center  ">
                             <div className="offset-md-1 col-md-4 col-xs-12">
                                 <h2 className="seccionTittle display-4">Creá</h2>
                                 <p className="lead">Crear una ficha lleva 10 segundos: elije un concepto, escribe una descripción y selecciona una imagen.&nbsp;</p>
@@ -126,16 +127,35 @@ function Details(){
                         </div>
                     </div>
                     <div className="container">
-                        <div style={{height:"400px"}} className="row align-items-center  ">
-                            <div className="col-md-6 col-span-md-1">
-                                <img alt="mazos" className="img-fluid"  src={process.env.PUBLIC_URL+"/img/landing/decks.gif"}/>
-                                <p><br/></p>
-                            </div>
-                            <div className="offset-md-1 col-md-4  ">
-                                <h2 className="seccionTittle display-4">Organizá</h2>
-                                <p className="lead">Guarda tus fichas en mazos, para separarlas por tema, por ejemplo un mazo para Ingles, otro para chino, etc. Adentro de cada mazo aparte de tarjetas podes guardar otros mazos!</p>
-                            </div>
-                        </div>
+
+                        
+                            <Responsive minWidth={700}>
+                                {(matches) => {
+                                    if (matches) {
+                                        return (<div className="practice row align-items-center">
+                                                    <div className="col-md-6 col-span-md-1">
+                                                        <img alt="mazos" className="img-fluid"  src={process.env.PUBLIC_URL+"/img/landing/decks.gif"}/>
+                                                        <p><br/></p>
+                                                    </div>
+                                                <div className="offset-md-1 col-md-4  ">
+                                                    <h2 className="seccionTittle display-4">Organizá</h2>
+                                                    <p className="lead">Guarda tus fichas en mazos, para separarlas por tema, por ejemplo un mazo para Ingles, otro para chino, etc. Adentro de cada mazo aparte de tarjetas podes guardar otros mazos!</p>
+                                                </div> </div>)
+                                    } else {
+                                        return (<span>
+                                                 <div className="offset-md-1 col-md-4  ">
+                                                    <h2 className="seccionTittle display-4">Organizá</h2>
+                                                    <p className="lead">Guarda tus fichas en mazos, para separarlas por tema, por ejemplo un mazo para Ingles, otro para chino, etc. Adentro de cada mazo aparte de tarjetas podes guardar otros mazos!</p>
+                                                </div> 
+                                                <div className="col-md-6 col-span-md-1">
+                                                    <img alt="mazos" className="img-fluid"  src={process.env.PUBLIC_URL+"/img/landing/decks.gif"}/>
+                                                    <p><br/></p>
+                                                </div>
+                                               
+                                                </span>) 
+                                    }
+                                }}
+                            </Responsive>
                     </div>
                     <div className="practice container">
                         <div className="practice-box row align-items-center justify-content-center  ">
