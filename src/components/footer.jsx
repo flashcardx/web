@@ -1,5 +1,6 @@
 import React from "react";
 import Responsive from 'react-responsive';
+// eslint-disable-next-line 
 import styles from "../css/footer.css";
 
 function FooterMobile(props){
@@ -24,7 +25,7 @@ function FooterMobile(props){
 function FooterDesktop(props){
     return   <span>
                   <div className="footer-left">
-                    <div><img className="footer-logo" src={process.env.PUBLIC_URL+"/img/logo_text_white.png"}/></div>
+                    <div><img alt="flashcardx logo" className="footer-logo" src={process.env.PUBLIC_URL+"/img/logo_text_white.png"}/></div>
     
                     <p className="footer-links">
                         Aprende de todo con fichas multimedia
