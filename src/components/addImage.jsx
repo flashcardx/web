@@ -33,7 +33,7 @@ class AddImage extends Component{
     
     constructor(props){
         super(props);
-        this.state = {btnsDisabled:true, openModal: false, searchQuery:"", isLoading:false};
+        this.state = {searchBoxTouched:true, btnsDisabled:true, openModal: false, searchQuery:"", isLoading:false};
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.renderTitle = this.renderTitle.bind(this);
@@ -42,6 +42,7 @@ class AddImage extends Component{
         this.searchGif = this.searchGif.bind(this);
         this.onImgPick = this.onImgPick.bind(this);
         this.renderPicker = this.renderPicker.bind(this);
+        this.shouldUpdateSearchQuery = this.shouldUpdateSearchQuery.bind(this);
     }
 
     componentWillMount(){
@@ -54,15 +55,17 @@ class AddImage extends Component{
 
     closeModal(){
         this.setState({openModal: false, isLoading:false});
-        this.props.resetSearchImages();
         if(this.props.reloadImage)
             this.props.onImageReloadCancel();
     }
 
     componentWillUpdate(nextProps, nextState){
             if(nextState.searchQuery !== this.state.searchQuery ||
-                nextState.isLoading !== this.state.isLoading)
-                this.setState({btnsDisabled:(_.isEmpty(nextState.searchQuery) || this.state.isLoading)});        
+                nextState.isLoading !== this.state.isLoading){
+                    if(nextState.isLoading)
+                        return this.setState({btnsDisabled:true});
+                    this.setState({btnsDisabled:(_.isEmpty(nextState.searchQuery) || this.state.isLoading)});        
+                }
     }
 
     renderTitle(){
@@ -71,7 +74,7 @@ class AddImage extends Component{
                         <FlatButton  onClick={() => { this.dropzoneRef.open() }}
                                      backgroundColor="#4286f4"
                                      hoverColor="#346bc3"
-                                     disabled={this.state.btnsDisabled}
+                                     disabled={this.state.isLoading}
                                      labelStyle={style.white}
                                      label="Subir"/>
                     </div>
@@ -82,7 +85,7 @@ class AddImage extends Component{
     }
 
     onChange(e){
-        this.setState({searchQuery:e.target.value});
+        this.setState({searchQuery:e.target.value, searchBoxTouched:true});
     }
 
     searchImg(){
@@ -95,10 +98,17 @@ class AddImage extends Component{
         this.props.searchGif(this.state.searchQuery);
     }
 
+    shouldUpdateSearchQuery(nextProps){
+        return (!this.state.searchBoxTouched || _.isEmpty(this.state.searchQuery)) && !_.isEqual(nextProps.searchQuery, this.state.searchQuery)
+    }
+
     componentWillReceiveProps(nextProps){
         this.setState({isLoading: false});
-        if(!_.isEqual(nextProps.searchQuery, this.state.searchQuery))
+        if(this.props.searchImages !== nextProps.searchImages && _.isEmpty(nextProps.searchImages))
+            this.setState({searchQuery:""}); 
+        if(this.shouldUpdateSearchQuery(nextProps)){
             this.setState({searchQuery: nextProps.searchQuery});
+        }
         if(!_.isEqual(this.props.pickedImgs, nextProps.pickedImgs))
                 this.props.updateContainer(this.renderPickedImgs());
         if(nextProps.reloadImage)

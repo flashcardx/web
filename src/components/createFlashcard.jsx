@@ -8,6 +8,7 @@ import _ from "lodash";
 import Formsy from 'formsy-react';
 import {MyOwnInput} from "./util/form.jsx";
 import MultimediaCreator from "./multimediaCreator.jsx";
+import {resetSearchImages} from "../actions/image";
 
 class CreateFlashcard extends Component{
 
@@ -29,6 +30,7 @@ class CreateFlashcard extends Component{
     }
 
     reset(){
+        this.props.resetSearchImages();
         this.onImgDelete();
         this.setState({form:{name:"", description: ""}}, ()=>{
             this.refs.form.reset();
@@ -143,5 +145,5 @@ function mapStateToProps(state){
 
 
 
-export default connect(mapStateToProps, {infoAlert})(Radium(CreateFlashcard));
+export default connect(mapStateToProps, {infoAlert, resetSearchImages})(Radium(CreateFlashcard));
 
