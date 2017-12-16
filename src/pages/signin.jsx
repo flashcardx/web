@@ -65,6 +65,7 @@ class Landing extends Component{
         this.onSubmit = this.onSubmit.bind(this);
         this.recaptchaChange = this.recaptchaChange.bind(this);
         this.signupSight = this.signupSight.bind(this);
+        this.logAuthError = this.logAuthError.bind(this);
     }
 
     signupSight(state){
@@ -77,6 +78,10 @@ class Landing extends Component{
         return null;
         }
     
+    logAuthError(err){
+        console.error("error when trying to log with google/facebook: ", err);
+    }
+
     render(){
         var signupMsg = null;
         if(this.props.signupMsg)
@@ -111,11 +116,14 @@ class Landing extends Component{
                                             <div className="row" style={style.center}>
                                                 <span style={style.center}>
                                                     <FacebookLogin 
+                                                        language="es"
+                                                        disableMobileRedirect={true}
                                                         appId={FB_APPID}
                                                         fields="name,email,picture"
                                                         textButton="Facebook"
                                                         size="small"
                                                         icon="fa fa-facebook-official"
+                                                        onFailure={this.logAuthError}
                                                         callback={this.props.fbAuth} />
                                                 </span>
                                             </div>
@@ -128,7 +136,7 @@ class Landing extends Component{
                                                             scope="profile email"
                                                             clientId={GOOGLE_CLIENTID}
                                                             onSuccess={this.props.googleAuth}
-                                                            onFailure={this.props.googleAuth}
+                                                            onFailure={this.logAuthError}
                                                             >
                                                                 <i style={{marginRight:"5px"}} aria-hidden="true">
                                                                     <img src={process.env.PUBLIC_URL+"/img/icon_google16.png"} alt="Google icon"/>

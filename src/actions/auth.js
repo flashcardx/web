@@ -70,6 +70,7 @@ export function emailVerification(id){
 }
 
 export function fbAuth({accessToken}){
+    console.log("access token from fb: ", accessToken);
     const request = axios.post(FB_AUTH_URL,{
        access_token: accessToken 
     });

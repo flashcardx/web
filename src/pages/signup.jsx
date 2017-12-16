@@ -66,6 +66,7 @@ class Landing extends Component{
         this.onSubmit = this.onSubmit.bind(this);
         this.recaptchaChange = this.recaptchaChange.bind(this);
         this.signupSight = this.signupSight.bind(this);
+        this.logAuthError = this.logAuthError.bind(this);
     }
 
     signupSight(state){
@@ -85,6 +86,10 @@ class Landing extends Component{
             );
         return null;
         }
+        
+    logAuthError(err){
+            console.error("error when trying to log with google/facebook: ", err);
+    }
     
     render(){
         var signupMsg = null;
@@ -125,6 +130,8 @@ class Landing extends Component{
                                                         textButton="Facebook"
                                                         size="small"
                                                         icon="fa fa-facebook-official"
+                                                        disableMobileRedirect={true}
+                                                        onFailure={this.logAuthError}
                                                         callback={this.props.fbAuth} />
                                                 </span>
                                             </div>
@@ -136,8 +143,8 @@ class Landing extends Component{
                                                             type="button"
                                                             scope="profile email"
                                                             clientId={GOOGLE_CLIENTID}
+                                                            onFailure={this.logAuthError}
                                                             onSuccess={this.props.googleAuth}
-                                                            onFailure={this.props.googleAuth}
                                                             >
                                                                 <i style={{marginRight:"5px"}} aria-hidden="true">
                                                                     <img src={process.env.PUBLIC_URL+"/img/icon_google16.png"} alt="Google icon"/>

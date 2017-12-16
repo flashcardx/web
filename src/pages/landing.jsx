@@ -50,7 +50,6 @@ const style = {
 
 class Landing extends Component{
 
-
     render(){
         return (
             <ParallaxProvider>
@@ -137,15 +136,15 @@ function Details(){
                                                         <img alt="mazos" className="img-fluid"  src={process.env.PUBLIC_URL+"/img/landing/decks.gif"}/>
                                                         <p><br/></p>
                                                     </div>
-                                                <div className="offset-md-1 col-md-4  ">
+                                                <div className="offset-md-1 col-sm-12 col-md-5 col-lg-4">
                                                     <h2 className="seccionTittle display-4">Organizá</h2>
-                                                    <p className="lead">Guarda tus fichas en mazos, para separarlas por tema, por ejemplo un mazo para Ingles, otro para chino, etc. Adentro de cada mazo aparte de tarjetas podes guardar otros mazos!</p>
+                                                    <p className="lead">Guarda tus fichas en mazos, para separarlas por tema, por ejemplo un mazo para Inglés, otro para chino,  y otro para recordar las caras de tus nuevos compañeros de trabajo. Además dentro de cada mazo aparte de tarjetas podes guardar otros mazos!</p>
                                                 </div> </div>)
                                     } else {
                                         return (<span>
-                                                 <div className="offset-md-1 col-md-4  ">
+                                                 <div className="offset-md-1 col-sm-12 col-md-5 col-lg-4">
                                                     <h2 className="seccionTittle display-4">Organizá</h2>
-                                                    <p className="lead">Guarda tus fichas en mazos, para separarlas por tema, por ejemplo un mazo para Ingles, otro para chino, etc. Adentro de cada mazo aparte de tarjetas podes guardar otros mazos!</p>
+                                                    <p className="lead">Guarda tus fichas en mazos, para separarlas por tema, por ejemplo un mazo para Inglés, otro para chino, y otro para recordar las caras de tus nuevos compañeros de trabajo. Además dentro de cada mazo aparte de tarjetas podes guardar otros mazos!</p>
                                                 </div> 
                                                 <div className="col-md-6 col-span-md-1">
                                                     <img alt="mazos" className="img-fluid"  src={process.env.PUBLIC_URL+"/img/landing/decks.gif"}/>
