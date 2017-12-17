@@ -50,9 +50,13 @@ const style = {
 
 class Landing extends Component{
 
+    constructor(props){
+        super(props);
+    }
+
     render(){
         return (
-            <ParallaxProvider>
+            <span>
                             <nav style={style.base} className="navbar navbar-expand-lg d-flex">
                                 <Link style={style.logo} className="navbar-brand mr-auto" to="#"><img alt="logo" style={style.logoImg} src={process.env.PUBLIC_URL+"/img/logo_text_white.png"}/><sub style={style.beta}>BETA</sub></Link>
                                 <span className="p-2">
@@ -65,10 +69,12 @@ class Landing extends Component{
                                 </span>
                             </nav>
                             <Details/>
-            </ParallaxProvider>
+            </span>
         );
     }
 }
+
+
 
 function Details(){
     return(
@@ -82,33 +88,15 @@ function Details(){
                                 </div>
                                 <div className="col-md-7 col-lg-5 ">
                                     <div className="seccionMultimedia">
-                                            <Parallax
-                                                offsetYMax="0 px"
-                                                offsetYMin="100 px"
-                                                offsetXMax="200 px"
-                                                offsetXMin="-100 px"
-                                                slowerScrollRate
-                                            >
-                                                <img alt="ficha saturno" className="fcIzquierda"src={SATURNO_SRC}  />
-                                            </Parallax>
-                                            <Parallax
-                                                offsetYMax="0 px"
-                                                offsetYMin="100 px"
-                                                offsetXMin="100 px"
-                                                offsetXMax="-200 px"
-                                                slowerScrollRate
-                                            >
-                                                <img alt="ficha jupiter" className="fcDerecha" src={JUPITER_SRC}  />
-                                            </Parallax>
-                                            <Parallax
-                                                offsetYMax="0 px"
-                                                offsetYMin="-100 px"
-                                                offsetXMax="0 px"
-                                                offsetXMin="0 px"
-                                                slowerScrollRate
-                                            >
-                                                <img alt="ficha cohete" className="fcCentro"src={ROCKET_SRC}  />
-                                            </Parallax>
+                                        <Responsive minWidth={700}>
+                                        {(matches) => {
+                                            if (matches) {
+                                                return <CardsDesktop/>
+                                            } else {
+                                                return <CardsMobile/>
+                                            }
+                                        }}
+                                    </Responsive>
                                     </div>
                                 </div>
                             </div>
@@ -125,10 +113,8 @@ function Details(){
                             </div>
                         </div>
                     </div>
-                    <div className="container">
-
-                        
-                            <Responsive minWidth={700}>
+                    <div className="container">                
+                            <Responsive minWidth={710}>
                                 {(matches) => {
                                     if (matches) {
                                         return (<div className="practice row align-items-center">
@@ -171,6 +157,51 @@ function Details(){
     );
 }
 
+    function CardsDesktop(){
+         return <ParallaxProvider>                        
+                                            <Parallax
+                                                offsetYMax="0 px"
+                                                offsetYMin="100 px"
+                                                offsetXMax="200 px"
+                                                offsetXMin="-100 px"
+                                                slowerScrollRate
+                                            >
+                                                <img alt="ficha saturno" className="fcIzquierda"src={SATURNO_SRC}  />
+                                            </Parallax>
+                                            <Parallax
+                                                offsetYMax="0 px"
+                                                offsetYMin="100 px"
+                                                offsetXMin="100 px"
+                                                offsetXMax="-200 px"
+                                                slowerScrollRate
+                                            >
+                                                <img alt="ficha jupiter" className="fcDerecha" src={JUPITER_SRC}  />
+                                            </Parallax>
+                                            <Parallax
+                                                offsetYMax="0 px"
+                                                offsetYMin="-100 px"
+                                                offsetXMax="0 px"
+                                                offsetXMin="0 px"
+                                                slowerScrollRate
+                                            >
+                                                <img alt="ficha cohete" className="fcCentro"src={ROCKET_SRC}  />
+                                            </Parallax>
+                                        </ParallaxProvider>
+     }
+
+    function CardsMobile(){
+            return <span>                        
+                                            <div>
+                                                <img alt="ficha saturno" className="fcIzquierda"src={SATURNO_SRC}  />
+                                            </div>
+                                            <div>
+                                                <img alt="ficha jupiter" className="fcDerecha" src={JUPITER_SRC}  />
+                                            </div>
+                                            <div>
+                                                <img alt="ficha cohete" className="fcCentro"src={ROCKET_SRC}  />
+                                            </div>
+                    </span>
+     }
 
 
 export default Radium(Landing);
