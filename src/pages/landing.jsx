@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import Radium from "radium";
 import {Link} from "react-router-dom";
 import Responsive from 'react-responsive';
-import AddToHomeScreen from '../components/util/iosAddToHome';
 
 // eslint-disable-next-line 
 import styles from "../css/landing.css";
@@ -70,7 +69,6 @@ class Landing extends Component{
                                 </span>
                             </nav>
                             <Details/>
-                            <AddToHomeScreen msg1="¿Queres acceder de forma mas simple?, Agreganos a tu pantalla de inicio, presiona el boton " msg2='y luego en "Agregar a inicio".' timeToShow={15000}/>
             </span>
         );
     }
