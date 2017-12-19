@@ -52,7 +52,6 @@ class AddToHomeScreen extends Component {
       >
         <div
           style={{
-            height: 100,
             padding: 10,
             background: '#F5F5F4',
             width: '280px',
@@ -70,8 +69,8 @@ class AddToHomeScreen extends Component {
             position: 'absolute',
             top: 0,
             right: 0,
-            width: 25,
-            height: 25,
+            width: 27,
+            height: 27,
             padding: 5,
             cursor: 'pointer'
           }}

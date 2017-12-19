@@ -70,7 +70,7 @@ class Landing extends Component{
                                 </span>
                             </nav>
                             <Details/>
-                            <AddToHomeScreen msg1="¿Queres acceder de forma mas simple?, Agreganos a tu pantalla de inicio, presiona el boton " msg2='y luego en "Agregar a inicio".' timeToShow={10000}/>
+                            <AddToHomeScreen msg1="¿Queres acceder de forma mas simple?, Agreganos a tu pantalla de inicio, presiona el boton " msg2='y luego en "Agregar a inicio".' timeToShow={15000}/>
             </span>
         );
     }
