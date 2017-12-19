@@ -58,7 +58,6 @@ class Landing extends Component{
     render(){
         return (
             <span>
-                        <AddToHomeScreen msg1="Agreganos a la pantalla de inicio para una mejor experiencia, presiono el boton " msg2='y luego en "Agregar a inicio".' timeToShow={10000}/>
                             <nav style={style.base} className="navbar navbar-expand-lg d-flex">
                                 <Link style={style.logo} className="navbar-brand mr-auto" to="#"><img alt="logo" style={style.logoImg} src={process.env.PUBLIC_URL+"/img/logo_text_white.png"}/><sub style={style.beta}>BETA</sub></Link>
                                 <span className="p-2">
@@ -71,6 +70,7 @@ class Landing extends Component{
                                 </span>
                             </nav>
                             <Details/>
+                            <AddToHomeScreen msg1="¿Queres acceder de forma mas simple?, Agreganos a tu pantalla de inicio, presiona el boton " msg2='y luego en "Agregar a inicio".' timeToShow={10000}/>
             </span>
         );
     }
