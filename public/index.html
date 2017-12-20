@@ -20,9 +20,18 @@
     <body>
         <div id="react"></div>
         <footer id="footer" class="footer-distributed">
-         </footer>
+        </footer>
+
         <script type="text/jsx" src="%PUBLIC_URL%/js/app.js"></script>
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    
+        <script crossorigin>
+            (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v2.11&appId=731168503758461";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
     </body>
 </html>

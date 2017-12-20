@@ -134,12 +134,12 @@ class GetPromocode extends Component{
                                         </h3>
                                         <h3 style={{whiteSpace: "initial"}}>
                                             <li>
-                                            Comparte alguna de nuestras publicaciones(la que mas te guste)
+                                            Envia un mensaje a nuestra página(Necesario ya que Facebook no nos permite iniciar una conversación)
                                             </li>
                                         </h3>
                                         <h3 style={{whiteSpace: "initial"}}>
                                             <li>
-                                            En menos de 24 horas te enviaremos tu codigo por mensaje privado
+                                            En menos de 24 horas recibiras tu codigo de acceso!
                                             </li>
                                         </h3>                      
                                     </ol>

@@ -7,25 +7,9 @@ import Responsive from 'react-responsive';
 import Dialog, {
     DialogActions,
     DialogContent,
-    DialogContentText,
-    DialogTitle,
-    withMobileDialog,
+    DialogTitle
   } from 'material-ui-next/Dialog';
-const style = {
-    dialogStyles:{
-         position: 'absolute',
-         left: '50%',
-         top: '50%',
-         transform: 'translate(-50%, -50%)'
-    },
-    mobileStyles:{
-        position: 'absolute',
-        width: "100%",
-        left: '50%',
-        top: '50%',
-        transform: 'translate(-50%, -50%)'
-    }   
-}
+
 
 class Modal extends Component{
 

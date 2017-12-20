@@ -7,7 +7,7 @@ import {signin as SigninAction} from "../actions/auth";
 import Formsy from 'formsy-react';
 import {MyOwnInput} from "../components/util/form.jsx";
 import config from "../api_config";
-import FacebookLogin from 'react-facebook-login';
+import FacebookLogin from "../components/util/facebookLogin.jsx"
 import {GoogleLogin} from 'react-google-login';
 import GreenButton from "../components/util/greenButton.jsx";
 import {Link} from "react-router-dom";
@@ -114,23 +114,12 @@ class Landing extends Component{
                                         </div>
                                         <div style={{ padding:"20px"}} className="container">
                                             <div className="row" style={style.center}>
-                                                <span style={style.center}>
-                                                    <FacebookLogin 
-                                                        language="es"
-                                                        disableMobileRedirect={true}
-                                                        appId={FB_APPID}
-                                                        fields="name,email,picture"
-                                                        textButton="Facebook"
-                                                        size="small"
-                                                        icon="fa fa-facebook-official"
-                                                        onFailure={this.logAuthError}
-                                                        callback={this.props.fbAuth} />
-                                                </span>
+                                                <FacebookLogin onSuccess={this.props.fbAuth}/>
                                             </div>
                                             <div className="row" style={style.center}>
                                                     <GoogleLogin
                                                             disabled={this.props.bigLoading}
-                                                            style={{...style.center, backgroundColor:"#ffffff", marginBottom:"10px", marginTop:"10px", fontWeight:"500", fontSize: "16px", border:"1px solid gray"}}
+                                                            style={{backgroundColor:"#ffffff", marginBottom:"10px", marginTop:"10px", fontWeight:"400", fontSize: "16px", border:"1px solid gray"}}
                                                             className="btn btn-light"
                                                             type="button"
                                                             scope="profile email"
@@ -141,7 +130,7 @@ class Landing extends Component{
                                                                 <i style={{marginRight:"5px"}} aria-hidden="true">
                                                                     <img src={process.env.PUBLIC_URL+"/img/icon_google16.png"} alt="Google icon"/>
                                                                 </i>
-                                                                <span> GOOGLE</span>
+                                                                <span>Continuar con Google</span>
                                                             </GoogleLogin>
                                             </div>
                                     </div>

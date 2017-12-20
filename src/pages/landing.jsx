@@ -50,10 +50,6 @@ const style = {
 
 class Landing extends Component{
 
-    constructor(props){
-        super(props);
-    }
-
     render(){
         return (
             <span>

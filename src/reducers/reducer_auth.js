@@ -3,10 +3,16 @@ import {SIGNIN, SIGNUP, SIGNUP_RESEND_EMAIL, RE_SIGNIN, SIGNOUT, EMAIL_VERIFICAT
 export function authReducer(state=false, action){
     const {payload} = action;
     switch (action.type) {
-        case SIGNIN:   localStorage.setItem("jwt", payload.token);
+        case SIGNIN:   if(action.fbAccessToken)
+                             localStorage.setItem("fbAcessToken", action.accessToken);
+                       localStorage.setItem("jwt", payload.token);
                        return true;
         case RE_SIGNIN: return true;
-        case SIGNOUT: localStorage.removeItem("jwt");
+        case SIGNOUT: if(localStorage.getItem("fbAcessToken") && window.FB){
+                            window.FB.logout();
+                            localStorage.removeItem("fbAcessToken")
+                        }  
+                      localStorage.removeItem("jwt");
                       return false;
         default: return state;   
     }
