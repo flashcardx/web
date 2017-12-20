@@ -113,25 +113,27 @@ class Landing extends Component{
                                             </div>
                                         </div>
                                         <div style={{ padding:"20px"}} className="container">
-                                            <div className="row" style={style.center}>
-                                                <FacebookLogin onSuccess={this.props.fbAuth}/>
-                                            </div>
-                                            <div className="row" style={style.center}>
-                                                    <GoogleLogin
-                                                            disabled={this.props.bigLoading}
-                                                            style={{backgroundColor:"#ffffff", marginBottom:"10px", marginTop:"10px", fontWeight:"400", fontSize: "16px", border:"1px solid gray"}}
-                                                            className="btn btn-light"
-                                                            type="button"
-                                                            scope="profile email"
-                                                            clientId={GOOGLE_CLIENTID}
-                                                            onSuccess={this.props.googleAuth}
-                                                            onFailure={this.logAuthError}
-                                                            >
-                                                                <i style={{marginRight:"5px"}} aria-hidden="true">
-                                                                    <img src={process.env.PUBLIC_URL+"/img/icon_google16.png"} alt="Google icon"/>
-                                                                </i>
-                                                                <span>Continuar con Google</span>
-                                                            </GoogleLogin>
+                                            <div className="row">
+                                                <div className="row" style={style.center}>
+                                                    <FacebookLogin onSuccess={this.props.fbAuth}/>
+                                                </div>
+                                                <div className="row" style={style.center}>
+                                                        <GoogleLogin
+                                                                disabled={this.props.bigLoading}
+                                                                style={{backgroundColor:"#ffffff", marginBottom:"10px", marginTop:"10px", fontWeight:"400", fontSize: "16px", border:"1px solid gray"}}
+                                                                className="btn btn-light"
+                                                                type="button"
+                                                                scope="profile email"
+                                                                clientId={GOOGLE_CLIENTID}
+                                                                onSuccess={this.props.googleAuth}
+                                                                onFailure={this.logAuthError}
+                                                                >
+                                                                    <i style={{marginRight:"5px"}} aria-hidden="true">
+                                                                        <img src={process.env.PUBLIC_URL+"/img/icon_google16.png"} alt="Google icon"/>
+                                                                    </i>
+                                                                    <span>Continuar con Google</span>
+                                                        </GoogleLogin>
+                                                </div>
                                             </div>
                                     </div>
                             </div>
