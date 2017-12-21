@@ -33,7 +33,7 @@ class AddImage extends Component{
     
     constructor(props){
         super(props);
-        this.state = {searchBoxTouched:true, btnsDisabled:true, openModal: false, searchQuery:"", isLoading:false};
+        this.state = {searchBoxTouched:false, btnsDisabled:true, openModal: false, searchQuery:"", isLoading:false};
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.renderTitle = this.renderTitle.bind(this);

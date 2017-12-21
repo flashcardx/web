@@ -34,6 +34,7 @@ class FacebookLogin extends Component{
         // for FB.getLoginStatus().
         if (response.status === 'connected') {
             // Logged into your app and Facebook.
+            console.log("reponse: ", response);
            this.props.onSuccess(response.authResponse);
         } else if (response.status === 'not_authorized') {
             // The person is logged into Facebook, but not your app.
