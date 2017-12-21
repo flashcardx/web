@@ -9,7 +9,8 @@ This project is meant to run with the API at: https://github.com/flashcardx/api
 2)  `npm start`
 
 # Slack group
-https://flashcardx.slack.com
+Send us an email(contact@flashcardx.co) requesting an invitation for our [Slack group](https://flashcardx.slack.com)
+Here we discuss new ideas about the future of the platform!
 
 ## Contributing
 
