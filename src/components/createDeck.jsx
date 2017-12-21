@@ -107,12 +107,10 @@ class CreateDeck extends Component{
                                     <div className="col-sm-12">
                                             <MyOwnInput
                                                 validationErrors={{
-                                                    minLength: "La descripcion de tu mazo debe contener almenos 4 caracteres",
-                                                    isDefaultRequiredValue: "Tu mazo necesita una descripcion!"
+                                                    maxLength: "La descripcion de tu mazo no puede contener mas de 400 caracteres",
                                                     }}
-                                                required
                                                 multiLine={true}
-                                                validations="minLength:4"
+                                                validations="maxLength:400"
                                                 onChange={this.onChangeFormDescription}
                                                 value={this.state.form.description}
                                                 name="description"
