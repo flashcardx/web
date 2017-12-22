@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import Radium from "radium";
 import ReactAudioPlayer from 'react-audio-player';
 
-
 class Speaker extends Component{
 
 
@@ -12,17 +11,25 @@ class Speaker extends Component{
     }
 
     play(){
-        if(this.props.play)
+        if(this.props.play){
             this.rap.audioEl.play();
+        }
     }
 
+   componentDidUpdate(){
+        if(this.props.play)
+            this.play();
+   }
 
    render(){
-    if(this.props.play){
-        const audio = new Audio(this.props.src);
-        audio.play()
-    }
-       return null;
+        
+        return   <ReactAudioPlayer
+                        preload="auto"
+                        ref={(element) => { this.rap = element; }}
+                        src={this.props.src}
+                        style={{display:"none"}}
+                        onEnded={this.props.onEnded}
+                />
    } 
 }
 

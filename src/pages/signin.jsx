@@ -12,7 +12,6 @@ import {GoogleLogin} from 'react-google-login';
 import GreenButton from "../components/util/greenButton.jsx";
 import {Link} from "react-router-dom";
 const RECAPTCHA_KEY = config.recaptchaSiteKey;
-const FB_APPID = config.fbAppId;
 const GOOGLE_CLIENTID = config.googleClientId;
 
 const style = {

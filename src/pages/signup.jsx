@@ -13,7 +13,6 @@ import GreenButton from "../components/util/greenButton.jsx";
 import FacebookLogin from "../components/util/facebookLogin.jsx"
 import {Link} from "react-router-dom";
 const RECAPTCHA_KEY = config.recaptchaSiteKey;
-const FB_APPID = config.fbAppId;
 const GOOGLE_CLIENTID = config.googleClientId;
 
 const style = {

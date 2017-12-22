@@ -134,7 +134,7 @@ class Flashcard extends Component{
                         </CardText>
                         <CardActions>
                             {(this.props["practice-stage"]===1)?
-                                <GreenButton onClick={this.props.submitName} disabled={!this.props.nameImput} className="col" label="Confirmar" />
+                                <GreenButton onClick={()=>this.props.submitName(this.props.nameImput)} disabled={!this.props.nameImput} className="col" label="Confirmar" />
                                 :
                                 (this.props["practice-stage"]===2)?
                                 <FlatButton disabled={this.props.bigLoading} onClick={this.props.onContinue} hoverColor="#346bc3" backgroundColor="#4286f4" className="col" label="Continuar" />
