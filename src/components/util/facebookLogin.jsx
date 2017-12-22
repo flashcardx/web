@@ -16,10 +16,10 @@ class FacebookLogin extends Component{
                 return setTimeout(()=>{
                     this.init();
                 }, 100);
-            }
+            }/*
              window.FB.getLoginStatus(function(response) {
-                    this.statusChangeCallback(response);
-             }.bind(this));
+                   this.statusChangeCallback(response);
+             }.bind(this));*/
     }
 
     componentDidMount() {
