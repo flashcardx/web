@@ -77,7 +77,8 @@ export function fbAuth({accessToken}){
         type: SIGNIN,
         originAPI: true,
         bigLoading: true,
-        payload: request
+        payload: request,
+        fbAccessToken: accessToken
     }
 }
 

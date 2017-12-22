@@ -12,7 +12,8 @@ import MoveUserFlashcardContainer from "../containers/moveUserFlashcardContainer
 import EditUserFlashcardContainer from "../containers/editUserFlashcardContainer.jsx";
 import {} from "../actions/audio";
 import SpeakerLangContainer from "../containers/speakerLangContainer.jsx";
-import TextField from 'material-ui/TextField';
+import Formsy from 'formsy-react';
+import {MyOwnInput} from "./util/form.jsx";
 import FlatButton from 'material-ui/FlatButton';
 import GreenButton from "./util/greenButton"
 const style = {
@@ -53,18 +54,23 @@ class Flashcard extends Component{
         this.openEditModal = this.openEditModal.bind(this);
         this.closeEditModal = this.closeEditModal.bind(this);
         this.renderNameInput = this.renderNameInput.bind(this);
+        this.submitNamePractice = this.submitNamePractice.bind(this);
     }
 
     renderNameInput(){
         return  <div className="row">
-                    <div style={{width:"100%"}} className="col">
-                        <TextField
-                            value={this.props.nameImput}
-                            onChange={this.props.onNameChange}
-                            style={{overflow:"hidden", width:"100%"}}
-                            hintText="Completa el nombre"
-                        />
-                    </div>
+                    <Formsy.Form ref="form" style={{width:"100%"}} className="col" onValidSubmit={this.submitNamePractice}> 
+                            <MyOwnInput
+                                name="title"
+                                required
+                                autoFocus
+                                value={this.props.nameImput}
+                                onEnter={()=>this.refs.form.submit()}
+                                onChange={this.props.onNameChange}
+                                style={{overflow:"hidden", width:"100%"}}
+                                placeholder="Completa el nombre"
+                            />
+                    </Formsy.Form>
                 </div> 
     }
 
@@ -113,6 +119,10 @@ class Flashcard extends Component{
         return <span dangerouslySetInnerHTML={{__html:description}}></span>
     }
 
+    submitNamePractice(){
+        this.props.submitName(this.props.nameImput)
+    }
+
     render(){
         const {card} = this.props;
         var title = (this.props["practice-stage"]===1)? this.renderNameInput() :this.renderTitle(card);
@@ -134,10 +144,10 @@ class Flashcard extends Component{
                         </CardText>
                         <CardActions>
                             {(this.props["practice-stage"]===1)?
-                                <GreenButton onClick={this.props.submitName} disabled={!this.props.nameImput} className="col" label="Confirmar" />
+                                <GreenButton onClick={this.submitNamePractice} disabled={!this.props.nameImput} className="col" label="Confirmar" />
                                 :
                                 (this.props["practice-stage"]===2)?
-                                <FlatButton disabled={this.props.bigLoading} onClick={this.props.onContinue} hoverColor="#346bc3" backgroundColor="#4286f4" className="col" label="Continuar" />
+                                <FlatButton  autoFocus disabled={this.props.bigLoading} onClick={this.props.onContinue} hoverColor="#346bc3" backgroundColor="#4286f4" className="col" label="Continuar" />
                                 :
                                 <div className="row">
                                     <IconButton onClick={()=>this.props.onDelete(card._id)} iconStyle={{ color: "red" }} data-tip="Delete" iconClassName="material-icons">

@@ -100,21 +100,26 @@ class GetPromocode extends Component{
                             <div className="col-4">
                                 <img style={style.img2} alt="invoice emoji" className="img-fluid" src={process.env.PUBLIC_URL+"/img/invoice.svg"}/>
                             </div>
-                            <div className="col-8 col-sm-6">
+                            <div className="col-12 col-md-8">
                                             <h2 style={{color:"#4286f4"}}>Ingresa tu codigo</h2>
                             </div>
-                            <div className="col-12 col-sm-12">
+                                <div className="row">
+                                    <div className="col-10 col-sm-8">
                                                 <TextField
+                                                style={{width:"100%"}}
                                                 value={this.state.code}
                                                 onChange={e=>this.setState({code:e.target.value})}
                                                 floatingLabelText="Codigo"
                                                 />
+                                    </div>
+                                    <div className="col-4">
                                                 <GreenButton
-                                                        style={{margin:"5px"}}
+                                                        style={{bottom:0, margin:"5px"}}
                                                         onClick={this.submitPromocode}
                                                         disabled={this.props.bigLoading}
                                                         label="Validar"/>      
-                            </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div style={{...style.box, ...style.box2}} className="row">
@@ -129,12 +134,12 @@ class GetPromocode extends Component{
                                         </h3>
                                         <h3 style={{whiteSpace: "initial"}}>
                                             <li>
-                                            Comparte alguna de nuestras publicaciones(la que mas te guste)
+                                            Envia un mensaje a nuestra página(Necesario ya que Facebook no nos permite iniciar una conversación)
                                             </li>
                                         </h3>
                                         <h3 style={{whiteSpace: "initial"}}>
                                             <li>
-                                            En menos de 24 horas te enviaremos tu codigo por mensaje privado
+                                            En menos de 24 horas recibiras tu codigo de acceso!
                                             </li>
                                         </h3>                      
                                     </ol>

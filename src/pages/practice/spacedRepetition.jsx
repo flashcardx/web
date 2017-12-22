@@ -6,6 +6,7 @@ import WhiteBar from "../../components/util/whiteBar.jsx";
 import {Points} from "../../components/util/text.jsx";
 import { Link } from 'react-router-dom';
 import {getDeckName} from "../../actions/deck";
+import {calcRank} from "../../adapters/practiceAdapter"
 import {fetchSpacedRepetitionCards, rankCard} from "../../actions/practice";
 import {successAlertGame, infoAlertGame, errorAlertGame} from "../../actions/alerts";
 import {connect} from "react-redux";
@@ -20,6 +21,9 @@ const WIN_SOUND_URL = config.urlSoundWin,
       HIT_TRANSITION_TIME=500;
 // eslint-disable-next-line 
 var winSound, loseSound;
+
+
+
 /*stage: 0 //loading, need to get more cards
   stage: 1 //show card without title
   stage: 2 //show result, real card(if user failed the answer), lasts until user clicks on continue
@@ -28,7 +32,7 @@ class SpacedRepetition extends Component{
     
     constructor(props){
         super(props);
-        this.state = {showHit:false, hit:null, playWin:false, playLose:false, deckName:"Cargando...", stage:0, points:0, cards:[], cardNameInput: ""};
+        this.state = {submitInProcess:false, playLose:false, playWin:false, showHit:false, hit:null, deckName:"Cargando...", stage:0, points:0, cards:[], cardNameInput: ""};
         this.replaceDeckName = this.replaceDeckName.bind(this);
         this.getCards = this.getCards.bind(this);
         this.renderNextCard = this.renderNextCard.bind(this);
@@ -36,9 +40,10 @@ class SpacedRepetition extends Component{
         this.submitName = this.submitName.bind(this);
         this.showAnswer = this.showAnswer.bind(this);
         this.loadNextCard = this.loadNextCard.bind(this);
-        this.playLose = this.playLose.bind(this);
+        this.renderSoundLose = this.renderSoundLose.bind(this);
+        this.renderSoundWin = this.renderSoundWin.bind(this);
         this.playWin = this.playWin.bind(this);
-        this.renderSound = this.renderSound.bind(this);
+        this.playLose = this.playLose.bind(this);
     }
 
     componentDidMount(){
@@ -51,7 +56,7 @@ class SpacedRepetition extends Component{
         });
         axios.get(LOSE_SOUND_URL).then(r=>{
             loseSound = r;  
-        });;
+        }); 
     }
 
     getCards(){
@@ -71,14 +76,6 @@ class SpacedRepetition extends Component{
         this.setState({stage:2});
     }
 
-    playWin(){
-        this.setState({playWin:true});
-    }
-
-    playLose(){
-        this.setState({playLose:true});
-    }
-
     componentWillReceiveProps(nextProps){
         if(nextProps.deckName && nextProps.deckName !== this.state.deckName)
             this.setState({deckName: nextProps.deckName});
@@ -94,34 +91,49 @@ class SpacedRepetition extends Component{
             }
             else
                 this.setState({points: newPoints, showHit:false});
-            switch (nextProps.cardRank.rank) {
-                    case 5:  this.props.successAlertGame("Excelente");
-                             this.playWin();
-                             return this.loadNextCard();
-                    case 3: this.props.infoAlertGame("Muy cerca");
-                            this.playLose();
-                            return this.showAnswer();
-                    case 1: this.props.errorAlertGame("Incorrecto");
-                            this.playLose();
-                            return this.showAnswer();
-                default:
-                    return console.error("invalid rank: ", nextProps.cardRank.rank);
-            }
+            if (nextProps.cardRank.rank ===5)
+                    this.loadNextCard();
+            this.setState({submitInProcess:false});
         }
     }
-
-    submitName(){
+    
+    submitName(nameToRank){
+        if(this.state.submitInProcess){
+            console.log("rejecting submit");
+            return;
+        }
         const card = this.state.cards[0];
-        this.props.rankCard(card._id, this.state.cardNameInput);
+        this.props.rankCard(card._id, nameToRank);
+        if(nameToRank.toLowerCase() === card.name.toLowerCase()){
+            this.playWin();
+            this.props.successAlertGame("Excelente");
+        }
+        else{
+            this.playLose();
+            this.showAnswer();
+            const rank = calcRank(nameToRank, card.name);
+            if(rank === 3)
+                this.props.infoAlertGame("Muy cerca");
+            else if(rank === 1)
+                this.props.errorAlertGame("Incorrecto");
+        }
+        this.setState({submitInProcess:true});
+    }
+
+    playLose(){
+        this.setState({playLose: true});
+    }
+
+    playWin(){
+        this.setState({playWin: true});
     }
 
     onNameChange(event){
         const newName = event.target.value
-        this.setState({cardNameInput: newName}, ()=>{
+        this.setState({cardNameInput: newName});
         const card = this.state.cards[0];
         if(newName.toLowerCase() === card.name.toLowerCase())
-            this.submitName();
-        })
+            this.submitName(newName);
     }
 
     renderNextCard(practiceMode){
@@ -141,20 +153,20 @@ class SpacedRepetition extends Component{
              this.setState({cards: newCards, stage:1, cardNameInput:""});
     }
 
-    renderSound(){
-        if(this.state.playLose)
-            return <Speaker
-                        play={true}
-                        src={LOSE_SOUND_URL}
-                        onEnded={()=>this.setState({playLose:false})}
-                    />
-        if(this.state.playWin)
-            return <Speaker
-                        play={true}
+    renderSoundWin(){
+        return <Speaker
+                        play={this.state.playWin}
                         src={WIN_SOUND_URL}
-                        onEnded={()=>this.setState({playWin:false})}
-                    />
-        return  null;
+                        onEnded={()=>{this.setState({playWin:false}) }}
+               />
+    }
+
+    renderSoundLose(){
+        return <Speaker
+                        play={this.state.playLose}
+                        src={LOSE_SOUND_URL}
+                        onEnded={()=>{this.setState({playLose:false})}}
+               />
     }
 
     componentDidUpdate(){
@@ -167,7 +179,6 @@ class SpacedRepetition extends Component{
     }
 
     render(){
-        const sound = this.renderSound();
         var body = null;
         if(this.state.stage === 0){
             body =  <div className="row"><div  style={{textAlign: "center"}} className="col"><CircularProgress style={{margin:"auto"}} size={130} thickness={7} /></div></div>
@@ -196,7 +207,8 @@ class SpacedRepetition extends Component{
                         </Points>
                 </WhiteBar>
                 <div className="container">
-                  {sound}
+                    {this.renderSoundLose()}
+                    {this.renderSoundWin()}
                   {body}
                 </div>
             </Page>

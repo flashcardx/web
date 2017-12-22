@@ -19,7 +19,7 @@ class MoveUserFlashcardContainer extends Component{
 
     render(){
         return (<SelectDeckModal
-                confirmLabel="Mover aqui:"
+                confirmLabel="Mover aqui"
                 description="Mover a:"
                 onSubmit={this.onSubmit}
                 decksName={this.props.decksName}

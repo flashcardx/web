@@ -62,7 +62,7 @@ class SelectDeckModal extends Component{
                 );
         return (
             <div style={{"display":"inline-block","marginRight":"20px"}}>
-                <Modal titleStyle={{display:"none"}} confirmObject={confirmObject} autoScroll={true} onClose={this.closeModal} modal={false} open={this.props.modalOpened}>
+                <Modal title="Mover ficha" titleStyle={{backgroundColor:"#D9509C", padding:"10px 10px 10px 15px", marginBottom:"10px"}} confirmObject={confirmObject} closeLabel="Cancelar" autoScroll={true} onClose={this.closeModal} modal={false} open={this.props.modalOpened}>
                     <SelectDeck
                              onDeckPick={this.onDeckPick}
                              goToIndex={this.goToIndex}

@@ -8,6 +8,7 @@ import _ from "lodash";
 import Formsy from 'formsy-react';
 import {MyOwnInput} from "./util/form.jsx";
 import MultimediaCreator from "./multimediaCreator.jsx";
+import {resetSearchImages} from "../actions/image";
 
 class CreateFlashcard extends Component{
 
@@ -29,6 +30,7 @@ class CreateFlashcard extends Component{
     }
 
     reset(){
+        this.props.resetSearchImages();
         this.onImgDelete();
         this.setState({form:{name:"", description: ""}}, ()=>{
             this.refs.form.reset();
@@ -69,7 +71,7 @@ class CreateFlashcard extends Component{
 
     renderForm(){
         return (
-            <div className="container">
+            <div style={{marginTop:"10px"}} className="container">
                 <div className="row">
                 <Formsy.Form ref="form" className="col" id="cardForm" onValidSubmit={this.onSubmit}>                         
                                      <div className="col-sm-12">
@@ -79,6 +81,7 @@ class CreateFlashcard extends Component{
                                                     isDefaultRequiredValue: "Tu ficha necesita un nombre"
                                                     }}
                                                 name="name"
+                                                autoFocus
                                                 required
                                                 validations="maxLength:40"
                                                 onChange={this.onChangeFormName}
@@ -93,6 +96,7 @@ class CreateFlashcard extends Component{
                                                     }}
                                                 validations="maxLength:850"
                                                 onChange={this.onChangeFormDescription}
+                                                onEnter={()=>this.refs.form.submit()}
                                                 value={this.state.form.description}
                                                 name="description"
                                                 multiLine={true}
@@ -101,7 +105,7 @@ class CreateFlashcard extends Component{
                                         </div>
                         </Formsy.Form>
                 </div>
-                <div className="container">
+                <div style={{marginTop:"10px"}} className="container">
                             <MultimediaCreator image drawing audio video
                                             searchQuery={this.state.form.name}
                                             onImageCrop={this.onCrop}
@@ -143,5 +147,5 @@ function mapStateToProps(state){
 
 
 
-export default connect(mapStateToProps, {infoAlert})(Radium(CreateFlashcard));
+export default connect(mapStateToProps, {infoAlert, resetSearchImages})(Radium(CreateFlashcard));
 

@@ -98,6 +98,7 @@ class CreateDeck extends Component{
                                                     }}
                                                 validations="minLength:2"
                                                 name="name"
+                                                autoFocus
                                                 required
                                                 onChange={this.onChangeFormName}
                                                 placeholder="Nombre del mazo"
@@ -107,14 +108,13 @@ class CreateDeck extends Component{
                                     <div className="col-sm-12">
                                             <MyOwnInput
                                                 validationErrors={{
-                                                    minLength: "La descripcion de tu mazo debe contener almenos 4 caracteres",
-                                                    isDefaultRequiredValue: "Tu mazo necesita una descripcion!"
+                                                    maxLength: "La descripcion de tu mazo no puede contener mas de 400 caracteres",
                                                     }}
-                                                required
                                                 multiLine={true}
-                                                validations="minLength:4"
+                                                validations="maxLength:400"
                                                 onChange={this.onChangeFormDescription}
                                                 value={this.state.form.description}
+                                                onEnter={()=>this.refs.form.submit()}
                                                 name="description"
                                                 placeholder="Descripcion, ¿que tipo/tema de contenido vas a guardar en este mazo?"
                                             />

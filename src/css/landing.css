@@ -1,0 +1,63 @@
+.seccionMultimedia{
+    background-color:transparent;
+    height:340px;
+    position:relative;
+}
+
+body{
+    background-color: white;
+}
+
+.seccionMultimedia .fcDerecha{
+    height:250px;
+    width:172px;
+    position:absolute;
+    right:1%;
+    top:55px;
+}
+
+.seccionMultimedia .fcIzquierda{
+    height:250px;
+    width:172px;
+    position:absolute;
+    left:1%;
+    top:55px;
+}
+.seccionMultimedia .fcCentro{
+    height:320px;
+    width:220px;
+    position:absolute;
+    left:0!important;
+    right:0!important;
+    margin: 0 auto;
+    top:25px;
+}
+
+.seccionTittle{
+    padding-top:10px;
+}
+
+
+.practice-box{
+    height: 400px;
+}
+
+ @media (max-width: 800px){	
+
+    .practice-box{
+                height: 500px;
+                margin-top: 50px;
+            }
+}
+
+@media (max-width: 600px){	
+	.practice{
+        margin-top: 30px;
+        padding-top: 30px;
+    }
+    .practice-box{
+        height: 600px;
+    }
+    
+}
+

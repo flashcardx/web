@@ -1,4 +1,6 @@
 import React, {Component} from "react";
+// eslint-disable-next-line 
+import styles from "./css/general.css";
 import ReactDOM from "react-dom";
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
@@ -29,6 +31,7 @@ import Loading from './containers/loading.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import registerServiceWorker from "./registerServiceWorker";
 import Footer from "./components/footer.jsx"
+import AddToHomeScreen from './components/util/iosAddToHome';
 const createStoreWithMiddleware = applyMiddleware(showLoadingMDW, promiseMDW, reduxThunk, parseApiMDW, hideLoadingMDW, errorHandlerMDW, successMessage)(createStore);
 
 class App extends Component{
@@ -63,6 +66,7 @@ ReactDOM.render(
                         <ReactTooltip delayShow={500}/>
                         <Loading/>
                         <App/>
+                        <AddToHomeScreen msg1="¿Queres acceder de forma mas simple?, Agreganos a tu pantalla de inicio, presiona el boton " msg2='y luego en "Agregar a inicio".' timeToShow={15000}/>
                     </div>
                 </MuiThemeProvider>
         </Provider>

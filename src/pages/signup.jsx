@@ -8,12 +8,11 @@ import {signup as SignupAction} from "../actions/auth";
 import Formsy from 'formsy-react';
 import {MyOwnInput} from "../components/util/form.jsx";
 import config from "../api_config";
-import FacebookLogin from 'react-facebook-login';
 import {GoogleLogin} from 'react-google-login';
 import GreenButton from "../components/util/greenButton.jsx";
+import FacebookLogin from "../components/util/facebookLogin.jsx"
 import {Link} from "react-router-dom";
 const RECAPTCHA_KEY = config.recaptchaSiteKey;
-const FB_APPID = config.fbAppId;
 const GOOGLE_CLIENTID = config.googleClientId;
 
 const style = {
@@ -66,6 +65,7 @@ class Landing extends Component{
         this.onSubmit = this.onSubmit.bind(this);
         this.recaptchaChange = this.recaptchaChange.bind(this);
         this.signupSight = this.signupSight.bind(this);
+        this.logAuthError = this.logAuthError.bind(this);
     }
 
     signupSight(state){
@@ -85,6 +85,10 @@ class Landing extends Component{
             );
         return null;
         }
+        
+    logAuthError(err){
+            console.error("error when trying to log with google/facebook: ", err);
+    }
     
     render(){
         var signupMsg = null;
@@ -117,34 +121,28 @@ class Landing extends Component{
                                             </div>
                                         </div>
                                         <div style={{ padding:"20px"}} className="container">
-                                            <div className="row" style={style.center}>
-                                                <span style={style.center}>
-                                                    <FacebookLogin 
-                                                        appId={FB_APPID}
-                                                        fields="name,email,picture"
-                                                        textButton="Facebook"
-                                                        size="small"
-                                                        icon="fa fa-facebook-official"
-                                                        callback={this.props.fbAuth} />
-                                                </span>
-                                            </div>
-                                            <div className="row" style={style.center}>
+                                            <div className="row">
+                                                <div className="row" style={style.center}>
+                                                    <FacebookLogin onSuccess={this.props.fbAuth}/>
+                                                </div>
+                                                <div className="row" style={style.center}>
                                                     <GoogleLogin
-                                                            disabled={this.props.bigLoading}
-                                                            style={{...style.center, backgroundColor:"#ffffff", marginBottom:"10px", marginTop:"10px", fontWeight:"500", fontSize: "16px", border:"1px solid gray"}}
-                                                            className="btn btn-light"
-                                                            type="button"
-                                                            scope="profile email"
-                                                            clientId={GOOGLE_CLIENTID}
-                                                            onSuccess={this.props.googleAuth}
-                                                            onFailure={this.props.googleAuth}
-                                                            >
-                                                                <i style={{marginRight:"5px"}} aria-hidden="true">
-                                                                    <img src={process.env.PUBLIC_URL+"/img/icon_google16.png"} alt="Google icon"/>
-                                                                </i>
-                                                                <span> GOOGLE</span>
-                                                            </GoogleLogin>
+                                                                disabled={this.props.bigLoading}
+                                                                style={{backgroundColor:"#ffffff", marginBottom:"10px", marginTop:"10px", fontWeight:"400", fontSize: "15px", border:"1px solid gray"}}
+                                                                className="btn btn-light"
+                                                                type="button"
+                                                                scope="profile email"
+                                                                clientId={GOOGLE_CLIENTID}
+                                                                onFailure={this.logAuthError}
+                                                                onSuccess={this.props.googleAuth}
+                                                                >
+                                                                    <i style={{marginRight:"5px"}} aria-hidden="true">
+                                                                        <img src={process.env.PUBLIC_URL+"/img/icon_google16.png"} alt="Google icon"/>
+                                                                    </i>
+                                                                    <span>Continuar con Google</span>
+                                                    </GoogleLogin>
                                             </div>
+                                        </div>
                                     </div>
                             </div>
 

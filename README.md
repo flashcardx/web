@@ -9,7 +9,8 @@ This project is meant to run with the API at: https://github.com/flashcardx/api
 2)  `npm start`
 
 # Slack group
-https://flashcardx.slack.com
+Send us an email(contact@flashcardx.co) requesting an invitation for our [Slack group](https://flashcardx.slack.com)
+Here we discuss new ideas about the future of the platform!
 
 ## Contributing
 
@@ -24,7 +25,9 @@ Please make a pull request to the branch [develop](https://github.com/flashcardx
 
 Thank you to [BrowserStack](https://www.browserstack.com/) for providing the infrastructure that allows us to test in real browsers.
 
+Thank you to [Federico Martin](https://github.com/fedemartinm) for the work you putted in the project
+
 ## License
 
 This project is licensed under the terms of the
-[MIT license](https://github.com/flashcardx/web/blob/master/LICENSE).
+[MIT license](https://github.com/flashcardx/web/blob/master/LICENSE). With the exception of the trademark and logos(flashcardx) wich are property of [Pablo Nicolas Marino](https://github.com/pablonm3)

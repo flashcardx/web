@@ -27,7 +27,7 @@ export function submitPromocode(promocode, captchaKey, callback){
             type: SIGNIN,
             originAPI: true,
             bigLoading: true,
-            successMsg: "Tu cuenta ah sido activada, bienvenido!",
+            successMsg: "Tu cuenta fue activada, bienvenido/a!",
             payload: request
         }
 }

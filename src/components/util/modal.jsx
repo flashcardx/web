@@ -1,29 +1,15 @@
 import React, {Component} from "react";
-import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import ReactTooltip from 'react-tooltip';
 import PropTypes from 'prop-types';
 import Radium from "radium";
 import Responsive from 'react-responsive';
+import Dialog, {
+    DialogActions,
+    DialogContent,
+    DialogTitle
+  } from 'material-ui-next/Dialog';
 
-const style = {
-    dialogStyles:{
-         position: 'absolute',
-         left: '50%',
-         top: '50%',
-         transform: 'translate(-50%, -50%)'
-    },
-    mobileStyles:{
-        position: "fixed",
-        width: "100%",
-        minHeight: "100%",
-        margin: 0,
-        padding: 0,
-        left: '50%',
-        top: '50%',
-        transform: 'translate(-50%, -50%)'
-    }   
-}
 
 class Modal extends Component{
 
@@ -33,8 +19,7 @@ class Modal extends Component{
         this.onClose = props.onClose;
         this.handleClose = this.handleClose.bind(this);
         this.handleConfirm = this.handleConfirm.bind(this);
-        this.renderDesktop = this.renderDesktop.bind(this);
-        this.renderMobile = this.renderMobile.bind(this);
+        this.renderModal = this.renderModal.bind(this);
     }
 
     componentDidUpdate(){
@@ -64,48 +49,39 @@ class Modal extends Component{
         this.handleClose();
     };
 
-    renderDesktop(actions){
+    renderModal(actions, fullscreen){
         return <Dialog
-        {...this.props}
-        contentStyle={ style.dialogStyles }
-        title={this.props.title}
-        actions={actions}
-        modal={this.props.modal}
+        fullScreen={fullscreen}
+        fullWidth={true}
         open={this.state.opened}
-        onRequestClose={this.handleClose}
-        autoScrollBodyContent={this.props.autoScroll}>
+        onRequestClose={this.handleClose}>
+                <DialogTitle style={this.props.titleStyle}> 
+                    {this.props.title}
+                </DialogTitle>
                 <ReactTooltip html={true}  data-multiline={true} id="modal-tooltip" delayShow={500}/>
-                    {this.props.children}
+                <DialogContent>
+                        {this.props.children}
+                </DialogContent>
+                <DialogActions>
+                    {actions}
+                </DialogActions>
         </Dialog>
-    }
-
-    renderMobile(actions){
-        return <Dialog
-                        {...this.props}
-                        contentStyle={ style.mobileStyles }
-                        title={this.props.title}
-                        actions={actions}
-                        modal={this.props.modal}
-                        open={this.state.opened}
-                        onRequestClose={this.handleClose}
-                        autoScrollBodyContent={this.props.autoScroll}>
-                                <ReactTooltip html={true}  data-multiline={true} id="modal-tooltip" delayShow={500}/>
-                                    {this.props.children}
-            </Dialog>
     }
     
     render(){
         var actions = [];
         if(this.props.closeLabel)
             actions.push(<FlatButton
-                        label={this.state.closeLabel}
-                        onClick={this.handleClose}
+                            key="0"
+                            label={this.state.closeLabel}
+                            onClick={this.handleClose}
                     />);
         if(this.props.confirmObject)
-            actions.unshift(this.props.confirmObject);
+            actions.unshift(<span key="2">{this.props.confirmObject}</span>);
         else
         if(this.props.confirmLabel){
-            actions.unshift(      <FlatButton
+            actions.unshift(    <FlatButton
+                                key="2"
                                 label={this.props.confirmLabel}
                                 primary={true}
                                 onClick={this.handleConfirm}
@@ -117,9 +93,9 @@ class Modal extends Component{
             <Responsive minWidth={700}>
             {(matches) => {
                 if (matches) {
-                    return this.renderDesktop(actions)
+                    return this.renderModal(actions, false)
                 } else {
-                    return this.renderMobile(actions)
+                    return this.renderModal(actions, true)
                 }
             }}
             </Responsive>

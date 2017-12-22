@@ -27,6 +27,13 @@ export const MyOwnInput = Radium(createReactClass({
       this.setValue(event.currentTarget.value);
     },
 
+    onKeyDown(e){
+      if(e.key ==="Enter" && this.props.onEnter){
+          e.preventDefault();
+               this.props.onEnter();
+          }
+    },
+
     render() {
       // Set a specific className based on the validation
       // state of this component. showRequired() is true
@@ -42,9 +49,11 @@ export const MyOwnInput = Radium(createReactClass({
       return (
           <div>
               <TextField
+                            autoFocus={this.props.autoFocus}
                             type={this.props.type}
                             multiLine={this.props.multiLine}
                             value={this.props.value}
+                            onKeyDown={this.onKeyDown}
                             hintText={this.props.placeholder}
                             className={this.props.className}
                             style={{width:"100%", ...this.props.style}}
