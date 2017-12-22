@@ -33,7 +33,6 @@ class CreateFlashcard extends Component{
         this.props.resetSearchImages();
         this.onImgDelete();
         this.setState({form:{name:"", description: ""}}, ()=>{
-            this.refs.nameInput.focus();
             this.refs.form.reset();
         });
     }
@@ -82,7 +81,6 @@ class CreateFlashcard extends Component{
                                                     isDefaultRequiredValue: "Tu ficha necesita un nombre"
                                                     }}
                                                 name="name"
-                                                ref={(input) => { this.nameInput = input; }} 
                                                 required
                                                 validations="maxLength:40"
                                                 onChange={this.onChangeFormName}
