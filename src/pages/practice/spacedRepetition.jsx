@@ -6,6 +6,7 @@ import WhiteBar from "../../components/util/whiteBar.jsx";
 import {Points} from "../../components/util/text.jsx";
 import { Link } from 'react-router-dom';
 import {getDeckName} from "../../actions/deck";
+import {calcRank} from "../../adapters/practiceAdapter"
 import {fetchSpacedRepetitionCards, rankCard} from "../../actions/practice";
 import {successAlertGame, infoAlertGame, errorAlertGame} from "../../actions/alerts";
 import {connect} from "react-redux";
@@ -20,6 +21,9 @@ const WIN_SOUND_URL = config.urlSoundWin,
       HIT_TRANSITION_TIME=500;
 // eslint-disable-next-line 
 var winSound, loseSound;
+
+
+
 /*stage: 0 //loading, need to get more cards
   stage: 1 //show card without title
   stage: 2 //show result, real card(if user failed the answer), lasts until user clicks on continue
@@ -87,33 +91,32 @@ class SpacedRepetition extends Component{
             }
             else
                 this.setState({points: newPoints, showHit:false});
-            switch (nextProps.cardRank.rank) {
-                    case 5: this.props.successAlertGame("Excelente");
-                            this.playWin();
-                            this.loadNextCard();
-                            break;
-                    case 3: this.props.infoAlertGame("Muy cerca");
-                            this.playLose();
-                            this.showAnswer();
-                            break;
-                    case 1: this.props.errorAlertGame("Incorrecto");
-                            this.playLose();
-                            this.showAnswer();
-                            break;
-                    default:
-                            console.error("invalid rank: ", nextProps.cardRank.rank);
-            }
+            if (nextProps.cardRank.rank ===5)
+                    this.loadNextCard();
             this.setState({submitInProcess:false});
         }
     }
-
-    submitName(name){
+    
+    submitName(nameToRank){
         if(this.state.submitInProcess){
             console.log("rejecting submit");
             return;
         }
         const card = this.state.cards[0];
-        this.props.rankCard(card._id, name);
+        this.props.rankCard(card._id, nameToRank);
+        if(nameToRank.toLowerCase() === card.name.toLowerCase()){
+            this.playWin();
+            this.props.successAlertGame("Excelente");
+        }
+        else{
+            this.playLose();
+            this.showAnswer();
+            const rank = calcRank(nameToRank, card.name);
+            if(rank === 3)
+                this.props.infoAlertGame("Muy cerca");
+            else if(rank === 1)
+                this.props.errorAlertGame("Incorrecto");
+        }
         this.setState({submitInProcess:true});
     }
 

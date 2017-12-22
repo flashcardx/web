@@ -7,6 +7,7 @@ class Speaker extends Component{
 
     constructor(props){
         super(props);
+        this.state = {isReady:true};
         this.play = this.play.bind(this);
     }
 
@@ -17,8 +18,13 @@ class Speaker extends Component{
     }
 
    componentDidUpdate(){
-        if(this.props.play)
+        if(this.props.play && this.state.isReady)
             this.play();
+        this.setState({isReady: false}, ()=>{
+            setTimeout(() => {
+                this.setState({isReady: true});      
+            }, 50);
+        })
    }
 
    render(){
