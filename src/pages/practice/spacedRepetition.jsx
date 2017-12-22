@@ -105,7 +105,7 @@ class SpacedRepetition extends Component{
 
     submitName(name){
         const card = this.state.cards[0];
-        this.props.rankCard(card._id, this.state.cardNameInput);
+        this.props.rankCard(card._id, name);
     }
 
     playLose(){
