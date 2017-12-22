@@ -9,7 +9,8 @@ import Dropzone from 'react-dropzone';
 import ImgPicker from "./imgPicker.jsx";
 import Cropper from "./util/cropper.jsx";
 import {searchImg, searchGif, resetSearchImages} from "../actions/image";
-import TextField from 'material-ui/TextField';
+import Formsy from 'formsy-react';
+import {MyOwnInput} from "./util/form.jsx";
 import SearchIcon from 'material-ui/svg-icons/action/search';
 
 const style = {
@@ -156,12 +157,16 @@ class AddImage extends Component{
                           onDrop={this.onDrop.bind(this)}>
                     <div className="row">
                         <div className="col-12 col-sm-7 col-md-7">
-                        <TextField
-                            onChange={this.onChange}
-                            value={this.state.searchQuery}
-                            style={{overflow:"hidden", width:"100%"}}
-                            hintText="Buscar"
-                        />
+                        <Formsy.Form ref="form" className="col" onValidSubmit={this.searchImg}> 
+                            <MyOwnInput
+                                name="searchQuery"
+                                onChange={this.onChange}
+                                onEnter={()=>this.refs.form.submit()}
+                                value={this.state.searchQuery}
+                                style={{overflow:"hidden", width:"100%"}}
+                                placeholder="Buscar"
+                            />
+                        </Formsy.Form>
                         </div>
                         <div className="col-12 col-sm-5 col-md-5">
                             <div className="row">
