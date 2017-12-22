@@ -160,6 +160,7 @@ class AddImage extends Component{
                         <Formsy.Form ref="form" className="col" onValidSubmit={this.searchImg}> 
                             <MyOwnInput
                                 name="searchQuery"
+                                autoFocus
                                 onChange={this.onChange}
                                 onEnter={()=>this.refs.form.submit()}
                                 value={this.state.searchQuery}

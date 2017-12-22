@@ -98,6 +98,7 @@ class CreateDeck extends Component{
                                                     }}
                                                 validations="minLength:2"
                                                 name="name"
+                                                autoFocus
                                                 required
                                                 onChange={this.onChangeFormName}
                                                 placeholder="Nombre del mazo"

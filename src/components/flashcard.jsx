@@ -62,6 +62,8 @@ class Flashcard extends Component{
                     <Formsy.Form ref="form" style={{width:"100%"}} className="col" onValidSubmit={this.submitNamePractice}> 
                             <MyOwnInput
                                 name="title"
+                                required
+                                autoFocus
                                 value={this.props.nameImput}
                                 onEnter={()=>this.refs.form.submit()}
                                 onChange={this.props.onNameChange}
@@ -145,7 +147,7 @@ class Flashcard extends Component{
                                 <GreenButton onClick={this.submitNamePractice} disabled={!this.props.nameImput} className="col" label="Confirmar" />
                                 :
                                 (this.props["practice-stage"]===2)?
-                                <FlatButton disabled={this.props.bigLoading} onClick={this.props.onContinue} hoverColor="#346bc3" backgroundColor="#4286f4" className="col" label="Continuar" />
+                                <FlatButton  autoFocus disabled={this.props.bigLoading} onClick={this.props.onContinue} hoverColor="#346bc3" backgroundColor="#4286f4" className="col" label="Continuar" />
                                 :
                                 <div className="row">
                                     <IconButton onClick={()=>this.props.onDelete(card._id)} iconStyle={{ color: "red" }} data-tip="Delete" iconClassName="material-icons">

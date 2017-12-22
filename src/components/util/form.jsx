@@ -49,6 +49,7 @@ export const MyOwnInput = Radium(createReactClass({
       return (
           <div>
               <TextField
+                            autoFocus={this.props.autoFocus}
                             type={this.props.type}
                             multiLine={this.props.multiLine}
                             value={this.props.value}

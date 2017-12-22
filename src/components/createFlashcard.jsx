@@ -81,6 +81,7 @@ class CreateFlashcard extends Component{
                                                     isDefaultRequiredValue: "Tu ficha necesita un nombre"
                                                     }}
                                                 name="name"
+                                                autoFocus
                                                 required
                                                 validations="maxLength:40"
                                                 onChange={this.onChangeFormName}
