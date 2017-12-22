@@ -28,7 +28,7 @@ class SpacedRepetition extends Component{
     
     constructor(props){
         super(props);
-        this.state = {playLose:false, playWin:false, showHit:false, hit:null, deckName:"Cargando...", stage:0, points:0, cards:[], cardNameInput: ""};
+        this.state = {submitInProcess:false, playLose:false, playWin:false, showHit:false, hit:null, deckName:"Cargando...", stage:0, points:0, cards:[], cardNameInput: ""};
         this.replaceDeckName = this.replaceDeckName.bind(this);
         this.getCards = this.getCards.bind(this);
         this.renderNextCard = this.renderNextCard.bind(this);
@@ -90,22 +90,31 @@ class SpacedRepetition extends Component{
             switch (nextProps.cardRank.rank) {
                     case 5: this.props.successAlertGame("Excelente");
                             this.playWin();
-                            return this.loadNextCard();
+                            this.loadNextCard();
+                            break;
                     case 3: this.props.infoAlertGame("Muy cerca");
                             this.playLose();
-                            return this.showAnswer();
+                            this.showAnswer();
+                            break;
                     case 1: this.props.errorAlertGame("Incorrecto");
                             this.playLose();
-                            return this.showAnswer();
+                            this.showAnswer();
+                            break;
                     default:
-                        return console.error("invalid rank: ", nextProps.cardRank.rank);
+                            console.error("invalid rank: ", nextProps.cardRank.rank);
             }
+            this.setState({submitInProcess:false});
         }
     }
 
     submitName(name){
+        if(this.state.submitInProcess){
+            console.log("rejecting submit");
+            return;
+        }
         const card = this.state.cards[0];
         this.props.rankCard(card._id, name);
+        this.setState({submitInProcess:true});
     }
 
     playLose(){
