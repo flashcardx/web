@@ -52,7 +52,7 @@ class SpacedRepetition extends Component{
         });
         axios.get(LOSE_SOUND_URL).then(r=>{
             loseSound = r;  
-        });;
+        }); 
     }
 
     getCards(){
@@ -89,10 +89,13 @@ class SpacedRepetition extends Component{
                 this.setState({points: newPoints, showHit:false});
             switch (nextProps.cardRank.rank) {
                     case 5: this.props.successAlertGame("Excelente");
+                            this.playWin();
                             return this.loadNextCard();
                     case 3: this.props.infoAlertGame("Muy cerca");
+                            this.playLose();
                             return this.showAnswer();
                     case 1: this.props.errorAlertGame("Incorrecto");
+                            this.playLose();
                             return this.showAnswer();
                     default:
                         return console.error("invalid rank: ", nextProps.cardRank.rank);
@@ -103,10 +106,6 @@ class SpacedRepetition extends Component{
     submitName(name){
         const card = this.state.cards[0];
         this.props.rankCard(card._id, this.state.cardNameInput);
-        if(name.toLowerCase() === card.name.toLowerCase())
-             this.playWin();
-        else
-            this.playLose();
     }
 
     playLose(){
