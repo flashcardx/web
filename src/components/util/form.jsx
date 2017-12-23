@@ -54,6 +54,7 @@ export const MyOwnInput = Radium(createReactClass({
                             multiLine={this.props.multiLine}
                             value={this.props.value}
                             onKeyDown={this.onKeyDown}
+                            floatingLabelText={this.props.floatingLabelText}
                             hintText={this.props.placeholder}
                             className={this.props.className}
                             style={{width:"100%", ...this.props.style}}

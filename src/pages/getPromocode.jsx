@@ -5,7 +5,8 @@ import {connect} from "react-redux";
 import config from "../api_config";
 import { Redirect} from "react-router";
 import {withRouter, Link} from 'react-router-dom';
-import TextField from 'material-ui/TextField';
+import Formsy from 'formsy-react';
+import {MyOwnInput} from "../components/util/form.jsx";
 import ReCAPTCHA from "react-google-recaptcha";
 import _ from "lodash";
 import {submitPromocode} from "../actions/user";
@@ -105,17 +106,26 @@ class GetPromocode extends Component{
                             </div>
                                 <div className="row">
                                     <div className="col-10 col-sm-8">
-                                                <TextField
-                                                style={{width:"100%"}}
-                                                value={this.state.code}
-                                                onChange={e=>this.setState({code:e.target.value})}
-                                                floatingLabelText="Codigo"
-                                                />
+                                               <Formsy.Form ref="form" className="col" onValidSubmit={this.submitPromocode}> 
+                                                    <MyOwnInput
+                                                        name="code"
+                                                        autoFocus
+                                                        value={this.state.code}
+                                                        required
+                                                        validationErrors={{
+                                                            isDefaultRequiredValue: "Ingresa un codigo"
+                                                        }}
+                                                        onChange={e=>this.setState({code:e.target.value})}
+                                                        floatingLabelText="Codigo"
+                                                        onEnter={()=>this.refs.form.submit()}
+                                                        style={{width:"100%"}}
+                                                    />
+                                                </Formsy.Form>
                                     </div>
                                     <div className="col-4">
                                                 <GreenButton
                                                         style={{bottom:0, margin:"5px"}}
-                                                        onClick={this.submitPromocode}
+                                                        onClick={()=>this.refs.form.submit()}
                                                         disabled={this.props.bigLoading}
                                                         label="Validar"/>      
                                     </div>
