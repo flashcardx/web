@@ -16,6 +16,7 @@ import Formsy from 'formsy-react';
 import {MyOwnInput} from "./util/form.jsx";
 import FlatButton from 'material-ui/FlatButton';
 import GreenButton from "./util/greenButton"
+import Responsive from 'react-responsive';
 const style = {
     card: {
         padding: "0px",
@@ -147,7 +148,15 @@ class Flashcard extends Component{
                                 <GreenButton onClick={this.submitNamePractice} disabled={!this.props.nameImput} className="col" label="Confirmar" />
                                 :
                                 (this.props["practice-stage"]===2)?
-                                <FlatButton keyboardFocused disabled={this.props.bigLoading} onClick={this.props.onContinue} hoverColor="#346bc3" backgroundColor="#4286f4" className="col" label="Continuar" />
+                                    <Responsive minWidth={700}>
+                                        {(matches) => {
+                                            if (matches) {
+                                                return <FlatButton keyboardFocused disabled={this.props.bigLoading} onClick={this.props.onContinue} hoverColor="#346bc3" backgroundColor="#4286f4" className="col" label="Continuar" />
+                                            } else {
+                                                return <FlatButton disabled={this.props.bigLoading} onClick={this.props.onContinue} hoverColor="#346bc3" backgroundColor="#4286f4" className="col" label="Continuar" />
+                                            }
+                                        }}
+                                    </Responsive>
                                 :
                                 <div className="row">
                                     <IconButton onClick={()=>this.props.onDelete(card._id)} iconStyle={{ color: "red" }} data-tip="Delete" iconClassName="material-icons">
