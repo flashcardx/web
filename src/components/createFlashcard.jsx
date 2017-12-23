@@ -14,7 +14,7 @@ class CreateFlashcard extends Component{
 
     constructor(props){
         super(props);
-        this.state = {regainFocus:false, form:{name: this.props.name, description:this.props.description}, multimediaBox: null}
+        this.state = {regainFocus:false, form:{name: this.props.name, description:this.props.description}}
         this.renderForm = this.renderForm.bind(this);
         this.onCrop = this.onCrop.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -22,7 +22,6 @@ class CreateFlashcard extends Component{
         this.reset = this.reset.bind(this);
         this.onChangeFormName = this.onChangeFormName.bind(this);
         this.onChangeFormDescription = this.onChangeFormDescription.bind(this);
-        this.updateMultimediaBox = this.updateMultimediaBox.bind(this);
     }
 
     closeModal(){
@@ -64,10 +63,6 @@ class CreateFlashcard extends Component{
         var newForm = _.clone(this.state.form);
         newForm.description = e.target.value;
         this.setState({form:newForm});
-    }
-
-    updateMultimediaBox(data){
-        this.setState({multimediaBox: data});
     }
 
     renderForm(){
