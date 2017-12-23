@@ -34,6 +34,14 @@ export const MyOwnInput = Radium(createReactClass({
           }
     },
 
+    componentDidMount(){
+        console.log("input was mounted: ", this.props.name);
+        if(this.props.autoFocus){
+          this.refInput.focus();
+          console.log("autofocusing");
+        }
+    },
+
     render() {
       // Set a specific className based on the validation
       // state of this component. showRequired() is true
@@ -49,8 +57,9 @@ export const MyOwnInput = Radium(createReactClass({
       return (
           <div>
               <TextField
-                            autoFocus={this.props.autoFocus}
                             type={this.props.type}
+                            ref={input=>{ this.refInput = input}} 
+                            name={this.props.name}
                             multiLine={this.props.multiLine}
                             value={this.props.value}
                             onKeyDown={this.onKeyDown}
@@ -99,6 +108,7 @@ export const MyOwnInput = Radium(createReactClass({
       return (
             <SelectField
                 style={{width:"100%"}}
+                name={this.props.name}
                 onFocus={()=>{this.setState({focus:true})}}
                 onBlur={()=>{this.setState({focus:false})}}
                 value={this.props.value}
