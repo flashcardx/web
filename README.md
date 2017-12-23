@@ -16,7 +16,7 @@ Here we discuss new ideas about the future of the platform!
 
 We'd greatly appreciate any contribution you make :).
 Please check out our [milestones](https://github.com/flashcardx/web/milestones) here we have all the future goals for the project, you can pick any issue that's not taken by somebody and assign it to yourself, or if you have new ideas create a new issue in the [nice to have milestone](https://github.com/flashcardx/web/milestone/3) 
-Please make a pull request to the branch [develop](https://github.com/flashcardx/web/tree/develop). Every week we merge the develop branch with master.
+For contributing create a branch with the name of the feature you are working on(please follow the current code style of the project and test everything before pushing it), then when you are ready make a pull request to [master](https://github.com/flashcardx/web/tree/master).
 
 
 ## Thanks
