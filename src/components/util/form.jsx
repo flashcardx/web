@@ -35,10 +35,26 @@ export const MyOwnInput = Radium(createReactClass({
     },
 
     componentDidMount(){
-        console.log("input was mounted: ", this.props.name);
         if(this.props.autoFocus){
+          setTimeout(() => {
+              this.refInput.focus();
+          }, 30);//we need this hack because refs are available after componentDidUpdate
+        }
+    },
+
+    componentDidUpdate(){
+      if(this.props.autoFocus && this.props.regainFocus){
           this.refInput.focus();
-          console.log("autofocusing");
+          this.props.focusWasResetted();
+      }
+    },
+
+    onFocus(e){
+        this.setState({focus:true})
+        if(this.props.autoFocus){//this thing moves the caret to the end of the input if it has text
+          var temp_value = e.target.value
+          e.target.value = ''
+          e.target.value = temp_value
         }
     },
 
@@ -67,7 +83,7 @@ export const MyOwnInput = Radium(createReactClass({
                             hintText={this.props.placeholder}
                             className={this.props.className}
                             style={{width:"100%", ...this.props.style}}
-                            onFocus={()=>{this.setState({focus:true})}}
+                            onFocus={this.onFocus}
                             onBlur={()=>{this.setState({focus:false})}}
                             onChange={this.props.onChange} 
                             errorText={errorMessage}	
