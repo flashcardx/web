@@ -14,7 +14,7 @@ class CreateFlashcard extends Component{
 
     constructor(props){
         super(props);
-        this.state = {form:{name: this.props.name, description:this.props.description}, multimediaBox: null}
+        this.state = {regainFocus:false, form:{name: this.props.name, description:this.props.description}}
         this.renderForm = this.renderForm.bind(this);
         this.onCrop = this.onCrop.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -22,7 +22,6 @@ class CreateFlashcard extends Component{
         this.reset = this.reset.bind(this);
         this.onChangeFormName = this.onChangeFormName.bind(this);
         this.onChangeFormDescription = this.onChangeFormDescription.bind(this);
-        this.updateMultimediaBox = this.updateMultimediaBox.bind(this);
     }
 
     closeModal(){
@@ -34,6 +33,7 @@ class CreateFlashcard extends Component{
         this.onImgDelete();
         this.setState({form:{name:"", description: ""}}, ()=>{
             this.refs.form.reset();
+            this.setState({regainFocus:true});
         });
     }
 
@@ -65,10 +65,6 @@ class CreateFlashcard extends Component{
         this.setState({form:newForm});
     }
 
-    updateMultimediaBox(data){
-        this.setState({multimediaBox: data});
-    }
-
     renderForm(){
         return (
             <div style={{marginTop:"10px"}} className="container">
@@ -81,6 +77,8 @@ class CreateFlashcard extends Component{
                                                     isDefaultRequiredValue: "Tu ficha necesita un nombre"
                                                     }}
                                                 name="name"
+                                                regainFocus={this.state.regainFocus}
+                                                focusWasResetted={()=>this.setState({regainFocus:false})}
                                                 autoFocus
                                                 required
                                                 validations="maxLength:40"

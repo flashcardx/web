@@ -34,6 +34,30 @@ export const MyOwnInput = Radium(createReactClass({
           }
     },
 
+    componentDidMount(){
+        if(this.props.autoFocus){
+          setTimeout(() => {
+              this.refInput.focus();
+          }, 30);//we need this hack because refs are available after componentDidUpdate
+        }
+    },
+
+    componentDidUpdate(){
+      if(this.props.autoFocus && this.props.regainFocus){
+          this.refInput.focus();
+          this.props.focusWasResetted();
+      }
+    },
+
+    onFocus(e){
+        this.setState({focus:true})
+        if(this.props.autoFocus){//this thing moves the caret to the end of the input if it has text
+          var temp_value = e.target.value
+          e.target.value = ''
+          e.target.value = temp_value
+        }
+    },
+
     render() {
       // Set a specific className based on the validation
       // state of this component. showRequired() is true
@@ -49,15 +73,17 @@ export const MyOwnInput = Radium(createReactClass({
       return (
           <div>
               <TextField
-                            autoFocus={this.props.autoFocus}
                             type={this.props.type}
+                            ref={input=>{ this.refInput = input}} 
+                            name={this.props.name}
                             multiLine={this.props.multiLine}
                             value={this.props.value}
                             onKeyDown={this.onKeyDown}
+                            floatingLabelText={this.props.floatingLabelText}
                             hintText={this.props.placeholder}
                             className={this.props.className}
                             style={{width:"100%", ...this.props.style}}
-                            onFocus={()=>{this.setState({focus:true})}}
+                            onFocus={this.onFocus}
                             onBlur={()=>{this.setState({focus:false})}}
                             onChange={this.props.onChange} 
                             errorText={errorMessage}	
@@ -98,6 +124,7 @@ export const MyOwnInput = Radium(createReactClass({
       return (
             <SelectField
                 style={{width:"100%"}}
+                name={this.props.name}
                 onFocus={()=>{this.setState({focus:true})}}
                 onBlur={()=>{this.setState({focus:false})}}
                 value={this.props.value}
