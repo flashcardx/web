@@ -45,7 +45,7 @@ body{
  @media (max-width: 800px){	
 
     .practice-box{
-                height: 500px;
+                height: 600px;
                 margin-top: 50px;
             }
 }
@@ -54,9 +54,6 @@ body{
 	.practice{
         margin-top: 30px;
         padding-top: 30px;
-    }
-    .practice-box{
-        height: 600px;
     }
     
 }
