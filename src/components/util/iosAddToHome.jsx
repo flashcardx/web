@@ -44,6 +44,7 @@ class AddToHomeScreen extends Component {
         style={{
           position: 'fixed',
           bottom: 20,
+          zIndex: 10000,
           left: '50%',
           transform: 'translateX(-50%)',
           display: this.state.visible ? 'inline-block' : 'none',
