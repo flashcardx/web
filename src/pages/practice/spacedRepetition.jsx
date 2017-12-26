@@ -156,6 +156,7 @@ class SpacedRepetition extends Component{
     renderSoundWin(){
         return <Speaker
                         play={this.state.playWin}
+                        preload="auto"
                         src={WIN_SOUND_URL}
                         onEnded={()=>{this.setState({playWin:false}) }}
                />
@@ -165,6 +166,7 @@ class SpacedRepetition extends Component{
         return <Speaker
                         play={this.state.playLose}
                         src={LOSE_SOUND_URL}
+                        preload="auto"
                         onEnded={()=>{this.setState({playLose:false})}}
                />
     }

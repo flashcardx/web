@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import Radium from "radium";
-import {Link} from "react-router-dom";
+import { HashLink as Link } from 'react-router-hash-link';
 import Responsive from 'react-responsive';
 
 // eslint-disable-next-line 
@@ -149,6 +149,12 @@ function Details(){
                             </div>
                         </div>
                     </div>
+                    <div className="container">
+                    <div className="row align-items-center justify-content-center  ">
+                        <Link to="/signup#top" className="nav-item btn btn-info"> Comenzar!</Link>
+                    </div>
+                                
+                    </div>  
         </div>
     );
 }

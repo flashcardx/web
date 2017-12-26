@@ -26,7 +26,7 @@ class Speaker extends Component{
    render(){
         
         return   <ReactAudioPlayer
-                        preload="auto"
+                        preload={this.props.preload}
                         ref={(element) => { this.rap = element; }}
                         src={this.props.src}
                         style={{display:"none"}}

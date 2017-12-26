@@ -10,8 +10,7 @@ import Truncate from "./util/truncate.jsx";
 import ImageGallery from "./imageGallery.jsx";
 import MoveUserFlashcardContainer from "../containers/moveUserFlashcardContainer.jsx";
 import EditUserFlashcardContainer from "../containers/editUserFlashcardContainer.jsx";
-import {} from "../actions/audio";
-import SpeakerLangContainer from "../containers/speakerLangContainer.jsx";
+import SpeakerTTSContainer from "../containers/speakerTTSContainer.jsx";
 import Formsy from 'formsy-react';
 import {MyOwnInput} from "./util/form.jsx";
 import FlatButton from 'material-ui/FlatButton';
@@ -80,7 +79,7 @@ class Flashcard extends Component{
         return (<div className="row">
                     <div style={{whiteSpace: "pre-line", wordBreak: "break-all" }} className="col-9">
                         {card.name}
-                        <SpeakerLangContainer lang={this.props.lang} text={card.name}/>
+                        <SpeakerTTSContainer src={card.TTSSrc}/>
                     </div>
                     {
                     this.props["practice-stage"]? null
