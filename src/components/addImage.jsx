@@ -34,7 +34,7 @@ class AddImage extends Component{
     
     constructor(props){
         super(props);
-        this.state = {searchBoxTouched:false, btnsDisabled:true, openModal: false, searchQuery:"", isLoading:false};
+        this.state = {searchingGif: false, searchingImg: false, searchBoxTouched:false, openModal: false, searchQuery:"", isLoading:false};
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.renderTitle = this.renderTitle.bind(this);
@@ -60,15 +60,6 @@ class AddImage extends Component{
             this.props.onImageReloadCancel();
     }
 
-    componentWillUpdate(nextProps, nextState){
-            if(nextState.searchQuery !== this.state.searchQuery ||
-                nextState.isLoading !== this.state.isLoading){
-                    if(nextState.isLoading)
-                        return this.setState({btnsDisabled:true});
-                    this.setState({btnsDisabled:(_.isEmpty(nextState.searchQuery) || this.state.isLoading)});        
-                }
-    }
-
     renderTitle(){
          return <div className="row">
                     <div className="col-4">
@@ -86,16 +77,16 @@ class AddImage extends Component{
     }
 
     onChange(e){
-        this.setState({searchQuery:e.target.value, searchBoxTouched:true});
+        this.setState({searchingGif:false, searchingImg:false, searchQuery:e.target.value, searchBoxTouched:true});
     }
 
     searchImg(){
-        this.setState({isLoading: true});     
+        this.setState({isLoading: true, searchingImg:true});     
         this.props.searchImg(this.state.searchQuery);
     }
     
     searchGif(){
-        this.setState({isLoading: true});     
+        this.setState({isLoading: true, searchingGif:true});     
         this.props.searchGif(this.state.searchQuery);
     }
 
@@ -103,15 +94,16 @@ class AddImage extends Component{
         return (!this.state.searchBoxTouched || _.isEmpty(this.state.searchQuery)) && !_.isEqual(nextProps.searchQuery, this.state.searchQuery)
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps, nextState){
         this.setState({isLoading: false});
         if(this.props.searchImages !== nextProps.searchImages && _.isEmpty(nextProps.searchImages))
-            this.setState({searchQuery:""}); 
+            this.setState({searchQuery:"", searchingGif:false, searchingImg:false}); 
         if(this.shouldUpdateSearchQuery(nextProps)){
-            this.setState({searchQuery: nextProps.searchQuery});
+            this.setState({searchingGif:false, searchingImg:false, searchQuery: nextProps.searchQuery});
         }
-        if(!_.isEqual(this.props.pickedImgs, nextProps.pickedImgs))
-                this.props.updateContainer(this.renderPickedImgs());
+        if(!_.isEqual(this.props.pickedImgs, nextProps.pickedImgs)){
+            this.props.updateContainer(this.renderPickedImgs());
+        }
         if(nextProps.reloadImage)
                 this.openModal();
     }
@@ -146,6 +138,8 @@ class AddImage extends Component{
     }
 
     renderPicker(){
+        const gifDisabled = this.state.isLoading || _.isEmpty(this.state.searchQuery) || this.state.searchingGif,
+              imgDisabled = this.state.isLoading || _.isEmpty(this.state.searchQuery) || this.state.searchingImg;
         return (
             <div className="container">
                 <Dropzone style={{borderStyle:"none"}}
@@ -173,14 +167,14 @@ class AddImage extends Component{
                             <div className="row">
                                 <FlatButton onClick={this.searchImg}
                                             style={style.white}
-                                            disabled={this.state.btnsDisabled}
+                                            disabled={imgDisabled}
                                             backgroundColor="#4286f4"
                                             hoverColor="#346bc3"
                                             icon={<SearchIcon />}
                                             label="imagen"/>                    
                                 <FlatButton onClick={this.searchGif}
                                             style={style.white}
-                                            disabled={this.state.btnsDisabled}
+                                            disabled={gifDisabled}
                                             backgroundColor="#4286f4"
                                             hoverColor="#346bc3"
                                             icon={<SearchIcon />}
