@@ -16,6 +16,11 @@ const RECAPTCHA_KEY = config.recaptchaSiteKey;
 const LinkRadium = Radium(Link);
 
 const style = {
+    title:{
+        backgroundColor:"white",
+        padding:"10px",
+        margin: "20px"
+    },
     box:{
         backgroundColor:"white",
         boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px",
@@ -32,7 +37,7 @@ const style = {
         background: "linear-gradient(to right, #fcd172 ,  #c3aa14)"
     },
     img:{
-        width:"70px",
+        width:"80px",
         height: "auto",
         float: "right",
         display: "inline-block"
@@ -90,17 +95,14 @@ class GetPromocode extends Component{
                                     sitekey={RECAPTCHA_KEY}
                                     onChange={this.recaptchaChange}
                                 />
-                        <div style={style.box} className="row">
+                        <div style={style.title} className="row">
                             <span style={{width:"100%"}}>
                                 <img style={style.img} alt="cry emoji" className="img-fluid" src={process.env.PUBLIC_URL+"/img/crying.svg"}/>
-                                <h2 style={{color:"#4286f4"}}>Parece que no tenes una subscripción activa</h2>
+                                <h1 style={{color:"black"}}>Parece que no tenes una subscripción activa</h1>
                             </span>
                         </div>
                         <div style={style.box} className="row">
                         <div className="container">
-                            <div className="col-4">
-                                <img style={style.img2} alt="invoice emoji" className="img-fluid" src={process.env.PUBLIC_URL+"/img/invoice.svg"}/>
-                            </div>
                             <div className="col-12 col-md-8">
                                             <h2 style={{color:"#4286f4"}}>Ingresa tu codigo</h2>
                             </div>
