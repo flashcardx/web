@@ -23,13 +23,13 @@ const style = {
         margin: "10px"
     },
     box2:{
-        background: "linear-gradient(to right, #5dbeff , #0089e5)"
+        background: "linear-gradient(to right, #6dc4ff , #0089e5)"
     },
     box3:{
-        background: "linear-gradient(to right, #bc2a8d ,  #8a3ab9)"
+        background: "linear-gradient(to right, #c23f98 ,  #8a3ab9)"
     },
     box4:{
-        background: "linear-gradient(to right, #fccc63 ,  #c3aa14)"
+        background: "linear-gradient(to right, #fcd172 ,  #c3aa14)"
     },
     img:{
         width:"70px",
