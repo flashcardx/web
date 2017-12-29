@@ -2,10 +2,11 @@ import {ERROR_ALERT,SUCCESS_ALERT, INFO_ALERT,
      INFO_ALERT_GAME, ERROR_ALERT_GAME, SUCCESS_ALERT_GAME,
          SHOW_BIGLOADING, HIDE_BIGLOADING} from "./types";
 
-export function errorAlert(msg){
+export function errorAlert(msg, time){
     return {
             type: ERROR_ALERT,
-            payload: msg
+            payload: msg,
+            time: time
         }
 }
 
@@ -16,10 +17,11 @@ export function errorAlertGame(msg){
         }
 }
 
-export function infoAlert(msg){
+export function infoAlert(msg, time){
     return {
             type: INFO_ALERT,
-            payload: msg
+            payload: msg,
+            time: time
         }
 }
 
@@ -30,10 +32,11 @@ export function infoAlertGame(msg){
         }
 }
 
-export function successAlert(msg){
+export function successAlert(msg, time){
     return {
             type: SUCCESS_ALERT,
-            payload: msg
+            payload: msg,
+            time: time
         }
 }
 

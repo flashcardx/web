@@ -12,6 +12,7 @@ import {spCardsReducer, rankCardReducer} from "./reducer_practice";
 import {redirectReducer} from "./reducer_util"
 import {searchImagesReducer, imageProxyReducer} from "./reducer_img";
 import {reducer as formReducer} from "redux-form";
+import {translateReducer, translatePreferencesReducer} from "./reducer_translator";
 
 const appReducer = combineReducers({
   notificationCount: countReducer,
@@ -32,11 +33,13 @@ const appReducer = combineReducers({
   cardsToPractice: spCardsReducer,
   practiceCardRank: rankCardReducer,
   master: masterReducer,
-  redirect: redirectReducer
+  redirect: redirectReducer,
+  translation: translateReducer,
+  translationPreferences: translatePreferencesReducer
 });
 
 const rootReducer = (state, action) => {
-   if (action.type === 'SIGNOUT')
+   if (action.type === 'SIGNOUT')//on signout we delete the store!
       state = undefined
   return appReducer(state, action);
 }

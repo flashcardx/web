@@ -1,5 +1,6 @@
 import axios from "axios";
 import config from "../api_config";
+import {getTranslatorPreferences} from "./translator";
 import {SIGNIN, SIGNUP, SIGNUP_RESEND_EMAIL, SIGNOUT, RE_SIGNIN, EMAIL_VERIFICATION} from "./types";
 const SIGNIN_URL = config.apiLogin;
 const SIGNUP_URL = config.apiSignup;
@@ -14,12 +15,17 @@ export function signin(email, password, key){
         password,
         "g-recaptcha-response": key
     });  
-    return {
-        type: SIGNIN,
-        originAPI: true,
-        bigLoading: true,
-        payload: request
-    }
+    return dispatch => {
+       dispatch({
+                    type: SIGNIN,
+                    originAPI: true,
+                    bigLoading: true,
+                    payload: request
+            })
+        request.then(()=>{
+                dispatch(getTranslatorPreferences())
+            })
+      };
 }
 
 export function signup(email,name, password, key){
@@ -49,9 +55,14 @@ export function resendEmailSignup(email){
 }
 
 export function reSignin(){
-    return {
-        type: RE_SIGNIN
-    }
+    return dispatch => {
+        dispatch({
+            type: RE_SIGNIN
+        })
+        setTimeout(() => {
+            dispatch(getTranslatorPreferences())
+        }, 1000);
+    };
 }
 
 export function signout(){
@@ -73,13 +84,18 @@ export function fbAuth({accessToken}){
     const request = axios.post(FB_AUTH_URL,{
        access_token: accessToken 
     });
-    return {
-        type: SIGNIN,
-        originAPI: true,
-        bigLoading: true,
-        payload: request,
-        fbAccessToken: accessToken
-    }
+    return dispatch => {
+        dispatch({
+            type: SIGNIN,
+            originAPI: true,
+            bigLoading: true,
+            payload: request,
+            fbAccessToken: accessToken
+        })
+        request.then(()=>{
+            dispatch(getTranslatorPreferences())
+        })
+    };
 }
 
 export function googleAuth(googleUser){
@@ -90,11 +106,15 @@ export function googleAuth(googleUser){
         const request = axios.post(GOOGLE_AUTH_URL, {
             id_token: id_token
         });
-        return {
-            type: SIGNIN,
-            originAPI: true,
-            bigLoading: true,
-            payload: request
-        }
+        return dispatch => {
+            dispatch({
+                type: SIGNIN,
+                originAPI: true,
+                bigLoading: true,
+                payload: request
+            })
+            request.then(()=>{
+                dispatch(getTranslatorPreferences())
+            })
+        };
 }
-

@@ -144,6 +144,8 @@ function insertMoreCards(state, cards, deckId){
 };
 
 function getLang(decks, deckId){
+        if(!deckId)
+            return null;
         return decks[deckId].lang;
 };
 

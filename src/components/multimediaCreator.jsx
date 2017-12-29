@@ -38,7 +38,7 @@ class MultimediaCreator extends Component{
         }
         if(this.props.translator){
             btns.push(<div key={2} className="col-3 col-sm-3">
-                                <Translator/>
+                                <Translator defaultLang={this.props.lang} searchQuery={this.props.searchQuery}/>
                       </div>);
         }
        /* if(this.props.drawing){

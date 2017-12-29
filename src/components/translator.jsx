@@ -2,20 +2,18 @@ import React, {Component} from "react";
 import Radium from "radium";
 import {connect} from "react-redux";
 import Modal from "./util/modal.jsx";
+import _ from "lodash"
 import {MyOwnInput, MyOwnSelect} from "./util/form.jsx";
 import FlatButton from 'material-ui/FlatButton';
-import {infoAlert} from "../actions/alerts.js";
-import {reduxForm } from 'redux-form';
-import Dropzone from 'react-dropzone';
-import PropTypes from "prop-types";
-import ImgPicker from "./imgPicker.jsx";
+import {translate, updateTranslatorPreferencesTo, updateTranslatorPreferencesFrom} from "../actions/translator"
 import Formsy from 'formsy-react';
-import PreviewImage from "./previewImage.jsx";
-import Cropper from "./util/cropper.jsx";
 import {langs} from "./util/language.js";
-import SwapIcon from 'material-ui/svg-icons/action/swap-horiz';
-import {fullWhite} from 'material-ui/styles/colors';
-import {searchImg, searchGif, resetSearchImages} from "../actions/image";
+import IconButton from 'material-ui-next/IconButton';
+import SwapIcon from 'material-ui-icons/SwapHoriz';
+import SpeakerTTSContainer from "../containers/speakerTTSContainer.jsx";
+import CopyToClipboard from "./util/copyToClipboard"
+var fromLangs = _.clone(langs);
+fromLangs.push({value:"", label:"Autodetect"});
 
 const style = {
     marginRight:{
@@ -37,7 +35,7 @@ class Translator extends Component{
 
     constructor(props){
         super(props);
-        this.state = {openModal:false, from:"", to:""};
+        this.state = {openModal:false, result:null, from:"", to:"", text:""};
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.renderTitle = this.renderTitle.bind(this);
@@ -45,6 +43,22 @@ class Translator extends Component{
         this.renderTranslator = this.renderTranslator.bind(this);
         this.onChangeFrom = this.onChangeFrom.bind(this);
         this.onChangeTo = this.onChangeTo.bind(this);
+        this.swap = this.swap.bind(this);
+        this.translate = this.translate.bind(this);
+        this.initPreferences = this.initPreferences.bind(this); 
+    }
+
+    initPreferences(){
+        if(this.props.translationPreferences){
+            this.setState({from: this.props.translationPreferences.from, to: this.props.translationPreferences.to});
+        }
+        else{
+            this.setState({to: this.props.defaultLang, from: this.props.defaultLang});
+        }
+    }
+
+    componentDidMount(){
+        this.initPreferences();
     }
     
     renderButton(){
@@ -58,12 +72,50 @@ class Translator extends Component{
             </span>);
     }
 
+
     renderTranslator(){
          return (
             <div className="container">
-                    renderTranslator
+                    <MyOwnInput
+                                validationErrors={{
+                                    maxLength:"La cantidad maxima de caracteres es: 40",
+                                    isDefaultRequiredValue: "Ingresa lo que deseas traducir",
+                                }}
+                                required
+                                validations="maxLength:40"
+                                onChange={e=>this.setState({text:e.target.value})}
+                                onEnter={()=>this.refs.form.submit()}
+                                value={this.state.text}
+                                name="text"
+                                multiLine={true}
+                                placeholder="¿Que deseas traducir?"
+                    />
+                    <FlatButton
+                    onClick={()=>this.refs.form.submit()}
+                    label="Traducir"
+                    backgroundColor="#4286f4"
+                    hoverColor="#346bc3"
+                    labelStyle={{color:"white"}}
+                    />
+                    {this.state.result && <div style={{wordBreak: "break-all", padding:"5px", fontSize:"20px", color:"white", backgroundColor:"#4286f4", marginTop:"10px"}}>
+                                            {this.state.result.text}
+                                            <span style={{float:"right"}}>
+                                                 <SpeakerTTSContainer src={this.state.result.audioSrc}/>
+                                                 <CopyToClipboard text={this.state.result.text} color="white"/>
+                                            </span>
+                                        </div>
+                    }
             </div>
         );
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        if(this.state.from !== prevState.from){
+            this.props.updateTranslatorPreferencesFrom(this.state.from);
+        }
+        if(this.state.to !== prevState.to){
+            this.props.updateTranslatorPreferencesTo(this.state.to);
+        }
     }
 
     openModal(){
@@ -83,7 +135,13 @@ class Translator extends Component{
     }
 
     translate(){
+        this.props.translate(this.state.text, this.state.from, this.state.to);
+    }
 
+    swap(){
+        const newFrom = this.state.to,
+              newTo = this.state.from;
+        this.setState({to:newTo, from:newFrom});
     }
 
     renderTitle(){
@@ -91,19 +149,22 @@ class Translator extends Component{
                     <div className="col-5">
                         <MyOwnSelect
                                  name="from"
-                                 options={langs}
+                                 options={fromLangs}
                                  onChange={this.onChangeFrom}
                                  value={this.state.from}
                         />
                     </div>
                    <div className="col-2">
-                       <FlatButton  backgroundColor="#4286f4"
-                                    labelStyle={{padding:"0px"}}
-                                    hoverColor="#346bc3"
-                                    icon={<SwapIcon color={fullWhite} />}/>
+                   <IconButton onClick={this.swap} aria-label="swap">
+                        <SwapIcon />
+                    </IconButton>
                    </div>
                    <div className="col-5">
                         <MyOwnSelect
+                                 validationErrors={{
+                                    isDefaultRequiredValue: "Selecciona un idioma"
+                                }}
+                                 required
                                  name="to"
                                  options={langs}
                                  onChange={this.onChangeTo}
@@ -113,6 +174,17 @@ class Translator extends Component{
                 </div>
    }
 
+   componentWillReceiveProps(nextProps){
+        if(this.props.translation !== nextProps.translation){
+            const result = {
+                    text: nextProps.translation.text,
+                    audioSrc: nextProps.translation.audioSrc 
+            };
+            this.setState({from:nextProps.translation.from, result:result});
+        }
+        if(this.props.searchQuery !== nextProps.searchQuery)
+            this.setState({text: nextProps.searchQuery});
+   }
 
     render(){
         return (
@@ -131,8 +203,9 @@ class Translator extends Component{
 
 function mapStateToProps(state){
     return {
-        searchImages: state.searchImages
+        translation: state.translation,
+        translationPreferences: state.translationPreferences
     }
 }
 
-export default connect(mapStateToProps, {})(Radium(Translator));
+export default connect(mapStateToProps, {translate, updateTranslatorPreferencesTo, updateTranslatorPreferencesFrom})(Radium(Translator));
