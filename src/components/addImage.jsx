@@ -12,6 +12,7 @@ import {searchImg, searchGif, resetSearchImages} from "../actions/image";
 import Formsy from 'formsy-react';
 import {MyOwnInput} from "./util/form.jsx";
 import SearchIcon from 'material-ui/svg-icons/action/search';
+import Tooltip from './util/tooltip';
 
 const style = {
     marginTop:{
@@ -200,12 +201,12 @@ class AddImage extends Component{
     renderButton(){
         return (
             <span>
-                <i className="fa fa-picture-o" aria-hidden="true"
-                    style={style.btn}
-                    data-tip="Agregar imagen"
-                    data-for="modal-tooltip"
-                    onClick={this.openModal}>
-                </i>       
+                <Tooltip title="Agregar imagen">
+                    <i className="fa fa-picture-o" aria-hidden="true"
+                        style={style.btn}
+                        onClick={this.openModal}>
+                    </i>
+                </Tooltip>  
             </span>
         );
     }
