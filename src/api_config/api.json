@@ -80,7 +80,9 @@
             "masterUserCount": "http://localhost:3000/userCount",
             "masterLogins": "http://localhost:3000/loginRegistry",
             "masterCodegen": "http://localhost:3000/promocodes/",
-            "setPromocode": "http://localhost:3000/promocode"
+            "setPromocode": "http://localhost:3000/promocode",
+            "translate": "http://localhost:3000/translate",
+            "lastTranslationLangs": "http://localhost:3000/translateUsedLangs"
             },
         "pi":{
             "getInitialCards": "http://pi.api.flashcardx.co/allCards",
@@ -163,7 +165,9 @@
             "masterUserCount": "http://pi.api.flashcardx.co/userCount",
             "masterLogins": "http://pi.api.flashcardx.co/loginRegistry",
             "masterCodegen": "http://pi.api.flashcardx.co/promocodes/",
-            "setPromocode": "http://pi.api.flashcardx.co/promocode"
+            "setPromocode": "http://pi.api.flashcardx.co/promocode",
+            "translate": "http://pi.api.flashcardx.co/translate",
+            "lastTranslationLangs": "http://pi.api.flashcardx.co/translateUsedLangs"
             },
         "production":{
             "getInitialCards": "https://api.flashcardx.co/allCards",
@@ -246,6 +250,8 @@
             "masterUserCount": "https://api.flashcardx.co/userCount",
             "masterLogins": "https://api.flashcardx.co/loginRegistry",
             "masterCodegen": "https://api.flashcardx.co/promocodes/",
-            "setPromocode": "https://api.flashcardx.co/promocode"
+            "setPromocode": "https://api.flashcardx.co/promocode",
+            "translate": "https://api.flashcardx.co/translate",
+            "lastTranslationLangs": "https://api.flashcardx.co/translateUsedLangs"
         }
 }

@@ -104,7 +104,8 @@ class CreateFlashcard extends Component{
                         </Formsy.Form>
                 </div>
                 <div style={{marginTop:"10px"}} className="container">
-                            <MultimediaCreator image drawing audio video
+                            <MultimediaCreator image translator drawing audio video
+                                            lang={this.props.lang}
                                             searchQuery={this.state.form.name}
                                             onImageCrop={this.onCrop}
                                             onImgDelete={this.props.onImgDelete}

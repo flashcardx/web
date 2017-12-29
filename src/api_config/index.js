@@ -94,5 +94,7 @@ module.exports = {
     apiMasterUserCount: api.masterUserCount,
     apiMasterLogins: api.masterLogins,
     apiMasterCodegen: api.masterCodegen,
-    apiSetPromocode: api.setPromocode
+    apiSetPromocode: api.setPromocode,
+    apiTranslate: api.translate,
+    apiLastTranslationLangs: api.lastTranslationLangs
 };

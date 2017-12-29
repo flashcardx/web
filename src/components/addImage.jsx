@@ -203,6 +203,7 @@ class AddImage extends Component{
                 <i className="fa fa-picture-o" aria-hidden="true"
                     style={style.btn}
                     data-tip="Agregar imagen"
+                    data-for="modal-tooltip"
                     onClick={this.openModal}>
                 </i>       
             </span>

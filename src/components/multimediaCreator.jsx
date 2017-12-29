@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import Radium from "radium";
 import AddImage from "./addImage.jsx";
+import Translator from "./translator.jsx";
 import PreviewImage from "./previewImage.jsx";
 
 class MultimediaCreator extends Component{
@@ -35,18 +36,23 @@ class MultimediaCreator extends Component{
                                                       />
                                         </div>);
         }
-       /* if(this.props.drawing){
+        if(this.props.translator){
             btns.push(<div key={2} className="col-3 col-sm-3">
+                                <Translator defaultLang={this.props.lang} searchQuery={this.props.searchQuery}/>
+                      </div>);
+        }
+       /* if(this.props.drawing){
+            btns.push(<div key={3} className="col-3 col-sm-3">
                                 <AddDrawing />
                       </div>);
         }*/
        /* if(this.props.audio){
-            btns.push( <div key={3} className="col-3 col-sm-3">
+            btns.push( <div key={4} className="col-3 col-sm-3">
                                 <AddAudio />
                         </div>);
         }*/
       /*if(this.props.video){
-          btns.push(<div key={4} className="col-3 col-sm-3">
+          btns.push(<div key={5} className="col-3 col-sm-3">
                             <AddVideo />
                     </div>);
       }*/

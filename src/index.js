@@ -32,10 +32,10 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import registerServiceWorker from "./registerServiceWorker";
 import Footer from "./components/footer.jsx"
 import AddToHomeScreen from './components/util/iosAddToHome';
-const createStoreWithMiddleware = applyMiddleware(showLoadingMDW, promiseMDW, reduxThunk, parseApiMDW, hideLoadingMDW, errorHandlerMDW, successMessage)(createStore);
+const createStoreWithMiddleware = applyMiddleware(reduxThunk, showLoadingMDW, promiseMDW, parseApiMDW, hideLoadingMDW, errorHandlerMDW, successMessage)(createStore);
 
 class App extends Component{
- 
+
     render(){
        return ( <BrowserRouter>
                     <Switch>
@@ -59,7 +59,7 @@ class App extends Component{
 }
 
 ReactDOM.render(
-        <Provider store={createStoreWithMiddleware(reducers)}>
+        <Provider store={createStoreWithMiddleware(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())}>
                  <MuiThemeProvider>    
                     <div>
                         <AlertContainer/>
@@ -77,6 +77,5 @@ ReactDOM.render(
         <Footer/>
     ,
     document.getElementById('footer'));
-
 
 registerServiceWorker();

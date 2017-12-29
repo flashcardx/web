@@ -28,7 +28,8 @@ class Alert extends Component {
   componentDidMount(){
       this.showAlert();
   }
-    componentDidUpdate(){
+  
+  componentDidUpdate(){
         this.showAlert();     
   }
  
