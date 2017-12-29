@@ -156,6 +156,7 @@ class Translator extends Component{
                                  options={fromLangs}
                                  onChange={this.onChangeFrom}
                                  value={this.state.from}
+                                 defaultValue=""
                         />
                     </div>
                    <div className="col-2">
@@ -167,7 +168,7 @@ class Translator extends Component{
                         <MyOwnSelect
                                  validationErrors={{
                                     isDefaultRequiredValue: "Selecciona un idioma"
-                                }}
+                                 }}
                                  required
                                  name="to"
                                  options={langs}

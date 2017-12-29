@@ -100,7 +100,28 @@ export const MyOwnInput = Radium(createReactClass({
   export const MyOwnSelect = Radium(createReactClass({
 
     getInitialState(){
-        return {focus: false}
+        return {focus: false, value:""}
+    },
+
+    componentDidMount(){
+        this.updateValue();
+    },
+
+    updateValue(){
+        var valueExists = this.props.options.find(option=>{
+          return option.value === this.props.value;
+        });
+        if(valueExists){
+             this.setState({value:this.props.value});
+        }
+        else{
+            this.setState({value:this.props.defaultValue})
+        }
+    },
+
+    componentDidUpdate(prevProps, prevState){
+      if(this.props.value !== prevProps.value)
+        this.updateValue();
     },
 
     // Add the Formsy Mixin
@@ -129,7 +150,7 @@ export const MyOwnInput = Radium(createReactClass({
                 name={this.props.name}
                 onFocus={()=>{this.setState({focus:true})}}
                 onBlur={()=>{this.setState({focus:false})}}
-                value={this.props.value}
+                value={this.state.value}
                 onChange={this.props.onChange}
                 hintText={this.props.placeholder}
                 className={this.props.className}
