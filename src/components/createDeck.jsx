@@ -98,6 +98,7 @@ class CreateDeck extends Component{
                                                     }}
                                                 validations="minLength:2"
                                                 name="name"
+                                                onEnter={()=>this.refs.form.submit()}
                                                 autoFocus
                                                 required
                                                 onChange={this.onChangeFormName}

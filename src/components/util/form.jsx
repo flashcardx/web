@@ -14,8 +14,9 @@ const style = {
 
 export const MyOwnInput = Radium(createReactClass({
 
+
     getInitialState(){
-        return {focus: false}
+        return {focus: false, onEnter:false}
     },
 
     // Add the Formsy Mixin
@@ -29,7 +30,8 @@ export const MyOwnInput = Radium(createReactClass({
 
     onKeyDown(e){
       if(e.key ==="Enter" && this.props.onEnter){
-          e.preventDefault();
+               e.preventDefault();
+               this.setState({onEnter: true});
                this.props.onEnter();
           }
     },
@@ -50,7 +52,7 @@ export const MyOwnInput = Radium(createReactClass({
     },
 
     onFocus(e){
-        this.setState({focus:true})
+        this.setState({focus:true, onEnter:false})
         if(this.props.autoFocus){//this thing moves the caret to the end of the input if it has text
           var temp_value = e.target.value
           e.target.value = ''
@@ -68,7 +70,7 @@ export const MyOwnInput = Radium(createReactClass({
       // An error message is returned ONLY if the component is invalid
       // or the server has returned an error message
       var errorMessage = this.getErrorMessage();
-      if(this.state.focus || (this.showRequired() && !this.isFormSubmitted()))
+      if((this.state.focus && !this.state.onEnter) || (this.showRequired() && !this.isFormSubmitted()))
            errorMessage = null;
       return (
           <div>

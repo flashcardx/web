@@ -84,9 +84,10 @@ class Translator extends Component{
                                 required
                                 validations="maxLength:40"
                                 onChange={e=>this.setState({text:e.target.value})}
-                                onEnter={()=>this.refs.form.submit()}
+                                onEnter={e=>{this.refs.form.submit()}}
                                 value={this.state.text}
                                 name="text"
+                                autoFocus
                                 multiLine={true}
                                 placeholder="¿Que deseas traducir?"
                     />
@@ -97,9 +98,10 @@ class Translator extends Component{
                     hoverColor="#346bc3"
                     labelStyle={{color:"white"}}
                     />
-                    {this.state.result && <div style={{wordBreak: "break-all", padding:"5px", fontSize:"20px", color:"white", backgroundColor:"#4286f4", marginTop:"10px"}}>
+                    {this.state.result && <div style={{overflow: "hidden", wordBreak: "break-all", padding:"5px", fontSize:"20px", color:"white", backgroundColor:"#4286f4", marginTop:"10px"}}>
                                             {this.state.result.text}
-                                            <span style={{float:"right"}}>
+                                            &nbsp;
+                                            <span style={{float:"right", display:"inline"}}>
                                                  <SpeakerTTSContainer src={this.state.result.audioSrc}/>
                                                  <CopyToClipboard text={this.state.result.text} color="white"/>
                                             </span>
@@ -182,7 +184,10 @@ class Translator extends Component{
                     text: nextProps.translation.text,
                     audioSrc: nextProps.translation.audioSrc 
             };
-            this.setState({from:nextProps.translation.from, result:result});
+            this.setState({result:result});
+            if(nextProps.translation.from){
+                this.setState({from: nextProps.translation.from});
+            }
         }
         if(this.props.searchQuery !== nextProps.searchQuery)
             this.setState({text: nextProps.searchQuery});

@@ -38,7 +38,7 @@ class CreateFlashcard extends Component{
     }
 
      onCrop(r){
-    }
+        }
 
     onImgDelete(src){
             this.props.onImgDelete(src);
@@ -80,6 +80,7 @@ class CreateFlashcard extends Component{
                                                 regainFocus={this.state.regainFocus}
                                                 focusWasResetted={()=>this.setState({regainFocus:false})}
                                                 autoFocus
+                                                onEnter={()=>this.refs.form.submit()}
                                                 required
                                                 validations="maxLength:40"
                                                 onChange={this.onChangeFormName}
