@@ -150,10 +150,18 @@ function Details(){
                         </div>
                     </div>
                     <div className="container">
-                    <div className="row align-items-center justify-content-center  ">
-                        <Link to="/signup#top" className="nav-item btn btn-info"> Comenzar!</Link>
+                        <div className="practice row align-items-center justify-content-center">
+                            <h2 style={{fontWeight:800,color:"#17a2b8"}} className="seccionTittle display-4">Mira como funciona:</h2>
+                            <div className="embed-responsive embed-responsive-16by9">
+                                <iframe className="embed-responsive-item" src="https://www.youtube.com/embed/ZXg9HoGyWAc" allowFullScreen></iframe>
+                            </div>
+                        </div>
                     </div>
-                                
+
+                    <div style={{marginTop:"10px"}} className="container">
+                        <div className="row align-items-center justify-content-center  ">
+                            <Link to="/signup#top" className="nav-item btn btn-info"> Comenzar!</Link>
+                        </div>            
                     </div>  
         </div>
     );
