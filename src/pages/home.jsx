@@ -14,7 +14,6 @@ import DeckGalleryUserContainer from "../containers/deckGalleryUserContainer.jsx
 import FlashcardGalleryUserContainer from "../containers/flashcardGalleryUserContainer.jsx";
 import _ from "lodash";
 import deckPathAdapter from "../adapters/deckPathAdapter.js";
-import userDeckAdapter from "../adapters/userDeckAdapter"
 import WhiteBar from "../components/util/whiteBar.jsx";
 
 class Home extends Component{
@@ -79,9 +78,8 @@ class Home extends Component{
         const parentId = deckPathAdapter.getLastIdFromPath(this.props.path);
         var createCard = null,
             userInfo = null;
-        const lang = userDeckAdapter.getLang(this.props.decks, parentId);
         if(parentId)
-            createCard = <CreateUserFlashcardContainer lang={lang} parentId={parentId}/>;                   
+            createCard = <CreateUserFlashcardContainer parentId={parentId}/>;                   
         else
             userInfo = this.generateUserInfoBar();
         return (

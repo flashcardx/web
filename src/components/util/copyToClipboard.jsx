@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import IconButton from 'material-ui-next/IconButton';
-import CopyIcon from 'material-ui-icons/ContentCopy';
 import copy from 'copy-to-clipboard';
 import {successAlert} from "../../actions/alerts"
 

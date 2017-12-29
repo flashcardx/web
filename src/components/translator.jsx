@@ -116,6 +116,8 @@ class Translator extends Component{
         if(this.state.to !== prevState.to){
             this.props.updateTranslatorPreferencesTo(this.state.to);
         }
+        if(this.props.defaultLang !== prevProps.defaultLang)
+            this.initPreferences();
     }
 
     openModal(){
@@ -185,6 +187,8 @@ class Translator extends Component{
         if(this.props.searchQuery !== nextProps.searchQuery)
             this.setState({text: nextProps.searchQuery});
    }
+
+   componentdid
 
     render(){
         return (

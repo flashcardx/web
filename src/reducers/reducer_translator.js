@@ -21,10 +21,10 @@ export function translatePreferencesReducer(state=null, action){
                                               if(newState)
                                                     newState.to = action.payload;
                                               return newState;
-        case UPDATE_TRANSLATE_PREFERENCES_FROM: var newState = _.clone(state);
-                                                if(newState)
-                                                    newState.from = action.payload;
-                                                return newState;
+        case UPDATE_TRANSLATE_PREFERENCES_FROM: var newState2 = _.clone(state);
+                                                if(newState2)
+                                                    newState2.from = action.payload;
+                                                return newState2;
         default: return state;
     }
 }
