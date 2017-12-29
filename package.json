@@ -52,6 +52,7 @@
     "radium": "^0.19.4",
     "raf": "3.4.0",
     "randomstring": "^1.1.5",
+    "react": "^16.2.0",
     "react-alert": "git+https://git@github.com/flashcardx/react-alert.git",
     "react-async-script": "^0.9.1",
     "react-audio-player": "^0.6.2",
