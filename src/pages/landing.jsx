@@ -159,7 +159,7 @@ function Details(){
                                     que puedas accederlo en cualquier momento, y que no importa lo que pase tu informacion esta segura. No compartiremos tu informacion y contenido con nadie, sin tu consentimiento.&nbsp;</p>
                             </div>
                             <div className="col-md-7">
-                                <img alt="crear ficha" className="img-fluid" src="https://media.giphy.com/media/fnjzX4eGNUglq/giphy.gif"/>
+                                <img alt="cloud computing" className="img-fluid" src={process.env.PUBLIC_URL+"/img/landing/cloud.gif"}/>
                             </div>
                         </div>
                     </div>
