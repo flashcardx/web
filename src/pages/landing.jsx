@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import Radium from "radium";
 import { HashLink as Link } from 'react-router-hash-link';
 import Responsive from 'react-responsive';
-
+import DocumentTitle from "react-document-title";
 // eslint-disable-next-line 
 import styles from "../css/landing.css";
 import { ParallaxProvider, Parallax } from 'react-scroll-parallax';
@@ -52,7 +52,8 @@ class Landing extends Component{
 
     render(){
         return (
-            <span>
+            <DocumentTitle title="FlashcardX">
+                <span>
                             <nav style={style.base} className="navbar navbar-expand-lg d-flex">
                                 <Link style={style.logo} className="navbar-brand mr-auto" to="#"><img alt="logo" style={style.logoImg} src={process.env.PUBLIC_URL+"/img/logo_text_white.png"}/><sub style={style.beta}>BETA</sub></Link>
                                 <span className="p-2">
@@ -65,7 +66,8 @@ class Landing extends Component{
                                 </span>
                             </nav>
                             <Details/>
-            </span>
+                </span>
+            </DocumentTitle>
         );
     }
 }
@@ -166,7 +168,7 @@ function Details(){
                             <div className="col">
                                 <h2 style={{fontWeight:800,color:"#17a2b8"}} className="seccionTittle display-4 text-center">Mira como funciona</h2>
                                 <div className="embed-responsive embed-responsive-16by9">
-                                    <iframe className="embed-responsive-item" src="https://www.youtube.com/embed/ZXg9HoGyWAc" allowFullScreen></iframe>
+                                    <iframe title="tutorial" className="embed-responsive-item" src="https://www.youtube.com/embed/ZXg9HoGyWAc" allowFullScreen></iframe>
                                 </div>
                             </div>
                         </div>

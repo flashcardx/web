@@ -88,7 +88,7 @@ class GetPromocode extends Component{
     render(){
         if(this.shouldNotBeInThisPage())
             return <Redirect push to="/landing"/>
-        return <Page noWrap name="getpromocode">
+        return <Page title="Activar cuenta" noWrap name="getpromocode">
                         <ReCAPTCHA
                                     ref={(el) => {captcha = el; }}
                                     size="invisible"

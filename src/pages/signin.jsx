@@ -11,6 +11,7 @@ import FacebookLogin from "../components/util/facebookLogin.jsx"
 import {GoogleLogin} from 'react-google-login';
 import GreenButton from "../components/util/greenButton.jsx";
 import {Link} from "react-router-dom";
+import DocumentTitle from "react-document-title";
 const RECAPTCHA_KEY = config.recaptchaSiteKey;
 const GOOGLE_CLIENTID = config.googleClientId;
 
@@ -86,7 +87,8 @@ class Landing extends Component{
         if(this.props.signupMsg)
             signupMsg = this.signupSight(this.props.signupMsg);
         return (
-                <span>
+                <DocumentTitle title="Iniciar sesión - FlashcardX">
+                    <span>
                             <ReCAPTCHA
                                 ref={(el) => { captchaRef = el; }}
                                 size="invisible"
@@ -139,7 +141,8 @@ class Landing extends Component{
 
                             </div>
                             </div>
-                </span>
+                    </span>
+                </DocumentTitle>   
         );
     }
 

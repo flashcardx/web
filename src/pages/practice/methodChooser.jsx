@@ -15,7 +15,7 @@ class MethodChooser extends Component{
         if(this.state.redirect)
             return  <Redirect push to={"/practice/"+this.state.redirect} />;
         return (
-             <Page noWrap name="practice">
+             <Page title="Practica - Elige método" noWrap name="practice">
                 <WhiteBar>
                         <h4>Elige un metodo de practica</h4>
                 </WhiteBar>

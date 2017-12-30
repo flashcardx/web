@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import { Redirect } from "react-router";
 import {withRouter} from 'react-router-dom';
+import DocumentTitle from "react-document-title";
 
 class Page extends Component{
 
@@ -25,13 +26,18 @@ class Page extends Component{
     render(){
         if(this.state.redirect && !this.isAlreadyInRedirectPage())
             return <Redirect push to={this.state.redirect}/>
+        var title = "FlashcardX";
+        if(this.props.title)
+            title = this.props.title + " - " + title;
         return (     
-            <div>
-                <Navbar active={this.state.name}/>
-                <div style={this.props.style} className={this.props.noWrap?null:"container"}>
-                     {this.props.children}
-                </div>
-            </div>   
+            <DocumentTitle title={title}>
+                <span>
+                    <Navbar active={this.state.name}/>
+                    <div style={this.props.style} className={this.props.noWrap?null:"container"}>
+                        {this.props.children}
+                    </div>
+                </span>
+            </DocumentTitle>   
         );
     }
 }

@@ -48,7 +48,7 @@ class DeckChooser extends Component{
     render(){
         if(this.state.redirect)
             return  <Redirect push to={"/practice/"+this.state.redirect} />
-      return ( <Page noWrap name="practice">
+      return ( <Page title="Practica - Elige mazo" noWrap name="practice">
                 <WhiteBar>
                         <h4>Elige el mazo a practicar</h4>
                 </WhiteBar>

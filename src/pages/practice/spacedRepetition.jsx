@@ -195,7 +195,7 @@ class SpacedRepetition extends Component{
             body = <div className="row"><div  style={{textAlign: "center"}} className="col">{this.renderNextCard(false)}</div></div>
         }
         return(
-            <Page noWrap name="practice">
+            <Page title="Practica - Repetición espaceada" noWrap name="practice">
                  <WhiteBar>
                         <span className="col">Método: Repeticion espaceada <Link to="/practice"><i className="fa fa-pencil" aria-hidden="true"></i></Link></span>
                         <span className="col">Mazo: {this.state.deckName} <Link to="/practice/spaced-repetition"><i className="fa fa-pencil" aria-hidden="true"></i></Link></span>
