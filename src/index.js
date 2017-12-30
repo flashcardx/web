@@ -26,7 +26,6 @@ import parseApiMDW from "./middlewares/parseApiResponse.js";
 import successMessage from "./middlewares/successMessage.js";
 import AlertContainer from "./containers/alertContainer.jsx";
 import reduxThunk from 'redux-thunk';
-import ReactTooltip from 'react-tooltip';
 import Loading from './containers/loading.jsx';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import registerServiceWorker from "./registerServiceWorker";
@@ -63,7 +62,6 @@ ReactDOM.render(
                  <MuiThemeProvider>    
                     <div>
                         <AlertContainer/>
-                        <ReactTooltip delayShow={500}/>
                         <Loading/>
                         <App/>
                         <AddToHomeScreen msg1="¿Queres acceder de forma mas simple?, Agreganos a tu pantalla de inicio, presiona el boton " msg2='y luego en "Agregar a inicio".' timeToShow={15000}/>

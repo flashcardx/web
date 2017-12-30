@@ -75,6 +75,7 @@
     "react-scroll-parallax": "^1.1.1",
     "react-select": "^1.0.0-rc.10",
     "react-text-collapse": "^0.4.3",
+    "react-tippy": "^1.2.2",
     "react-tooltip": "^3.3.0",
     "react-transition-group": "^2.2.1",
     "redux": "^3.7.2",

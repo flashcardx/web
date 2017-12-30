@@ -1,9 +1,12 @@
-import Tooltip from 'material-ui-next/Tooltip';
 import React from "react";
+import 'react-tippy/dist/tippy.css'
+import {Tooltip} from 'react-tippy';
+  
 
 export default function(props){
-    const title = <span style={{fontSize:"13px", zIndex:50000, position:"fixed"}} >{props.title}</span>
-    return <Tooltip title={title} placement="bottom">
-                {props.children}
-           </Tooltip>
+    return <Tooltip title={props.title}
+                    position="bottom"
+            >
+            {props.children}
+            </Tooltip>
 }
