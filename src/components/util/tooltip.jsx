@@ -1,12 +1,9 @@
 import React from "react";
-import 'react-tippy/dist/tippy.css'
-import {Tooltip} from 'react-tippy';
+import {Tooltip} from 'react-lightweight-tooltip';
   
 
 export default function(props){
-    return <Tooltip title={props.title}
-                    position="bottom"
-            >
-            {props.children}
+    return <Tooltip content={props.title}
+            > {props.children}
             </Tooltip>
 }
