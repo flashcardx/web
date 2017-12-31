@@ -7,13 +7,6 @@ div{
   position: absolute !important
 }
 
-@media (max-width: 600px){	
-	.tooltip{
-    display: none !important;
-   }
-}
-
-
 .owl-dots{
     margin-top: -20px !important;
     position: relative !important;

@@ -35,13 +35,16 @@ class Alert extends Component {
   }
  
   render () {
-    if(this.props.type === "info")
-      return   SAlert.info(this.props.msg, {
-                          position: 'top',
-                          effect: 'bouncyflip',
-                          timeout: this.props.time? this.props.time : TIME 
-                      });
-    return (
+    if(this.props.type === "info"){
+      SAlert.info(this.props.msg, {
+        position: 'top',
+        effect:'stackslide',
+        timeout: this.props.time? this.props.time : TIME,
+        html: true
+      });
+      return null;
+    }
+      return (
       <div>
         <AlertContainer ref={a => this.msg = a} {...alertOptions} />
       </div>

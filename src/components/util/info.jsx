@@ -10,7 +10,8 @@ class Info extends Component{
     }
 
     show(){
-       this.props.infoAlert(this.props.text, this.props.time || 13000);
+       const plainOldHtml = "<span style='font-size:16px;'>" + this.props.text + "</span>";
+       this.props.infoAlert(plainOldHtml, this.props.time || 15000);
     }
 
     render(){

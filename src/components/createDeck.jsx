@@ -137,7 +137,7 @@ class CreateDeck extends Component{
                                                     />
                                                 </div>
                                                 <div className="col-2 col-sm-2 col-md-1">
-                                                     <Info style={{bottom:"25px", position:"absolute"}} text="El lenguaje en el que vas a crear los titulos de las fichas adentro de este mazo, es importante ya que otros servicios como por ejemplo la &quot;pronunciacion automatica&quot; se basan en este campo."/>
+                                                     <Info style={{bottom:"25px", position:"absolute"}} text="El lenguaje en el que vas a crear los titulos de las fichas adentro de este mazo, es importante ya que otros servicios como por ejemplo la &quot;pronunciacion automatica&quot; se basan en este campo a la hora de la creación."/>
                                                 </div>
                                             </div>                                           
                                             </div>
