@@ -8,6 +8,7 @@ import Formsy from 'formsy-react';
 import {MyOwnInput, MyOwnSelect} from "./util/form.jsx";
 import MultimediaCreator from "./multimediaCreator.jsx";
 import _ from "lodash";
+import Info from "./util/info"
 import {langs} from "./util/language.js";
 
 class CreateDeck extends Component{
@@ -135,8 +136,8 @@ class CreateDeck extends Component{
                                                         value={this.state.form.lang}
                                                     />
                                                 </div>
-                                                <div data-tip="El lenguaje en el que vas a crear los<br/> titulos de las fichas adentro de este mazo,<br/> es importante ya que otros servicios<br/> como por ejemplo la &quot;pronunciacion automatica&quot;<br/> se basan en este campo." className="col-2 col-sm-2 col-md-1">
-                                                    <i className="fa fa-info-circle" style={{margin:"5px", bottom:4, position:"absolute"}} aria-hidden="true"></i>
+                                                <div className="col-2 col-sm-2 col-md-1">
+                                                     <Info style={{bottom:"25px", position:"absolute"}} text="El lenguaje en el que vas a crear los titulos de las fichas adentro de este mazo, es importante ya que otros servicios como por ejemplo la &quot;pronunciacion automatica&quot; se basan en este campo."/>
                                                 </div>
                                             </div>                                           
                                             </div>

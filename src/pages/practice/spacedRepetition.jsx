@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import {getDeckName} from "../../actions/deck";
 import {calcRank} from "../../adapters/practiceAdapter"
 import {fetchSpacedRepetitionCards, rankCard} from "../../actions/practice";
-import {successAlertGame, infoAlertGame, errorAlertGame} from "../../actions/alerts";
+import {successAlertGame, warningAlertGame, errorAlertGame} from "../../actions/alerts";
 import {connect} from "react-redux";
 import CircularProgress from 'material-ui/CircularProgress';
 import _ from "lodash"
@@ -113,7 +113,7 @@ class SpacedRepetition extends Component{
             this.showAnswer();
             const rank = calcRank(nameToRank, card.name);
             if(rank === 3)
-                this.props.infoAlertGame("Muy cerca");
+                this.props.warningAlertGame("Muy cerca");
             else if(rank === 1)
                 this.props.errorAlertGame("Incorrecto");
         }
@@ -227,4 +227,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, {getDeckName, fetchSpacedRepetitionCards, rankCard, successAlertGame, infoAlertGame, errorAlertGame})(Radium(SpacedRepetition));
+export default connect(mapStateToProps, {getDeckName, fetchSpacedRepetitionCards, rankCard, successAlertGame, warningAlertGame, errorAlertGame})(Radium(SpacedRepetition));

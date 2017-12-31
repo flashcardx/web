@@ -4,7 +4,7 @@ import Radium from "radium";
 import {connect} from "react-redux";
 import Modal from "./util/modal.jsx";
 import FlatButton from 'material-ui/FlatButton';
-import {infoAlert} from "../actions/alerts.js";
+import {warningAlert} from "../actions/alerts.js";
 import Dropzone from 'react-dropzone';
 import ImgPicker from "./imgPicker.jsx";
 import Cropper from "./util/cropper.jsx";
@@ -117,7 +117,7 @@ class AddImage extends Component{
 
     onDrop(files, rejectedFiles) {
         if(!_.isEmpty(rejectedFiles)){
-            return this.props.infoAlert("No se pudo cargar la imagen, recorda que el tamaño maximo permitido por imagen es de 7Mb");
+            return this.props.warningAlert("No se pudo cargar la imagen, recorda que el tamaño maximo permitido por imagen es de 7Mb");
         }
         this.closeModal();
         const file = files[0];
@@ -227,4 +227,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps, {infoAlert, searchImg, searchGif, resetSearchImages})(Radium(AddImage));
+export default connect(mapStateToProps, {warningAlert, searchImg, searchGif, resetSearchImages})(Radium(AddImage));
