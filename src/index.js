@@ -32,6 +32,8 @@ import registerServiceWorker from "./registerServiceWorker";
 import Footer from "./components/footer.jsx"
 import ReactTooltip from 'react-tooltip';
 import AddToHomeScreen from './components/util/iosAddToHome';
+import SAlert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-css-effects/stackslide.css';
 const createStoreWithMiddleware = applyMiddleware(reduxThunk, showLoadingMDW, promiseMDW, parseApiMDW, hideLoadingMDW, errorHandlerMDW, successMessage)(createStore);
 
 class App extends Component{
@@ -62,13 +64,14 @@ ReactDOM.render(
         <Provider store={createStoreWithMiddleware(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())}>
                  <MuiThemeProvider>    
                     <div>
-                        <AlertContainer/>
+                        <Loading/>
+                        <App/>
                         <ReactTooltip globalEventOff="click"
                                       multiline={true} className="tooltip"
                                       delayShow={500}/>
-                        <Loading/>
-                        <App/>
                         <AddToHomeScreen msg1="¿Queres acceder de forma mas simple?, Agreganos a tu pantalla de inicio, presiona el boton " msg2='y luego en "Agregar a inicio".' timeToShow={120000}/>
+                        <AlertContainer/>
+                        <SAlert stack={{limit: 3}} />
                     </div>
                 </MuiThemeProvider>
         </Provider>

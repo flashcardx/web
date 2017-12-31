@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import AlertContainer from 'react-alert';
 import PropTypes from 'prop-types';
- 
+import SAlert from 'react-s-alert';
 const TIME = 9000
 
  const alertOptions = {
@@ -18,11 +18,12 @@ class Alert extends Component {
     }
 
   showAlert = () => {
-    this.msg.show(this.props.msg, {
-      time: this.props.time? this.props.time : TIME ,
-      type: this.props.type,
-      theme: this.props.theme? this.props.theme: "light" 
-    })
+    if(this.props.type !== "info")
+      this.msg.show(this.props.msg, {
+        time: this.props.time? this.props.time : TIME ,
+        type: this.props.type,
+        theme: this.props.theme? this.props.theme: "light" 
+      })
   }
 
   componentDidMount(){
@@ -34,6 +35,12 @@ class Alert extends Component {
   }
  
   render () {
+    if(this.props.type === "info")
+      return   SAlert.info(this.props.msg, {
+                          position: 'top',
+                          effect: 'bouncyflip',
+                          timeout: this.props.time? this.props.time : TIME 
+                      });
     return (
       <div>
         <AlertContainer ref={a => this.msg = a} {...alertOptions} />
