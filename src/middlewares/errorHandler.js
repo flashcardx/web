@@ -1,4 +1,4 @@
-import {errorAlert, infoAlert} from "../actions/alerts";
+import {errorAlert, warningAlert} from "../actions/alerts";
 import {SIGNOUT} from "../actions/types";
 import {redirect} from "../actions/util";
 import {errorCodes} from "../api_config";
@@ -22,7 +22,7 @@ export default function({dispatch}){
             else     
                 msg = action.payload.msg;   
             if(action.showErrorAsWarning)
-                return next(infoAlert(msg));
+                return next(warningAlert(msg));
             else
                 return next(errorAlert(msg));
         }

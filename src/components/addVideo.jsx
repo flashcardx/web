@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import Modal from "./util/modal.jsx";
 import TextField from "./util/textField.jsx";
 import RaisedButton from 'material-ui/RaisedButton';
-import {infoAlert} from "../actions/alerts.js";
+import {warningAlert} from "../actions/alerts.js";
 import {reduxForm } from 'redux-form';
 import Dropzone from 'react-dropzone';
 import PropTypes from "prop-types";
@@ -40,4 +40,4 @@ class AddVideo extends Component{
     }
 }
 
-export default connect(null, {infoAlert, searchImg, searchGif, resetSearchImages})(Radium(AddVideo));
+export default connect(null, {warningAlert, searchImg, searchGif, resetSearchImages})(Radium(AddVideo));

@@ -65,7 +65,6 @@ class Translator extends Component{
         return (<span>
                 <i className="fa fa-language" aria-hidden="true"
                     style={style.btn}
-                    data-for="modal-tooltip"
                     data-tip="Traductor"
                     onClick={this.openModal}>
                 </i>            

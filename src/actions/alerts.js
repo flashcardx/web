@@ -1,5 +1,5 @@
-import {ERROR_ALERT,SUCCESS_ALERT, INFO_ALERT,
-     INFO_ALERT_GAME, ERROR_ALERT_GAME, SUCCESS_ALERT_GAME,
+import {INFO_ALERT, ERROR_ALERT,SUCCESS_ALERT, WARNING_ALERT,
+    WARNING_ALERT_GAME, ERROR_ALERT_GAME, SUCCESS_ALERT_GAME,
          SHOW_BIGLOADING, HIDE_BIGLOADING} from "./types";
 
 export function errorAlert(msg, time){
@@ -17,6 +17,14 @@ export function errorAlertGame(msg){
         }
 }
 
+export function warningAlert(msg, time){
+    return {
+            type: WARNING_ALERT,
+            payload: msg,
+            time: time
+        }
+}
+
 export function infoAlert(msg, time){
     return {
             type: INFO_ALERT,
@@ -25,9 +33,9 @@ export function infoAlert(msg, time){
         }
 }
 
-export function infoAlertGame(msg){
+export function warningAlertGame(msg){
     return {
-            type: INFO_ALERT_GAME,
+            type: WARNING_ALERT_GAME,
             payload: msg
         }
 }

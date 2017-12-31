@@ -3,7 +3,7 @@ import Radium from "radium";
 import Modal from "./util/modal.jsx";
 import GreenButton from "./util/greenButton";
 import {connect} from "react-redux";
-import {infoAlert} from "../actions/alerts.js";
+import {warningAlert} from "../actions/alerts.js";
 import _ from "lodash";
 import Formsy from 'formsy-react';
 import {MyOwnInput} from "./util/form.jsx";
@@ -46,7 +46,7 @@ class CreateFlashcard extends Component{
 
     onSubmit({name, description}){
             if(!description && this.props.pickedImages.length === 0)
-                return this.props.infoAlert("Ouch!, Tu ficha debe contener una descripcion o algun contenido multimedia");
+                return this.props.warningAlert("Ouch!, Tu ficha debe contener una descripcion o algun contenido multimedia");
             this.props.onSubmit(name, description,()=>{
                 if(this.props.resetOnClose)
                     this.reset();
@@ -146,5 +146,5 @@ function mapStateToProps(state){
 
 
 
-export default connect(mapStateToProps, {infoAlert, resetSearchImages})(Radium(CreateFlashcard));
+export default connect(mapStateToProps, {warningAlert, resetSearchImages})(Radium(CreateFlashcard));
 

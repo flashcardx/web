@@ -44,7 +44,7 @@ class Alert extends Component {
 
 Alert.propTypes = {
     msg: PropTypes.string,
-    type: PropTypes.oneOf(['info', 'success', 'error', "success-game", "error-game", "info-game"])
+    type: PropTypes.oneOf(['warning', 'info', 'success', 'error', "success-game", "error-game", "warning-game"])
 }
 
 export default Alert;
