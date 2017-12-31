@@ -10,7 +10,7 @@ class Info extends Component{
     }
 
     show(){
-       this.props.infoAlert(this.props.text, 10000);
+       this.props.infoAlert(this.props.text, this.props.time || 13000);
     }
 
     render(){
