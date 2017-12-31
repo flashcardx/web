@@ -155,7 +155,7 @@ function Details(){
                         <div className="practice row align-items-center justify-content-center  ">
                             <div className="offset-md-1 col-md-4 col-xs-12">
                                 <h2 className="seccionTittle display-4">Seguridad</h2>
-                                <p className="lead">Todo el contenido creado en FlashcardX, es almacenado en nuestros servidores en la nube, lo que garantiza
+                                <p className="lead">Todo el contenido creado en FlashcardX es almacenado en nuestros servidores en la nube, lo que garantiza
                                     que puedas accederlo en cualquier momento, y que no importa lo que pase tu informacion esta segura. No compartiremos tu informacion y contenido con nadie, sin tu consentimiento.&nbsp;</p>
                             </div>
                             <div className="col-md-7">
