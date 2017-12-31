@@ -63,7 +63,7 @@ class NotificationBadge extends Component{
     else
         return (<div>
                     <NotificationModal/>
-                    <IconButton style={style.notifications} onClick={this.openModal} data-tip="Notifications">
+                    <IconButton style={style.notifications} onClick={this.openModal} data-tip="Notificaciones">
                         <NotificationsIcon style={style.notifications} />
                     </IconButton>
                 </div>);

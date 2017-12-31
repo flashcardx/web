@@ -63,7 +63,9 @@ ReactDOM.render(
                  <MuiThemeProvider>    
                     <div>
                         <AlertContainer/>
-                        <ReactTooltip multiline={true} className="tooltip" delayShow={500}/>
+                        <ReactTooltip globalEventOff="click"
+                                      multiline={true} className="tooltip"
+                                      delayShow={500}/>
                         <Loading/>
                         <App/>
                         <AddToHomeScreen msg1="¿Queres acceder de forma mas simple?, Agreganos a tu pantalla de inicio, presiona el boton " msg2='y luego en "Agregar a inicio".' timeToShow={120000}/>
