@@ -53,6 +53,7 @@ class App extends Component{
                         <Route path="/landing" component={redirectIfAuth(Landing, "/")}/>
                         <Route path="/signin" component={redirectIfAuth(Signin, "/")}/>
                         <Route path="/signup" component={redirectIfAuth(Signup, "/")}/>
+                        <Route path="/:deckId" component={requireAuth(Home, "/landing")}/>
                         <Route path="/" component={requireAuth(Home, "/landing")}/>
                         <Redirect from='*' to='/'/>
                     </Switch>

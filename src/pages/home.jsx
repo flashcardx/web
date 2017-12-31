@@ -28,6 +28,12 @@ class Home extends Component{
 
     componentDidMount(){
         this.props.getUserInfo();
+        if(!this.props.match.params.deckId){
+            console.log("deckId is null");
+        }
+        else
+            console.log("deckId: ", this.props.match.params.deckId);
+        //    this.props.fetchDeckPath();
     }
 
     pushToPath(deckId, deckName){
@@ -141,4 +147,4 @@ function mapStateToProps(state){
         };
 }
 
-export default connect(mapStateToProps, {getUserInfo, deleteUserDeck,deleteUserFlashcard, successAlert, fetchUserDecks, pushToPath, dropFromPath})(Radium(Home));
+export default connect(mapStateToProps, {getUserInfo, deleteUserDeck, deleteUserFlashcard, successAlert, fetchUserDecks, pushToPath, dropFromPath})(Radium(Home));
