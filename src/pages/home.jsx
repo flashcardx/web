@@ -83,7 +83,7 @@ class Home extends Component{
         else
             userInfo = this.generateUserInfoBar();
         return (
-            <Page title="Mi collección" noWrap name="my collection">
+            <Page title="Mi colección" noWrap name="my collection">
                 <div>
                     <WhiteBar noMargin={parentId===null}>
                                 <div className="col-lg-8  col-md-7 col-sm-12">
