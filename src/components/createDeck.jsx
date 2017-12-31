@@ -9,7 +9,6 @@ import {MyOwnInput, MyOwnSelect} from "./util/form.jsx";
 import MultimediaCreator from "./multimediaCreator.jsx";
 import _ from "lodash";
 import {langs} from "./util/language.js";
-import Tooltip from './util/tooltip';
 
 class CreateDeck extends Component{
 
@@ -136,10 +135,8 @@ class CreateDeck extends Component{
                                                         value={this.state.form.lang}
                                                     />
                                                 </div>
-                                                <div className="col-2 col-sm-2 col-md-1">
-                                                    <Tooltip title="El lenguaje en el que vas a crear los<br/> titulos de las fichas adentro de este mazo,<br/> es importante ya que otros servicios<br/> como por ejemplo la &quot;pronunciacion automatica&quot;<br/> se basan en este campo.">
-                                                        <i className="fa fa-info-circle" style={{margin:"5px", bottom:4, position:"absolute"}} aria-hidden="true"></i>
-                                                    </Tooltip>
+                                                <div data-tip="El lenguaje en el que vas a crear los<br/> titulos de las fichas adentro de este mazo,<br/> es importante ya que otros servicios<br/> como por ejemplo la &quot;pronunciacion automatica&quot;<br/> se basan en este campo." className="col-2 col-sm-2 col-md-1">
+                                                    <i className="fa fa-info-circle" style={{margin:"5px", bottom:4, position:"absolute"}} aria-hidden="true"></i>
                                                 </div>
                                             </div>                                           
                                             </div>

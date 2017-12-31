@@ -24,8 +24,12 @@ class Modal extends Component{
     }
 
     componentDidUpdate(prevProps){
-        if(this.props.open !== prevProps.open && this.props.open)
-            ReactTooltip.rebuild();
+        if(this.props.open !== prevProps.open && this.props.open){
+            setTimeout(() => {
+                ReactTooltip.rebuild();
+                console.log("rebuilding...");
+            }, 100);
+        }
     }
 
     componentDidMount(){

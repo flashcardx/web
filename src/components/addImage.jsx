@@ -199,12 +199,10 @@ class AddImage extends Component{
 
     
     renderButton(){
-        return (<Tooltip title="Agregar imagen">
-                    <i className="fa fa-picture-o" aria-hidden="true"
+        return (<i data-tip="Agregar imagen" className="fa fa-picture-o" aria-hidden="true"
                         style={style.btn}
                         onClick={this.openModal}>
-                    </i>
-                </Tooltip>  
+                </i>
         );
     }
 
