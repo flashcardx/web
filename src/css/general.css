@@ -5,6 +5,7 @@ div{
 .tooltip{
   z-index: 100000 !important;
   border: "none" !important;
+  position: "relative" !important;
   padding: "0px" !important;
 }
 

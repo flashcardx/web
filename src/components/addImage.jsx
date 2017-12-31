@@ -12,7 +12,6 @@ import {searchImg, searchGif, resetSearchImages} from "../actions/image";
 import Formsy from 'formsy-react';
 import {MyOwnInput} from "./util/form.jsx";
 import SearchIcon from 'material-ui/svg-icons/action/search';
-import Tooltip from './util/tooltip';
 
 const style = {
     marginTop:{
