@@ -23,18 +23,17 @@ const style = {
     },
     box:{
         backgroundColor:"white",
-        boxShadow: "rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px",
+        boxShadow: "3px 3px 5px 6px #ccc",
         padding:"10px",
-        margin: "10px"
+        margin: "15px"
     },
     box2:{
-        background: "linear-gradient(to right, #6dc4ff , #0089e5)"
+        backgroundColor: "#0089e5"
     },
     box3:{
-        background: "linear-gradient(to right, #c23f98 ,  #8a3ab9)"
+        backgroundColor: "#E9293F"
     },
     box4:{
-        background: "linear-gradient(to right, #fcd172 ,  #c3aa14)"
     },
     img:{
         width:"80px",
@@ -42,13 +41,11 @@ const style = {
         float: "right",
         display: "inline-block"
     },
-    img2:{
-        width:"auto",
-        maxHeight:"70px",
-        display: "inline-block",
-        verticalAlign: "middle",
-        float: "left",
-        margin:"5px"
+    imgTitle:{
+        width:"110px",
+        height: "auto",
+        float: "right",
+        display: "inline"
     },
     link:{
         color: "blue",
@@ -89,26 +86,23 @@ class GetPromocode extends Component{
         if(this.shouldNotBeInThisPage())
             return <Redirect push to="/landing"/>
         return <Page title="Activar cuenta" noWrap name="getpromocode">
-                        <ReCAPTCHA
+                            <ReCAPTCHA
                                     ref={(el) => {captcha = el; }}
                                     size="invisible"
                                     sitekey={RECAPTCHA_KEY}
                                     onChange={this.recaptchaChange}
                                 />
-                        <div style={style.title} className="row">
+                            <div className="container">
+                            <img style={style.imgTitle} alt="free" className="img-fluid" src={process.env.PUBLIC_URL+"/img/free.png"}/>
+                            <div style={style.title} className="row">
                             <span style={{width:"100%"}}>
-                                <img style={style.img} alt="cry emoji" className="img-fluid" src={process.env.PUBLIC_URL+"/img/crying.svg"}/>
-                                <h1 style={{color:"black"}}>Parece que no tenes una subscripción activa</h1>
-                            </span>
-                        </div>
-                        <div style={style.box} className="row">
-                        <div className="container">
-                            <div className="col-12 col-md-8">
-                                            <h2 style={{color:"#4286f4"}}>Ingresa tu código</h2>
-                            </div>
+                                <h1 style={{color:"black"}}>Activa tu cuenta (tranquilo/a es gratis)</h1>
+                                <div className="col-12 col-md-8">
+                                                <h2 style={{color:"#4286f4"}}>Ingresa tu código</h2>
+                                </div>
                                 <div className="row">
-                                    <div className="col-10 col-sm-8">
-                                               <Formsy.Form ref="form" className="col" onValidSubmit={this.submitPromocode}> 
+                                    <div className="col-12 col-md-8">
+                                               <Formsy.Form ref="form" onValidSubmit={this.submitPromocode}> 
                                                     <MyOwnInput
                                                         name="code"
                                                         autoFocus
@@ -121,7 +115,7 @@ class GetPromocode extends Component{
                                                         floatingLabelText="Codigo"
                                                         onEnter={()=>this.refs.form.submit()}
                                                         style={{width:"100%"}}
-                                                    />
+                                                        />
                                                 </Formsy.Form>
                                     </div>
                                     <div className="col-4">
@@ -132,6 +126,7 @@ class GetPromocode extends Component{
                                                         label="Validar"/>      
                                     </div>
                                 </div>
+                                </span>
                             </div>
                         </div>
                         <div style={{...style.box, ...style.box2}} className="row">
@@ -182,9 +177,10 @@ class GetPromocode extends Component{
                         </div>
                         <div style={{...style.box, ...style.box4}} className="row">
                              <span style={{width:"100%"}}>
-                                <img style={style.img} alt="cry emoji" className="img-fluid" src={process.env.PUBLIC_URL+"/img/email.svg"}/>
+                                <img style={style.img} alt="cry emoji" className="img-fluid" src={process.env.PUBLIC_URL+"/img/feedback.svg"}/>
                                 <h2>Opción 3</h2>
-                                <h3 style={{whiteSpace: "initial"}}>Si no tenes las anteriores redes sociales o sos profesor y queres solicitar codigos para tus alumnos envianos un email a: contact@flashcardx.co y pronto nos pondremos en contacto</h3>
+                                <h3 style={{whiteSpace: "initial"}}>Completa la siguiente encuesta, contandonos que opinas del proyecto, que cosas te gustan y cuales podemos mejorar, te enviaremos tu código por Email</h3>
+                                <iframe title="form" frameBorder="0" style={{height:"700px", width:"100%", border:"none"}} src='https://forms.zohopublic.com/flashcardxco/form/Tuopinion/formperma/MgAE57E25F26mM1k51HG4h55E'></iframe>
                              </span>
                         </div>
                 </Page>
