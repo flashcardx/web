@@ -17,9 +17,8 @@ const LinkRadium = Radium(Link);
 
 const style = {
     title:{
-        backgroundColor:"white",
         padding:"10px",
-        margin: "20px"
+        margin: "10px"
     },
     box:{
         backgroundColor:"white",
@@ -101,7 +100,7 @@ class GetPromocode extends Component{
                                                 <h2 style={{color:"#4286f4"}}>Ingresa tu código</h2>
                                 </div>
                                 <div className="row">
-                                    <div className="col-12 col-md-8">
+                                    <div className="col-8">
                                                <Formsy.Form ref="form" onValidSubmit={this.submitPromocode}> 
                                                     <MyOwnInput
                                                         name="code"
