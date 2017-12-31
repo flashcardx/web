@@ -64,7 +64,7 @@ ReactDOM.render(
                         <AlertContainer/>
                         <Loading/>
                         <App/>
-                        <AddToHomeScreen msg1="¿Queres acceder de forma mas simple?, Agreganos a tu pantalla de inicio, presiona el boton " msg2='y luego en "Agregar a inicio".' timeToShow={15000}/>
+                        <AddToHomeScreen msg1="¿Queres acceder de forma mas simple?, Agreganos a tu pantalla de inicio, presiona el boton " msg2='y luego en "Agregar a inicio".' timeToShow={120000}/>
                     </div>
                 </MuiThemeProvider>
         </Provider>

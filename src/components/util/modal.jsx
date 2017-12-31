@@ -4,6 +4,7 @@ import ReactTooltip from 'react-tooltip';
 import PropTypes from 'prop-types';
 import Radium from "radium";
 import Responsive from 'react-responsive';
+  
 import Dialog, {
     DialogActions,
     DialogContent,
@@ -22,16 +23,14 @@ class Modal extends Component{
         this.renderModal = this.renderModal.bind(this);
     }
 
-    componentDidUpdate(){
-        setTimeout(function() {
+    componentDidUpdate(prevProps){
+        if(this.props.open !== prevProps.open && this.props.open)
             ReactTooltip.rebuild();
-        }, 1000);
     }
 
     componentDidMount(){
-        setTimeout(function() {
+        if(this.props.open)
             ReactTooltip.rebuild();
-        }, 1000);
     }
 
     componentWillReceiveProps(nextProps){
@@ -58,7 +57,6 @@ class Modal extends Component{
                 <DialogTitle style={this.props.titleStyle}> 
                     {this.props.title}
                 </DialogTitle>
-                <ReactTooltip html={true}  data-multiline={true} id="modal-tooltip" delayShow={500}/>
                 <DialogContent>
                         {this.props.children}
                 </DialogContent>
