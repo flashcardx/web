@@ -104,7 +104,7 @@ class GetPromocode extends Component{
                         <div style={style.box} className="row">
                         <div className="container">
                             <div className="col-12 col-md-8">
-                                            <h2 style={{color:"#4286f4"}}>Ingresa tu codigo</h2>
+                                            <h2 style={{color:"#4286f4"}}>Ingresa tu código</h2>
                             </div>
                                 <div className="row">
                                     <div className="col-10 col-sm-8">

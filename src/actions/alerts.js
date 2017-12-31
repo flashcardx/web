@@ -1,4 +1,4 @@
-import {ERROR_ALERT,SUCCESS_ALERT, WARNING_ALERT,
+import {INFO_ALERT, ERROR_ALERT,SUCCESS_ALERT, WARNING_ALERT,
     WARNING_ALERT_GAME, ERROR_ALERT_GAME, SUCCESS_ALERT_GAME,
          SHOW_BIGLOADING, HIDE_BIGLOADING} from "./types";
 
@@ -20,6 +20,14 @@ export function errorAlertGame(msg){
 export function warningAlert(msg, time){
     return {
             type: WARNING_ALERT,
+            payload: msg,
+            time: time
+        }
+}
+
+export function infoAlert(msg, time){
+    return {
+            type: INFO_ALERT,
             payload: msg,
             time: time
         }

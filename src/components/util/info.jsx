@@ -1,6 +1,6 @@
 import React, {Component} from "react"
 import {connect} from "react-redux"
-//import {infoAlert} from "../../actions/alerts.js"
+import {infoAlert} from "../../actions/alerts.js"
 
 class Info extends Component{
 
@@ -10,7 +10,7 @@ class Info extends Component{
     }
 
     show(){
-      //  this.props.infoAlert(this.props.text, 10000);
+       this.props.infoAlert(this.props.text, 10000);
     }
 
     render(){
@@ -21,4 +21,4 @@ class Info extends Component{
 
 
 
-export default connect(null, {})(Info);
+export default connect(null, {infoAlert})(Info);
