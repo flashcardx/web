@@ -22,8 +22,9 @@ export function signin(email, password, key){
                     bigLoading: true,
                     payload: request
             })
-        request.then(()=>{
-                dispatch(getTranslatorPreferences())
+        request.then(({data})=>{
+                if(data.success)
+                    dispatch(getTranslatorPreferences())
             })
       };
 }
@@ -92,8 +93,9 @@ export function fbAuth({accessToken}){
             payload: request,
             fbAccessToken: accessToken
         })
-        request.then(()=>{
-            dispatch(getTranslatorPreferences())
+        request.then(({data})=>{
+            if(data.success)
+                dispatch(getTranslatorPreferences())
         })
     };
 }
@@ -113,8 +115,9 @@ export function googleAuth(googleUser){
                 bigLoading: true,
                 payload: request
             })
-            request.then(()=>{
-                dispatch(getTranslatorPreferences())
+            request.then(({data})=>{
+                if(data.success)
+                    dispatch(getTranslatorPreferences())
             })
         };
 }

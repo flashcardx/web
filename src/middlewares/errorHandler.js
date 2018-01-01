@@ -9,8 +9,9 @@ export default function({dispatch}){
             return next(action);
         if(action.payload.success === false){
             console.error("error(errorhandler mdw): ", action.payload.msg);
-            if(action.payload.code === 1)
+            if(action.payload.code === 1){
                 return dispatch({type:SIGNOUT});
+            }
             var msg;
             if(action.customErrorMsg)
                 msg = action.customErrorMsg;
