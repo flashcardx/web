@@ -126,7 +126,9 @@ class Translator extends Component{
     }
 
     closeModal(){
-        this.setState({openModal: false});
+        this.setState({openModal: false}, ()=>{
+            this.props.onClose();
+        });
     }
 
     onChangeFrom(event, index, value){

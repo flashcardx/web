@@ -106,6 +106,7 @@ class CreateFlashcard extends Component{
                 </div>
                 <div style={{marginTop:"10px"}} className="container">
                             <MultimediaCreator image translator drawing audio video
+                                            onClose={()=>this.setState({regainFocus:true})}
                                             searchQuery={this.state.form.name}
                                             onImageCrop={this.onCrop}
                                             onImgDelete={this.props.onImgDelete}

@@ -15,7 +15,7 @@ class CreateDeck extends Component{
 
     constructor(props){
         super(props);
-        this.state = {form:{name:props.name, description:props.description, lang:props.lang, errorMsj:null}};
+        this.state = {regainFocus:false, form:{name:props.name, description:props.description, lang:props.lang, errorMsj:null}};
         this.renderForm = this.renderForm.bind(this);
         this.onImgDelete = this.onImgDelete.bind(this);
         this.onCrop = this.onCrop.bind(this);
@@ -31,6 +31,7 @@ class CreateDeck extends Component{
     reset(){
         this.setState({form:{name:"", description:"", lang:"", errorMsj:null}}, ()=>{
              this.refs.form.reset();
+             this.setState({regainFocus:true});
         });
         this.props.onImgDelete();
     }
@@ -40,8 +41,7 @@ class CreateDeck extends Component{
     }
 
      onCrop(r){
-      
-    }
+     }
 
     componentWillReceiveProps(nextProps){
             if(!_.isEqual(nextProps.pickedImages, this.props.pickedImages)){
@@ -99,6 +99,9 @@ class CreateDeck extends Component{
                                                     }}
                                                 validations="minLength:2"
                                                 name="name"
+                                                ref="firstInput"
+                                                regainFocus={this.state.regainFocus}
+                                                focusWasResetted={()=>this.setState({regainFocus:false})}
                                                 onEnter={()=>this.refs.form.submit()}
                                                 autoFocus
                                                 required
@@ -145,6 +148,7 @@ class CreateDeck extends Component{
                     </div>
                     <div className="container">
                         <MultimediaCreator  image
+                                            onClose={()=>this.setState({regainFocus:true})}
                                             errorMsg={this.state.errorMsg}
                                             searchQuery={this.state.form.name}
                                             onImageCrop={this.onCrop}
@@ -158,6 +162,7 @@ class CreateDeck extends Component{
             </div>
         );
     }
+
     render(){
         var confirmObject = (
                          <FlatButton

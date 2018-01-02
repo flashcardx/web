@@ -55,7 +55,9 @@ class AddImage extends Component{
     }
 
     closeModal(){
-        this.setState({openModal: false, isLoading:false});
+        this.setState({openModal: false, isLoading:false}, ()=>{
+            this.props.onClose();
+        });
         if(this.props.reloadImage)
             this.props.onImageReloadCancel();
     }
@@ -204,7 +206,7 @@ class AddImage extends Component{
                 </i>
         );
     }
-
+    
     render(){
         return (
             <div>

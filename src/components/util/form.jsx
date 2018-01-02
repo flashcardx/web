@@ -37,11 +37,11 @@ export const MyOwnInput = Radium(createReactClass({
     },
 
     componentDidMount(){
-        if(this.props.autoFocus){
+      if(this.props.autoFocus){
           setTimeout(() => {
-              this.refInput.focus();
+            this.refInput.focus();
           }, 30);//we need this hack because refs are available after componentDidUpdate
-        }
+      }    
     },
 
     componentDidUpdate(){
