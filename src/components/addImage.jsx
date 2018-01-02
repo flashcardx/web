@@ -93,7 +93,7 @@ class AddImage extends Component{
     }
 
     shouldUpdateSearchQuery(nextProps){
-        return (!this.state.searchBoxTouched || _.isEmpty(this.state.searchQuery)) && !_.isEqual(nextProps.searchQuery, this.state.searchQuery)
+        return !this.state.openModal && !_.isEqual(nextProps.searchQuery, this.state.searchQuery)
     }
 
     componentWillReceiveProps(nextProps, nextState){
