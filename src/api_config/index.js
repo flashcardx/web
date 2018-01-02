@@ -23,7 +23,7 @@ module.exports = {
     apiUserPreferences: api.userPreferences,
     apiToggleAutocomplete: api.toggleAutocomplete,
     apiExamples: api.examples,
-    apiDefine: api.define,
+    apiDictionaryDefine: api.dictionaryDefine,
     apiEditCard: api.editCard,
     apiGetCategories: api.getCategories,
     apiGetUserPlan: api.getUserPlan,

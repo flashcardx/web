@@ -10,12 +10,13 @@ export default class ReactTextCollapse extends Component {
 
   constructor(props) {
     super(props);
-
     const { options: { collapse } } = this.props;
     this.state = {
+      idLastSetTimeout: null,
       collapse: collapse ? collapse : true,
       childrenHeight: 3000
     }//children height too high so at first expand text is shown
+    this.close = this.close.bind(this);
   }
 
   renderHelperText() {
@@ -34,6 +35,24 @@ export default class ReactTextCollapse extends Component {
     let { collapse } = this.state;
     collapse = !collapse;
     this.setState({ collapse });
+    if(this.state.collapse === true){
+      this.open();
+    }
+    else{
+      this.close();
+    }
+  }
+  
+  open(){
+    clearTimeout(this.state.idLastSetTimeout);
+    const idLastSetTimeout = setTimeout(() => {
+      this.close();
+    }, 20000);
+    this.setState({idLastSetTimeout: idLastSetTimeout, collapse: false });
+  }
+
+  close(){
+    this.setState({collapse: true });
   }
 
   componentDidMount(){

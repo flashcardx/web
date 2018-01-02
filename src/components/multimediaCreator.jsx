@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import Radium from "radium";
 import AddImage from "./addImage.jsx";
 import TranslatorContainer from "../containers/translatorContainer.jsx";
+import DictionaryContainer from "../containers/dictionaryContainer.jsx";
 import PreviewImage from "./previewImage.jsx";
 
 class MultimediaCreator extends Component{
@@ -47,6 +48,11 @@ class MultimediaCreator extends Component{
         if(this.props.translator){
             btns.push(<div key={2} className="col-3 col-sm-3">
                                 <TranslatorContainer onClose={this.onClose} searchQuery={this.props.searchQuery}/>
+                      </div>);
+        }
+        if(this.props.dictionary){
+            btns.push(<div key={3} className="col-3 col-sm-3">
+                                <DictionaryContainer onDefine={this.props.onDefine} searchQuery={this.props.searchQuery}/>
                       </div>);
         }
        /* if(this.props.drawing){
