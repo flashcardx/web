@@ -29,8 +29,9 @@ class TranslatorContainer extends Component{
 
     render(){
         return <Translator
-            defaultLang={this.state.defaultLang}
-            searchQuery={this.props.searchQuery}
+                onClose={this.props.onClose}
+                defaultLang={this.state.defaultLang}
+                searchQuery={this.props.searchQuery}
         />
     }
 

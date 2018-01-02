@@ -55,7 +55,9 @@ class AddImage extends Component{
     }
 
     closeModal(){
-        this.setState({openModal: false, isLoading:false});
+        this.setState({openModal: false, isLoading:false}, ()=>{
+            this.props.onClose();
+        });
         if(this.props.reloadImage)
             this.props.onImageReloadCancel();
     }
@@ -91,7 +93,7 @@ class AddImage extends Component{
     }
 
     shouldUpdateSearchQuery(nextProps){
-        return (!this.state.searchBoxTouched || _.isEmpty(this.state.searchQuery)) && !_.isEqual(nextProps.searchQuery, this.state.searchQuery)
+        return !this.state.openModal && !_.isEqual(nextProps.searchQuery, this.state.searchQuery)
     }
 
     componentWillReceiveProps(nextProps, nextState){
@@ -204,7 +206,7 @@ class AddImage extends Component{
                 </i>
         );
     }
-
+    
     render(){
         return (
             <div>

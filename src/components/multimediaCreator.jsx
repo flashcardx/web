@@ -17,6 +17,13 @@ class MultimediaCreator extends Component{
         this.renderGallery = this.renderGallery.bind(this);
         this.onImageReload = this.onImageReload.bind(this);
         this.onImageReloadCancel = this.onImageReloadCancel.bind(this);
+        this.onClose = this.onClose.bind(this);
+    }
+
+    onClose(){
+        setTimeout(() => {
+            this.props.onClose();
+        }, 500);
     }
 
     renderButtons(props){
@@ -24,6 +31,7 @@ class MultimediaCreator extends Component{
         if(this.props.image && (this.state.reloadImage || (this.props.maxPickedImgs - this.props.pickedImages.length > 0))){
             btns.push(<div key={1} className="col-3 col-sm-3">
                                             <AddImage searchQuery={this.props.searchQuery}
+                                                      onClose={this.onClose}
                                                       onCrop={this.props.onImageCrop}
                                                       disabled={this.props.bigLoading}
                                                       onImgPick={this.props.onImgPick}
@@ -38,7 +46,7 @@ class MultimediaCreator extends Component{
         }
         if(this.props.translator){
             btns.push(<div key={2} className="col-3 col-sm-3">
-                                <TranslatorContainer searchQuery={this.props.searchQuery}/>
+                                <TranslatorContainer onClose={this.onClose} searchQuery={this.props.searchQuery}/>
                       </div>);
         }
        /* if(this.props.drawing){
