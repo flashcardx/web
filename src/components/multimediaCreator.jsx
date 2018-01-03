@@ -46,7 +46,7 @@ class MultimediaCreator extends Component{
         }
         if(this.props.translator){
             btns.push(<div key={2} className="col-3 col-sm-3">
-                                <TranslatorContainer onClose={this.onClose} searchQuery={this.props.searchQuery}/>
+                                <TranslatorContainer deckId={this.props.deckId} onClose={this.onClose} searchQuery={this.props.searchQuery}/>
                       </div>);
         }
        /* if(this.props.drawing){

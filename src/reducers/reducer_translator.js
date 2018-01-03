@@ -11,19 +11,26 @@ export function translateReducer(state={}, action){
     }
 }
 
-export function translatePreferencesReducer(state=null, action){
+export function translatePreferencesReducer(state={}, action){
     switch (action.type) {
         case TRANSLATE_PREFERENCES: const obj = JSON.parse(action.payload.msg);
                                     if(!obj)
                                         return state;
-                                    return {to:obj.to, from:obj.from};
+                                    var newState = _.clone(state)
+                                    if(!newState[action.deckId])
+                                        newState[action.deckId] = {}
+                                    newState[action.deckId].to = obj.to;
+                                    newState[action.deckId].from = obj.from;
+                                    return newState;
         case UPDATE_TRANSLATE_PREFERENCES_TO: var newState = _.clone(state);
-                                              if(newState)
-                                                    newState.to = action.payload;
-                                              return newState;
+                                              if(!newState[action.deckId])
+                                                 newState[action.deckId] = {}
+                                              newState[action.deckId].to = action.payload;
+                                                return newState;
         case UPDATE_TRANSLATE_PREFERENCES_FROM: var newState2 = _.clone(state);
-                                                if(newState2)
-                                                    newState2.from = action.payload;
+                                                if(!newState2[action.deckId])
+                                                    newState2[action.deckId] = {}
+                                                newState2[action.deckId].from = action.payload;
                                                 return newState2;
         default: return state;
     }

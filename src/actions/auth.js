@@ -1,6 +1,5 @@
 import axios from "axios";
 import config from "../api_config";
-import {getTranslatorPreferences} from "./translator";
 import {SIGNIN, SIGNUP, SIGNUP_RESEND_EMAIL, SIGNOUT, RE_SIGNIN, EMAIL_VERIFICATION} from "./types";
 const SIGNIN_URL = config.apiLogin;
 const SIGNUP_URL = config.apiSignup;
@@ -21,10 +20,6 @@ export function signin(email, password, key){
                     originAPI: true,
                     bigLoading: true,
                     payload: request
-            })
-        request.then(({data})=>{
-                if(data.success)
-                    dispatch(getTranslatorPreferences())
             })
       };
 }
@@ -60,9 +55,6 @@ export function reSignin(){
         dispatch({
             type: RE_SIGNIN
         })
-        setTimeout(() => {
-            dispatch(getTranslatorPreferences())
-        }, 1000);
     };
 }
 
@@ -93,10 +85,6 @@ export function fbAuth({accessToken}){
             payload: request,
             fbAccessToken: accessToken
         })
-        request.then(({data})=>{
-            if(data.success)
-                dispatch(getTranslatorPreferences())
-        })
     };
 }
 
@@ -114,10 +102,6 @@ export function googleAuth(googleUser){
                 originAPI: true,
                 bigLoading: true,
                 payload: request
-            })
-            request.then(({data})=>{
-                if(data.success)
-                    dispatch(getTranslatorPreferences())
             })
         };
 }

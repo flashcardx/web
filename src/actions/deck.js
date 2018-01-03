@@ -9,6 +9,7 @@ import {FETCH_USER_DECKS,
         EDIT_USER_DECK,
         LIST_DECKS_NAME,
         GET_DECK_NAME} from "./types";
+import {getTranslatorPreferences} from "./translator"
 const FETCH_USER_DECKS_URL = config.apiGetUserDecks;
 const CREATE_USER_DECK_URL = config.apiCreateUserDeck;
 const DELETE_USER_DECK_URL = config.apiDeleteUserDeck;
@@ -111,10 +112,13 @@ export function pushToPath(deckId, deckName){
                         id: deckId,
                         name: deckName
                         }
-        return {
-                type: PUSH_TO_USER_DECK_PATH,
-                newPath
-        }
+        return dispatch => {
+                dispatch({
+                        type: PUSH_TO_USER_DECK_PATH,
+                        newPath
+                })
+                dispatch(getTranslatorPreferences(deckId));
+            };
 }
 
 export function dropFromPath(pathLastIndex){

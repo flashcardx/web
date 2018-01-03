@@ -49,8 +49,9 @@ class Translator extends Component{
     }
 
     initPreferences(){
-        if(this.props.translationPreferences){
-            this.setState({from: this.props.translationPreferences.from, to: this.props.translationPreferences.to});
+        if(this.props.translationPreferences[this.props.deckId]){
+            this.setState({from: this.props.translationPreferences[this.props.deckId].from,
+                            to: this.props.translationPreferences[this.props.deckId].to});
         }
         else{
             this.setState({to: this.props.defaultLang, from: this.props.defaultLang});
@@ -112,10 +113,10 @@ class Translator extends Component{
 
     componentDidUpdate(prevProps, prevState){
         if(this.state.from !== prevState.from){
-            this.props.updateTranslatorPreferencesFrom(this.state.from);
+            this.props.updateTranslatorPreferencesFrom(this.props.deckId, this.state.from);
         }
         if(this.state.to !== prevState.to){
-            this.props.updateTranslatorPreferencesTo(this.state.to);
+            this.props.updateTranslatorPreferencesTo(this.props.deckId, this.state.to);
         }
         if(this.props.defaultLang !== prevProps.defaultLang)
             this.initPreferences();
@@ -140,7 +141,7 @@ class Translator extends Component{
     }
 
     translate(){
-        this.props.translate(this.state.text, this.state.from, this.state.to);
+        this.props.translate(this.props.deckId, this.state.text, this.state.from, this.state.to);
     }
 
     swap(){

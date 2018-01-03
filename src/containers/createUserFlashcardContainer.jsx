@@ -13,7 +13,7 @@ class CreateUserCardContainer extends Component{
 
     constructor(props){
         super(props);
-        this.state = {pickedImages: [], modalOpened:false};
+        this.state = {deckId:null, pickedImages: [], modalOpened:false};
         this.onImgPick = this.onImgPick.bind(this);
         this.onImgUpload = this.onImgUpload.bind(this);
         this.onImgDelete = this.onImgDelete.bind(this);
@@ -21,6 +21,16 @@ class CreateUserCardContainer extends Component{
         this.onSubmit = this.onSubmit.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.guessDeckId = this.guessDeckId.bind(this);
+    }
+
+    componentDidMount(){
+        this.guessDeckId();
+    }
+    
+    guessDeckId(){
+        const deckId = userPathAdapter.getLastIdFromPath(this.props.userDecksPath);
+        this.setState({deckId:deckId});
     }
 
     componentWillReceiveProps(nextProps){
@@ -30,6 +40,9 @@ class CreateUserCardContainer extends Component{
                 var newImages = this.state.pickedImages.slice(); 
                 newImages.push(nextProps.imageReady);
                 return this.setState({pickedImages: newImages});
+            }
+            if(nextProps.userDecksPath !== this.props.userDecksPath){
+                this.guessDeckId();
             }
     }
 
@@ -44,9 +57,8 @@ class CreateUserCardContainer extends Component{
     }
 
     onSubmit(name, description, callback){
-        var deckId = userPathAdapter.getLastIdFromPath(this.props.userDecksPath);
         var imgs = this.state.pickedImages;
-        this.props.createUserCard(name, description, imgs, deckId, ()=>{
+        this.props.createUserCard(name, description, imgs, this.state.deckId, ()=>{
              callback();
         });
     }
@@ -78,6 +90,7 @@ class CreateUserCardContainer extends Component{
             <div>
                 <RaisedButton onClick={this.openModal} labelColor="#ffffff" disabled={this.props.bigLoading} backgroundColor="#66b543" label="Crear ficha" />                   
                 <CreateFlashcard
+                                deckId={this.state.deckId}
                                 resetOnClose
                                 modalOpened={this.state.modalOpened}
                                 closeModal={this.closeModal}
