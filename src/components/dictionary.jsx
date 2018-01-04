@@ -54,8 +54,6 @@ class Dictionary extends Component{
     }
 
     render(){
-        if(!this.langIsAvailable())
-            return null;
         return (
             <div>
                         {this.renderButton()}

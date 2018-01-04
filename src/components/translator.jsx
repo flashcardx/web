@@ -195,8 +195,6 @@ class Translator extends Component{
             this.setState({text: nextProps.searchQuery});
    }
 
-   componentdid
-
     render(){
         return (
             <div>
