@@ -28,8 +28,7 @@ class Dictionary extends Component{
         super(props);
         this.renderButton = this.renderButton.bind(this);
         this.define = this.define.bind(this);
-        this.langIsAvailable = this.langIsAvailable.bind(this);
-    }
+     }
     
     renderButton(){
         return (<span>
@@ -47,12 +46,6 @@ class Dictionary extends Component{
         this.props.define(this.props.lang, this.props.searchQuery);
     }
 
-    langIsAvailable(){
-        if(this.props.lang === "en")
-            return true;
-        return false;
-    }
-
     render(){
         return (
             <div>
@@ -63,7 +56,7 @@ class Dictionary extends Component{
 
     componentWillReceiveProps(nextProps){
         if(nextProps.dictionaryDefinition !== this.props.dictionaryDefinition){
-            if(_.isEmpty(nextProps.dictionaryDefinition.text)){
+            if(_.isEmpty(nextProps.dictionaryDefinition.text) || nextProps.dictionaryDefinition.text === "\"\""){
                 this.props.infoAlert("No se encontro definición para el término");
             }
             else{
