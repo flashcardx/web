@@ -33,9 +33,7 @@ const style = {
         // eslint-disable-next-line
         whiteSpace: "pre-wrap",       /* css-3 */
         wordWrap: "break-word",       /* Internet Explorer 5.5+ */
-        wordBreak: "break-all",
-        // eslint-disable-next-line
-        whiteSpace: "normal"
+        wordBreak: "break-all"
     },
     a:{
         cursor: "pointer",

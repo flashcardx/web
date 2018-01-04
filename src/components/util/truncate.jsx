@@ -3,8 +3,8 @@ import React from "react";
 
 const TEXT_COLLAPSE_OPTIONS = {
   collapse: false,
-  collapseText: 'Show more',
-  expandText: 'Show less',
+  collapseText: 'Mostrar más',
+  expandText: 'Mostrar menos',
   minHeight: 40
 }
 
@@ -14,7 +14,7 @@ function T(props){
             options={TEXT_COLLAPSE_OPTIONS}
             >
                 {props.children}
-        </TextCollapse>
+            </TextCollapse>
     );
 }
 

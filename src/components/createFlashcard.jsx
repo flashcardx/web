@@ -22,6 +22,7 @@ class CreateFlashcard extends Component{
         this.reset = this.reset.bind(this);
         this.onChangeFormName = this.onChangeFormName.bind(this);
         this.onChangeFormDescription = this.onChangeFormDescription.bind(this);
+        this.setFormDescription = this.setFormDescription.bind(this);
     }
 
     closeModal(){
@@ -60,8 +61,12 @@ class CreateFlashcard extends Component{
     }
 
     onChangeFormDescription(e){
+       this.setFormDescription(e.target.value);
+    }
+
+    setFormDescription(newDescripcion){
         var newForm = _.clone(this.state.form);
-        newForm.description = e.target.value;
+        newForm.description = newDescripcion;
         this.setState({form:newForm});
     }
 
@@ -105,7 +110,7 @@ class CreateFlashcard extends Component{
                         </Formsy.Form>
                 </div>
                 <div style={{marginTop:"10px"}} className="container">
-                            <MultimediaCreator image translator drawing audio video
+                            <MultimediaCreator image translator dictionary drawing audio video
                                             deckId={this.props.deckId}
                                             onClose={()=>this.setState({regainFocus:true})}
                                             searchQuery={this.state.form.name}
@@ -113,6 +118,7 @@ class CreateFlashcard extends Component{
                                             onImgDelete={this.props.onImgDelete}
                                             pickedImages={this.props.pickedImages}
                                             maxPickedImgs={3}
+                                            onDefine={this.setFormDescription}
                                             bigLoading={this.props.bigLoading}
                                             onImgPick={this.props.onImgPick}
                                             onImgUpload={this.props.onImgUpload}

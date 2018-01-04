@@ -74,7 +74,7 @@ class DeckGallery extends Component{
 
     render(){
         if(!this.state.wasRendered && _.isEmpty(this.props.decks))
-            return <p>Loading...</p>
+            return <p>Obteninedo mazos...</p>
         return (            
             <div style={{overflow:"hidden"}}>
                 {this.renderDecks(this.props.decks, this.props.path)}

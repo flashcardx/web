@@ -13,6 +13,7 @@ import {redirectReducer} from "./reducer_util"
 import {searchImagesReducer, imageProxyReducer} from "./reducer_img";
 import {reducer as formReducer} from "redux-form";
 import {translateReducer, translatePreferencesReducer} from "./reducer_translator";
+import {dictionaryDefineReducer} from './reducer_dictionary';
 
 const appReducer = combineReducers({
   notificationCount: countReducer,
@@ -35,7 +36,8 @@ const appReducer = combineReducers({
   master: masterReducer,
   redirect: redirectReducer,
   translation: translateReducer,
-  translationPreferences: translatePreferencesReducer
+  translationPreferences: translatePreferencesReducer,
+  dictionaryDefinition: dictionaryDefineReducer
 });
 
 const rootReducer = (state, action) => {
