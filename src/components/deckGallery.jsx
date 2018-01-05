@@ -12,10 +12,11 @@ class DeckGallery extends Component{
 
     constructor(props){
         super(props);
-        this.state = {skip:0, isFetching: false, wasRendered: false};
+        this.state = {skip:0, wasRendered: false};
         this.renderDecks = this.renderDecks.bind(this);
         this.renderDeck = this.renderDeck.bind(this);
         this.increasePage = this.increasePage.bind(this);
+        this.isLoading = this.isLoading.bind(this);
     }
 
     componentWillMount(){
@@ -41,17 +42,10 @@ class DeckGallery extends Component{
             </span>
         );
     }
-
-    componentWillReceiveProps(nextProps){
-        //the function could be called even when props didnt change, so we need to check before doing somehing nasty
-        if(!_.isEqual(this.props,nextProps))
-            this.setState({isFetching: false});
-    }
-
     increasePage(){
-        if(this.state.isFetching)
+        if(this.props.isFetching)
             return;
-        this.setState({isFetching: true, skip:(this.state.skip+DECKS_PER_PAGE)}, ()=>{
+        this.setState({skip:(this.state.skip+DECKS_PER_PAGE)}, ()=>{
             this.props.fetch(this.state.skip);
         });
     }
@@ -59,7 +53,7 @@ class DeckGallery extends Component{
     renderDecks(decks, path){
         const parentId = deckPathAdapter.getLastIdFromPath(path);
         const decksArray = userDeckAdapter.getDecks(decks, parentId);
-        if(this.state.wasRendered && _.isEmpty(decksArray))
+        if(_.isEmpty(decksArray))
             return <p>Parece que no tenes mazos en esta ruta :(</p>
         var renderedDecks = [];
         decksArray.forEach(deck=>{
@@ -72,8 +66,15 @@ class DeckGallery extends Component{
         );
     }
 
+    isLoading(){
+        const parentId = deckPathAdapter.getLastIdFromPath(this.props.path);
+        const decksArray = userDeckAdapter.getDecks(this.props.decks, parentId);
+        return (!this.state.wasRendered || this.props.isFetching) && ( _.isEmpty(this.props.decks) || _.isEmpty(decksArray) )
+    }
+
     render(){
-        if(!this.state.wasRendered && _.isEmpty(this.props.decks))
+        console.log("isfetching: ", this.props.isFetching);
+        if( this.isLoading() )
             return <p>Obteninedo mazos...</p>
         return (            
             <div style={{overflow:"hidden"}}>

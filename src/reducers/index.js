@@ -9,7 +9,7 @@ import {userDecksReducer,
         deckNameReducer} from "./reducer_deck";
 import masterReducer from "./reducer_master"
 import {spCardsReducer, rankCardReducer} from "./reducer_practice";
-import {redirectReducer} from "./reducer_util"
+import {redirectReducer, isFetchingReducer} from "./reducer_util"
 import {searchImagesReducer, imageProxyReducer} from "./reducer_img";
 import {reducer as formReducer} from "redux-form";
 import {translateReducer, translatePreferencesReducer} from "./reducer_translator";
@@ -37,7 +37,8 @@ const appReducer = combineReducers({
   redirect: redirectReducer,
   translation: translateReducer,
   translationPreferences: translatePreferencesReducer,
-  dictionaryDefinition: dictionaryDefineReducer
+  dictionaryDefinition: dictionaryDefineReducer,
+  isFetching: isFetchingReducer
 });
 
 const rootReducer = (state, action) => {

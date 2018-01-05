@@ -8,7 +8,9 @@ import {FETCH_USER_DECKS,
         DROP_FROM_USER_DECK_PATH,
         EDIT_USER_DECK,
         LIST_DECKS_NAME,
-        GET_DECK_NAME} from "./types";
+        GET_DECK_NAME,
+        ISFETCHING_DECKS_START,
+        ISFETCHING_DECKS_STOP} from "./types";
 import {getTranslatorPreferences} from "./translator"
 const FETCH_USER_DECKS_URL = config.apiGetUserDecks;
 const CREATE_USER_DECK_URL = config.apiCreateUserDeck;
@@ -24,12 +26,18 @@ export function fetchUserDecks(skip=0, path=[]){
         url += "&parentId="+parentId;
     const request = axios.get(url,
                     {headers: {'x-access-token': localStorage.getItem("jwt")}});
-   return {type: FETCH_USER_DECKS,
-            originAPI: true,
-            bigLoading: true,
-            payload: request,
-            path: path,
-            skip: skip}
+    return dispatch => {
+            dispatch({type: FETCH_USER_DECKS,
+                      originAPI: true,
+                      bigLoading: true,
+                      payload: request,
+                      path: path,
+                      skip: skip});
+           dispatch({type: ISFETCHING_DECKS_START});
+           request.then(()=>{
+                dispatch({type: ISFETCHING_DECKS_STOP});
+           })
+   };
 }
 
 export function listDecksName(deckId){

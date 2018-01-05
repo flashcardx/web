@@ -19,10 +19,17 @@ class DeckGalleryUserContainer extends Component{
                 <DeckGallery pushToPath={this.props.pushToPath}
                              onDelete={this.props.onDelete}
                              path={this.props.path}
+                             isFetching={this.props.isFetching}
                              fetch={this.fetchDecks}
                              decks={this.props.decks}/> 
         );
     }
 }
 
-export default connect(null, {fetchUserDecks})(DeckGalleryUserContainer);
+function mapStateToProps(state){
+    return {
+        isFetching: state.isFetching.decks
+    }
+}
+
+export default connect(mapStateToProps, {fetchUserDecks})(DeckGalleryUserContainer);

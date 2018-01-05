@@ -71,7 +71,7 @@ class FlashcardGallery extends Component{
 
     render(){
         if(!this.state.wasRendered && _.isEmpty(this.props.cards))
-            return <p>Cargando...</p>
+            return <p>Obteniendo fichas...</p>
         return (            
             <div style={{overflow:"hidden"}}>
                 {this.renderCards(this.props.cards)}

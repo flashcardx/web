@@ -156,10 +156,6 @@ function moveCard(state, cardId, oldDeckId, newDeckId){
         return insertNewCard(state, card, newDeckId);
 }
 
-
-
-
-
 export default {
     insertDecks: insertDecks,
     insertNewDeck: insertNewDeck,
