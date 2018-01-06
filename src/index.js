@@ -37,7 +37,63 @@ import 'react-s-alert/dist/s-alert-css-effects/stackslide.css';
 import 'react-s-alert/dist/s-alert-default.css';
 const createStoreWithMiddleware = applyMiddleware(reduxThunk, showLoadingMDW, promiseMDW, parseApiMDW, hideLoadingMDW, errorHandlerMDW, successMessage)(createStore);
 
+
 class App extends Component{
+
+    constructor(props){
+        super(props)
+        this.googleSignin = this.googleSignin.bind(this)
+    }
+
+    componentDidMount(){
+        window.onGoogleYoloLoad = (googleyolo) => {
+            console.log("The 'googleyolo' object is ready");
+            this.googleSignin();
+            // The 'googleyolo' object is ready for use.
+        };
+    }
+
+    googleSignin(){
+        const retrievePromise = googleyolo.retrieve({
+            supportedAuthMethods: [
+              "https://accounts.google.com",
+              "googleyolo://id-and-password"
+            ],
+            supportedIdTokenProviders: [
+              {
+                uri: "https://accounts.google.com",
+                clientId: GOOGLE_CLIENTID
+              }
+            ]
+          });
+          googleyolo.cancelLastOperation().then(() => {
+                console.log("credentials selector closed");
+          });
+          retrievePromise.then((credential) => {
+            if (credential.password) {
+              // An ID (usually email address) and password credential was retrieved.
+              // Sign in to your backend using the password.
+              signInWithEmailAndPassword(credential.id, credential.password);
+            } else {
+              // A Google Account is retrieved. Since Google supports ID token responses,
+              // you can use the token to sign in instead of initiating the Google sign-in
+              // flow.
+              useGoogleIdTokenForAuth(credential.idToken);
+            }
+          }, (error) => {
+            // Credentials could not be retrieved. In general, if the user does not
+            // need to be signed in to use the page, you can just fail silently; or,
+            // you can also examine the error object to handle specific error cases.
+          
+            // If retrieval failed because there were no credentials available, and
+            // signing in might be useful or is required to proceed from this page,
+            // you can call `hint()` to prompt the user to select an account to sign
+            // in or sign up with.
+            if (error.type === 'noCredentialsAvailable') {
+              googleyolo.hint(...).then(...);
+            }
+          });
+    }
 
     render(){
        return ( <BrowserRouter>
@@ -66,6 +122,7 @@ ReactDOM.render(
                  <MuiThemeProvider>    
                     <div>
                         <Loading/>
+                        <GoogleOneTapSign/>
                         <App/>
                         <ReactTooltip globalEventOff="click"
                                       multiline={true} className="tooltip"
