@@ -36,13 +36,13 @@ class GoogleOneTapSign extends Component{
             ]
           });
           window.googleyolo.cancelLastOperation().then(() => {
-                console.log("credentials selector closed");
-                
+                console.log("credentials selector closed");    
           });
           retrievePromise.then((credential) => {
             if (credential.password) {
               // An ID (usually email address) and password credential was retrieved.
               // Sign in to your backend using the password.
+              console.log("console.log got email and password: ", credential);
               this.props.signin(credential.id, credential.password);
             } else {
               // A Google Account is retrieved. Since Google supports ID token responses,
