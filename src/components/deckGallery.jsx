@@ -73,7 +73,6 @@ class DeckGallery extends Component{
     }
 
     render(){
-        console.log("isfetching: ", this.props.isFetching);
         if( this.isLoading() )
             return <p>Obteninedo mazos...</p>
         return (            
