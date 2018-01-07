@@ -11,7 +11,11 @@ export function authReducer(state=false, action){
         case SIGNOUT: if(localStorage.getItem("fbAcessToken") && window.FB){
                             window.FB.logout();
                             localStorage.removeItem("fbAcessToken")
-                        }  
+                        }
+                      if(window.googleyolo){
+                          console.log("googleyolo log out");
+                          window.googleyolo.disableAutoSignIn() 
+                      }
                       localStorage.removeItem("jwt");
                       return false;
         default: return state;   

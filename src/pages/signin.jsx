@@ -8,12 +8,12 @@ import Formsy from 'formsy-react';
 import {MyOwnInput} from "../components/util/form.jsx";
 import config from "../api_config";
 import FacebookLogin from "../components/util/facebookLogin.jsx"
-import {GoogleLogin} from 'react-google-login';
 import GreenButton from "../components/util/greenButton.jsx";
 import {Link} from "react-router-dom";
 import DocumentTitle from "react-document-title";
+import GoogleSignButton from "../components/util/googleSignButton";
 const RECAPTCHA_KEY = config.recaptchaSiteKey;
-const GOOGLE_CLIENTID = config.googleClientId;
+
 
 const style = {
     base:{
@@ -119,21 +119,7 @@ class Landing extends Component{
                                                     <FacebookLogin onSuccess={this.props.fbAuth}/>
                                                 </div>
                                                 <div className="row" style={style.center}>
-                                                        <GoogleLogin
-                                                                disabled={this.props.bigLoading}
-                                                                style={{backgroundColor:"#ffffff", marginBottom:"10px", marginTop:"10px", fontWeight:"400", fontSize: "16px", border:"1px solid gray"}}
-                                                                className="btn btn-light"
-                                                                type="button"
-                                                                scope="profile email"
-                                                                clientId={GOOGLE_CLIENTID}
-                                                                onSuccess={this.props.googleAuth}
-                                                                onFailure={this.logAuthError}
-                                                                >
-                                                                    <i style={{marginRight:"5px"}} aria-hidden="true">
-                                                                        <img src={process.env.PUBLIC_URL+"/img/icon_google16.png"} alt="Google icon"/>
-                                                                    </i>
-                                                                    <span>Continuar con Google</span>
-                                                        </GoogleLogin>
+                                                        <GoogleSignButton/>
                                                 </div>
                                             </div>
                                     </div>
