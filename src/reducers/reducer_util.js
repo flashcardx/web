@@ -14,10 +14,9 @@ export function isFetchingReducer(state={}, action){
         case ISFETCHING_DECKS_START: var newState = _.clone(state)
                                      newState.decks = true;
                                      return newState
-        case ISFETCHING_DECKS_STOP: var newState = _.clone(state)
-                                    newState.decks = false;
-                                    return newState
+        case ISFETCHING_DECKS_STOP: var newState2 = _.clone(state)
+                                    newState2.decks = false;
+                                    return newState2
+        default:                    return state;
     }
-
-    return state;
 }

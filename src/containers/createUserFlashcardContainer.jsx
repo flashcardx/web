@@ -41,9 +41,12 @@ class CreateUserCardContainer extends Component{
                 newImages.push(nextProps.imageReady);
                 return this.setState({pickedImages: newImages});
             }
-            if(nextProps.userDecksPath !== this.props.userDecksPath){
+    }
+        
+    componentDidUpdate(prevProps){
+            if(prevProps.userDecksPath !== this.props.userDecksPath){
                 this.guessDeckId();
-            }
+            }    
     }
 
     onImgDelete(src){
