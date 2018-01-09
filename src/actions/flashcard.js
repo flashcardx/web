@@ -1,12 +1,15 @@
 import axios from "axios";
 import config from "../api_config";
-import {CREATE_USER_CARD, EDIT_USER_CARD, GET_USER_CARDS, DELETE_USER_FLASHCARD, MOVE_USER_CARD} from "./types";
+import {CREATE_USER_CARD,
+        EDIT_USER_CARD,
+        GET_USER_CARDS,
+        DELETE_USER_FLASHCARD,
+        MOVE_USER_CARD} from "./types";
 const CREATE_USER_CARD_URL = config.apiCreateUserCard;
 const EDIT_USER_CARD_URL = config.apiEditCard;
 const MOVE_USER_CARD_URL = config.apiMoveCard;
 const GET_USER_CARDS_URL = config.apiGetUserCards;
 const DELETE_USER_FLASHCARD_URL = config.apiDeleteUserFlashcard;
-
 
 export function createUserCard(name, description, images, deckId, callback){
     const url = CREATE_USER_CARD_URL + deckId;

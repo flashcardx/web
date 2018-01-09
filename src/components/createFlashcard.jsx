@@ -7,6 +7,7 @@ import {warningAlert} from "../actions/alerts.js";
 import _ from "lodash";
 import Formsy from 'formsy-react';
 import {MyOwnInput} from "./util/form.jsx";
+import SpellSuggestionsContainer from "../containers/spellSuggestionsContainer.jsx"
 import MultimediaCreator from "./multimediaCreator.jsx";
 import {resetSearchImages} from "../actions/image";
 
@@ -20,13 +21,13 @@ class CreateFlashcard extends Component{
         this.onSubmit = this.onSubmit.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.reset = this.reset.bind(this);
-        this.onChangeFormName = this.onChangeFormName.bind(this);
         this.onChangeFormDescription = this.onChangeFormDescription.bind(this);
         this.setFormDescription = this.setFormDescription.bind(this);
+        this.setFormName = this.setFormName.bind(this)
     }
 
     closeModal(){
-           this.props.closeModal();
+        this.props.closeModal();
     }
 
     reset(){
@@ -54,12 +55,6 @@ class CreateFlashcard extends Component{
             });
     }
 
-    onChangeFormName(e){
-        var newForm = _.clone(this.state.form);
-        newForm.name = e.target.value;
-        this.setState({form:newForm});
-    }
-
     onChangeFormDescription(e){
        this.setFormDescription(e.target.value);
     }
@@ -70,29 +65,36 @@ class CreateFlashcard extends Component{
         this.setState({form:newForm});
     }
 
+    setFormName(newName){
+        var newForm = _.clone(this.state.form);
+        newForm.name = newName;
+        this.setState({form:newForm});
+    }
+
     renderForm(){
-        return (
+         return (
             <div style={{marginTop:"10px"}} className="container">
                 <div className="row">
                 <Formsy.Form ref="form" className="col" id="cardForm" onValidSubmit={this.onSubmit}>                         
                                      <div className="col-sm-12">
-                                            <MyOwnInput
-                                                validationErrors={{
-                                                    maxLength: "El nombre de tu ficha debe contener menos de 40 caracteres",
-                                                    isDefaultRequiredValue: "Tu ficha necesita un nombre"
-                                                    }}
-                                                name="name"
-                                                regainFocus={this.state.regainFocus}
-                                                focusWasResetted={()=>this.setState({regainFocus:false})}
-                                                autoFocus
-                                                onEnter={()=>this.refs.form.submit()}
-                                                required
-                                                validations="maxLength:40"
-                                                onChange={this.onChangeFormName}
-                                                placeholder="Nombre de la ficha, concepto que queres recordar"
-                                                value={this.state.form.name}
-                                            />
-                                        </div>
+                                        <SpellSuggestionsContainer
+                                            validationErrors={{
+                                                maxLength: "El nombre de tu ficha debe contener menos de 40 caracteres",
+                                                isDefaultRequiredValue: "Tu ficha necesita un nombre"
+                                                }}
+                                            name="name"
+                                            lang={this.props.lang}
+                                            regainFocus={this.state.regainFocus}
+                                            focusWasResetted={()=>this.setState({regainFocus:false})}
+                                            autoFocus
+                                            onEnter={()=>this.refs.form.submit()}
+                                            required
+                                            validations="maxLength:40"
+                                            placeholder="Nombre de la ficha, concepto que queres recordar"
+                                            value={this.state.form.name}
+                                            onChange={this.setFormName}
+                                        />
+                                    </div>
                                      <div className="col-sm-12">
                                             <MyOwnInput
                                                 validationErrors={{
@@ -150,8 +152,6 @@ class CreateFlashcard extends Component{
 function mapStateToProps(state){
     return {bigLoading: state.bigLoading};
 }
-
-
 
 
 export default connect(mapStateToProps, {warningAlert, resetSearchImages})(Radium(CreateFlashcard));

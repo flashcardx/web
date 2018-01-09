@@ -33,7 +33,7 @@ module.exports = {
     apiGoogleAuthUrl: api.googleAuth,
     fbAppId: keys.fbAuth.appId,
     googleClientId: keys.googleAuth.clientId,
-    apiSuggest: api.suggest,
+    apiSpellSuggestions: api.spellSuggestions,
     apiGetUserInfo: api.getUserInfo,
     apiGetActivity: api.getActivity,
     apiGetActivityCount: api.getActivityCount,
