@@ -7,13 +7,14 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {proxyImgFromUrl, proxyImgFromData, deleteImageReady} from "../actions/image";
 import CreateFlashcard from "../components/createFlashcard.jsx";
 import userPathAdapter from "../adapters/deckPathAdapter";
+import userDeckAdapter from "../adapters/userDeckAdapter";
 import _ from "lodash";
 
 class CreateUserCardContainer extends Component{
 
     constructor(props){
         super(props);
-        this.state = {deckId:null, pickedImages: [], modalOpened:false};
+        this.state = {lang:"en", deckId:null, pickedImages: [], modalOpened:false};
         this.onImgPick = this.onImgPick.bind(this);
         this.onImgUpload = this.onImgUpload.bind(this);
         this.onImgDelete = this.onImgDelete.bind(this);
@@ -22,10 +23,12 @@ class CreateUserCardContainer extends Component{
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.guessDeckId = this.guessDeckId.bind(this);
+        this.setLang = this.setLang.bind(this)
     }
 
     componentDidMount(){
         this.guessDeckId();
+        this.setLang()
     }
     
     guessDeckId(){
@@ -42,11 +45,19 @@ class CreateUserCardContainer extends Component{
                 return this.setState({pickedImages: newImages});
             }
     }
+
+    setLang(){
+            const newLang = userDeckAdapter.getLang(this.props.allDecks, this.state.deckId)
+            this.setState({lang: newLang})
+    }
         
-    componentDidUpdate(prevProps){
+    componentDidUpdate(prevProps, prevState){
             if(prevProps.userDecksPath !== this.props.userDecksPath){
                 this.guessDeckId();
             }    
+            if(prevState.deckId !== this.state.deckId){
+                this.setLang();
+            }
     }
 
     onImgDelete(src){
@@ -107,6 +118,7 @@ class CreateUserCardContainer extends Component{
                                 onImgPick={this.onImgPick}
                                 onImgUpload={this.onImgUpload}
                                 onSubmit={this.onSubmit}
+                                lang={this.state.lang}
                                 {...this.props}
                             />
             </div>
@@ -122,7 +134,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state){
     return {
         imageReady: state.imageReady,
-        userDecksPath: state.userDecksPath
+        userDecksPath: state.userDecksPath,
+        allDecks: state.userDecks
     }
 }
 

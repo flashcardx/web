@@ -13,7 +13,7 @@ import {redirectReducer, isFetchingReducer} from "./reducer_util"
 import {searchImagesReducer, imageProxyReducer} from "./reducer_img";
 import {reducer as formReducer} from "redux-form";
 import {translateReducer, translatePreferencesReducer} from "./reducer_translator";
-import {dictionaryDefineReducer} from './reducer_dictionary';
+import {dictionaryDefineReducer, spellSuggestionsReducer} from './reducer_dictionary';
 
 const appReducer = combineReducers({
   notificationCount: countReducer,
@@ -38,7 +38,8 @@ const appReducer = combineReducers({
   translation: translateReducer,
   translationPreferences: translatePreferencesReducer,
   dictionaryDefinition: dictionaryDefineReducer,
-  isFetching: isFetchingReducer
+  isFetching: isFetchingReducer,
+  spellSuggestions: spellSuggestionsReducer
 });
 
 const rootReducer = (state, action) => {
