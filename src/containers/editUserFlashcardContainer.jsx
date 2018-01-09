@@ -6,6 +6,7 @@ import {successAlert} from "../actions/alerts.js";
 import IconButton from 'material-ui/IconButton';
 import {proxyImgFromUrl, proxyImgFromData, deleteImageReady} from "../actions/image";
 import CreateFlashcard from "../components/createFlashcard.jsx";
+import userDeckAdapter from "../adapters/userDeckAdapter";
 import _ from "lodash";
 const FORM_NAME = "userdeckForm";
 
@@ -14,7 +15,7 @@ class EditUserFlashcardContainer extends Component{
 
     constructor(props){
         super(props);
-        this.state = {pickedImages:[], modalOpened:false};
+        this.state = {lang:"en", pickedImages:[], modalOpened:false};
         this.onSubmit = this.onSubmit.bind(this);
         this.onImgPick = this.onImgPick.bind(this);
         this.onImgUpload = this.onImgUpload.bind(this);
@@ -22,6 +23,16 @@ class EditUserFlashcardContainer extends Component{
         this.onImgDelete = this.onImgDelete.bind(this);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.setLang = this.setLang.bind(this)
+    }
+
+    componentDidMount(){
+        this.setLang()
+    }
+
+    setLang(){
+        const newLang = userDeckAdapter.getLang(this.props.allDecks, this.props.deckId)
+        this.setState({lang: newLang})
     }
 
     onSubmit(name, description, callback){
@@ -58,6 +69,12 @@ class EditUserFlashcardContainer extends Component{
             }
     }
 
+    componentDidUpdate(prevProps){
+        if(prevProps.deckId !== this.props.deckId){
+            this.setLang();
+        }
+    }
+
     onImgPick(img){
         this.props.proxyImgFromUrl(img);
     }
@@ -87,6 +104,8 @@ class EditUserFlashcardContainer extends Component{
                         create
                 </IconButton>
                 <CreateFlashcard
+                            lang={this.state.lang}
+                            deckId={this.props.deckId}
                             modalOpened={this.state.modalOpened}
                             closeModal={this.closeModal}
                             buttonTitle="Confirmar"
@@ -116,7 +135,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state){
     return {
-        imageReady: state.imageReady
+        imageReady: state.imageReady,
+        allDecks: state.userDecks
     }
 }
 

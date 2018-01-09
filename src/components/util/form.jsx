@@ -187,6 +187,7 @@ export const MyOwnInput = Radium(createReactClass({
       }
       if(this.props.value !== prevProps.value){
           clearTimeout(fetchTimeouteId);
+          this.props.onTyping()
           fetchTimeouteId = setTimeout(() => {
                 this.props.fetchSuggestions()
             }, this.props.timeToFetch || 400);

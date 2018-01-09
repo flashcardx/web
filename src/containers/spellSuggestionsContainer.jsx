@@ -41,7 +41,7 @@ class SpellSuggestionsContainer extends Component{
     }
 
     render(){
-        return <MyOwnAutocomplete {...this.props} fetchSuggestions={this.fetchSuggestions} suggestions={this.state.suggestions}/>
+        return <MyOwnAutocomplete {...this.props} onTyping={this.props.clearSuggestions} fetchSuggestions={this.fetchSuggestions} suggestions={this.state.suggestions}/>
     }
 
 }
