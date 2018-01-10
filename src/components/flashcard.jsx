@@ -16,6 +16,8 @@ import {MyOwnInput} from "./util/form.jsx";
 import FlatButton from 'material-ui/FlatButton';
 import GreenButton from "./util/greenButton"
 import Responsive from 'react-responsive';
+import CardFlip from 'react-card-flip';
+
 const style = {
     card: {
         padding: "0px",
@@ -48,11 +50,19 @@ class Flashcard extends Component{
     
     constructor(props){
         super(props);
-        this.state = {openEditModal:false};
+        this.state = {openEditModal:false, isFlipped: false};
         this.openEditModal = this.openEditModal.bind(this);
         this.closeEditModal = this.closeEditModal.bind(this);
         this.renderNameInput = this.renderNameInput.bind(this);
         this.submitNamePractice = this.submitNamePractice.bind(this);
+        this.handleFlip = this.handleFlip.bind(this)
+        this.renderSide1 = this.renderSide1.bind(this)
+        this.renderSide2 = this.renderSide2.bind(this)
+    }
+
+    handleFlip(e) {
+        e.preventDefault();
+        this.setState({ isFlipped: !this.state.isFlipped });
     }
 
     renderNameInput(){
@@ -121,18 +131,51 @@ class Flashcard extends Component{
         this.props.submitName(this.props.nameImput)
     }
 
-    render(){
+    renderSide1(){
         const {card} = this.props;
         var title = (this.props["practice-stage"]===1)? this.renderNameInput() :this.renderTitle(card);
         var imgs = this.generateImgs(card.imgs);
-        return (
-            <span>
+        return <span>
+                <MoveUserFlashcardContainer deckId={this.props.deckId} cardId={card._id} title="Mover ficha" onClose={this.closeEditModal} modalOpened={this.state.openEditModal} editModal={this.state.editModal}/>
+                <Card style={style.card} className="col-lg-3 col-md-4 col-sm-12">
+                    <CardMedia>
+                        <ImageGallery imgs={imgs}/>
+                    </CardMedia>
+                    <CardTitle style={{paddingBottom:"0px", paddingRight:"8px", paddingLeft:"8px"}} titleStyle={{wordBreak: "break-all" }} title={title} />
+                    <CardActions>
+                        {(this.props["practice-stage"]===1)?
+                            <GreenButton onClick={this.submitNamePractice} disabled={!this.props.nameImput} className="col" label="Confirmar" />
+                            :
+                            (this.props["practice-stage"]===2)?
+                                <Responsive minWidth={700}>
+                                    {(matches) => {
+                                        if (matches) {
+                                            return <FlatButton keyboardFocused disabled={this.props.bigLoading} onClick={this.props.onContinue} hoverColor="#346bc3" backgroundColor="#4286f4" className="col" label="Continuar" />
+                                        } else {
+                                            return <FlatButton disabled={this.props.bigLoading} onClick={this.props.onContinue} hoverColor="#346bc3" backgroundColor="#4286f4" className="col" label="Continuar" />
+                                        }
+                                    }}
+                                </Responsive>
+                            :
+                            <div className="row">
+                                <IconButton onClick={()=>this.props.onDelete(card._id)} iconStyle={{ color: "red" }} data-tip="Delete" iconClassName="material-icons">
+                                    clear
+                                </IconButton>
+                                <EditUserFlashcardContainer
+                                deckId={this.props.deckId}
+                                card={card}/>
+                            </div>
+                        }
+                    </CardActions>
+            </Card>
+        </span>
+    }
+
+    renderSide2(){
+        const {card} = this.props;
+        return <span>
                     <MoveUserFlashcardContainer deckId={this.props.deckId} cardId={card._id} title="Mover ficha" onClose={this.closeEditModal} modalOpened={this.state.openEditModal} editModal={this.state.editModal}/>
                     <Card style={style.card} className="col-lg-3 col-md-4 col-sm-12">
-                        <CardMedia>
-                            <ImageGallery imgs={imgs}/>
-                        </CardMedia>
-                        <CardTitle style={{paddingBottom:"0px", paddingRight:"8px", paddingLeft:"8px"}} titleStyle={{wordBreak: "break-all" }} title={title} />
                         <CardText>
                             <Truncate>
                                 <span style={style.wordBreak}>
@@ -167,7 +210,23 @@ class Flashcard extends Component{
                         </CardActions>
                     </Card>
             </span>
-        );
+    }
+
+    render(){
+        return <CardFlip isFlipped={false}>
+                    <div style={{position:"absolute"}} key="front">
+                        <img
+                            src="//img.buzzfeed.com/buzzfeed-static/static/2014-04/enhanced/webdr06/4/16/enhanced-11136-1396643149-13.jpg?no-auto"
+                        />
+                        <button onClick={this.handleFlip}>Click to flip</button>
+                    </div>
+                    <div style={{position:"absolute"}} key="back">
+                    <img
+                            src="//img.buzzfeed.com/buzzfeed-static/static/2014-04/enhanced/webdr06/4/16/enhanced-11136-1396643149-13.jpg?no-auto"
+                        />
+                        <button onClick={this.handleFlip}>Click to flip</button>
+                    </div>
+            </CardFlip>
     }
 } 
 
