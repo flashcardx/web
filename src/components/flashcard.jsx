@@ -6,24 +6,22 @@ import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import Truncate from "./util/truncate.jsx";
 import ImageGallery from "./imageGallery.jsx";
 import MoveUserFlashcardContainer from "../containers/moveUserFlashcardContainer.jsx";
-import EditUserFlashcardContainer from "../containers/editUserFlashcardContainer.jsx";
 import SpeakerTTSContainer from "../containers/speakerTTSContainer.jsx";
 import Formsy from 'formsy-react';
 import {MyOwnInput} from "./util/form.jsx";
 import FlatButton from 'material-ui/FlatButton';
 import GreenButton from "./util/greenButton"
 import Responsive from 'react-responsive';
-import CardFlip from 'react-card-flip';
+import CardFlip from './util/flippable';
+import FlashcardActions from "./flashcardActions"
 
 const style = {
     card: {
-        padding: "0px",
-        margin: "6px",
         display: "inline-block",
-        minWidth: "180px"
+        width: "250px",
+        bottom: 0
     },
     wordBreak: {
         // eslint-disable-next-line
@@ -137,7 +135,7 @@ class Flashcard extends Component{
         var imgs = this.generateImgs(card.imgs);
         return <span>
                 <MoveUserFlashcardContainer deckId={this.props.deckId} cardId={card._id} title="Mover ficha" onClose={this.closeEditModal} modalOpened={this.state.openEditModal} editModal={this.state.editModal}/>
-                <Card style={style.card} className="col-lg-3 col-md-4 col-sm-12">
+                <Card style={style.card}>
                     <CardMedia>
                         <ImageGallery imgs={imgs}/>
                     </CardMedia>
@@ -157,14 +155,11 @@ class Flashcard extends Component{
                                     }}
                                 </Responsive>
                             :
-                            <div className="row">
-                                <IconButton onClick={()=>this.props.onDelete(card._id)} iconStyle={{ color: "red" }} data-tip="Delete" iconClassName="material-icons">
-                                    clear
-                                </IconButton>
-                                <EditUserFlashcardContainer
-                                deckId={this.props.deckId}
-                                card={card}/>
-                            </div>
+                            <FlashcardActions
+                                onDelete={()=>this.props.onDelete(card._id)}
+                                onFlip={()=>this.cardFlip.flip()}
+                                edit={{deckId: this.props.deckId, card}}
+                            />
                         }
                     </CardActions>
             </Card>
@@ -175,13 +170,13 @@ class Flashcard extends Component{
         const {card} = this.props;
         return <span>
                     <MoveUserFlashcardContainer deckId={this.props.deckId} cardId={card._id} title="Mover ficha" onClose={this.closeEditModal} modalOpened={this.state.openEditModal} editModal={this.state.editModal}/>
-                    <Card style={style.card} className="col-lg-3 col-md-4 col-sm-12">
+                    <Card style={style.card}>
                         <CardText>
-                            <Truncate>
+                            <div style={{height:"200px", overflowX:"hidden", overflowY:"auto"}}>
                                 <span style={style.wordBreak}>
-                                    {this.props["practice-stage"]===1?  this.hideName(card.description) : card.description}
+                                    {(this.props["practice-stage"]===1?  this.hideName(card.description) : card.description)||"No hay descipción."}
                                 </span>
-                            </Truncate>
+                            </div>
                         </CardText>
                         <CardActions>
                             {(this.props["practice-stage"]===1)?
@@ -198,14 +193,11 @@ class Flashcard extends Component{
                                         }}
                                     </Responsive>
                                 :
-                                <div className="row">
-                                    <IconButton onClick={()=>this.props.onDelete(card._id)} iconStyle={{ color: "red" }} data-tip="Delete" iconClassName="material-icons">
-                                        clear
-                                    </IconButton>
-                                    <EditUserFlashcardContainer
-                                    deckId={this.props.deckId}
-                                    card={card}/>
-                                </div>
+                                <FlashcardActions
+                                onDelete={()=>this.props.onDelete(card._id)}
+                                onFlip={()=>this.cardFlip.flip()}
+                                edit={{deckId: this.props.deckId, card}}
+                                />
                             }
                         </CardActions>
                     </Card>
@@ -213,19 +205,9 @@ class Flashcard extends Component{
     }
 
     render(){
-        return <CardFlip isFlipped={false}>
-                    <div style={{position:"absolute"}} key="front">
-                        <img
-                            src="//img.buzzfeed.com/buzzfeed-static/static/2014-04/enhanced/webdr06/4/16/enhanced-11136-1396643149-13.jpg?no-auto"
-                        />
-                        <button onClick={this.handleFlip}>Click to flip</button>
-                    </div>
-                    <div style={{position:"absolute"}} key="back">
-                    <img
-                            src="//img.buzzfeed.com/buzzfeed-static/static/2014-04/enhanced/webdr06/4/16/enhanced-11136-1396643149-13.jpg?no-auto"
-                        />
-                        <button onClick={this.handleFlip}>Click to flip</button>
-                    </div>
+        return <CardFlip ref={ref=>{ this.cardFlip = ref }} isFlipped={false}>
+                    {this.renderSide1()}
+                    {this.renderSide2()}
             </CardFlip>
     }
 } 
