@@ -2,30 +2,36 @@ import React from "react"
 import CreateReactClass from "create-react-class"
 import "../../css/flippable.css"
 
+var rotate = null
 var Flippable = CreateReactClass({
     getInitialState: function() {
       return {
-        flipped: false,
-        clicked: false
+        flipped: false
       }
     },
     flip: function() {
+      rotate = rotate? null: "rotate"
         //this is meant to be called from the parent of this component by using a ref of this one
       this.setState({
-        flipped: !this.state.flipped,
-        clicked: true
+        flipped: !this.state.flipped
       });
     } ,
     render: function() {
-      var flippedCSS = this.state.flipped ? " Card-Back-Flip" : " Card-Front-Flip";
-      if (!this.state.clicked) flippedCSS =  "";
+      var parentContainerCSS = "flipper-container";
+      var innerContainerCSS = "flipper";
+      if(rotate){
+        innerContainerCSS += " rotate"
+        parentContainerCSS += " rotate"
+      }
       return (
-        <div className="Card">
-          <div className={"Card-Front"+flippedCSS}>
-            {this.props.children[0]}
-          </div>
-          <div className={"Card-Back"+flippedCSS}>
-            {this.props.children[1]}
+        <div className={parentContainerCSS}>
+          <div className={innerContainerCSS}>
+              <div className="front">
+                {this.props.children[0]}
+              </div>
+              <div className="back">
+                {this.props.children[1]}
+              </div>
           </div>
         </div>
       );

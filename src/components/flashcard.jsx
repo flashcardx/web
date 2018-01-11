@@ -141,26 +141,13 @@ class Flashcard extends Component{
                     </CardMedia>
                     <CardTitle style={{paddingBottom:"0px", paddingRight:"8px", paddingLeft:"8px"}} titleStyle={{wordBreak: "break-all" }} title={title} />
                     <CardActions>
-                        {(this.props["practice-stage"]===1)?
-                            <GreenButton onClick={this.submitNamePractice} disabled={!this.props.nameImput} className="col" label="Confirmar" />
-                            :
-                            (this.props["practice-stage"]===2)?
-                                <Responsive minWidth={700}>
-                                    {(matches) => {
-                                        if (matches) {
-                                            return <FlatButton keyboardFocused disabled={this.props.bigLoading} onClick={this.props.onContinue} hoverColor="#346bc3" backgroundColor="#4286f4" className="col" label="Continuar" />
-                                        } else {
-                                            return <FlatButton disabled={this.props.bigLoading} onClick={this.props.onContinue} hoverColor="#346bc3" backgroundColor="#4286f4" className="col" label="Continuar" />
-                                        }
-                                    }}
-                                </Responsive>
-                            :
+                       
                             <FlashcardActions
                                 onDelete={()=>this.props.onDelete(card._id)}
                                 onFlip={()=>this.cardFlip.flip()}
                                 edit={{deckId: this.props.deckId, card}}
                             />
-                        }
+                       
                     </CardActions>
             </Card>
         </span>
@@ -168,6 +155,7 @@ class Flashcard extends Component{
 
     renderSide2(){
         const {card} = this.props;
+        const inputTitle = (this.props["practice-stage"]===1)? this.renderNameInput() : null
         return <span>
                     <MoveUserFlashcardContainer deckId={this.props.deckId} cardId={card._id} title="Mover ficha" onClose={this.closeEditModal} modalOpened={this.state.openEditModal} editModal={this.state.editModal}/>
                     <Card style={style.card}>
@@ -178,9 +166,15 @@ class Flashcard extends Component{
                                 </span>
                             </div>
                         </CardText>
+                        {inputTitle}
                         <CardActions>
                             {(this.props["practice-stage"]===1)?
-                                <GreenButton onClick={this.submitNamePractice} disabled={!this.props.nameImput} className="col" label="Confirmar" />
+                                    <span>
+                                    <GreenButton onClick={this.submitNamePractice} disabled={!this.props.nameImput} className="col" label="Confirmar" />
+                                    <FlashcardActions
+                                        onFlip={()=>this.cardFlip.flip()}
+                                    />
+                                    </span>
                                 :
                                 (this.props["practice-stage"]===2)?
                                     <Responsive minWidth={700}>
