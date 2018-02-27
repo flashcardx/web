@@ -102,7 +102,6 @@ class CreateFlashcard extends Component{
                                                     }}
                                                 validations="maxLength:850"
                                                 onChange={this.onChangeFormDescription}
-                                                onEnter={()=>this.refs.form.submit()}
                                                 value={this.state.form.description}
                                                 name="description"
                                                 multiLine={true}
