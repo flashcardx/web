@@ -33,7 +33,7 @@ const style = {
         // eslint-disable-next-line
         whiteSpace: "pre-wrap",       /* css-3 */
         wordWrap: "break-word",       /* Internet Explorer 5.5+ */
-        wordBreak: "break-all"
+        wordBreak: "normal"
     },
     a:{
         cursor: "pointer",
@@ -134,11 +134,11 @@ class Flashcard extends Component{
                         </CardMedia>
                         <CardTitle style={{paddingBottom:"0px", paddingRight:"8px", paddingLeft:"8px"}} titleStyle={{wordBreak: "break-all" }} title={title} />
                         <CardText>
-                            <Truncate>
-                                <span style={style.wordBreak}>
-                                    {this.props["practice-stage"]===1?  this.hideName(card.description) : card.description}
-                                </span>
-                            </Truncate>
+                                <div style={{maxHeight:"120px",overflowY:"auto"}}>
+                                    <span style={style.wordBreak}>
+                                        {this.props["practice-stage"]===1?  this.hideName(card.description) : card.description}
+                                    </span>
+                                </div>
                         </CardText>
                         <CardActions>
                             {(this.props["practice-stage"]===1)?
